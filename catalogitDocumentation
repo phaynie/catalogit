@@ -1,0 +1,9 @@
+peopleSearch.php
+
+"Use of undefined constant validationFailed - assumed 'validationFailed"
+we see this on peopleSearch.php when trying to wash user input from the searchPeopleLastName text box.
+The variable $searchPeopleLastName = "Springer"  (has a value)
+but when I try to change the variable name to $searchPeopleLastName_value  and continue to wash the data the value remains "".
+
+        $washPostVar = cleanup_post($_POST['searchPeopleLastName']);
+        $searchPeopleLastName_value = strip_before_insert($conn, $washPostVar);

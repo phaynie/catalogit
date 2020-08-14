@@ -1,0 +1,73 @@
+<!-- boiler plate and nav bar included in all pages. Will make this an include eventually.
+ not current. see beginningNav.php-->
+
+<header class="page-header font-small bg-secondary py-3">
+  <nav class="navbar navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"
+        ><img class="img-responsive" src="images/crudelogo3.png"
+      /></a>
+
+      <button
+        class="navbar-toggler"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="introPage.php">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="introPage.php">Search-it</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="answer.php">Answer-it</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.php">About-it</a>
+          </li>
+          <li>
+            <a class="nav-link " href="contact.php">Contact-it</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- navbar-collapse -->
+
+      <!-- container -->
+
+    </div>
+  </nav>
+
+</header>
+<div class="form-group has-search ml-3">
+  <span class="fa fa-search form-control-feedback"></span>
+  <input type="text" class="form-control" placeholder="Search" />
+</div>
+<div class="container-fluid bg-light pt-4 pb-4">
+  <div class="row">
+    <div class="col-md-3">
+      <?php
+      if(isset($_SESSION['userId'])) {
+        echo '<form action="indexlogout.php" method="post"><br>
+                <button class="btn btn-secondary" type="submit" name="logout-submit">Logout</button><br>
+              </form> ';
+      }else{
+      echo '<form action="indexlogin.php" method="post">
+        <input class="form-control" type="text" name="mailuid" placeholder="Username/Email..."></form><br>
+        <input class="form-control" type="password" name="pwd" placeholder="Password"><br>
+        <button class="btn btn-secondary mb-4" type="submit" name="login">Login</button><br>
+        </form>
+        <a class="btn btn-secondary" href="signUp.php">Signup</a>';
+      }
+    ?>
+
+    </div><!--end col-->
+  </div><!--end row-->
+</div> <!--end container-->
+
+
+

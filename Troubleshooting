@@ -1,0 +1,37 @@
+EditBook, Multiple Editors/Publishers
+2020 19Jan
+  editBook.php
+  When selecting the button Add a New Editor to this book or Add a new publisher to this book,
+  it is intended that there is no existing editor/publisher. However if you do decide to Add a
+  new editor/publisher. The code actually does add the new editor/publisher to the book. The
+  most recent addition is what you currently will see when book information is requested. You
+  will see, thought, that when that editor/publisher is deleted the previously stored editor/
+  publisher shows up instead of none.
+
+  Fix: The code is already working, but we need a way to show more than one editor/publisher.
+  if editor/publisher is added to the B2R2P/B2R2O then add the html that says Editor/Publisher
+  Name: and it will list two. Or find a way to add the second to the first separated by a comma.
+
+  Or could only allow one editor/publisher to be added by disabling the add editor/publisher if
+  one already exists. See editBook.php there is a disable variable on the edit Existing Publisher
+  info when there is no existing publisher so the user cannot click the wrong button.
+
+
+EditBook.php
+2020 19Jan
+  If book does not have an editor/publisher and the user chooses to edit the editor/publisher
+  the user ends up at addOrg which would be where they would normally edit existing info.
+  However it the user adds the info here, it simply sends them to addRole where they get stuck.
+  None of the right info is sent and they can only back up with the back arrow or go back to
+  the beginning page.
+
+
+  apostrophe in the searched for name:
+  How do we make it so the name searched for does not also end up with a back slash?
+
+
+Catalogues of Classical Compositions
+  After much research for both how a catalogue might be indicated, and encountering the vast list
+  of catalogues and their abbreviations, I have decided to allow the user to type in the
+  Catalogue abbreviation for each composer. That is the field called 'opus-like'. I plan to
+  rename it 'Catalogue abbreviation' at some point.

@@ -1,0 +1,202 @@
+
+/*#0a12cc  blue info color*/
+/*#0a12cc  more country blue info color*/
+/*#a41d1b  red info color*/
+/*#cc0033  error color maybe use the red info color for the errors. */
+/*#ffa472  Creamsicle*/
+/*#EB6B42  burnt*/
+/*#2fa628  mossy green*/
+
+.brandname {
+  font-style:italic;
+  color:#006;
+  text-transform:uppercase;
+}
+
+.mossaccent {
+  font-style:italic;
+  color:#309941;
+}
+
+h1 {
+  font-size: 2vw;
+}
+
+.loginStatus {
+  display: inline-block;
+  color: #EB6B42;
+  margin-left: 50px;
+
+}
+
+h2.creamsicle {
+  color: #ffa472;
+}
+
+.custom {
+  color:#EB6B42;
+}
+
+h5.purp {
+  color: #AC26EB;
+}
+
+h5.burnt {
+  color: #EB6B42;
+}
+
+
+
+h5.mossaccent {
+  color: #309941;
+}
+
+.myLibraryImage {
+  background-image: url('images/musiclibrary.jpg') 50% no-repeat;
+  background-size: cover;
+}
+
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
+
+/*buttons in general*/
+@media (max-width: 768px) {
+  .btn {
+    font-size: 11px;
+    padding: 4px 6px;
+  }
+}
+
+@media (min-width: 768px) {
+  .btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
+@media (min-width: 992px) {
+  .btn {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .btn {
+    padding: 10px 16px;
+    font-size: 18px;
+  }
+}
+
+
+
+/*buttons specifically the edit pages*/
+@media (max-width: 768px) {
+  .btn {
+    font-size: 11px;
+    padding: 4px 6px;
+  }
+}
+
+@media (min-width: 768px) {
+  .btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
+@media (min-width: 992px) {
+  .btn {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .btn {
+    padding: 10px 16px;
+    font-size: 18px;
+  }
+}
+
+
+
+
+
+.error {
+   color: #cc0033;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 15px;
+  margin: 5px 0 0;
+}
+
+
+.signupsuccess  {
+  color: #0a12cc;
+  display: block;
+  font-size: 25px;
+  line-height: 18px;
+  margin: 5px 0 0;
+  text-align: center;
+  padding-bottom:25px;
+}
+
+.login-status  {
+  color: #2d4c72;
+  display: block;
+  font-size: 25px;
+  line-height: 18px;
+  margin: 5px 0 0;
+  text-align: center;
+  padding-bottom:25px;
+}
+
+.navButton {
+  display:inline-block
+}
+
+.center {
+  display: block;
+  margin: auto;
+  margin-right: auto;
+  width: 50%;
+  color:#cc0033
+}
+
+.fontChange {
+  font-size: 1vw;
+
+
+}
+
+.btn-link {
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+  color: #2fa628;
+  padding: 0;
+  text-decoration: underline;
+  font-family: inherit;
+  font-size: 100%;
+
+}
+
+p.editpage {
+  font-size: 1.1rem;
+}
+
