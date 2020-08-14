@@ -4415,3 +4415,6 @@
 [13-Aug-2020 16:23:42 UTC] PHP Recoverable fatal error:  Object of class mysqli could not be converted to string in C:\Ampps\www\catalogit\advancedSearch.php on line 273
 [13-Aug-2020 16:23:42 UTC] PHP Stack trace:
 [13-Aug-2020 16:23:42 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\advancedSearch.php:0
+[14-Aug-2020 17:10:41 UTC] PHP Recoverable fatal error:  Object of class mysqli could not be converted to string in C:\Ampps\www\catalogit\advancedSearch.php on line 273
+[14-Aug-2020 17:10:41 UTC] PHP Stack trace:
+[14-Aug-2020 17:10:41 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\advancedSearch.php:0
