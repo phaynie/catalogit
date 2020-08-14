@@ -260,7 +260,7 @@ $debug_string .="print_r($instrumentsArray)";
 
     $composerArray = "";
     $composerArrayQuery = "
-                SELECT distinct p.lastname
+                SELECT distinct p.lastname, p.firstname
                 FROM people AS p 
                 JOIN C2R2P ON p.ID = C2R2P.people_ID
                 JOIN roles AS r ON C2R2P.role_ID = r.ID AND r.role_name = 'Composer'
@@ -304,7 +304,7 @@ $debug_string .= " print_r($composerArray)";
 
 $arrangersArray = "";
 $arrangersArrayQuery = "
-                SELECT distinct p.lastname
+                SELECT distinct p.lastname, p.firstname
                 FROM people AS p 
                 JOIN C2R2P ON p.ID = C2R2P.people_ID
                 JOIN roles AS r ON C2R2P.role_ID = r.ID AND r.role_name = 'Arranger'
@@ -346,7 +346,7 @@ $debug_string .= "print_r($arrangersArray)";
 
 $lyricistsArray = "";
 $lyricistsArrayQuery = "
-                SELECT distinct p.lastname
+                SELECT distinct p.lastname, p.firstname
                 FROM people AS p 
                 JOIN C2R2P ON p.ID = C2R2P.people_ID
                 JOIN roles AS r ON C2R2P.role_ID = r.ID AND r.role_name = 'Lyricist'
@@ -530,7 +530,7 @@ if($submit == 'true') {
         unset($value);
 
 
-        $washPostVar = cleanup_post(instruments);
+        $washPostVar = cleanup_post($instruments);
         $instruments = strip_before_insert($conn, $washPostVar);
 
         $washPostVar = cleanup_post($era);
@@ -637,7 +637,7 @@ echo $debug_string;
 
                         <h6>Will you be searching for an Instrument?</h6>
                         <div class="form-check">
-                            <label class="" for="searchBoxGeneralInst">Instrument Search: </label>
+                            <label class="" for="searchBoxGeneralInst">Name of Instrument: </label>
                             <input class="form-control" type="text" id="searchBoxGeneralInst" name="searchBoxGeneralInst" placeholder="Please enter an Instrument name" /><br/>
                             <ul id="instArray"></ul>
 
@@ -655,7 +655,7 @@ echo $debug_string;
 
                         <h6>Will you be searching for a Composer?</h6>
                         <div class="form-check">
-                            <label class="" for="searchBoxGeneralComposer">Composer Search: </label>
+                            <label class="" for="searchBoxGeneralComposer">Last Name Only: </label>
                             <input class="form-control" type="text" id="searchBoxGeneralComposer" name="searchBoxGeneralComposer" placeholder="Please enter a Last Name for your composer" /><br/>
                             <ul id="compsrArray"></ul>
 
@@ -673,7 +673,7 @@ echo $debug_string;
                         <h6>Will you be searching for an Arranger?</h6>
                         <div class="form-check">
 
-                            <label class="" for="searchBoxGeneralArr">Arranger Search: </label>
+                            <label class="" for="searchBoxGeneralArr">Last Name Only: </label>
                             <input class="form-control" type="text" id="searchBoxGeneralArr" name="searchBoxGeneralArr" placeholder="Please enter a Last Name for your arranger" /><br/>
                             <ul id="arrArray"></ul>
 
@@ -690,7 +690,7 @@ echo $debug_string;
                         <h6>Will you be searching for a Lyricist?</h6>
                         <div class="form-check">
 
-                            <label class="" for="searchBoxGeneralLyr">Lyricist Search: </label>
+                            <label class="" for="searchBoxGeneralLyr">Last Name Only: </label>
                             <input class="form-control" type="text" id="searchBoxGeneralLyr" name="searchBoxGeneralLyr" placeholder="Please enter a Last Name for your lyricist" /><br/>
                             <ul id="lyrArray"></ul>
 

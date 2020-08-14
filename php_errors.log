@@ -4415,3 +4415,10 @@
 [13-Aug-2020 16:23:42 UTC] PHP Recoverable fatal error:  Object of class mysqli could not be converted to string in C:\Ampps\www\catalogit\advancedSearch.php on line 273
 [13-Aug-2020 16:23:42 UTC] PHP Stack trace:
 [13-Aug-2020 16:23:42 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\advancedSearch.php:0
+[14-Aug-2020 17:31:43 UTC] PHP Warning:  Use of undefined constant instruments - assumed 'instruments' (this will throw an Error in a future version of PHP) in C:\Ampps\www\catalogit\advancedSearch.php on line 533
+[14-Aug-2020 17:31:43 UTC] PHP Stack trace:
+[14-Aug-2020 17:31:43 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\advancedSearch.php:0
+[14-Aug-2020 17:31:43 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\Ampps\www\catalogit\advancedSearch.php:533) in C:\Ampps\www\catalogit\advancedSearch.php on line 578
+[14-Aug-2020 17:31:43 UTC] PHP Stack trace:
+[14-Aug-2020 17:31:43 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\advancedSearch.php:0
+[14-Aug-2020 17:31:43 UTC] PHP   2. header() C:\Ampps\www\catalogit\advancedSearch.php:578
