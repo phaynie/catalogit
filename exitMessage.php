@@ -26,7 +26,7 @@ echo <<<_END
             <p>I hope you liked my work in progress! </p>
             <p>Please leave a review if you like. </p>
             <p>I'd love to hear what features you would like to see. </p><br>
-            <form action='intro.php' method='post'>
+            <form action='introPage.php' method='post'>
                 <input class="btn btn-secondary mt-4 " type='submit' value='Oops, Continue using Catalogit'/>
             </form>
   

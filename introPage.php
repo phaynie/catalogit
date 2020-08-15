@@ -58,41 +58,9 @@ echo<<<_END
     <input type='hidden' name='advSearch' value= 'true' />
   </form>
 
-  <form action='arrangerSearch.php' method='post'>
-    <input  class="btn form-control  btn-light btn-block mb-3" type='submit' value='Find or Add an Arranger'/>
-  </form>
 
-  <form action='lyricistSearch.php' method='post'>
-    <input  class="btn btn-light btn-block mb-3" type='submit' value='Find or Add a Lyricist'/>
-  </form>
 
-  <form action='orgSearch.php' method='post'>
-    <input  class="btn btn-light btn-block mb-3" type='submit' value='Find or Add a Publisher'/>
-  </form>
-
-  <form action='editorSearch.php' method='post'>
-    <input  class="btn btn-light btn-block mb-3" type='submit' value='Find or Add an Editor'/>
-  </form>
-
-  <form action='advancedSearch.php' method='post'>
-    <input  class="btn btn-light btn-block mb-3" type='submit' value='Find Music from a specific Era'/>
-     <input type="hidden" name="findEra" value= "true" />
-  </form>
-
-  <form action='advancedSearch.php' method='post'>
-    <input  class="btn btn-light btn-block mb-3" type='submit' value='Find Music by Instrument'/>
-    <input type="hidden" name="findInstrument" value= "true" />
-  </form>
-  
-  <form action='advancedSearch.php' method='post'>
-    <input  class="btn btn-light btn-block mb-3" type='submit' value='Find Music by Difficulty Level'/>
-    <input type="hidden" name="findDifficulty" value= "true" />
-  </form>
-  
-  <form action='advancedSearch.php' method='post'>
-    <input  class="btn btn-light btn-block mb-3" type='submit' value='Find Music by Genre'/>
-    <input type="hidden" name="findGenre" value= "true" />
-  </form>
+ 
   
   </div> <!-- end form group  -->
   </div> <!-- end container  -->

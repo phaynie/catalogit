@@ -1,9 +1,0 @@
-
-
-
-
-
-
-2020 14 Aug     displayComposition.php
-                Should there be more than one Publisher Location allowed? Why are there so many with AppleBees book?
-                And the last part of the publishing location has a publisher name. This is wrong.
