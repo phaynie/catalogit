@@ -149,7 +149,7 @@ $searchString = "";
 
 
     $advIDSearchQuery = "
-    SELECT distinct c.ID
+    SELECT distinct c.ID, c.comp_name
 FROM compositions AS c
 LEFT JOIN C2I ON c.ID = C2I.composition_ID
 LEFT JOIN instruments as i ON C2I.instrument_ID = i.ID
@@ -223,7 +223,7 @@ WHERE 1=1";
     }
 
 
-    $advIDSearchQuery .= "ORDER BY comp_name";
+    $advIDSearchQuery .= "ORDER BY c.comp_name";
 
 
     $advIDSearchQueryResult = $conn->query($advIDSearchQuery);
@@ -439,9 +439,8 @@ echo <<<_END
                     <input class="btn btn-light" type='submit' value='Back to Site Options'/>
                 </form> <!-- end form --><br>
                 
-                <form action="Print Search Results.php" method='post'>
-                    <input class="btn btn-light" type='submit' $notFound value='Print Search Results'/>
-                    
+               <br><form action="Print Search Results.php" method='post'>
+                    <input class="btn btn-light" type='submit' $notFound value='Print Search Results'/>     
                 </form> <!-- end form --><br>
         
                 <form action="advancedSearch.php" method='post'>
