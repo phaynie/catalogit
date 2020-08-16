@@ -13029,3 +13029,17 @@
 
 [14-Aug-2020 17:31:43 UTC] PHP   2. header() C:\Ampps\www\catalogit\advancedSearch.php:578
 
+[16-Aug-2020 11:18:13 UTC] PHP Warning:  Error while sending STATISTICS packet. PID=10764 in C:\Ampps\www\catalogit\addPeople.php on line 261
+[16-Aug-2020 11:18:13 UTC] PHP Stack trace:
+[16-Aug-2020 11:18:13 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\addPeople.php:0
+[16-Aug-2020 12:04:27 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\Ampps\www\catalogit\addPeople.php:261) in C:\Ampps\www\catalogit\addPeople.php on line 390
+[16-Aug-2020 12:04:27 UTC] PHP Stack trace:
+[16-Aug-2020 12:04:27 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\addPeople.php:0
+[16-Aug-2020 12:04:27 UTC] PHP   2. header(*uninitialized*) C:\Ampps\www\catalogit\addPeople.php:390
+[16-Aug-2020 16:17:19 UTC] PHP Warning:  Use of undefined constant deletePublisherQueryResult - assumed 'deletePublisherQueryResult' (this will throw an Error in a future version of PHP) in C:\Ampps\www\catalogit\delete.php on line 580
+[16-Aug-2020 16:17:19 UTC] PHP Stack trace:
+[16-Aug-2020 16:17:19 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\delete.php:0
+[16-Aug-2020 16:17:19 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\Ampps\www\catalogit\delete.php:580) in C:\Ampps\www\catalogit\delete.php on line 584
+[16-Aug-2020 16:17:19 UTC] PHP Stack trace:
+[16-Aug-2020 16:17:19 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\delete.php:0
+[16-Aug-2020 16:17:19 UTC] PHP   2. header() C:\Ampps\www\catalogit\delete.php:584

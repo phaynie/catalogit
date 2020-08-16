@@ -577,7 +577,7 @@ _END;
         if($debug) {
             if (!$deletePublisherQueryResult) echo("\n Error description deletePublisherQuery: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
-        if(deletePublisherQueryResult) {
+        if($deletePublisherQueryResult) {
             $deletePublisherFromBookSuccess = 'true';
         }
 

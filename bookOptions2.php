@@ -91,6 +91,9 @@ _END;
         /*Retrieving all editor info for this book
           I will also be creating a comma separated list to use in the displayed information, except my comma will be a break and Editor Name: */
 
+/*logic that says only look for editor etc if we got a result*/
+
+        if ($bookTitleFound) {
 
 
             $editorPeopleQuery = <<<_END
@@ -139,11 +142,11 @@ _END;
 
             $publisherOrgQuery = <<<_END
     
-          SELECT  o.ID, o.org_name, o.location
-          FROM books AS b 
-          JOIN B2R2O ON b.ID = B2R2O.book_ID
-          JOIN organizations AS o ON o.ID= B2R2O.org_ID
-          WHERE b.ID = $bookID;
+                  SELECT  o.ID, o.org_name, o.location
+                  FROM books AS b 
+                  JOIN B2R2O ON b.ID = B2R2O.book_ID
+                  JOIN organizations AS o ON o.ID= B2R2O.org_ID
+                  WHERE b.ID = $bookID;
 
 _END;
 
@@ -175,7 +178,7 @@ _END;
 
 
             $displayPublisherOrgString = substr($publisherOrgString, 0, strrpos($publisherOrgString, "</br>Publisher Name: "));
-
+        } /*end if bookTitleFound*/
     } /*end if bookquery result*/
 
 

@@ -252,10 +252,14 @@ _END;
 
     echo <<<_END
     <div class="container-fluid bg-secondary pt-3 pb-3 mt-3">
-    <h4 class="display-4 text-light text-center "> "$bookTitle"</h4>
-    <h4 class="display-5 text-light text-center "> Add or Edit here</h4><br><br>
+    <h4 class="display-4 text-light text-center "> "$bookTitle"</h4><br/><br/>
+    
+  
    <div class=" col-md-8 offset-md-2  ">
+   <h4 class="display-5 text-light  "> Add or Edit here</h4>
+   <p class="editpage"> * Don't forget to finish adding your Editor and Publisher information here. </p>
     <p class="editpage"> * You will be returned to this page each time UNTIL you are finished editing and you click the "Done Editing" button. The editing you have done will be reflected in the book information you see on this page. Cool, right?</p>
+    <p class="editpage"> * What do the buttons mean? Look farther below for explanation of each button.</p>
     </div>
       <div class="row"</div> 
       

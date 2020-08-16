@@ -86,6 +86,7 @@ if(isset($_REQUEST['addNewEditor'])) {
     $addNewEditor = $_REQUEST['addNewEditor'];
 }
 
+
 if(isset($_REQUEST['addNewComposer'])) {
     $addNewComposer = $_REQUEST['addNewComposer'];
 }
@@ -133,11 +134,6 @@ if(isset($_REQUEST['editEditor'])) {
 if(isset($_REQUEST['newPeopleID'])) {
     $newPeopleID = $_REQUEST['newPeopleID'];
 }
-
-if(isset($_REQUEST['addNewEditor'])) {
-    $addNewEditor = $_REQUEST['addNewEditor'];
-}
-
 
 
 if(isset($_REQUEST['peopleFirstName'])) {
@@ -247,7 +243,7 @@ if($submit == 'true') {
 
     /*If any validation failed, save all form values in variables
     or these simply fall to the variables made to hold the request values*/
-    if ($validationFailed) {
+    if($validationFailed) {
 
 
     }/*end if validationFailed*/
@@ -363,7 +359,7 @@ if($submit == 'true') {
             }
 
             if($peopleSuffix == "") {
-                $peopleInsertQuery .= "NULL";
+                $peopleInsertQuery .= "NULL)";
             }else{
                 $peopleInsertQuery .= "'$peopleSuffix')";
             }
