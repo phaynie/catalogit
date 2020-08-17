@@ -109,10 +109,10 @@ if($submit == 'true') {
     /*washes this user data*/
     if (!$validationFailed ) {
         $washPostVar = cleanup_post($searchCompositionTitle);
-        $searchCompositionTitle = strip_before_insert($conn, $washPostVar);
+        $searchCompositionTitleAltered = strip_before_insert($conn, $washPostVar);
 
 
-        header('Location: compositionOptions2.php?bookID=' . $bookID . '&searchCompositionTitle=' . $searchCompositionTitle);
+        header('Location: compositionOptions2.php?bookID=' . $bookID . '&searchCompositionTitle=' . $searchCompositionTitle . '&searchCompositionTitleAltered=' . $searchCompositionTitleAltered);
         exit();
 
     } /* End if (!$validationFailed )*/

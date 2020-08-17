@@ -17,6 +17,7 @@ include 'beginningNav.php';
 
 $bookID = "";
 $searchCompositionTitle = "";
+$searchCompositionTitleAltered = "";
 
 
 $bookTag1 = "";
@@ -85,6 +86,10 @@ if(isset($_REQUEST['searchCompositionTitle'])) {
     $searchCompositionTitle = $_REQUEST['searchCompositionTitle'];
 }
 
+if(isset($_REQUEST['searchCompositionTitleAltered'])) {
+    $searchCompositionTitleAltered = $_REQUEST['searchCompositionTitleAltered'];
+}
+
 if($bookID == "") {
     $formAction = 'bookTitleSearch.php';
 } elseif(strlen($bookID > 0)) {
@@ -95,7 +100,7 @@ $notEntered = "<span style='color:rgba(0,0,0,0.4);'>Not Entered</span>";
 
 
 /*retrieve composition options*/
-if ($searchCompositionTitle !== "") {
+if ($searchCompositionTitleAltered !== "") {
 
 
     $compositionQuery = <<<_END
@@ -106,7 +111,7 @@ if ($searchCompositionTitle !== "") {
             LEFT JOIN ensembles AS ens ON c.ensemble_ID = ens.ID
             LEFT JOIN books AS b ON c.book_ID = b.ID
     
-            WHERE c.comp_name LIKE '%$searchCompositionTitle%';
+            WHERE c.comp_name LIKE '%$searchCompositionTitleAltered%';
        
 _END;
 
@@ -115,6 +120,13 @@ _END;
         echo 'compositionQuery = ' . $compositionQuery . '<br/><br/>';
         if (!$resultCompositionQuery) echo("\n Error description compositionQuery: " . mysqli_error($conn) . "\n<br/>");
     }/*end debug*/
+
+
+
+
+
+
+
 
     if ($resultCompositionQuery) {
 
@@ -130,7 +142,7 @@ _END;
       
       <div class="container-fluid bg-secondary pt-4 pb-2"> 
         <h3 class= "display-4 text-light" > Bummer! </h3>
-        <h3>No composition with the title of "$searchCompositionTitle" was found. <br/><br/><br/></h3> 
+        <h3>No composition with the title of " . $searchCompositionTitle" was found. <br/><br/><br/></h3> 
         <h4 class="text-light pb-3">Choose an option below <br/></h4>
         <form action='compositionSearch.php' method='post'>
           <button class="btn btn-light" type='submit'>Try another Composition Search</button><br/>
@@ -938,7 +950,7 @@ _END;
 
         }/*End else if Compositions Found/not found*/
     }/*End $ifresultCompositionQuery*/
-} /*ENd if ($searchCompositionTitle !== "")*/
+} /*ENd if ($searchCompositionTitleAltered !== "")*/
 
 
 
