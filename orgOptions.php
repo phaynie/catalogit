@@ -126,7 +126,12 @@ if($editReplaceDeletePub == 'true') {
 There is also the possibility that there is no Publisher. Since Publisher is the final step in collecting book information, the "No Publisher, continue" button takes the user either back to  displayBook.php or editBook.php to let the user decide what they want to do next*/
 
 
-if (strlen($searchPubName) > 0  ) {
+/*here we wash the variable and give it a unique name to be used in the db*/
+$washPostVar = cleanup_post($searchPubName);
+$searchPubNameAltered = strip_before_insert($conn, $washPostVar);
+
+
+if (strlen($searchPubNameAltered) > 0  ) {
 
     /*searches the database for the publisher the user is looking for*/
     /*I am commenting this code out because it asks specifically for an organization where the role is publisher.
@@ -140,7 +145,7 @@ if (strlen($searchPubName) > 0  ) {
     FROM organizations As o
     LEFT JOIN B2R2O ON o.ID = B2R2O.org_ID 
 
-    WHERE o.org_name LIKE '%$searchPubName%';
+    WHERE o.org_name LIKE '%$searchPubNameAltered%';
 
 _END;
 
@@ -214,9 +219,9 @@ _END;
             for ($j = 0 ; $j < $numberOfOrgRows ; ++$j){
                 $row = $resultOrgQuery->fetch_array(MYSQLI_NUM);
 
-                $publisherID = ($row[0]);
-                $publisherName = ($row[1]);
-                $publisherLocation = ($row[2]);
+                $publisherID = htmlspecialchars($row[0]);
+                $publisherName = htmlspecialchars($row[1]);
+                $publisherLocation = htmlspecialchars($row[2]);
 
 
 /*TODO: figure out what the form action here should be. */
@@ -310,7 +315,7 @@ if($editReplaceDeletePub == "true") {
       FROM books AS b 
       JOIN B2R2O ON b.ID = B2R2O.book_ID
       JOIN organizations AS o ON o.ID= B2R2O.org_ID
-      WHERE b.ID = $bookID;
+      WHERE b.ID = '$bookID';
 
 _END;
 
@@ -379,9 +384,9 @@ _END;
             for ($j = 0; $j < $numPublisherOrgRows; ++$j) {
                 $row = $resultPublisherOrgQuery->fetch_array(MYSQLI_NUM);
                 /*var_dump ($row);*/
-                $publisherOrgID = ($row[0]);
-                $publisherOrgName = ($row[1]);
-                $publisherOrgLocation = ($row[2]);
+                $publisherOrgID = htmlspecialchars($row[0]);
+                $publisherOrgName = htmlspecialchars($row[1]);
+                $publisherOrgLocation = htmlspecialchars($row[2]);
 
 
                 /*TODO: figure out what the form action here should be. */

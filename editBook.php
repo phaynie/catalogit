@@ -7,8 +7,10 @@ if($debug) {
 
 include 'beginningNav.php';
  /*from page 4 (display book)
-  This page is for the purpose of giving the user an opportunity to edit the book displayed in the previous page (4)*/
-  /*In order to Edit the book found on the editbook page we will collect and display the book information and provide buttons that allow the user to choose which part of the book information they would like to change. We will circle back to this editBook page again and again until the user if finished editing this book and clicks on the Done Editing button which takes them back to the displayBook page. */
+  This page is displays and updates the book information and allows the user to edit the book displayed. (4)*/
+  /*
+  We will circle back to this editBook page again and again until the user is finished editing this book and clicks
+  on the Done Editing button which takes them back to the displayBook page. */
 
 
 $bookID = "";
@@ -19,7 +21,7 @@ $physBookLocNote = "";
 $deletePublisherFromBookSuccess = "";
 $deleteEditorFromBookSuccess = "";
 
-
+$bookTitle = "";
 $bookTag1 = "";
 $bookTag2 = "";
 $bookVolume = "";
@@ -88,7 +90,7 @@ if (isset($editBook) || $bookID){
           SELECT b.ID, b.title, b.tag1, b.tag2, b.book_vol, b.book_num, b.physBookLoc
           FROM books AS b
 
-          WHERE b.ID = $bookID ;
+          WHERE b.ID = '$bookID' ;
 
 _END;
 
@@ -128,7 +130,7 @@ if($bookQueryResult) {
       FROM books AS b 
       JOIN B2R2P ON b.ID = B2R2P.book_ID
       JOIN people AS p ON p.ID= B2R2P.people_ID
-      WHERE b.ID = $bookID;
+      WHERE b.ID = '$bookID';
 
 _END;
 
@@ -147,11 +149,11 @@ _END;
         for ($j = 0 ; $j < $numEditorPeopleRows ; ++$j) {
             $row = $resultEditorPeopleQuery->fetch_array(MYSQLI_NUM);
             /*var_dump ($row);*/
-            $editorPeopleID = ($row[0]);
-            $editorPeopleFirstName = ($row[1]);
-            $editorPeopleMiddleName = ($row[2]);
-            $editorPeopleLastName = ($row[3]);
-            $editorPeopleSuffix = ($row[4]);
+            $editorPeopleID = htmlspecialchars($row[0]);
+            $editorPeopleFirstName = htmlspecialchars($row[1]);
+            $editorPeopleMiddleName = htmlspecialchars($row[2]);
+            $editorPeopleLastName = htmlspecialchars($row[3]);
+            $editorPeopleSuffix = htmlspecialchars($row[4]);
             /*$editorPeopleString = implode(',',$instVal);*/
             $editorPeopleString .= $editorPeopleFirstName . " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . ", ";
 
@@ -177,7 +179,7 @@ _END;
       FROM books AS b 
       JOIN B2R2O ON b.ID = B2R2O.book_ID
       JOIN organizations AS o ON o.ID= B2R2O.org_ID
-      WHERE b.ID = $bookID;
+      WHERE b.ID = '$bookID';
 
 _END;
 
@@ -196,9 +198,9 @@ _END;
         for ($j = 0 ; $j < $numPublisherOrgRows ; ++$j) {
             $row = $resultPublisherOrgQuery->fetch_array(MYSQLI_NUM);
             /*var_dump ($row);*/
-            $publisherOrgID = ($row[0]);
-            $publisherOrgName = ($row[1]);
-            $publisherOrgLocation = ($row[2]);
+            $publisherOrgID = htmlspecialchars($row[0]);
+            $publisherOrgName = htmlspecialchars($row[1]);
+            $publisherOrgLocation = htmlspecialchars($row[2]);
 
             /*$editorPeopleString = implode(',',$instVal);*/
             $publisherOrgString .= $publisherOrgName . "</br> Publisher Location: " . $publisherOrgLocation . "</br>Publisher Name: ";

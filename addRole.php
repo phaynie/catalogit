@@ -196,6 +196,11 @@ _END;
 }/*end debug*/
 
 
+ /*Here we will wash variables and give them unique name to be used in the db*/
+ $washPostVar = cleanup_post($_POST['pubLoc']);
+ $pubLocAltered = strip_before_insert($conn, $washPostVar);
+
+
 
  /*Adding a New Editor
  Here we are inserting a new row into the B2R2P or B2R2O table to connect our person (newPeopleID) or organization (newOrgID) with our book as an Editor or Publisher.*/
@@ -289,10 +294,10 @@ _END;
 
      $updateB2R2P = <<<_END
          UPDATE B2R2P
-         SET book_ID = $bookID, role_ID = $roleID, people_ID = $newPeopleID
-         WHERE B2R2P.book_ID = $bookID
-             AND B2R2P.role_ID = $roleID
-             AND B2R2P.people_ID = $oldPeopleID;
+         SET book_ID = '$bookID', role_ID = '$roleID', people_ID = '$newPeopleID'
+         WHERE B2R2P.book_ID = '$bookID'
+             AND B2R2P.role_ID = '$roleID'
+             AND B2R2P.people_ID = '$oldPeopleID';
              
 _END;
 
@@ -312,10 +317,10 @@ _END;
 
          $updateC2R2P = <<<_END
          UPDATE C2R2P
-         SET composition_ID = $compositionID, role_ID = $roleID, people_ID = $newPeopleID
-         WHERE C2R2P.composition_ID = $compositionID
-             AND C2R2P.role_ID = $roleID
-             AND C2R2P.people_ID = $oldPeopleID;
+         SET composition_ID = '$compositionID', role_ID = '$roleID', people_ID = '$newPeopleID'
+         WHERE C2R2P.composition_ID = '$compositionID'
+             AND C2R2P.role_ID = '$roleID'
+             AND C2R2P.people_ID = '$oldPeopleID';
              
 _END;
 
@@ -336,10 +341,10 @@ _END;
 
      $updatePublisher = <<<_END
      UPDATE B2R2O
-     SET book_ID = $bookID, role_ID = $roleID, org_ID = $newOrgID
-     WHERE B2R2O.book_ID = $bookID
-         AND B2R2O.role_ID = $roleID
-         AND B2R2O.org_ID = $oldOrgID;
+     SET book_ID = '$bookID', role_ID = '$roleID', org_ID = '$newOrgID'
+     WHERE B2R2O.book_ID = '$bookID'
+         AND B2R2O.role_ID = '$roleID'
+         AND B2R2O.org_ID = '$oldOrgID';
          
 _END;
 

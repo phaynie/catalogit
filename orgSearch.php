@@ -122,9 +122,13 @@ if ($resultOrgNamesArrayQuery) {
         /*  var_dump ($row);*/
 
 
-        $orgName = $row[0];
+        $orgName = htmlspecialchars($row[0], ENT_QUOTES);
 
-        $orgNamesArray .= "'" . addslashes($orgName) . "'" .", ";
+        $orgNamesArray .= "'$orgName'" .", ";
+
+
+
+
 
     } /*for loop ending*/
 
@@ -160,8 +164,8 @@ $orgNamesArray .="]</script>";
     /*Validation over*/
     /*washes this user data*/
     if (!$validationFailed && $submit=='true') {
-        $washPostVar = cleanup_post($searchPubName);
-        $searchPubName = strip_before_insert($conn, $washPostVar);
+
+/*don't need to wash here*/
 
         /*oldOrgID needs to be sent when replacing publisher*/
         header('Location: orgOptions.php?bookID=' . $bookID . '&oldOrgID=' . $oldOrgID . '&editBook=true&replacePublisher=' . $replacePublisher . '&searchPubName=' . $searchPubName . '&addNewPublisher=' . $addNewPublisher);
@@ -194,7 +198,7 @@ $bookQuery = <<<_END
           LEFT JOIN roles AS r_o ON r_o.ID = B2R2O.role_ID AND r_o.role_name = 'Publisher'
           LEFT JOIN organizations AS o ON o.ID = B2R2O.org_ID
 
-          WHERE b.ID = $bookID ;
+          WHERE b.ID = '$bookID' ;
 
 _END;
 

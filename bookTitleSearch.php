@@ -1,4 +1,11 @@
 <?php
+/*DB SECURITY
+This page has one text box receiving user input: $searchBoxTitle
+This page provides a form to collect this user data.
+Once data is submitted, this page will validate the submitted info.
+This page does not use that info in any db queries.
+This user data does not need to be washed on this page*/
+
 include 'boilerplate.php';
 
 if($debug) {
@@ -65,9 +72,13 @@ if ($resultBookTitlesArrayQuery) {
         /*  var_dump ($row);*/
 
 
-        $bookTitle = $row[0];
+        $bookTitle = htmlspecialchars($row[0], ENT_QUOTES);
 
-        $bookTitlesArray .= "'" . addslashes($bookTitle) . "'" .", ";
+        $bookTitlesArray .= "'$bookTitle'" .", ";
+
+
+
+
 
     } /*for loop ending*/
 
@@ -98,15 +109,15 @@ if($submit == 'true') {
     }/*end */
 
 
-
+/*I don't wash the data here because it isn't going into the data base here.
+The info the user adds will be washed later before it is submitted to the db. */
 
 
 
 
 
     if (!$validationFailed ) {
-        $washPostVar = cleanup_post($searchBookTitle);
-        $searchBookTitle = strip_before_insert($conn, $washPostVar);
+
 
 
         header('Location: bookOptions2.php?searchBookTitle=' . $searchBookTitle);

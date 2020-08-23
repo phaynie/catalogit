@@ -227,9 +227,15 @@ if ($resultPersonsArrayQuery) {
         /*  var_dump ($row);*/
 
 
-        $person = $row[0];
+        $person = htmlspecialchars($row[0], ENT_QUOTES);
 
-        $personsArray .= "'" . addslashes($person) . "'" .", ";
+        $personsArray .= "'$person'" .", ";
+
+
+
+
+
+
 
     } /*for loop ending*/
 
@@ -271,8 +277,7 @@ if($submit == 'true') {
     /*Validation over*/
     /*washes this user data*/
 if (!$validationFailed ) {
-        $washPostVar = cleanup_post($searchPeopleLastName);
-        $searchPeopleLastName = strip_before_insert($conn, $washPostVar);
+     /*Don't need to was var here. It will not be used until next page*/
 
 /*oldPeopleID needs to be sent when replacing editor*/
         header('Location: peopleOptions.php?bookID=' . $bookID . '&compName=' . $compName . '&compositionID=' . $compositionID . '&oldPeopleID=' . $oldPeopleID . '&editBook=' . $editBook . '&editComposition=' . $editComposition . '&replaceEditor=' . $replaceEditor . '&replaceComposer=' . $replaceComposer . '&replaceArranger=' . $replaceArranger . '&replaceLyricist=' . $replaceLyricist . '&addNewEditor=' . $addNewEditor . '&addNewComposer=' . $addNewComposer . '&addNewArranger=' . $addNewArranger . '&addNewLyricist=' . $addNewLyricist . '&searchPeopleLastName=' . $searchPeopleLastName . '&findComposer=' . $findComposer);
@@ -305,7 +310,7 @@ or, in this new scenario we wont need this book search at all. Will there ever b
           SELECT b.ID, b.title, b.tag1, b.tag2, b.book_vol, b.book_num, b.physBookLoc
           FROM books AS b
 
-          WHERE b.ID = $bookID ;
+          WHERE b.ID = '$bookID' ;
 
 _END;
 
@@ -345,7 +350,7 @@ _END;
       FROM books AS b 
       JOIN B2R2P ON b.ID = B2R2P.book_ID
       JOIN people AS p ON p.ID= B2R2P.people_ID
-      WHERE b.ID = $bookID;
+      WHERE b.ID = '$bookID';
 
 _END;
 
@@ -364,11 +369,11 @@ _END;
             for ($j = 0 ; $j < $numEditorPeopleRows ; ++$j) {
                 $row = $resultEditorPeopleQuery->fetch_array(MYSQLI_NUM);
                 /*var_dump ($row);*/
-                $editorPeopleID = ($row[0]);
-                $editorPeopleFirstName = ($row[1]);
-                $editorPeopleMiddleName = ($row[2]);
-                $editorPeopleLastName = ($row[3]);
-                $editorPeopleSuffix = ($row[4]);
+                $editorPeopleID = htmlspecialchars($row[0]);
+                $editorPeopleFirstName = htmlspecialchars($row[1]);
+                $editorPeopleMiddleName = htmlspecialchars($row[2]);
+                $editorPeopleLastName = htmlspecialchars($row[3]);
+                $editorPeopleSuffix = htmlspecialchars($row[4]);
                 /*$editorPeopleString = implode(',',$instVal);*/
                 $editorPeopleString .= $editorPeopleFirstName .  " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . "</br>Editor Name: ";
 
@@ -392,7 +397,7 @@ _END;
       FROM books AS b 
       JOIN B2R2O ON b.ID = B2R2O.book_ID
       JOIN organizations AS o ON o.ID= B2R2O.org_ID
-      WHERE b.ID = $bookID;
+      WHERE b.ID = '$bookID';
 
 _END;
 
@@ -411,9 +416,9 @@ _END;
             for ($j = 0 ; $j < $numPublisherOrgRows ; ++$j) {
                 $row = $resultPublisherOrgQuery->fetch_array(MYSQLI_NUM);
                 /*var_dump ($row);*/
-                $publisherOrgID = ($row[0]);
-                $publisherOrgName = ($row[1]);
-                $publisherOrgLocation = ($row[2]);
+                $publisherOrgID = htmlspecialchars($row[0]);
+                $publisherOrgName = htmlspecialchars($row[1]);
+                $publisherOrgLocation = htmlspecialchars($row[2]);
 
                 /*$editorPeopleString = implode(',',$instVal);*/
                 $publisherOrgString .= $publisherOrgName . "</br> Publisher Location: " . $publisherOrgLocation . "</br></br>Publisher Name: ";

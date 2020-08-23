@@ -88,8 +88,8 @@ function test_input($data) {
 function cleanup_post($data) {
   
   $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
+  /*$data = stripslashes($data);*/
+  /*$data = htmlspecialchars($data);*/
  
   return $data;
 }

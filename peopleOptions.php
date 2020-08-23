@@ -282,8 +282,13 @@ if($addNewEditor == 'true') {
 /*In this section we will search the data base for the Person the user is looking for. They will have submitted the  name of the Person they want in the text box in peopleSearch.php. Then, the possible People are displayed. Then, should none of those People be the one the user wants, there is an option to add new People information to the database. User is sent to addPeople.php
 There is also the possibility that there is no Editor, or Composer etc. Since Editor is not the final step in collecting book information, the "No Editor, continue" button takes the user either back to   editBook.php or searchPublisher to let the user decide what they want to do next*/
 
+/*Here we wash this information before we send it in a db query*/
+$washPostVar = cleanup_post($searchPeopleLastName);
+$searchPeopleLastNameAltered = strip_before_insert($conn, $washPostVar);
 
-if (strlen($searchPeopleLastName) > 0) {
+
+
+if (strlen($searchPeopleLastNameAltered) > 0) {
 
     /*searches the database for the person the user is looking for*/
       $peopleQuery = <<<_END
@@ -291,7 +296,7 @@ if (strlen($searchPeopleLastName) > 0) {
         SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
         FROM people As p
         
-        WHERE p.lastname LIKE '%$searchPeopleLastName%';
+        WHERE p.lastname LIKE '%$searchPeopleLastNameAltered%';
 
 _END;
 
@@ -364,11 +369,11 @@ _END;
             for ($j = 0 ; $j < $numberOfPeopleRows ; $j++){
               $row = $resultPeopleQuery->fetch_array(MYSQLI_NUM);
 
-              $peopleID = ($row[0]);
-              $peopleFirst = ($row[1]);
-              $peopleMiddle = ($row[2]);
-              $peopleLast = ($row[3]);
-              $peopleSuffix = ($row[4]);
+              $peopleID = htmlspecialchars($row[0]);
+              $peopleFirst = htmlspecialchars($row[1]);
+              $peopleMiddle = htmlspecialchars($row[2]);
+              $peopleLast = htmlspecialchars($row[3]);
+              $peopleSuffix = htmlspecialchars($row[4]);
 
                 /*TODO: figure out what the form action here should be. */
                 /*TODO:  check out whether this should be oldPeopleID or newPeopleID and don't we need both?*/
@@ -473,7 +478,7 @@ if ($editReplaceDeletePerson == 'true') {
         JOIN B2R2P ON b.ID = B2R2P.book_ID
         JOIN roles AS r ON r.ID = B2R2P.role_ID AND r.role_name = "$role"
         JOIN people AS p ON p.ID= B2R2P.people_ID
-        WHERE b.ID = $bookID;
+        WHERE b.ID = '$bookID';
        
        
 _END;
@@ -497,7 +502,7 @@ _END;
         JOIN C2R2P ON c.ID = C2R2P.composition_ID
         JOIN roles AS r ON r.ID = C2R2P.role_ID AND r.role_name = "$role"
         JOIN people AS p ON p.ID = C2R2P.people_ID
-        WHERE c.ID = $compositionID;
+        WHERE c.ID = '$compositionID';
        
        
 _END;
@@ -563,11 +568,11 @@ _END;
             for ($j = 0; $j < $numERDPeopleRows; $j++) {
                 $row = $resultERDPeopleQuery->fetch_array(MYSQLI_NUM);
                 /*var_dump ($row);*/
-                $ERDPeopleID = ($row[0]);
-                $ERDPeopleFirstName = ($row[1]);
-                $ERDPeopleMiddleName = ($row[2]);
-                $ERDPeopleLastName = ($row[3]);
-                $ERDPeopleSuffix = ($row[4]);
+                $ERDPeopleID = htmlspecialchars($row[0]);
+                $ERDPeopleFirstName = htmlspecialchars($row[1]);
+                $ERDPeopleMiddleName = htmlspecialchars($row[2]);
+                $ERDPeopleLastName = htmlspecialchars($row[3]);
+                $ERDPeopleSuffix = htmlspecialchars($row[4]);
 
 
                 echo <<<_END

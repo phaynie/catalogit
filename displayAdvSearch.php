@@ -137,6 +137,50 @@ if($advSearch == 'true') {
 
 
 
+/*here we wash the values that will be used in the db*/
+
+    $washPostVar = cleanup_post($searchBoxGeneralCompTitle);
+    $searchBoxGeneralCompTitleAltered = strip_before_insert($conn, $washPostVar);
+
+    $washPostVar = cleanup_post($searchBoxGeneralInst);
+    $searchBoxGeneralInstAltered = strip_before_insert($conn, $washPostVar);
+
+    $washPostVar = cleanup_post($searchBoxGeneralComposer);
+    $searchBoxGeneralComposerAltered = strip_before_insert($conn, $washPostVar);
+
+    $washPostVar = cleanup_post($searchBoxGeneralArr);
+    $searchBoxGeneralArrAltered = strip_before_insert($conn, $washPostVar);
+
+    $washPostVar = cleanup_post($searchBoxGeneralLyr);
+    $searchBoxGeneralLyrAltered = strip_before_insert($conn, $washPostVar);
+
+
+    foreach($keySigs as &$value) {
+        $washPostVar = cleanup_post($value);
+        $value = strip_before_insert($conn, $washPostVar);
+    }
+    unset($value);
+
+    foreach($genres as &$value) {
+        $washPostVar = cleanup_post($value);
+        $value = strip_before_insert($conn, $washPostVar);
+    }
+    unset($value);
+
+    $washPostVar = cleanup_post($era);
+    $eraAltered = strip_before_insert($conn, $washPostVar);
+
+    $washPostVar = cleanup_post($voice);
+    $voiceAltered = strip_before_insert($conn, $washPostVar);
+
+    $washPostVar = cleanup_post($ensemble);
+    $ensembleAltered = strip_before_insert($conn, $washPostVar);
+
+    $washPostVar = cleanup_post($genDiff);
+    $genDiffAltered = strip_before_insert($conn, $washPostVar);
+
+    $washPostVar = cleanup_post($ASPDiff);
+    $ASPDiffAltered = strip_before_insert($conn, $washPostVar);
 
 
 
@@ -145,7 +189,14 @@ if($advSearch == 'true') {
 
 
 
-$searchString = "";
+
+
+
+
+
+
+
+    $searchString = "";
 
 
     $advIDSearchQuery = "
@@ -169,27 +220,27 @@ LEFT JOIN difficulties AS d_G ON C2D_G.difficulty_ID = d_G.ID
 WHERE 1=1";
 
 
-    if (strlen($searchBoxGeneralCompTitle) > 0) {
-        $advIDSearchQuery .= " AND c.comp_name ='" . $searchBoxGeneralCompTitle . "'";
-        $searchString .= "Composition Title: " . $searchBoxGeneralCompTitle .  "<br>";
+    if (strlen($searchBoxGeneralCompTitleAltered) > 0) {
+        $advIDSearchQuery .= " AND c.comp_name ='" . $searchBoxGeneralCompTitleAltered . "'";
+        $searchString .= "Composition Title: " . $searchBoxGeneralCompTitleAltered .  "<br>";
     }
 
-    if (strlen($searchBoxGeneralInst) > 0) {
-        $advIDSearchQuery .= " AND i.instr_name ='" . $searchBoxGeneralInst . "'";
-        $searchString .= "Instrument: " . $searchBoxGeneralInst .  "<br>";
+    if (strlen($searchBoxGeneralInstAltered) > 0) {
+        $advIDSearchQuery .= " AND i.instr_name ='" . $searchBoxGeneralInstAltered . "'";
+        $searchString .= "Instrument: " . $searchBoxGeneralInstAltered .  "<br>";
     }
-    if (strlen($searchBoxGeneralComposer) > 0) {
-        $advIDSearchQuery .= " AND C2R2Pcomp.role_ID =1 AND pComp.lastname ='" . $searchBoxGeneralComposer . "'";
-        $searchString .= "Composer: " . $searchBoxGeneralComposer .  "<br>";
+    if (strlen($searchBoxGeneralComposerAltered) > 0) {
+        $advIDSearchQuery .= " AND C2R2Pcomp.role_ID =1 AND pComp.lastname ='" . $searchBoxGeneralComposerAltered . "'";
+        $searchString .= "Composer: " . $searchBoxGeneralComposerAltered .  "<br>";
 
     }
-    if (strlen($searchBoxGeneralArr) > 0) {
-        $advIDSearchQuery .= " AND C2R2Parr.role_ID = 2 AND pArr.lastname ='" . $searchBoxGeneralArr . "'";
-        $searchString .= "Arranger: " . $searchBoxGeneralArr .  "<br>";
+    if (strlen($searchBoxGeneralArrAltered) > 0) {
+        $advIDSearchQuery .= " AND C2R2Parr.role_ID = 2 AND pArr.lastname ='" . $searchBoxGeneralArrAltered . "'";
+        $searchString .= "Arranger: " . $searchBoxGeneralArrAltered .  "<br>";
     }
-    if (strlen($searchBoxGeneralLyr) > 0) {
-        $advIDSearchQuery .= " AND C2R2Plyr.role_ID = 3 AND pLyr.lastname ='" . $searchBoxGeneralLyr . "'";
-        $searchString .= "Lyricist: " . $searchBoxGeneralLyr .  "<br>";
+    if (strlen($searchBoxGeneralLyrAltered) > 0) {
+        $advIDSearchQuery .= " AND C2R2Plyr.role_ID = 3 AND pLyr.lastname ='" . $searchBoxGeneralLyrAltered . "'";
+        $searchString .= "Lyricist: " . $searchBoxGeneralLyrAltered .  "<br>";
     }
     if (count($keySigs) > 0) {
         $advIDSearchQuery .= " AND C2K.keysig_ID IN (" . $keySigIdsString . " ) ";
@@ -199,27 +250,27 @@ WHERE 1=1";
         $advIDSearchQuery .= " AND C2G.genre_ID IN (" . $genreIdsString . " ) ";
         $searchString .= "Genre(s): " . $genreNamesString .  "<br>";
     }
-    if (strlen($era) > 0) {
-        $advIDSearchQuery .= " AND c.era_ID = " . getIdFromString($era) . " ";
-        $searchString .= "Era: " . getNameFromString($era) .  "<br>";
+    if (strlen($eraAltered) > 0) {
+        $advIDSearchQuery .= " AND c.era_ID = " . getIdFromString($eraAltered) . " ";
+        $searchString .= "Era: " . getNameFromString($eraAltered) .  "<br>";
 
     }
-    if (strlen($voice) > 0) {
-        $advIDSearchQuery .= " AND c.voice_ID = " . getIdFromString($voice) . " ";
-        $searchString .= "Voicing: " . getNameFromString($voice) .  "<br>";
+    if (strlen($voiceAltered) > 0) {
+        $advIDSearchQuery .= " AND c.voice_ID = " . getIdFromString($voiceAltered) . " ";
+        $searchString .= "Voicing: " . getNameFromString($voiceAltered) .  "<br>";
     }
-    if (strlen($ensemble) > 0) {
-        $advIDSearchQuery .= " AND c.ensemble_ID = " . getIdFromString($ensemble) . " ";
-        $searchString .= "Ensemble: " . getNameFromString($ensemble) .  "<br>";
+    if (strlen($ensembleAltered) > 0) {
+        $advIDSearchQuery .= " AND c.ensemble_ID = " . getIdFromString($ensembleAltered) . " ";
+        $searchString .= "Ensemble: " . getNameFromString($ensembleAltered) .  "<br>";
     }
 
-    if (strlen($ASPDiff) > 0) {
-        $advIDSearchQuery .= " AND d_A.ID =" . getIdFromString($ASPDiff) . " ";
-        $searchString .= "ASP Difficulty Level: " . getNameFromString($ASPDiff) .  "<br>";
+    if (strlen($ASPDiffAltered) > 0) {
+        $advIDSearchQuery .= " AND d_A.ID =" . getIdFromString($ASPDiffAltered) . " ";
+        $searchString .= "ASP Difficulty Level: " . getNameFromString($ASPDiffAltered) .  "<br>";
     }
-    if (strlen($genDiff) > 0) {
-        $advIDSearchQuery .= " AND d_G.ID =" . getIdFromString($genDiff) . " ";
-        $searchString .= "General Difficulty Level: " . getNameFromString($genDiff) .  "<br>";
+    if (strlen($genDiffAltered) > 0) {
+        $advIDSearchQuery .= " AND d_G.ID =" . getIdFromString($genDiffAltered) . " ";
+        $searchString .= "General Difficulty Level: " . getNameFromString($genDiffAltered) .  "<br>";
     }
 
 
@@ -285,7 +336,7 @@ _END;
             for ($j = 0; $j < $numberOfAdvSearchIDQueryRows; ++$j) {
                 $row = $advIDSearchQueryResult->fetch_array(MYSQLI_NUM);
 
-                $compositionID = ($row[0]);
+                $compositionID = htmlspecialchars($row[0]);
 
 
                 $advSearchCompositionNameQuery = "
@@ -293,7 +344,7 @@ _END;
                 FROM compositions AS c 
                 JOIN books AS b ON c.book_ID = b.ID
                 
-                WHERE c.ID = $compositionID;
+                WHERE c.ID = '$compositionID';
                 
                 
                 ";
@@ -314,9 +365,9 @@ _END;
                     for ($i = 0; $i < $numberOfAdvSearchCompositionNameQueryRows; ++$i) {
                         $row = $advSearchCompositionNameQueryResult->fetch_array(MYSQLI_NUM);
 
-                        $compositionName = ($row[0]);
-                        $bookID = ($row[1]);
-                        $bookTitle = ($row[2]);
+                        $compositionName = htmlspecialchars($row[0]);
+                        $bookID = htmlspecialchars($row[1]);
+                        $bookTitle = htmlspecialchars($row[2]);
 
                     } /*end for loop*/
 
@@ -328,7 +379,7 @@ _END;
                         JOiN C2R2P ON c.ID = C2R2P.composition_ID
                         JOIN people AS p ON C2R2P.people_ID = p.ID AND C2R2P.role_ID=1
                         
-                        Where c.ID = $compositionID;
+                        Where c.ID = '$compositionID';
                         
                         
                         ";
@@ -351,9 +402,9 @@ _END;
                                 $row = $advSearchComposerQueryResult->fetch_array(MYSQLI_NUM);
 
 
-                                $composerFirstName = ($row[0]);
-                                $composerLastName = ($row[1]);
-                                $composerID = ($row[2]);
+                                $composerFirstName = htmlspecialchars($row[0]);
+                                $composerLastName = htmlspecialchars($row[1]);
+                                $composerID = htmlspecialchars($row[2]);
 
                                 $composerString .= $composerFirstName .  " " . $composerLastName . "</br> ";
 

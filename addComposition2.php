@@ -247,27 +247,27 @@ if($submit == 'true') {
         $validationFailed = true;
     }/*end if(count($instruments) == 0 )*/
 
-    if(count($era) == 0 ) {
+    if($era == "" ) {
         $eraErr = "<span class='error'>  * One item must be selected </span>";
         $validationFailed = true;
     }/*end if(count($era) == 0 )*/
 
-    if(count($voice) == 0 ) {
+    if($voice == "" ) {
         $voiceErr = "<span class='error'>  * One item must be selected </span>";
         $validationFailed = true;
     }/*end if(count($voice) == 0 )*/
 
-    if(count($ensemble) == 0 ) {
+    if($ensemble == 0 ) {
         $ensembleErr = "<span class='error'>  * One item must be selected </span>";
         $validationFailed = true;
     }/*end if(count($ensemble) == 0 )*/
 
-    if(count($genDiff) == 0 ) {
+    if($genDiff == 0 ) {
         $genDiffErr = "<span class='error'> * One item must be selected </span>";
         $validationFailed = true;
     }/*end if(count($genDiff) == 0 )*/
 
-    if(count($ASPDiffErr) == 0 ) {
+    if($ASPDiff == 0 ) {
         $ASPDiffErr = "<span class='error'>  * One item must be selected </span>";
         $validationFailed = true;
     }/*end if(count($ASPDiffErr) == 0 )*/
@@ -277,32 +277,33 @@ if($submit == 'true') {
 
 
     /*Validation successful!
-    Here we wash all values that come from the form*/
+    Here we wash all values that come from the form because they will be used in update and insert queueries on this page */
+    /*changed the var name to $varAltered just to be clear that the washed version is going into the db.*/
     /*if all values validate successfully...)*/
     if (!$validationFailed)
 
     {
 
         $washPostVar = cleanup_post($compName);
-        $compName = strip_before_insert($conn, $washPostVar);
+        $compNameAltered = strip_before_insert($conn, $washPostVar);
 
         $washPostVar = cleanup_post($opus);
-        $opus = strip_before_insert($conn, $washPostVar);
+        $opusAltered = strip_before_insert($conn, $washPostVar);
 
         $washPostVar = cleanup_post($opusNum);
-        $opusNum = strip_before_insert($conn, $washPostVar);
+        $opusNumAltered = strip_before_insert($conn, $washPostVar);
 
         $washPostVar = cleanup_post($compNum);
-        $compNum = strip_before_insert($conn, $washPostVar);
+        $compNumAltered = strip_before_insert($conn, $washPostVar);
 
         $washPostVar = cleanup_post($subTitle);
-        $subTitle = strip_before_insert($conn, $washPostVar);
+        $subTitleAltered = strip_before_insert($conn, $washPostVar);
 
         $washPostVar = cleanup_post($movement);
-        $movement = strip_before_insert($conn, $washPostVar);
+        $movementAltered = strip_before_insert($conn, $washPostVar);
 
         $washPostVar = cleanup_post($physCompositionLocNote);
-        $physCompositionLocNote = strip_before_insert($conn, $washPostVar);
+        $physCompositionLocNoteAltered = strip_before_insert($conn, $washPostVar);
 
         foreach($keySigs as &$value) {
             $washPostVar = cleanup_post($value);
@@ -323,21 +324,21 @@ if($submit == 'true') {
         unset($value);
 
         $washPostVar = cleanup_post($era);
-        $era = strip_before_insert($conn, $washPostVar);
+        $eraAltered = strip_before_insert($conn, $washPostVar);
 
         /*Why are'nt we washing book_Id ? Not submitted by user? */
 
         $washPostVar = cleanup_post($voice);
-        $voice = strip_before_insert($conn, $washPostVar);
+        $voiceAltered = strip_before_insert($conn, $washPostVar);
 
         $washPostVar = cleanup_post($ensemble);
-        $ensemble = strip_before_insert($conn, $washPostVar);
+        $ensembleAltered = strip_before_insert($conn, $washPostVar);
 
         $washPostVar = cleanup_post($genDiff);
-        $genDiff = strip_before_insert($conn, $washPostVar);
+        $genDiffAltered = strip_before_insert($conn, $washPostVar);
 
         $washPostVar = cleanup_post($ASPDiff);
-        $ASPDiff = strip_before_insert($conn, $washPostVar);
+        $ASPDiffAltered = strip_before_insert($conn, $washPostVar);
 
 
 
@@ -348,34 +349,34 @@ if($submit == 'true') {
     if($editComposition == 'true') {
         $updateCompositions = "UPDATE compositions AS c SET ";
 
-        $updateCompositions .= "c.comp_name='$compName', ";
+        $updateCompositions .= "c.comp_name='$compNameAltered', ";
 
-        if($opus =="") {
+        if($opusAltered =="") {
             $updateCompositions .= "c.opus_like=NULL, ";
         }
         else{
-            $updateCompositions .= "c.opus_like='$opus', ";
+            $updateCompositions .= "c.opus_like='$opusAltered', ";
         }
 
-        if($opusNum =="") {
+        if($opusNumAltered =="") {
             $updateCompositions .= "c.comp_num=NULL, ";
         }
         else{
-            $updateCompositions .= "c.comp_num=$opusNum, ";
+            $updateCompositions .= "c.comp_num=$opusNumAltered, ";
         }
 
-        if($compNum =="") {
+        if($compNumAltered =="") {
             $updateCompositions .= "c.comp_no=NULL, ";
         }
         else{
-            $updateCompositions .= "c.comp_no=$compNum, ";
+            $updateCompositions .= "c.comp_no=$compNumAltered, ";
         }
 
-        if($subTitle =="") {
+        if($subTitleAltered =="") {
             $updateCompositions .= "c.subtitle=NULL, ";
         }
         else{
-            $updateCompositions .= "c.subtitle='$subTitle', ";
+            $updateCompositions .= "c.subtitle='$subTitleAltered', ";
         }
 
         if($bookID =="") {
@@ -385,42 +386,42 @@ if($submit == 'true') {
             $updateCompositions .= "c.book_ID=$bookID, ";
         }
 
-        if($movement =="") {
+        if($movementAltered =="") {
             $updateCompositions .= "c.movement=NULL, ";
         }
         else{
-            $updateCompositions .= "c.movement='$movement', ";
+            $updateCompositions .= "c.movement='$movementAltered', ";
         }
 
-        if($era =="") {
+        if($eraAltered =="") {
             $updateCompositions .= "c.era_ID=NULL, ";
         }
         else{
-            $updateCompositions .= "c.era_ID=$era, ";
+            $updateCompositions .= "c.era_ID=$eraAltered, ";
         }
 
-        if($voice =="") {
+        if($voiceAltered =="") {
             $updateCompositions .= "c.voice_ID=NULL, ";
         }
         else{
-            $updateCompositions .= "c.voice_ID=$voice, ";
+            $updateCompositions .= "c.voice_ID=$voiceAltered, ";
         }
 
-        if($ensemble =="") {
+        if($ensembleAltered =="") {
             $updateCompositions .= "c.ensemble_ID=NULL, ";
         }
         else{
-            $updateCompositions .= "c.ensemble_ID=$ensemble, ";
+            $updateCompositions .= "c.ensemble_ID=$ensembleAltered, ";
         }
 
-        if($physCompositionLocNote =="") {
+        if($physCompositionLocNoteAltered =="") {
             $updateCompositions .= "c.physCompositionLoc=NULL ";
         }
         else{
-            $updateCompositions .= "c.physCompositionLoc='$physCompositionLocNote' ";
+            $updateCompositions .= "c.physCompositionLoc='$physCompositionLocNoteAltered' ";
         }
 
-            $updateCompositions .= "WHERE c.ID=$compositionID;";
+            $updateCompositions .= "WHERE c.ID='$compositionID';";
             
 
 
@@ -443,7 +444,7 @@ if($submit == 'true') {
         $deleteC2K = <<<_END
 
             DELETE FROM C2K
-            WHERE C2K.composition_ID = $compositionID;
+            WHERE C2K.composition_ID = '$compositionID';
 
 _END;
 
@@ -503,7 +504,7 @@ _END;
     $deleteC2G = <<<_END
 
                 DELETE FROM C2G
-                WHERE C2G.composition_ID  = $compositionID;
+                WHERE C2G.composition_ID  = '$compositionID';
 
 _END;
 
@@ -527,7 +528,7 @@ _END;
         foreach ($genres as $value) {
             $C2GInsertQuery = <<<_END
                 INSERT INTO C2G (composition_ID, genre_ID)
-                VALUES ($compositionID, '$value');
+                VALUES ('$compositionID', '$value');
 
 _END;
 
@@ -702,82 +703,82 @@ _END;
 
 if( $addNewComposition == 'true' && $validationFailed == false){
     /*insert into compositions table*/
-
+/*used the $varAltered names to ensure we are using washed data in the DB queries*/
 
     $compositionInsertQuery = "INSERT INTO compositions (comp_name, opus_like, comp_num, comp_no, subtitle, book_ID, movement, era_ID, voice_ID, ensemble_ID, physCompositionLoc)
 VALUES (";
 
 
-        $compositionInsertQuery .= "'$compName', ";
+        $compositionInsertQuery .= "'$compNameAltered', ";
 
-        if($opus == "") {
+        if($opusAltered == "") {
             $compositionInsertQuery .= " NULL, ";
         }
         else{
-            $compositionInsertQuery .= "'$opus', ";
+            $compositionInsertQuery .= "'$opusAltered', ";
         }
 
-        if($opusNum == "") {
+        if($opusNumAltered == "") {
             $compositionInsertQuery .= " NULL, ";
         }
         else{
-            $compositionInsertQuery .= " $opusNum, ";
+            $compositionInsertQuery .= " '$opusNumAltered', ";
         }
 
-        if($compNum == "") {
+        if($compNumAltered == "") {
             $compositionInsertQuery .= " NULL, ";
         }
         else{
-            $compositionInsertQuery .= " $compNum, ";
+            $compositionInsertQuery .= " '$compNumAltered', ";
         }
 
-        if($subTitle == "") {
+        if($subTitleAltered == "") {
             $compositionInsertQuery .= " NULL, ";
         }
         else{
-            $compositionInsertQuery .= " '$subTitle', ";
+            $compositionInsertQuery .= " '$subTitleAltered', ";
         }
 
         if($bookID == "") {
             $compositionInsertQuery .= " NULL, ";
         }
         else{
-            $compositionInsertQuery .= " $bookID, ";
+            $compositionInsertQuery .= " '$bookID', ";
         }
 
-        if($movement == "") {
+        if($movementAltered == "") {
             $compositionInsertQuery .= " NULL, ";
         }
         else{
-            $compositionInsertQuery .= " '$movement', ";
+            $compositionInsertQuery .= " '$movementAltered', ";
         }
 
-        if($era == "") {
+        if($eraAltered == "") {
             $compositionInsertQuery .= " NULL, ";
         }
         else{
-            $compositionInsertQuery .= " $era, ";
+            $compositionInsertQuery .= " '$eraAltered', ";
         }
 
-        if($voice == "") {
+        if($voiceAltered == "") {
             $compositionInsertQuery .= " NULL, ";
         }
         else{
-            $compositionInsertQuery .= " $voice, ";
+            $compositionInsertQuery .= " '$voiceAltered', ";
         }
 
-        if($ensemble == "") {
+        if($ensembleAltered == "") {
             $compositionInsertQuery .= " NULL, ";
         }
         else{
-            $compositionInsertQuery .= " $ensemble, ";
+            $compositionInsertQuery .= " '$ensembleAltered', ";
         }
 
-        if($physCompositionLocNote == "") {
+        if($physCompositionLocNoteAltered == "") {
             $compositionInsertQuery .= " NULL )";
         }
         else{
-            $compositionInsertQuery .= " '$physCompositionLocNote' )";
+            $compositionInsertQuery .= " '$physCompositionLocNoteAltered' )";
         }
 
 
@@ -1142,7 +1143,7 @@ _END;
 
             /*  var_dump ($row);*/
 
-            $genDiff = $row[0];
+            $genDiff = htmlspecialchars($row[0]);
 
         } /*for loop ending*/
 
@@ -1181,7 +1182,7 @@ _END;
 
             /* var_dump ($row);*/
 
-            $ASPDiff = $row[0];
+            $ASPDiff = htmlspecialchars($row[0]);
 
 
         } /*for loop ending*/
@@ -1214,18 +1215,18 @@ _END;
 
             /*  var_dump ($row);*/
 
-            $compositionID = $row[0];
-            $compName = $row[1];
-            $opus = $row[2];
-            $opusNum = $row[3];
-            $compNum = $row[4];
-            $subTitle = $row[5];
-            $movement = $row[6];
-            $era = $row[7];
-            $voice = $row[8];
-            $ensemble = $row[9];
-            $compBookID = $row[10];
-            $physCompositionLocNote = $row[11];
+            $compositionID = htmlspecialchars($row[0]);
+            $compName = htmlspecialchars($row[1]);
+            $opus = htmlspecialchars($row[2]);
+            $opusNum = htmlspecialchars($row[3]);
+            $compNum = htmlspecialchars($row[4]);
+            $subTitle = htmlspecialchars($row[5]);
+            $movement = htmlspecialchars($row[6]);
+            $era = htmlspecialchars($row[7]);
+            $voice = htmlspecialchars($row[8]);
+            $ensemble = htmlspecialchars($row[9]);
+            $compBookID = htmlspecialchars($row[10]);
+            $physCompositionLocNote = htmlspecialchars($row[11]);
 
 
         } /*for loop ending*/
@@ -1904,48 +1905,6 @@ if($opusNum == 'NULL') {
                <input type="checkbox"  class="form-check-input" id="chkbx51" name="instruments[]" value="51" <?php if (in_array( "51", $instruments)) {echo("checked");}?>>  Other<br>
                <label class="form-check-label sr-only" for="chkbx51"></label>
            </div> <!-- end form-check -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

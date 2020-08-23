@@ -91,26 +91,7 @@ $checkBoxLabelText = "";
 $errorMessage = "";
 
 
-/*End initializing variables*/
-/*if($opusNum == "NULL") {
-    $opusNum = "";
-}
 
-if($compNum == "NULL") {
-    $compNum = "";
-}
-
-if($era == "NULL") {
-    $era = "";
-}
-
-if($voice == "NULL") {
-    $voice = "";
-}
-
-if($ensemble == "NULL") {
-    $ensemble = "";
-}*/
 
 /*assign local variables to values from Request array (from previous page)*/
 
@@ -240,7 +221,7 @@ if ($resultInstrumentsArrayQuery) {
         /*  var_dump ($row);*/
 
 
-        $instrumentsName = $row[0];
+        $instrumentsName = htmlspecialchars($row[0], ENT_QUOTES);
 
         $instrumentsArray .= "'$instrumentsName'" .", ";
 
@@ -285,7 +266,7 @@ $debug_string .="print_r($instrumentsArray)";
                 /*  var_dump ($row);*/
 
 
-                $composerLastName = $row[0];
+                $composerLastName = htmlspecialchars($row[0], ENT_QUOTES);
 
                 $composerArray .= "'$composerLastName'" .", ";
 
@@ -296,7 +277,7 @@ $debug_string .="print_r($instrumentsArray)";
     $composerArray = rtrim($composerArray,', ');
     $composerArray .="]</script>";
 
-$debug_string .= " print_r($composerArray)";
+$debug_string .="print_r($composerArray)";
 
 
 
@@ -328,7 +309,7 @@ if ($resultArrangersArrayQuery) {
 
         /*  var_dump ($row);*/
 
-        $arrangerLastName = $row[0];
+        $arrangerLastName = htmlspecialchars($row[0], ENT_QUOTES);
 
         $arrangersArray .= "'$arrangerLastName'" .", ";
 
@@ -371,7 +352,7 @@ if ($resultLyricistsArrayQuery) {
         /*  var_dump ($row);*/
 
 
-        $lyricistLastName = $row[0];
+        $lyricistLastName = htmlspecialchars($row[0], ENT_QUOTES);
 
         $lyricistsArray .= "'$lyricistLastName'" .", ";
 
@@ -416,7 +397,7 @@ if ($resultCompositionsArrayQuery) {
         /*  var_dump ($row);*/
 
 
-        $compositionName = $row[0];
+        $compositionName = htmlspecialchars($row[0], ENT_QUOTES);
 
         $compositionsArray .= "'$compositionName'" .", ";
 
@@ -508,59 +489,10 @@ if($submit == 'true') {
 
 
     /*Validation successful!
-    Here we wash all values that come from the form*/
+    Here we do not need to wash variables here because they will not be used in a db query*/
     /*if all values validate successfully...)*/
     if (!$validationFailed) {
 
-        $washPostVar = cleanup_post($compName);
-        $compName = strip_before_insert($conn, $washPostVar);
-
-
-
-        foreach($keySigs as &$value) {
-            $washPostVar = cleanup_post($value);
-            $value = strip_before_insert($conn, $washPostVar);
-        }
-        unset($value);
-
-        foreach($genres as &$value) {
-            $washPostVar = cleanup_post($value);
-            $value = strip_before_insert($conn, $washPostVar);
-        }
-        unset($value);
-
-
-        $washPostVar = cleanup_post($instruments);
-        $instruments = strip_before_insert($conn, $washPostVar);
-
-        $washPostVar = cleanup_post($era);
-        $era = strip_before_insert($conn, $washPostVar);
-
-        /*Why are'nt we washing book_Id ? Not submitted by user? */
-
-        $washPostVar = cleanup_post($voice);
-        $voice = strip_before_insert($conn, $washPostVar);
-
-        $washPostVar = cleanup_post($ensemble);
-        $ensemble = strip_before_insert($conn, $washPostVar);
-
-        $washPostVar = cleanup_post($genDiff);
-        $genDiff = strip_before_insert($conn, $washPostVar);
-
-        $washPostVar = cleanup_post($ASPDiff);
-        $ASPDiff = strip_before_insert($conn, $washPostVar);
-
-
-
-        $ksString = "";
-        foreach($keySigs AS $key => $value) {
-            $ksString .= "&keySigs[]=" . $value ;
-        }
-
-        $genresString = "";
-        foreach($genres AS $key => $value) {
-            $genresString .= "&genres[]=" . $value ;
-        }
 
 
 
@@ -575,7 +507,7 @@ if($submit == 'true') {
     /* $check =    'Location: displayAdvSearch.php?advSearch=true&$searchBoxGeneralCompTitle=' . $compName . '&keySigs[]=' . $keySigs . '&genres[]=' . $genres . '&searchBoxGeneralInst=' . $instruments . '&era=' . $era . '&voice=' . $voice . '&ensemble=' . $ensemble . '&genDiff=' . $genDiff . '&ASPDiff=' . $ASPDiff ;*/
 
 
-            header('Location: displayAdvSearch.php?advSearch=true&searchBoxGeneralCompTitle=' . $searchBoxGeneralCompTitle .  $ksString . $genresString . '&searchBoxGeneralInst=' . $searchBoxGeneralInst . '&searchBoxGeneralComposer=' . $searchBoxGeneralComposer . '&searchBoxGeneralArr=' . $searchBoxGeneralArr . '&searchBoxGeneralLyr=' . $searchBoxGeneralLyr . '&era=' . $era . '&voice=' . $voice . '&ensemble=' . $ensemble . '&genDiff=' . $genDiff . '&ASPDiff=' . $ASPDiff );
+            header('Location: displayAdvSearch.php?advSearch=true&searchBoxGeneralCompTitle=' . $searchBoxGeneralCompTitle . '&searchBoxGeneralInst=' . $searchBoxGeneralInst . '&searchBoxGeneralComposer=' . $searchBoxGeneralComposer . '&searchBoxGeneralArr=' . $searchBoxGeneralArr . '&searchBoxGeneralLyr=' . $searchBoxGeneralLyr . '&era=' . $era . '&voice=' . $voice . '&ensemble=' . $ensemble . '&genDiff=' . $genDiff . '&ASPDiff=' . $ASPDiff );
             exit();
 
     } /*END if (!$validationFailed )*/

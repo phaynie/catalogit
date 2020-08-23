@@ -69,7 +69,8 @@ if ($resultCompositionsArrayQuery) {
         /*  var_dump ($row);*/
 
 
-        $compositionName = $row[0];
+        $compositionName = htmlspecialchars($row[0], ENT_QUOTES);
+
 
         $compositionsArray .= "'$compositionName'" .", ";
 
@@ -80,7 +81,7 @@ if ($resultCompositionsArrayQuery) {
 $compositionsArray = rtrim($compositionsArray,', ');
 $compositionsArray .="]</script>";
 
-$debug_string .= "print_r($compositionsArray)";
+$debug_string .= "<xmp>" . $compositionsArray . "</xmp> \n<br/>";
 
 
 
@@ -106,13 +107,12 @@ if($submit == 'true') {
 
 
     /*Validation over*/
-    /*washes this user data*/
+    /*Don't need to wash here. Not used to access DB. will wash on next page*/
     if (!$validationFailed ) {
-        $washPostVar = cleanup_post($searchCompositionTitle);
-        $searchCompositionTitleAltered = strip_before_insert($conn, $washPostVar);
 
 
-        header('Location: compositionOptions2.php?bookID=' . $bookID . '&searchCompositionTitle=' . $searchCompositionTitle . '&searchCompositionTitleAltered=' . $searchCompositionTitleAltered);
+
+        header('Location: compositionOptions2.php?bookID=' . $bookID . '&searchCompositionTitle=' . $searchCompositionTitle );
         exit();
 
     } /* End if (!$validationFailed )*/

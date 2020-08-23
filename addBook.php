@@ -1,7 +1,7 @@
 <?php
 /*This page provides a form with which to add or edit book info.
 When we are editing a book we see the form pre-populated with current book info we will validate, wash and update. goes to edit book again and again until user is finished updating and chooses "Done".
-When we are adding new book info, we will validate, wash and insert new info. we are sent to peopleSearch to continue adding information to the book.
+When we are adding new book info, we will validate, wash and insert new info. we are sent to editBook to continue adding information to the book.
 */
 include 'boilerplate.php';
 
@@ -27,7 +27,7 @@ $addNewBook = "";
 
 
 
-/* big space because i don't care about all the stuff above - and i don't want to think about it.
+/*
  *
  * general idea is to:
  * FIRST - initialize all the prepop variables that will hold any existing values to be pre-populated in form and also error messages
@@ -131,27 +131,31 @@ if($submit == 'true') {
 
 
     /*Validation successful!
-Here we wash all values that come from the form*/
+Here we will wash all values that come from the form to be used in the db queries
+    We will rename the variables $varAltered because the strip_before_insert function
+    changes the text format and we only need that for use in the db queries. In all other
+    instances (instances where the variable will not be used in the db queries)  we will
+    use the original $var name*/
 
     if($bookTitle !== "" && !$validationFailed) {
 
         $washPostVar = cleanup_post($bookTitle);
-        $bookTitle = strip_before_insert($conn, $washPostVar);
+        $bookTitleAltered = strip_before_insert($conn, $washPostVar);
 
         $washPostVar = cleanup_post($tag1);
-        $tag1 = strip_before_insert($conn, $washPostVar);
+        $tag1Altered = strip_before_insert($conn, $washPostVar);
 
         $washPostVar = cleanup_post($tag2);
-        $tag2 = strip_before_insert($conn, $washPostVar);
+        $tag2Altered = strip_before_insert($conn, $washPostVar);
 
         $washPostVar = cleanup_post($bookVol);
-        $bookVol = strip_before_insert($conn, $washPostVar);
+        $bookVolAltered = strip_before_insert($conn, $washPostVar);
 
         $washPostVar = cleanup_post($bookNum);
-        $bookNum = strip_before_insert($conn, $washPostVar);
+        $bookNumAltered = strip_before_insert($conn, $washPostVar);
 
         $washPostVar = cleanup_post($physBookLocNote);
-        $physBookLocNote = strip_before_insert($conn, $washPostVar);
+        $physBookLocNoteAltered = strip_before_insert($conn, $washPostVar);
 
 
 
@@ -161,35 +165,35 @@ Here we wash all values that come from the form*/
             /*all the update code here*/
 
             $updateBooks = " UPDATE books AS b SET ";
-            $updateBooks .= "b.title = '$bookTitle', ";
-            if($tag1 == "") {
+            $updateBooks .= "b.title = '$bookTitleAltered', ";
+            if($tag1Altered == "") {
                 $updateBooks .= "b.tag1 = NULL,";
             }else{
-                $updateBooks .= "b.tag1 = '$tag1',";
+                $updateBooks .= "b.tag1 = '$tag1Altered',";
             }
 
-            if($tag2 == "") {
+            if($tag2Altered == "") {
                 $updateBooks .= "b.tag2 = NULL,";
             }else{
-                $updateBooks .= "b.tag2 = '$tag2',";
+                $updateBooks .= "b.tag2 = '$tag2Altered',";
             }
 
-            if($bookVol == "") {
+            if($bookVolAltered == "") {
                 $updateBooks .= "b.book_vol = NULL,";
             }else{
-                $updateBooks .= "b.book_vol = '$bookVol',";
+                $updateBooks .= "b.book_vol = '$bookVolAltered',";
             }
 
-            if($bookNum == "") {
+            if($bookNumAltered == "") {
                 $updateBooks .= "b.book_num = NULL,";
             }else{
-                $updateBooks .= "b.book_num = '$bookNum',";
+                $updateBooks .= "b.book_num = '$bookNumAltered',";
             }
 
-            if($physBookLocNote == "") {
+            if($physBookLocNoteAltered == "") {
                 $updateBooks .= "b.physBookLoc = NULL";
             }else{
-                $updateBooks .= "b.physBookLoc = '$physBookLocNote'";
+                $updateBooks .= "b.physBookLoc = '$physBookLocNoteAltered'";
             }
 
                 $updateBooks .= " WHERE b.ID = $bookID;";
@@ -213,37 +217,39 @@ Here we wash all values that come from the form*/
         } elseif ($editBook == "") {
 
             /*Build the insert query string*/
+            /*we will use the $varAltered version of our variable we washed earlier for use with this query*/
+
             $bookInsertQuery = "INSERT INTO books (title, tag1, tag2, book_vol, book_num, physBookLoc)
         VALUES(";
-            $bookInsertQuery .= "'$bookTitle',";
-            if($tag1 == "") {
+            $bookInsertQuery .= "'$bookTitleAltered',";
+            if($tag1Altered == "") {
                 $bookInsertQuery .= "NULL,";
             }else{
-                $bookInsertQuery .= "'$tag1',";
+                $bookInsertQuery .= "'$tag1Altered',";
             }
 
-            if($tag2 == "") {
+            if($tag2Altered == "") {
                 $bookInsertQuery .= "NULL,";
             }else{
-                $bookInsertQuery .= "'$tag2',";
+                $bookInsertQuery .= "'$tag2Altered',";
             }
 
-            if($bookVol == "") {
+            if($bookVolAltered == "") {
                 $bookInsertQuery .= "NULL,";
             }else{
-                $bookInsertQuery .= "'$bookVol',";
+                $bookInsertQuery .= "'$bookVolAltered',";
             }
 
-            if($bookNum == "") {
+            if($bookNumAltered == "") {
                 $bookInsertQuery .= "NULL,";
             }else{
-                $bookInsertQuery .= "'$bookNum',";
+                $bookInsertQuery .= "'$bookNumAltered',";
             }
 
-            if($physBookLocNote == "") {
+            if($physBookLocNoteAltered == "") {
                 $bookInsertQuery .= "NULL)";
             }else{
-                $bookInsertQuery .= "'$physBookLocNote')";
+                $bookInsertQuery .= "'$physBookLocNoteAltered')";
             }
 
 
@@ -257,6 +263,8 @@ Here we wash all values that come from the form*/
             /*Getting book ID for the book just inserted into database*/
             $bookID = $conn->insert_id;
 
+            /*We don't need to send altered version of $bookTitle because we will wash it again
+            there before it is used in any db queries*/
 
             header('Location: editBook.php?bookID=' . $bookID . '&bookTitle=' . $bookTitle);
             /*Where we will continue adding Editor and Publisher info to our new book.*/
@@ -302,12 +310,12 @@ _END;
                 $row = $bookQueryResult->fetch_array(MYSQLI_NUM);
                 /*Don't need to be washed. These are from the database, not a user*/
 
-                $bookTitle = $row[0];
-                $tag1 = $row[1];
-                $tag2 = $row[2];
-                $bookVol = $row[3];
-                $bookNum = $row[4];
-                $physBookLocNote = $row[5];
+                $bookTitle = htmlspecialchars($row[0]);
+                $tag1 = htmlspecialchars($row[1]);
+                $tag2 = htmlspecialchars($row[2]);
+                $bookVol = htmlspecialchars($row[3]);
+                $bookNum = htmlspecialchars($row[4]);
+                $physBookLocNote = htmlspecialchars($row[5]);
 
             } /*end bookquery loop*/
 
@@ -340,7 +348,7 @@ echo <<<_END
         <div class="form-group pt-4">
 
           
-          Book Title: $bookTitleErr <input class="form-control " type='text' name='bookTitle' value = " $bookTitle"/>
+          Book Title: $bookTitleErr <input class="form-control " type='text' name='bookTitle' value = "$bookTitle"/>
           <br/>Tag 1: <input class="form-control"  type="text" name="tag1" value = "$tag1" />
           <br/>Tag 2: <input class="form-control"  type="text" name="tag2" value = "$tag2"/>
           <br/>Book Volume: <input class="form-control"  type="text" name="bookVol" value = "{$bookVol}" />

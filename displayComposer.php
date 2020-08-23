@@ -77,7 +77,7 @@ SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
   JOIN C2R2P ON c.ID = C2R2P.composition_ID
   JOIN people AS p ON C2R2P.people_ID = p.ID
   JOIN roles AS r_composer ON C2R2P.role_ID = r_composer.ID AND r_composer.role_name = 'Composer'
-  WHERE p.ID = $composerID;
+  WHERE p.ID = '$composerID';
 
 _END;
 
@@ -104,11 +104,11 @@ if($debug) {
   for ($j = 0 ; $j < $numberOfComposerRows ; ++$j){
     $row = $resultComposerQuery->fetch_array(MYSQLI_NUM);
 
-    $currentComposerID = ($row[0]);
-    $currentCompFirst = ($row[1]);
-    $currentCompMiddle = ($row[2]);
-    $currentCompLast = ($row[3]);
-    $currentCompSuffix = ($row[4]);
+    $currentComposerID = htmlspecialchars($row[0]);
+    $currentCompFirst = htmlspecialchars($row[1]);
+    $currentCompMiddle = htmlspecialchars($row[2]);
+    $currentCompLast = htmlspecialchars($row[3]);
+    $currentCompSuffix = htmlspecialchars($row[4]);
 
   } /*for loop ending*/
 
@@ -137,7 +137,7 @@ c.movement, e.description,v.voicing_type, ens.ensemble_type, c.book_ID, c.physCo
     LEFT JOIN people AS p ON C2R2P.people_ID = p.ID
     LEFT JOIN roles AS r_composer ON C2R2P.role_ID = r_composer.ID AND r_composer.role_name = 'Composer'
         
-    WHERE p.ID = $composerID;
+    WHERE p.ID = '$composerID';
 
 _END;
 
@@ -203,17 +203,17 @@ _END;
     for ($k = 0 ; $k < $numberOfCompositionRows ; ++$k) {
       $row = $resultCompositionQuery->fetch_array(MYSQLI_NUM);
       /*  var_dump ($row);*/
-      $compositionID = ($row[0]);
-      $compName = ($row[1]);            
-      $opusLike = ($row[2]);
-      $compNum = ($row[3]);
-      $compNo = ($row[4]);
-      $subTitle = ($row[5]);                          
-      $movement = ($row[6]);
-      $era = ($row[7]);            
-      $voice = ($row[8]);
-      $ensemble = ($row[9]); 
-      $CompbookID = ($row[10]);
+      $compositionID = htmlspecialchars($row[0]);
+      $compName = htmlspecialchars($row[1]);
+      $opusLike = htmlspecialchars($row[2]);
+      $compNum = htmlspecialchars($row[3]);
+      $compNo = htmlspecialchars($row[4]);
+      $subTitle = htmlspecialchars($row[5]);
+      $movement = htmlspecialchars($row[6]);
+      $era = htmlspecialchars($row[7]);
+      $voice = htmlspecialchars($row[8]);
+      $ensemble = htmlspecialchars($row[9]);
+      $CompbookID = htmlspecialchars($row[10]);
             
 
         if($debug) {
@@ -226,7 +226,7 @@ _END;
         SELECT  k.key_name
         FROM C2K
         JOIN keysignatures AS k ON C2K.keysig_ID = k.ID
-        WHERE C2K.composition_ID = $compositionID;
+        WHERE C2K.composition_ID = '$compositionID';
 
 _END;
 
@@ -246,7 +246,7 @@ _END;
         for ($j = 0 ; $j < $numberOfKeySigRows ; ++$j) {
           $row = $resultKeySigQuery->fetch_array(MYSQLI_NUM);
           /* var_dump ($row);*/
-          $keySigName = ($row[0]);
+          $keySigName = htmlspecialchars($row[0]);
           $keySignatureString .= $keySigName .", ";
             
         } /*for loop ending*/
@@ -265,7 +265,7 @@ _END;
         SELECT  g.genre_type
         FROM C2G 
         JOIN genres AS g ON C2G.genre_ID = g.ID
-        WHERE C2G.composition_ID = $compositionID;
+        WHERE C2G.composition_ID = '$compositionID';
 
 _END;
 
@@ -283,7 +283,7 @@ _END;
         for ($j = 0 ; $j < $numberOfGenreRows ; ++$j) {
           $row = $resultGenresQuery->fetch_array(MYSQLI_NUM);
           /* var_dump ($row);*/
-          $genreName = ($row[0]);
+          $genreName = htmlspecialchars($row[0]);
           $genreString .= $genreName .", ";
             
         } /*for loop ending*/
@@ -299,7 +299,7 @@ _END;
         SELECT  i.instr_name
         FROM C2I 
         JOIN instruments AS i ON C2I.instrument_ID = i.ID
-        WHERE C2I.composition_ID = $compositionID;
+        WHERE C2I.composition_ID = '$compositionID';
 
 _END;
 
@@ -317,7 +317,7 @@ _END;
         for ($j = 0 ; $j < $numberOfInstRows ; ++$j) {
           $row = $resultInstrumentQuery->fetch_array(MYSQLI_NUM);
           /* var_dump ($row);*/
-          $instrumentName = ($row[0]);
+          $instrumentName = htmlspecialchars($row[0]);
           $instrumentString .= $instrumentName .", ";
             
         } /*for loop ending*/
@@ -338,7 +338,7 @@ _END;
         JOIN C2D ON c.ID = C2D.composition_ID
         JOIN difficulties AS d ON C2D.difficulty_ID = d.ID
         JOIN organizations as o On d.org_ID = o.ID AND o.org_name = 'General'
-        WHERE C2D.composition_ID = $compositionID;
+        WHERE C2D.composition_ID = '$compositionID';
 
 
 _END;
@@ -355,7 +355,7 @@ _END;
         for ($j = 0 ; $j < $numberOfGenRows ; ++$j) {
           $row = $resultGenDiffQuery->fetch_array(MYSQLI_NUM);
           /*  var_dump ($row);*/
-          $diffGen = ($row[0]);
+          $diffGen = htmlspecialchars($row[0]);
           
         } /*for loop ending*/
     
@@ -370,7 +370,7 @@ _END;
         JOIN C2D ON c.ID = C2D.composition_ID
         JOIN difficulties AS d ON C2D.difficulty_ID = d.ID
         JOIN organizations as o On d.org_ID = o.ID AND o.org_name = 'ASP'
-        WHERE C2D.composition_ID = $compositionID;
+        WHERE C2D.composition_ID = '$compositionID';
 
 _END;
 
@@ -386,7 +386,7 @@ _END;
         for ($j = 0 ; $j < $numberOfASPRows ; ++$j) {
           $row = $resultASPDiffQuery->fetch_array(MYSQLI_NUM);
            /* var_dump ($row);*/
-          $diffASP = ($row[0]);
+          $diffASP = htmlspecialchars($row[0]);
             
         } /*for loop ending*/
 
@@ -462,11 +462,11 @@ _END;
     for ($j = 0; $j < $numEditorPeopleRows; ++$j) {
       $row = $resultEditorPeopleQuery->fetch_array(MYSQLI_NUM);
       /*var_dump ($row);*/
-      $editorPeopleID = ($row[0]);
-      $editorPeopleFirstName = ($row[1]);
-      $editorPeopleMiddleName = ($row[2]);
-      $editorPeopleLastName = ($row[3]);
-      $editorPeopleSuffix = ($row[4]);
+      $editorPeopleID = htmlspecialchars($row[0]);
+      $editorPeopleFirstName = htmlspecialchars($row[1]);
+      $editorPeopleMiddleName = htmlspecialchars($row[2]);
+      $editorPeopleLastName = htmlspecialchars($row[3]);
+      $editorPeopleSuffix = htmlspecialchars($row[4]);
       /*$editorPeopleString = implode(',',$instVal);*/
       $editorPeopleString .= $editorPeopleFirstName . " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . ", ";
 
@@ -506,9 +506,9 @@ _END;
     for ($j = 0; $j < $numPublisherOrgRows; ++$j) {
       $row = $resultPublisherOrgQuery->fetch_array(MYSQLI_NUM);
       /*var_dump ($row);*/
-      $publisherOrgID = ($row[0]);
-      $publisherOrgName = ($row[1]);
-      $publisherOrgLocation = ($row[2]);
+      $publisherOrgID = htmlspecialchars($row[0]);
+      $publisherOrgName = htmlspecialchars($row[1]);
+      $publisherOrgLocation = htmlspecialchars($row[2]);
 
       /*$editorPeopleString = implode(',',$instVal);*/
       $publisherOrgString .= $publisherOrgName . "</br> Publisher Location: " . $publisherOrgLocation . "</br><Publisher Name: ";
@@ -536,7 +536,7 @@ _END;
         JOIN C2R2P ON c.ID = C2R2P.composition_ID
         JOIN people AS p ON C2R2P.people_ID = p.ID
         JOIN roles AS r ON  r.ID = C2R2P.role_ID AND r.role_name = 'Composer'
-        WHERE c.ID = $compositionID;
+        WHERE c.ID = '$compositionID';
 
 _END;
 
@@ -560,11 +560,11 @@ _END;
             for ($j = 0 ; $j < $numberOfComposerRows ; ++$j){
                 $row = $resultComposerQuery->fetch_array(MYSQLI_NUM);
 
-                $composerID = ($row[0]);
-                $compFirst = ($row[1]);
-                $compMiddle = ($row[2]);
-                $compLast = ($row[3]);
-                $compSuffix = ($row[4]);
+                $composerID = htmlspecialchars($row[0]);
+                $compFirst = htmlspecialchars($row[1]);
+                $compMiddle = htmlspecialchars($row[2]);
+                $compLast = htmlspecialchars($row[3]);
+                $compSuffix = htmlspecialchars($row[4]);
 
                 $composerString .= $compFirst .  " " . $compMiddle . " " . $compLast . " " . $compSuffix . ", ";
 
@@ -586,7 +586,7 @@ _END;
           JOIN C2R2P ON c.ID = C2R2P.composition_ID
           JOIN people AS p ON C2R2P.people_ID = p.ID
           JOIN roles AS r_arr ON C2R2P.role_ID = r_arr.ID AND r_arr.role_name = 'Arranger'
-          WHERE c.ID = $compositionID;
+          WHERE c.ID = '$compositionID';
 
 _END;
 
@@ -609,11 +609,11 @@ _END;
           for ($j = 0 ; $j < $numberOfArrRows ; ++$j){
             $row = $resultArrangerQuery->fetch_array(MYSQLI_NUM);
 
-            $arrangerID = ($row[0]);
-            $arrFirst = ($row[1]);
-            $arrMiddle = ($row[2]);
-            $arrLast = ($row[3]);
-            $arrSuffix = ($row[4]);
+            $arrangerID = htmlspecialchars($row[0]);
+            $arrFirst = htmlspecialchars($row[1]);
+            $arrMiddle = htmlspecialchars($row[2]);
+            $arrLast = htmlspecialchars($row[3]);
+            $arrSuffix = htmlspecialchars($row[4]);
 
             $arrangerString .= $arrFirst . " " . $arrMiddle . " " . $arrLast . " " . $arrSuffix . ", ";
 
@@ -636,7 +636,7 @@ _END;
           JOIN C2R2P ON c.ID = C2R2P.composition_ID
           JOIN people AS p ON C2R2P.people_ID = p.ID
           JOIN roles AS r_lyr ON C2R2P.role_ID = r_lyr.ID AND r_lyr.role_name = 'Lyricist'
-          WHERE c.ID = $compositionID;
+          WHERE c.ID = '$compositionID';
 
 _END;
         if($debug) {
@@ -658,11 +658,11 @@ _END;
           for ($j = 0 ; $j < $numberOfLyrRows ; ++$j){
             $row = $resultLyricistQuery->fetch_array(MYSQLI_NUM);
 
-            $lyricistID = ($row[0]);
-            $lyrFirst = ($row[1]);
-            $lyrMiddle = ($row[2]);
-            $lyrLast = ($row[3]);
-            $lyrSuffix = ($row[4]);
+            $lyricistID = htmlspecialchars($row[0]);
+            $lyrFirst = htmlspecialchars($row[1]);
+            $lyrMiddle = htmlspecialchars($row[2]);
+            $lyrLast = htmlspecialchars($row[3]);
+            $lyrSuffix = htmlspecialchars($row[4]);
 
             $lyricistString .= $lyrFirst . " " . $lyrMiddle . " " . $lyrLast . " " . $lyrSuffix . ", ";
 

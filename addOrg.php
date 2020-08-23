@@ -130,28 +130,30 @@ Here we wash all values that come from the form*/
 if (!$validationFailed && $submit=='true') {
 
     $washPostVar = cleanup_post($_POST['pubName']);
-    $pubName = strip_before_insert($conn, $washPostVar);
+    $pubNameAltered = strip_before_insert($conn, $washPostVar);
 
     if($debug) {
-        $debug_string = 'pubName =' . $pubName . '<br/>';
+        $debug_string = 'pubName =' . $pubNameAltered . '<br/>';
     }/*end debug*/
 
     $washPostVar = cleanup_post($_POST['pubLoc']);
-    $pubLoc = strip_before_insert($conn, $washPostVar);
+    $pubLocAltered = strip_before_insert($conn, $washPostVar);
 
 /*This is the code that will update the organization table with the changes we made to the current Publisher information.
 When we click on submit below the form, the user is returned to this same page to validate the edited information and then, if we are editing current publisher info,  it is here where that new information is updated in the organizations table. The $submit variable tells us this is not our first time through the code.  */
+
     if ($oldOrgID !== '' && $editPublisher == 'true' && $submit = 'true') {
+
         $updateOrganizations = "UPDATE organizations AS o SET ";
-        if($pubName =="") {
+        if($pubNameAltered =="") {
             $updateOrganizations .= " o.org_name = NULL,";
         }else{
-            $updateOrganizations .= " o.org_name = '$pubName',";
+            $updateOrganizations .= " o.org_name = '$pubNameAltered',";
         }
-        if($pubLoc =="") {
+        if($pubLocAltered =="") {
             $updateOrganizations .= " o.location = NULL";
         }else{
-            $updateOrganizations .= " o.location = '$pubLoc'";
+            $updateOrganizations .= " o.location = '$pubLocAltered'";
         }
         $updateOrganizations .= "WHERE o.ID = $oldOrgID ;";
 
@@ -170,6 +172,8 @@ When we click on submit below the form, the user is returned to this same page t
         header('Location: editBook.php?bookID=' . $bookID . '&oldOrgID=' . $oldOrgID);
         exit();
 
+
+
 /*We will insert our New Publisher information to the db if
 -we are adding a new Publisher to a current book where there is no Publisher info or
 -we are adding another Publisher to the current book that does not already exist in the db
@@ -177,16 +181,16 @@ When we click on submit below the form, the user is returned to this same page t
 
     }/*if(isset($orgID)*/ elseif($addNewPublisher == 'true' || $replacePublisher == 'true') {
         $organizationsInsertQuery =  "INSERT INTO organizations (org_name, location) VALUES(";
-        if($pubName == "") {
+        if($pubNameAltered == "") {
             $organizationsInsertQuery .=  "NULL,";
         }else{
-            $organizationsInsertQuery .=  "'$pubName',";
+            $organizationsInsertQuery .=  "'$pubNameAltered',";
         }
 
-        if($pubLoc == "") {
+        if($pubLocAltered == "") {
             $organizationsInsertQuery .=  "NULL)";
         }else{
-            $organizationsInsertQuery .=  "'$pubLoc')";
+            $organizationsInsertQuery .=  "'$pubLocAltered')";
         }
 
 
@@ -228,6 +232,8 @@ if($replacePublisher == 'true') {
     $instructionalText = "<h2> Please enter Publisher Information Below</h2>";
 }/*end if isset replace publisher*/
 
+
+
 /*Edit existing Publisher info
 This searches the db for the current publisher
 Pre-populates the form with current Publisher info so user can correct spellings or complete incomplete portions.
@@ -237,7 +243,7 @@ if($editPublisher=='true') {
 
       SELECT o.org_name, o.location
       FROM organizations AS o
-      WHERE o.ID = $oldOrgID;
+      WHERE o.ID = '$oldOrgID';
 
 _END;
 

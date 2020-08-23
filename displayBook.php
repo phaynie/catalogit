@@ -96,7 +96,7 @@ _END;
           SELECT b.ID, b.title, b.tag1, b.tag2, b.book_vol, b.book_num, b.physBookLoc
           FROM books AS b
 
-          WHERE b.ID = $bookID ;
+          WHERE b.ID = '$bookID' ;
 
 _END;
 
@@ -136,7 +136,7 @@ _END;
       FROM books AS b 
       JOIN B2R2P ON b.ID = B2R2P.book_ID
       JOIN people AS p ON p.ID= B2R2P.people_ID
-      WHERE b.ID = $bookID;
+      WHERE b.ID = '$bookID';
 
 _END;
 
@@ -155,11 +155,11 @@ _END;
           for ($j = 0 ; $j < $numEditorPeopleRows ; ++$j) {
               $row = $resultEditorPeopleQuery->fetch_array(MYSQLI_NUM);
               /*var_dump ($row);*/
-              $editorPeopleID = ($row[0]);
-              $editorPeopleFirstName = ($row[1]);
-              $editorPeopleMiddleName = ($row[2]);
-              $editorPeopleLastName = ($row[3]);
-              $editorPeopleSuffix = ($row[4]);
+              $editorPeopleID = htmlspecialchars($row[0]);
+              $editorPeopleFirstName = htmlspecialchars($row[1]);
+              $editorPeopleMiddleName = htmlspecialchars($row[2]);
+              $editorPeopleLastName = htmlspecialchars($row[3]);
+              $editorPeopleSuffix = htmlspecialchars($row[4]);
               /*$editorPeopleString = implode(',',$instVal);*/
               $editorPeopleString .= $editorPeopleFirstName .  " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . ", ";
 
@@ -182,7 +182,7 @@ _END;
       FROM books AS b 
       JOIN B2R2O ON b.ID = B2R2O.book_ID
       JOIN organizations AS o ON o.ID= B2R2O.org_ID
-      WHERE b.ID = $bookID;
+      WHERE b.ID = '$bookID';
 
 _END;
 
@@ -201,9 +201,9 @@ _END;
           for ($j = 0 ; $j < $numPublisherOrgRows ; ++$j) {
               $row = $resultPublisherOrgQuery->fetch_array(MYSQLI_NUM);
               /*var_dump ($row);*/
-              $publisherOrgID = ($row[0]);
-              $publisherOrgName = ($row[1]);
-              $publisherOrgLocation = ($row[2]);
+              $publisherOrgID = htmlspecialchars($row[0]);
+              $publisherOrgName = htmlspecialchars($row[1]);
+              $publisherOrgLocation = htmlspecialchars($row[2]);
 
               /*$editorPeopleString = implode(',',$instVal);*/
               $publisherOrgString .= $publisherOrgName . "</br> Publisher Location: " . $publisherOrgLocation . "</br>Publisher Name: ";
@@ -283,7 +283,7 @@ _END;
 $compositionQuery = <<<_END
     SELECT c.ID, c.comp_name, c.book_ID, c.physCompositionLoc
     FROM compositions AS c
-    WHERE c.book_ID = $bookID;
+    WHERE c.book_ID = '$bookID';
 
 _END;
 
@@ -329,10 +329,10 @@ _END;
         for ($j = 0; $j < $numberOfCompositionRows; ++$j) {
             $row = $resultCompositionQuery->fetch_array(MYSQLI_NUM);
             /*Don't need to be washed. These are from the database, not a user*/
-            $compositionID = $row[0];
-            $compName = $row[1];
-            $bookID = $row[2];
-            $physCompositionLocNote = $row[3];
+            $compositionID = htmlspecialchars($row[0]);
+            $compName = htmlspecialchars($row[1]);
+            $bookID = htmlspecialchars($row[2]);
+            $physCompositionLocNote = htmlspecialchars($row[3]);
 
 
             echo <<<_END
