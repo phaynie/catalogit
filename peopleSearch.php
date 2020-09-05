@@ -58,15 +58,15 @@ $validationFailed = false; /*A single place to track whether any validation has 
 
 /*we use REQUEST here because then we can find our Key whether it is in the Post array or the Get Array. REQUEST includes both*/
 
-if(isset($_REQUEST['bookID'])) {
+if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
     $bookID = $_REQUEST['bookID'];
 }
 
-if(isset($_REQUEST['compositionID'])) {
+if(isset($_REQUEST['compositionID']) && is_numeric($_REQUEST['compositionID'])) {
     $compositionID = $_REQUEST['compositionID'];
 }
 
-if(isset($_REQUEST['oldPeopleID'])) {
+if(isset($_REQUEST['oldPeopleID']) && is_numeric($_REQUEST['oldPeopleId'])) {
     $oldPeopleID = $_REQUEST['oldPeopleID'];
 }
 
@@ -196,6 +196,11 @@ if($addNewEditor=='true') {
 }
 
 
+/*here we will wash all variable values that will be used in db Queries on this page*/
+
+$washPostVar = cleanup_post($bookID);
+$bookIDAltered = strip_before_insert($conn, $washPostVar);
+
 
 
 /*Auto Complete: retrieve people values from db and put into an array*/
@@ -310,7 +315,7 @@ or, in this new scenario we wont need this book search at all. Will there ever b
           SELECT b.ID, b.title, b.tag1, b.tag2, b.book_vol, b.book_num, b.physBookLoc
           FROM books AS b
 
-          WHERE b.ID = '$bookID' ;
+          WHERE b.ID = '$bookIDAltered' ;
 
 _END;
 
@@ -327,13 +332,13 @@ _END;
             for ($j = 0; $j < $numberOfBookRows; ++$j) {
                 $row = $bookQueryResult->fetch_array(MYSQLI_NUM);
 
-                $bookID = htmlspecialchars($row[0]);
-                $bookTitle = htmlspecialchars($row[1]);
-                $bookTag1 = htmlspecialchars($row[2]);
-                $bookTag2 = htmlspecialchars($row[3]);
-                $bookVolume = htmlspecialchars($row[4]);
-                $bookNumber = htmlspecialchars($row[5]);
-                $physBookLocNote = htmlspecialchars($row[6]);
+                $bookID = $row[0];
+                $bookTitle = $row[1];
+                $bookTag1 = $row[2];
+                $bookTag2 = $row[3];
+                $bookVolume = $row[4];
+                $bookNumber = $row[5];
+                $physBookLocNote = $row[6];
 
             }    /*forloop ending*/
 
@@ -350,7 +355,7 @@ _END;
       FROM books AS b 
       JOIN B2R2P ON b.ID = B2R2P.book_ID
       JOIN people AS p ON p.ID= B2R2P.people_ID
-      WHERE b.ID = '$bookID';
+      WHERE b.ID = '$bookIDAltered';
 
 _END;
 
@@ -369,11 +374,11 @@ _END;
             for ($j = 0 ; $j < $numEditorPeopleRows ; ++$j) {
                 $row = $resultEditorPeopleQuery->fetch_array(MYSQLI_NUM);
                 /*var_dump ($row);*/
-                $editorPeopleID = htmlspecialchars($row[0]);
-                $editorPeopleFirstName = htmlspecialchars($row[1]);
-                $editorPeopleMiddleName = htmlspecialchars($row[2]);
-                $editorPeopleLastName = htmlspecialchars($row[3]);
-                $editorPeopleSuffix = htmlspecialchars($row[4]);
+                $editorPeopleID = $row[0];
+                $editorPeopleFirstName = $row[1];
+                $editorPeopleMiddleName = $row[2];
+                $editorPeopleLastName = $row[3];
+                $editorPeopleSuffix = $row[4];
                 /*$editorPeopleString = implode(',',$instVal);*/
                 $editorPeopleString .= $editorPeopleFirstName .  " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . "</br>Editor Name: ";
 
@@ -397,7 +402,7 @@ _END;
       FROM books AS b 
       JOIN B2R2O ON b.ID = B2R2O.book_ID
       JOIN organizations AS o ON o.ID= B2R2O.org_ID
-      WHERE b.ID = '$bookID';
+      WHERE b.ID = '$bookIDAltered';
 
 _END;
 
@@ -416,9 +421,9 @@ _END;
             for ($j = 0 ; $j < $numPublisherOrgRows ; ++$j) {
                 $row = $resultPublisherOrgQuery->fetch_array(MYSQLI_NUM);
                 /*var_dump ($row);*/
-                $publisherOrgID = htmlspecialchars($row[0]);
-                $publisherOrgName = htmlspecialchars($row[1]);
-                $publisherOrgLocation = htmlspecialchars($row[2]);
+                $publisherOrgID = $row[0];
+                $publisherOrgName = $row[1];
+                $publisherOrgLocation = $row[2];
 
                 /*$editorPeopleString = implode(',',$instVal);*/
                 $publisherOrgString .= $publisherOrgName . "</br> Publisher Location: " . $publisherOrgLocation . "</br></br>Publisher Name: ";
@@ -492,7 +497,7 @@ _END;
 
   
           $role Last Name: $searchPeopleLastNameErr
-          <input class="form-control" type="text" name="searchPeopleLastName" id="searchPeopleLastName" placeholder = "Please enter the last name of the $role "/>
+          <input class="form-control" autocomplete="off" type="text" name="searchPeopleLastName" id="searchPeopleLastName" placeholder = "Please enter the last name of the $role "/>
           <ul id="cmpsrsArray"></ul>
           <input class="btn btn-secondary mt-4" type="submit" value="Search for this $role"/>
           <input type="hidden" name="bookID" value="{$bookID}"/>

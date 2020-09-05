@@ -37,27 +37,27 @@ $deletePublisher = "";
 
 
 
-if(isset($_REQUEST['bookID'])) {
+if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
     $bookID = $_REQUEST['bookID'];
 }
 
-if(isset($_REQUEST['compositionID'])) {
+if(isset($_REQUEST['compositionID']) && is_numeric($_REQUEST['compositionId'])) {
     $compositionID = $_REQUEST['compositionID'];
 }
 
-if(isset($_REQUEST['peopleID'])) {
+if(isset($_REQUEST['peopleID']) && is_numeric($_REQUEST['peopleID'])) {
     $peopleID = $_REQUEST['peopleID'];
 }
 
-if(isset($_REQUEST['orgID'])) {
+if(isset($_REQUEST['orgID']) && is_numeric($_REQUEST['orgID'])) {
     $orgID = $_REQUEST['orgID'];
 }
 
-if(isset($_REQUEST['oldOrgID'])) {
+if(isset($_REQUEST['oldOrgID']) && is_numeric($_REQUEST['oldOrgID'])) {
     $oldOrgID = $_REQUEST['oldOrgID'];
 }
 
-if(isset($_REQUEST['oldPeopleID'])) {
+if(isset($_REQUEST['oldPeopleID']) && is_numeric($_REQUEST['oldPeopleID'])) {
     $oldPeopleID = $_REQUEST['oldPeopleID'];
 }
 
@@ -142,6 +142,23 @@ if($deleteLyricist == 'true') {
 }
 
 
+/*here we will wash variables that will be used in the dbqueries below*/
+$washPostVar = cleanup_post($oldPeopleID);
+$oldPeopleIDAltered = strip_before_insert($conn, $washPostVar);
+
+$washPostVar = cleanup_post($oldOrgID);
+$oldOrgIDAltered = strip_before_insert($conn, $washPostVar);
+
+$washPostVar = cleanup_post($bookID);
+$bookIDAltered = strip_before_insert($conn, $washPostVar);
+
+$washPostVar = cleanup_post($compositionID);
+$compositionIDAltered = strip_before_insert($conn, $washPostVar);
+
+$washPostVar = cleanup_post($roleID);
+$roleIDIDAltered = strip_before_insert($conn, $washPostVar);
+
+
 
 /*Deleting an entire book*/
    if($deleteBook=='true'){
@@ -152,7 +169,7 @@ if($deleteLyricist == 'true') {
 
        $deleteB2R2P= <<<_END
          DELETE FROM B2R2P
-         WHERE B2R2P.book_ID = $bookID;
+         WHERE B2R2P.book_ID = '$bookIDAltered';
 
 _END;
 
@@ -171,7 +188,7 @@ _END;
        if ($deleteB2R2PResult) {
            $deleteB2R2O = <<<_END
              DELETE FROM B2R2O
-             WHERE B2R2O.book_ID = $bookID;
+             WHERE B2R2O.book_ID = '$bookIDAltered';
 
 _END;
 
@@ -191,7 +208,7 @@ _END;
                $deleteC2I = <<<_END
                     DELETE FROM C2I
                     WHERE C2I.composition_ID  
-                        IN (SELECT compositions.ID  FROM compositions WHERE book_ID  = $bookID);
+                        IN (SELECT compositions.ID  FROM compositions WHERE book_ID  = '$bookIDAltered');
 _END;
 
                if ($debug) {
@@ -210,7 +227,7 @@ _END;
                    $deleteC2K = <<<_END
                         DELETE FROM C2K
                         WHERE C2K.composition_ID  
-                            IN (SELECT compositions.ID  FROM compositions WHERE book_ID  = $bookID);
+                            IN (SELECT compositions.ID  FROM compositions WHERE book_ID  = '$bookIDAltered');
 _END;
 
                    if ($debug) {
@@ -229,7 +246,7 @@ _END;
                        $deleteC2D = <<<_END
                             DELETE FROM C2D
                             WHERE C2D.composition_ID  
-                            IN (SELECT compositions.ID  FROM compositions WHERE book_ID  = $bookID);
+                            IN (SELECT compositions.ID  FROM compositions WHERE book_ID  = '$bookIDAltered');
 _END;
 
                        if ($debug) {
@@ -248,7 +265,7 @@ _END;
                            $deleteC2G = <<<_END
                                 DELETE FROM C2G
                                 WHERE C2G.composition_ID  
-                                    IN (SELECT compositions.ID  FROM compositions WHERE book_ID  = $bookID);
+                                    IN (SELECT compositions.ID  FROM compositions WHERE book_ID  = '$bookIDAltered');
 _END;
 
                            if ($debug) {
@@ -267,7 +284,7 @@ _END;
                                 $deleteC2R2P = <<<_END
                                         DELETE FROM C2R2P
                                         WHERE C2R2P.composition_ID  
-                                        IN (SELECT compositions.ID  FROM compositions WHERE book_ID  = $bookID);
+                                        IN (SELECT compositions.ID  FROM compositions WHERE book_ID  = '$bookIDAltered');
 _END;
 
                                 if ($debug) {
@@ -285,7 +302,7 @@ _END;
                                 if ($deleteC2R2PResult) {
                                     $deleteCompositions = <<<_END
                                             DELETE FROM compositions
-                                            WHERE compositions.book_ID = $bookID;
+                                            WHERE compositions.book_ID = '$bookIDAltered';
 _END;
 
                                     if ($debug) {
@@ -304,7 +321,7 @@ _END;
 
                                             $deleteBooks = <<<_END
                                                     DELETE FROM books
-                                                    WHERE books.ID = $bookID;
+                                                    WHERE books.ID = '$bookIDAltered';
 _END;
 
                                             if ($debug) {
@@ -365,6 +382,9 @@ _END;
 
 /*Deleting a Composition*/
 
+/*Where have we come from?
+editComposition.php*/
+
 
 if($deleteComposition =='true') {
 
@@ -377,7 +397,7 @@ if($deleteComposition =='true') {
     $deleteC2I  =  <<<_END
 
     DELETE FROM C2I
-    WHERE C2I.composition_ID = $compositionID;
+    WHERE C2I.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -397,7 +417,7 @@ _END;
         $deleteC2K  =  <<<_END
 
             DELETE FROM C2K
-            WHERE C2K.composition_ID = $compositionID;
+            WHERE C2K.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -417,7 +437,7 @@ _END;
             $deleteC2D  =  <<<_END
 
                 DELETE FROM C2D
-                WHERE C2D.composition_ID = $compositionID;
+                WHERE C2D.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -437,7 +457,7 @@ _END;
                 $deleteC2G  =  <<<_END
 
                 DELETE FROM C2G
-                WHERE C2G.composition_ID  = $compositionID;
+                WHERE C2G.composition_ID  = '$compositionIDAltered';
 
 _END;
 
@@ -457,7 +477,7 @@ _END;
                     $deleteC2R2P  =  <<<_END
 
                     DELETE FROM C2R2P
-                    WHERE C2R2P.composition_ID =  $compositionID;
+                    WHERE C2R2P.composition_ID =  '$compositionIDAltered';
 
 _END;
 
@@ -477,7 +497,7 @@ _END;
                         $deleteCompositions  =  <<<_END
 
                         DELETE FROM compositions
-                        WHERE compositions.ID = $compositionID;
+                        WHERE compositions.ID = '$compositionIDAltered';
 
 _END;
 
@@ -535,6 +555,11 @@ _END;
 
 
 /*Deleting an Editor or Publisher from an existing Book*/
+
+/*Where have we come from?
+peopleOptions.php if we are deleting the editor
+orgOptions.php if we re deleting the Publisher*/
+
 if($editBook == 'true') {
     if ($deleteEditor == 'true') {
 
@@ -545,9 +570,9 @@ if($editBook == 'true') {
         $deleteEditorQuery =
             <<<_END
             DELETE FROM B2R2P
-            WHERE B2R2P.book_ID = $bookID
+            WHERE B2R2P.book_ID = '$bookIDAltered'
             AND B2R2P.role_ID = 4
-            AND B2R2P.people_ID = $oldPeopleID;
+            AND B2R2P.people_ID = '$oldPeopleIDAltered';
             
 _END;
 
@@ -566,9 +591,9 @@ _END;
         $deletePublisherQuery=
             <<<_END
         DELETE FROM B2R2O
-        WHERE B2R2O.book_ID = $bookID
+        WHERE B2R2O.book_ID = '$bookIDAltered'
         AND B2R2O.role_ID = 5
-        AND B2R2O.org_ID = $oldOrgID;
+        AND B2R2O.org_ID = '$oldOrgIDAltered';
         
 _END;
 
@@ -593,6 +618,10 @@ _END;
 
 
 /*Deleting a Composer, Arranger or Lyricist from an existing Composition*/
+
+/*Where have we come from?
+peopleOptions.php*/
+
 if($editComposition == 'true') {
     if ($deletePeople == 'true') {
        ?>
@@ -603,9 +632,9 @@ if($editComposition == 'true') {
         $deletePeopleQuery =
             <<<_END
             DELETE FROM C2R2P
-            WHERE C2R2P.composition_ID = $compositionID
-            AND C2R2P.role_ID = $roleID
-            AND C2R2P.people_ID = $oldPeopleID;
+            WHERE C2R2P.composition_ID = '$compositionIDAltered'
+            AND C2R2P.role_ID = '$roleIDIDAltered'
+            AND C2R2P.people_ID = '$oldPeopleIDAltered';
             
 _END;
 

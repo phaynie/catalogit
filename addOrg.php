@@ -20,7 +20,7 @@ include 'beginningNav.php';
     -provides a form (and button) to submit new organization (publisher) information.
     -validates the submitted form information.
     -inserts validated information into the organization table.
-    -sends user by way of header to addRole.php to update(edit/replace) or add(add new) to B2R2O table or delete a row(delete) from B2R2O table .
+    -sends user by way of header to addRole.php to update(edit/replace) or add(add new) to B2R2O table or delete a dispal(delete) from B2R2O table .
 */
 
 /*Initialize Variables*/
@@ -38,12 +38,16 @@ $pubName_value = "";
 $pubLoc_value = "";
 $submit = "";
 $debug_string = "";
+$oldOrgIDAltered = "";
 
-if(isset($_REQUEST['bookID'])) {
+/*bookID will NOT be used in db queries on this page
+We still check for numeric value*/
+if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
     $bookID = $_REQUEST['bookID'];
 }
-
-if(isset($_REQUEST['oldOrgID'])) {
+/*making sure the id variables are washed too.
+oldOrgID will be used in db queries on this page*/
+if(isset($_REQUEST['oldOrgID']) && is_numeric($_REQUEST['oldOrgID'])) {
     $oldOrgID = $_REQUEST['oldOrgID'];
 }
 
@@ -55,7 +59,8 @@ if(isset($_REQUEST['editPublisher'])) {
     $editPublisher = $_REQUEST['editPublisher'];
 }
 
-if(isset($_REQUEST['newOrgID'])) {
+/*$newOrgID is not used in any db queries on this page*/
+if(isset($_REQUEST['newOrgID']) && is_numeric($_REQUEST['newOrgID'])) {
     $newOrgID = $_REQUEST['newOrgID'];
 }
 
@@ -129,20 +134,24 @@ Here we wash all values that come from the form*/
 
 if (!$validationFailed && $submit=='true') {
 
-    $washPostVar = cleanup_post($_POST['pubName']);
+
+    $washPostVar = cleanup_post($oldOrgID);
+    $oldOrgIDAltered = strip_before_insert($conn, $washPostVar);
+
+    $washPostVar = cleanup_post($pubName);
     $pubNameAltered = strip_before_insert($conn, $washPostVar);
 
     if($debug) {
         $debug_string = 'pubName =' . $pubNameAltered . '<br/>';
     }/*end debug*/
 
-    $washPostVar = cleanup_post($_POST['pubLoc']);
+    $washPostVar = cleanup_post($pubLoc);
     $pubLocAltered = strip_before_insert($conn, $washPostVar);
 
 /*This is the code that will update the organization table with the changes we made to the current Publisher information.
 When we click on submit below the form, the user is returned to this same page to validate the edited information and then, if we are editing current publisher info,  it is here where that new information is updated in the organizations table. The $submit variable tells us this is not our first time through the code.  */
 
-    if ($oldOrgID !== '' && $editPublisher == 'true' && $submit = 'true') {
+    if ($oldOrgIDAltered !== '' && $editPublisher == 'true' && $submit = 'true') {
 
         $updateOrganizations = "UPDATE organizations AS o SET ";
         if($pubNameAltered =="") {
@@ -155,7 +164,7 @@ When we click on submit below the form, the user is returned to this same page t
         }else{
             $updateOrganizations .= " o.location = '$pubLocAltered'";
         }
-        $updateOrganizations .= "WHERE o.ID = $oldOrgID ;";
+        $updateOrganizations .= "WHERE o.ID = '$oldOrgIDAltered' ;";
 
 
         $updateOrganizationsResult = $conn->query($updateOrganizations);
@@ -243,7 +252,7 @@ if($editPublisher=='true') {
 
       SELECT o.org_name, o.location
       FROM organizations AS o
-      WHERE o.ID = '$oldOrgID';
+      WHERE o.ID = '$oldOrgIDAltered';
 
 _END;
 
@@ -262,8 +271,8 @@ _END;
     {
         $row = $organizationsPublisherQueryResult->fetch_array(MYSQLI_NUM);
 
-        $orgPubName = htmlspecialchars($row[0]);
-        $orgPubLoc = htmlspecialchars($row[1]);
+        $orgPubName = $row[0];
+        $orgPubLoc = $row[1];
 
 
     }    /*forloop ending*/
@@ -291,8 +300,8 @@ echo <<<_END
            
 
                 Publisher Name: $pubNameErr_value
-                <input class="form-control" type="text" name="pubName" value="{$pubName_value}"/><br/>
-                Publisher Location: <input class="form-control" type="text" name="pubLoc" value= "{$pubLoc_value}"/><br/>
+                <input class="form-control" type="text" name="pubName" value="{$fn_encode($pubName_value)}"/><br/>
+                Publisher Location: <input class="form-control" type="text" name="pubLoc" value= "{$fn_encode($pubLoc_value)}"/><br/>
                 <input class="btn btn-secondary mt-4" type='submit' value='Submit and Continue'/>
                 <input type='hidden' name="bookID" value='{$bookID}'/>
                 <input type='hidden' name="oldOrgID" value='{$oldOrgID}'/>

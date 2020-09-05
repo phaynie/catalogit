@@ -13118,3 +13118,7 @@
 [22-Aug-2020 11:31:06 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\index.php:0
 [22-Aug-2020 11:31:06 UTC] PHP   2. session_destroy() C:\Ampps\www\catalogit\index.php:5
 [22-Aug-2020 13:03:00 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\addRole.php on line 391
+[25-Aug-2020 01:14:12 UTC] PHP Parse error:  syntax error, unexpected '.', expecting end of file in C:\Ampps\www\catalogit\displayComposer.php on line 56
+[26-Aug-2020 22:14:47 UTC] PHP Parse error:  syntax error, unexpected ',' in C:\Ampps\www\catalogit\compositionPrintPage.php on line 151
+[30-Aug-2020 18:59:31 UTC] PHP Parse error:  syntax error, unexpected '}', expecting ')' in C:\Ampps\www\catalogit\addPeople.php on line 476
+[31-Aug-2020 18:19:40 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ')' in C:\Ampps\www\catalogit\compositionSearch.php on line 72

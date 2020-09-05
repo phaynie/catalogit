@@ -1,8 +1,8 @@
 <?php
 
 /*DB SECURITY
-will wash user info to be used in db queries ($searchBookTitle)
-When data is recovered from the db we use htmlspecialchars_decode() to allow the info to be clean and readable again.
+will wash user info to be used in db queries ($searchBookTitle and bookID)
+When data is recovered from the db we use htmlspecialchars And ENT_QUOTES to allow the info to be clean and readable again.
 */
 
 
@@ -38,7 +38,7 @@ $bookTitleNotFound = "";
 
 /*create local variables for the REQUEST values*/
 
-if(isset($_REQUEST['bookID'])) {
+if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
     $bookID = $_REQUEST['bookID'];
 }
 
@@ -52,6 +52,9 @@ if(isset($_REQUEST['searchBookTitle'])) {
 $notEntered = "<span style='color:rgba(0,0,0,0.4);'>Not Entered</span>";
 
 /*Here we wash this information before we send it in a db query*/
+$washPostVar = cleanup_post($bookID);
+$bookIDAltered = strip_before_insert($conn, $washPostVar);
+
 $washPostVar = cleanup_post($searchBookTitle);
 $searchBookTitleAltered = strip_before_insert($conn, $washPostVar);
 
@@ -86,13 +89,13 @@ _END;
 
             /*here we are reversing the htmlspecialchars function we used when the info was entered into the db.
             specifically allowing the quotes to be represented by " .*/
-            $bookID = htmlspecialchars($row[0]);
-            $bookTitle = htmlspecialchars($row[1]);
-            $bookTag1 = htmlspecialchars($row[2]);
-            $bookTag2 = htmlspecialchars($row[3]);
-            $bookVolume = htmlspecialchars($row[4]);
-            $bookNumber = htmlspecialchars($row[5]);
-            $physBookLocNote = htmlspecialchars($row[6]);
+            $bookID = $row[0];
+            $bookTitle = $row[1];
+            $bookTag1 = $row[2];
+            $bookTag2 = $row[3];
+            $bookVolume = $row[4];
+            $bookNumber = $row[5];
+            $physBookLocNote = $row[6];
 
         }    /*forloop ending*/
 
@@ -115,7 +118,7 @@ _END;
               FROM books AS b 
               JOIN B2R2P ON b.ID = B2R2P.book_ID
               JOIN people AS p ON p.ID= B2R2P.people_ID
-              WHERE b.ID = '$bookID';
+              WHERE b.ID = '$bookIDAltered';
 
 _END;
 
@@ -136,11 +139,11 @@ _END;
                     /*var_dump ($row);*/
                     /*here we are reversing the htmlspecialchars function we used when the info was entered into the db.
                     specifically allowing the quotes to be represented by " .*/
-                    $editorPeopleID = htmlspecialchars($row[0]);
-                    $editorPeopleFirstName = htmlspecialchars($row[1]);
-                    $editorPeopleMiddleName = htmlspecialchars($row[2]);
-                    $editorPeopleLastName = htmlspecialchars($row[3]);
-                    $editorPeopleSuffix = htmlspecialchars($row[4]);
+                    $editorPeopleID = $row[0];
+                    $editorPeopleFirstName = $row[1];
+                    $editorPeopleMiddleName = $row[2];
+                    $editorPeopleLastName = $row[3];
+                    $editorPeopleSuffix = $row[4];
                     /*$editorPeopleString = implode(',',$instVal);*/
                     $editorPeopleString .= $editorPeopleFirstName . " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . ", ";
 
@@ -161,7 +164,7 @@ _END;
                   FROM books AS b 
                   JOIN B2R2O ON b.ID = B2R2O.book_ID
                   JOIN organizations AS o ON o.ID= B2R2O.org_ID
-                  WHERE b.ID = '$bookID';
+                  WHERE b.ID = '$bookIDAltered';
 
 _END;
 
@@ -182,9 +185,9 @@ _END;
                     /*var_dump ($row);*/
                     /*here we are reversing the htmlspecialchars function we used when the info was entered into the db.
                     specifically allowing the quotes to be represented by " .*/
-                    $publisherOrgID = htmlspecialchars($row[0]);
-                    $publisherOrgName = htmlspecialchars($row[1]);
-                    $publisherOrgLocation = htmlspecialchars($row[2]);
+                    $publisherOrgID = $row[0];
+                    $publisherOrgName = $row[1];
+                    $publisherOrgLocation = $row[2];
 
                     /*$editorPeopleString = implode(',',$instVal);*/
                     $publisherOrgString .= $publisherOrgName . "</br> Publisher Location: " . $publisherOrgLocation . "</br>Publisher Name: ";

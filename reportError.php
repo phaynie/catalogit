@@ -12,7 +12,13 @@ _END;
 /*include 'beginningNav.html';*/
 include 'beginningNav.php';
 
-$bookID = $_POST['bookID'];
+$bookID = "";
+
+
+if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
+    $bookID = $_REQUEST['bookID'];
+}
+
 /* I want some kind of way to pre-poulate the page the error came from */
 
  echo <<<_END

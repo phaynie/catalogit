@@ -44,7 +44,7 @@ $submit = "";
 $validationFailed = false; /*A single place to track whether any validation has failed.*/
 
 /*we use REQUEST here because then we can find our Key whether it is in the Post array or the Get Array. REQUEST includes both*/
-if(isset($_REQUEST['bookID'])) {
+if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
     $bookID = $_REQUEST['bookID'];
 }
 
@@ -56,7 +56,7 @@ if(isset($_REQUEST['replacePublisher'])) {
     $replacePublisher = $_REQUEST['replacePublisher'];
 }
 
-if(isset($_REQUEST['oldOrgID'])) {
+if(isset($_REQUEST['oldOrgID']) && is_numeric($_REQUEST['oldOrgID'])) {
     $oldOrgID = $_REQUEST['oldOrgID'];
 }
 
@@ -94,6 +94,15 @@ if($replacePublisher == 'true') {
     $replaceContinueText = '<h3 class="display-4">Let\'s search for a replacement Publisher</h3>';
     $sendReplacePublisher = "<input type='hidden' name='replacePublisher' value='true' />";
 }
+
+/*here we wash any variables that will be used in db queries below*/
+$washPostVar = cleanup_post($bookID);
+$bookIDAltered = strip_before_insert($conn, $washPostVar);
+
+
+
+
+
 
 $orgNamesArray = "";
 $orgNamesArrayQuery = "
@@ -198,7 +207,7 @@ $bookQuery = <<<_END
           LEFT JOIN roles AS r_o ON r_o.ID = B2R2O.role_ID AND r_o.role_name = 'Publisher'
           LEFT JOIN organizations AS o ON o.ID = B2R2O.org_ID
 
-          WHERE b.ID = '$bookID' ;
+          WHERE b.ID = '$bookIDAltered' ;
 
 _END;
 
@@ -215,20 +224,20 @@ $numberOfRows = $bookQueryResult->num_rows;
 for ($j = 0; $j < $numberOfRows; ++$j) {
     $row = $bookQueryResult->fetch_array(MYSQLI_NUM);
 
-    $bookID = htmlspecialchars($row[0]);
-    $bookTitle = htmlspecialchars($row[1]);
-    $bookTag1 = htmlspecialchars($row[2]);
-    $bookTag2 = htmlspecialchars($row[3]);
-    $bookVolume = htmlspecialchars($row[4]);
-    $bookNumber = htmlspecialchars($row[5]);
-    $publisherName = htmlspecialchars($row[6]);
-    $publisherLocation = htmlspecialchars($row[7]);
-    $editorFirstName = htmlspecialchars($row[8]);
-    $editorMiddleName = htmlspecialchars($row[9]);
-    $editorLastName = htmlspecialchars($row[10]);
-    $editorSuffix = htmlspecialchars($row[11]);
-    $peopleID = htmlspecialchars($row[12]);
-    $orgID = htmlspecialchars($row[13]);
+    $bookID = $row[0];
+    $bookTitle = $row[1];
+    $bookTag1 = $row[2];
+    $bookTag2 = $row[3];
+    $bookVolume = $row[4];
+    $bookNumber = $row[5];
+    $publisherName = $row[6];
+    $publisherLocation = $row[7];
+    $editorFirstName = $row[8];
+    $editorMiddleName = $row[9];
+    $editorLastName = $row[10];
+    $editorSuffix = $row[11];
+    $peopleID = $row[12];
+    $orgID = $row[13];
 }/*forloop ending*/
 /*This will loop for each result row*/
 
@@ -291,7 +300,7 @@ _END;
 
 
         Publisher Name: $searchPubNameErr
-        <input class="form-control" type="text" id="searchPubName" name="searchPubName" placeholder = "Please enter a Publisher Name" /><br/>
+        <input class="form-control" autocomplete="off" type="text" id="searchPubName" name="searchPubName" placeholder = "Please enter a Publisher Name" /><br/>
         <ul id="pbNmsArray"></ul>
         <input class="btn btn-secondary mt-4" type='submit' value='Search for this Publisher'/>
         <input type='hidden' name="bookID" value="{$bookID}"/>

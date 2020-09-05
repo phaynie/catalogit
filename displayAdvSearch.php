@@ -12,6 +12,11 @@ _END;
 }/*end debug*/
 
 
+
+/*How did we get here?
+displayAdvSearch.php
+peopleOptions.php
+
 include 'beginningNav.php';
 
 /*Initialize variables coming from other pages*/
@@ -139,6 +144,11 @@ if($advSearch == 'true') {
 
 /*here we wash the values that will be used in the db*/
 
+    /*$compositionID is not retrieved until later. It is washed there*/
+
+    $washPostVar = cleanup_post($compositionID);
+    $compositionIDAltered = strip_before_insert($conn, $washPostVar);
+
     $washPostVar = cleanup_post($searchBoxGeneralCompTitle);
     $searchBoxGeneralCompTitleAltered = strip_before_insert($conn, $washPostVar);
 
@@ -222,25 +232,25 @@ WHERE 1=1";
 
     if (strlen($searchBoxGeneralCompTitleAltered) > 0) {
         $advIDSearchQuery .= " AND c.comp_name ='" . $searchBoxGeneralCompTitleAltered . "'";
-        $searchString .= "Composition Title: " . $searchBoxGeneralCompTitleAltered .  "<br>";
+        $searchString .= "Composition Title: " . $searchBoxGeneralCompTitle .  "<br>";
     }
 
     if (strlen($searchBoxGeneralInstAltered) > 0) {
         $advIDSearchQuery .= " AND i.instr_name ='" . $searchBoxGeneralInstAltered . "'";
-        $searchString .= "Instrument: " . $searchBoxGeneralInstAltered .  "<br>";
+        $searchString .= "Instrument: " . $searchBoxGeneralInst .  "<br>";
     }
     if (strlen($searchBoxGeneralComposerAltered) > 0) {
         $advIDSearchQuery .= " AND C2R2Pcomp.role_ID =1 AND pComp.lastname ='" . $searchBoxGeneralComposerAltered . "'";
-        $searchString .= "Composer: " . $searchBoxGeneralComposerAltered .  "<br>";
+        $searchString .= "Composer: " . $searchBoxGeneralComposer .  "<br>";
 
     }
     if (strlen($searchBoxGeneralArrAltered) > 0) {
         $advIDSearchQuery .= " AND C2R2Parr.role_ID = 2 AND pArr.lastname ='" . $searchBoxGeneralArrAltered . "'";
-        $searchString .= "Arranger: " . $searchBoxGeneralArrAltered .  "<br>";
+        $searchString .= "Arranger: " . $searchBoxGeneralArr .  "<br>";
     }
     if (strlen($searchBoxGeneralLyrAltered) > 0) {
         $advIDSearchQuery .= " AND C2R2Plyr.role_ID = 3 AND pLyr.lastname ='" . $searchBoxGeneralLyrAltered . "'";
-        $searchString .= "Lyricist: " . $searchBoxGeneralLyrAltered .  "<br>";
+        $searchString .= "Lyricist: " . $searchBoxGeneralLyr .  "<br>";
     }
     if (count($keySigs) > 0) {
         $advIDSearchQuery .= " AND C2K.keysig_ID IN (" . $keySigIdsString . " ) ";
@@ -252,25 +262,25 @@ WHERE 1=1";
     }
     if (strlen($eraAltered) > 0) {
         $advIDSearchQuery .= " AND c.era_ID = " . getIdFromString($eraAltered) . " ";
-        $searchString .= "Era: " . getNameFromString($eraAltered) .  "<br>";
+        $searchString .= "Era: " . getNameFromString($era) .  "<br>";
 
     }
     if (strlen($voiceAltered) > 0) {
         $advIDSearchQuery .= " AND c.voice_ID = " . getIdFromString($voiceAltered) . " ";
-        $searchString .= "Voicing: " . getNameFromString($voiceAltered) .  "<br>";
+        $searchString .= "Voicing: " . getNameFromString($voice) .  "<br>";
     }
     if (strlen($ensembleAltered) > 0) {
         $advIDSearchQuery .= " AND c.ensemble_ID = " . getIdFromString($ensembleAltered) . " ";
-        $searchString .= "Ensemble: " . getNameFromString($ensembleAltered) .  "<br>";
+        $searchString .= "Ensemble: " . getNameFromString($ensemble) .  "<br>";
     }
 
     if (strlen($ASPDiffAltered) > 0) {
         $advIDSearchQuery .= " AND d_A.ID =" . getIdFromString($ASPDiffAltered) . " ";
-        $searchString .= "ASP Difficulty Level: " . getNameFromString($ASPDiffAltered) .  "<br>";
+        $searchString .= "ASP Difficulty Level: " . getNameFromString($ASPDiff) .  "<br>";
     }
     if (strlen($genDiffAltered) > 0) {
         $advIDSearchQuery .= " AND d_G.ID =" . getIdFromString($genDiffAltered) . " ";
-        $searchString .= "General Difficulty Level: " . getNameFromString($genDiffAltered) .  "<br>";
+        $searchString .= "General Difficulty Level: " . getNameFromString($genDiff) .  "<br>";
     }
 
 
@@ -336,7 +346,13 @@ _END;
             for ($j = 0; $j < $numberOfAdvSearchIDQueryRows; ++$j) {
                 $row = $advIDSearchQueryResult->fetch_array(MYSQLI_NUM);
 
-                $compositionID = htmlspecialchars($row[0]);
+                $compositionID = $row[0];
+
+
+
+                $washPostVar = cleanup_post($compositionID);
+                $compositionIDAltered = strip_before_insert($conn, $washPostVar);
+
 
 
                 $advSearchCompositionNameQuery = "
@@ -344,7 +360,7 @@ _END;
                 FROM compositions AS c 
                 JOIN books AS b ON c.book_ID = b.ID
                 
-                WHERE c.ID = '$compositionID';
+                WHERE c.ID = '$compositionIDAltered';
                 
                 
                 ";
@@ -352,7 +368,7 @@ _END;
                 $advSearchCompositionNameQueryResult = $conn->query($advSearchCompositionNameQuery);
 
                 if ($debug) {
-                    echo 'advSearchComposerNameQuery =' . $advSearchCompositionNameQuery . '</br>';
+                    echo 'advSearchCompositionNameQuery =' . $advSearchCompositionNameQuery . '</br>';
                     if (!$advSearchCompositionNameQueryResult) echo("\n Error description query $advSearchCompositionNameQuery: " . mysqli_error($conn) . "\n<br/>");
                 }
 
@@ -365,9 +381,9 @@ _END;
                     for ($i = 0; $i < $numberOfAdvSearchCompositionNameQueryRows; ++$i) {
                         $row = $advSearchCompositionNameQueryResult->fetch_array(MYSQLI_NUM);
 
-                        $compositionName = htmlspecialchars($row[0]);
-                        $bookID = htmlspecialchars($row[1]);
-                        $bookTitle = htmlspecialchars($row[2]);
+                        $compositionName = $row[0];
+                        $bookID = $row[1];
+                        $bookTitle = $row[2];
 
                     } /*end for loop*/
 
@@ -377,9 +393,9 @@ _END;
                        SELECT p.firstname, p.lastname, p.ID
                         FROM compositions AS c
                         JOiN C2R2P ON c.ID = C2R2P.composition_ID
-                        JOIN people AS p ON C2R2P.people_ID = p.ID AND C2R2P.role_ID=1
+                        JOIN people AS p ON C2R2P.people_ID = p.ID AND C2R2P.role_ID='1'
                         
-                        Where c.ID = '$compositionID';
+                        Where c.ID = '$compositionIDAltered';
                         
                         
                         ";
@@ -402,9 +418,9 @@ _END;
                                 $row = $advSearchComposerQueryResult->fetch_array(MYSQLI_NUM);
 
 
-                                $composerFirstName = htmlspecialchars($row[0]);
-                                $composerLastName = htmlspecialchars($row[1]);
-                                $composerID = htmlspecialchars($row[2]);
+                                $composerFirstName = $row[0];
+                                $composerLastName = $row[1];
+                                $composerID = $row[2];
 
                                 $composerString .= $composerFirstName .  " " . $composerLastName . "</br> ";
 
@@ -425,14 +441,14 @@ _END;
                                                    
                 
                                             <div class="row ">
-                                            <div class="col-md-2  ">
+                                                <div class="col-md-2  ">
                                             </div>
                                             <div class="col-md-3  ">
-                                                        <a href="displayComposition.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&advSearch=true">$compositionName</a>
-                                                 </div>
-                                                <div class="col-md-3  "> 
-                                                       <h6 >composed by </h6> 
-                                                </div>
+                                                 <a href="displayComposition.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&advSearch=true">$compositionName</a>
+                                            </div>
+                                            <div class="col-md-3  "> 
+                                                 <h6 >composed by </h6> 
+                                            </div>
                                                 
                                                 <div class="col-md-4  "> 
                                                           <a href="displayComposer.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&composerID=${composerID}&advSearch=true">$displayComposerString</a>

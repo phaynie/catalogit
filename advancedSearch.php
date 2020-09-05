@@ -95,7 +95,7 @@ $errorMessage = "";
 
 /*assign local variables to values from Request array (from previous page)*/
 
-if (isset($_REQUEST['bookID'])) {
+if (isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
     $bookID = $_REQUEST['bookID'];
 }
 
@@ -107,11 +107,11 @@ if (isset($_REQUEST['advSearch'])) {
     $advSearch = $_REQUEST['advSearch'];
 }
 
-if (isset($_REQUEST['compositionID'])) {
+if (isset($_REQUEST['compositionID']) && is_numeric($_REQUEST['compositionID'])) {
     $compositionID = $_REQUEST['compositionID'];
 }
 
-if (isset($_REQUEST['oldCompositionID'])) {
+if (isset($_REQUEST['oldCompositionID']) && is_numeric($_REQUEST['oldCompositionID'])) {
     $oldCompositionID = $_REQUEST['oldCompositionID'];
 }
 
@@ -123,9 +123,6 @@ if (isset($_REQUEST['addNewComposition'])) {
     $addNewComposition = $_REQUEST['addNewComposition'];
 }
 
-if (isset($_REQUEST['bookID'])) {
-    $bookID = $_REQUEST['bookID'];
-}
 
 if (isset($_REQUEST['physCompositionLocNote'])) {
     $physCompositionLocNote = $_REQUEST['physCompositionLocNote'];
@@ -278,6 +275,8 @@ $debug_string .="print_r($instrumentsArray)";
     $composerArray .="]</script>";
 
 $debug_string .="print_r($composerArray)";
+
+
 
 
 
@@ -552,7 +551,7 @@ echo $debug_string;
                             <h6>Will you be searching by a Composition Title?</h6>
                             <div class="form-check">
                                 <label for="searchBoxGeneralCompTitle">Composition Name: <?php echo $compNameErr ?></label>
-                                <input type="text" class="form-control" id="searchBoxGeneralCompTitle" name="searchBoxGeneralCompTitle"  placeholder = "Please enter a title for the Composition" /><br/>
+                                <input type="text" class="form-control" autocomplete="off"  id="searchBoxGeneralCompTitle" name="searchBoxGeneralCompTitle"  placeholder = "Please enter a title for the Composition" /><br/>
                                 <ul id="cmpsnArray"></ul>
                             </div> <!-- end form-check -->
 
@@ -570,7 +569,7 @@ echo $debug_string;
                         <h6>Will you be searching for an Instrument?</h6>
                         <div class="form-check">
                             <label class="" for="searchBoxGeneralInst">Name of Instrument: </label>
-                            <input class="form-control" type="text" id="searchBoxGeneralInst" name="searchBoxGeneralInst" placeholder="Please enter an Instrument name" /><br/>
+                            <input class="form-control" autocomplete="off" type="text" id="searchBoxGeneralInst" name="searchBoxGeneralInst" placeholder="Please enter an Instrument name" /><br/>
                             <ul id="instArray"></ul>
 
 
@@ -588,7 +587,7 @@ echo $debug_string;
                         <h6>Will you be searching for a Composer?</h6>
                         <div class="form-check">
                             <label class="" for="searchBoxGeneralComposer">Last Name Only: </label>
-                            <input class="form-control" type="text" id="searchBoxGeneralComposer" name="searchBoxGeneralComposer" placeholder="Please enter a Last Name for your composer" /><br/>
+                            <input class="form-control" autocomplete="off" type="text" id="searchBoxGeneralComposer" name="searchBoxGeneralComposer" placeholder="Please enter a Last Name for your composer" /><br/>
                             <ul id="compsrArray"></ul>
 
 
@@ -606,7 +605,7 @@ echo $debug_string;
                         <div class="form-check">
 
                             <label class="" for="searchBoxGeneralArr">Last Name Only: </label>
-                            <input class="form-control" type="text" id="searchBoxGeneralArr" name="searchBoxGeneralArr" placeholder="Please enter a Last Name for your arranger" /><br/>
+                            <input class="form-control" autocomplete="off" type="text" id="searchBoxGeneralArr" name="searchBoxGeneralArr" placeholder="Please enter a Last Name for your arranger" /><br/>
                             <ul id="arrArray"></ul>
 
 
@@ -623,7 +622,7 @@ echo $debug_string;
                         <div class="form-check">
 
                             <label class="" for="searchBoxGeneralLyr">Last Name Only: </label>
-                            <input class="form-control" type="text" id="searchBoxGeneralLyr" name="searchBoxGeneralLyr" placeholder="Please enter a Last Name for your lyricist" /><br/>
+                            <input class="form-control" autocomplete="off" type="text" id="searchBoxGeneralLyr" name="searchBoxGeneralLyr" placeholder="Please enter a Last Name for your lyricist" /><br/>
                             <ul id="lyrArray"></ul>
 
 

@@ -15,9 +15,17 @@ _END;
 include 'beginningNav.php';
 
 
+
+/*Where did we come from?
+displayAdvSearch.php
+peopleOptions.php */
+
+
+
 /*Initialize local variables for values coming from other pages*/
 
 $composerID = "";
+$compositionID = "";
 $bookID = "";
 
 $bookTitle = "";
@@ -54,15 +62,27 @@ $physCompositionLocNote = "";
 
 
 
-if(isset($_REQUEST['composerID'])) {
+if(isset($_REQUEST['composerID']) && is_numeric($_REQUEST['composerID'])) {
     $composerID = $_REQUEST['composerID'];
+}
+
+if(isset($_REQUEST['compositionID']) && is_numeric($_REQUEST['compositionID'])) {
+    $compositionID = $_REQUEST['compositionID'];
 }
 
 
 $notEntered = "<span style='color:rgba(0,0,0,0.4);'>Not Entered</span>";
 
 
+/*here we will wash all variables that will be usd in the db queries below*/
+$washPostVar = cleanup_post($composerID);
+$composerIDAltered = strip_before_insert($conn, $washPostVar);
 
+$washPostVar = cleanup_post($compositionID);
+$compositionIDAltered = strip_before_insert($conn, $washPostVar);
+
+$washPostVar = cleanup_post($bookID);
+$bookIDAltered = strip_before_insert($conn, $washPostVar);
 
 
 
@@ -77,7 +97,7 @@ SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
   JOIN C2R2P ON c.ID = C2R2P.composition_ID
   JOIN people AS p ON C2R2P.people_ID = p.ID
   JOIN roles AS r_composer ON C2R2P.role_ID = r_composer.ID AND r_composer.role_name = 'Composer'
-  WHERE p.ID = '$composerID';
+  WHERE p.ID = '$composerIDAltered';
 
 _END;
 
@@ -104,11 +124,11 @@ if($debug) {
   for ($j = 0 ; $j < $numberOfComposerRows ; ++$j){
     $row = $resultComposerQuery->fetch_array(MYSQLI_NUM);
 
-    $currentComposerID = htmlspecialchars($row[0]);
-    $currentCompFirst = htmlspecialchars($row[1]);
-    $currentCompMiddle = htmlspecialchars($row[2]);
-    $currentCompLast = htmlspecialchars($row[3]);
-    $currentCompSuffix = htmlspecialchars($row[4]);
+    $currentComposerID = $row[0];
+    $currentCompFirst = $row[1];
+    $currentCompMiddle = $row[2];
+    $currentCompLast = $row[3];
+    $currentCompSuffix = $row[4];
 
   } /*for loop ending*/
 
@@ -137,7 +157,8 @@ c.movement, e.description,v.voicing_type, ens.ensemble_type, c.book_ID, c.physCo
     LEFT JOIN people AS p ON C2R2P.people_ID = p.ID
     LEFT JOIN roles AS r_composer ON C2R2P.role_ID = r_composer.ID AND r_composer.role_name = 'Composer'
         
-    WHERE p.ID = '$composerID';
+    WHERE p.ID = '$composerIDAltered'
+    ORDER BY c.comp_name ASC;
 
 _END;
 
@@ -192,7 +213,7 @@ _END;
     echo <<<_END
 
     <div class="container-fluid bg-light pt-4 pb-3">
-      <h3 class="display-4 pb-3">Success!</h3>
+      <h3 class="display-4 pb-3 noPrint">Success!</h3>
       <h3>Composer:</h3>
       <h3 class="display-4">  $currentCompFirst $currentCompMiddle $currentCompLast $currentCompSuffix </h3><br/>
     </div> <!--end container-->
@@ -203,17 +224,17 @@ _END;
     for ($k = 0 ; $k < $numberOfCompositionRows ; ++$k) {
       $row = $resultCompositionQuery->fetch_array(MYSQLI_NUM);
       /*  var_dump ($row);*/
-      $compositionID = htmlspecialchars($row[0]);
-      $compName = htmlspecialchars($row[1]);
-      $opusLike = htmlspecialchars($row[2]);
-      $compNum = htmlspecialchars($row[3]);
-      $compNo = htmlspecialchars($row[4]);
-      $subTitle = htmlspecialchars($row[5]);
-      $movement = htmlspecialchars($row[6]);
-      $era = htmlspecialchars($row[7]);
-      $voice = htmlspecialchars($row[8]);
-      $ensemble = htmlspecialchars($row[9]);
-      $CompbookID = htmlspecialchars($row[10]);
+      $compositionID = $row[0];
+      $compName = $row[1];
+      $opusLike = $row[2];
+      $compNum = $row[3];
+      $compNo = $row[4];
+      $subTitle = $row[5];
+      $movement = $row[6];
+      $era = $row[7];
+      $voice = $row[8];
+      $ensemble = $row[9];
+      $CompbookID = $row[10];
             
 
         if($debug) {
@@ -226,8 +247,8 @@ _END;
         SELECT  k.key_name
         FROM C2K
         JOIN keysignatures AS k ON C2K.keysig_ID = k.ID
-        WHERE C2K.composition_ID = '$compositionID';
-
+        WHERE C2K.composition_ID = '$compositionIDAltered';
+/*Does the composition Id come from the query above? */
 _END;
 
       $resultKeySigQuery = $conn->query($keySigQuery);
@@ -246,7 +267,7 @@ _END;
         for ($j = 0 ; $j < $numberOfKeySigRows ; ++$j) {
           $row = $resultKeySigQuery->fetch_array(MYSQLI_NUM);
           /* var_dump ($row);*/
-          $keySigName = htmlspecialchars($row[0]);
+          $keySigName = htmlspecialchars($row[0], ENT_QUOTES);
           $keySignatureString .= $keySigName .", ";
             
         } /*for loop ending*/
@@ -265,7 +286,7 @@ _END;
         SELECT  g.genre_type
         FROM C2G 
         JOIN genres AS g ON C2G.genre_ID = g.ID
-        WHERE C2G.composition_ID = '$compositionID';
+        WHERE C2G.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -283,7 +304,7 @@ _END;
         for ($j = 0 ; $j < $numberOfGenreRows ; ++$j) {
           $row = $resultGenresQuery->fetch_array(MYSQLI_NUM);
           /* var_dump ($row);*/
-          $genreName = htmlspecialchars($row[0]);
+          $genreName = $row[0];
           $genreString .= $genreName .", ";
             
         } /*for loop ending*/
@@ -299,7 +320,7 @@ _END;
         SELECT  i.instr_name
         FROM C2I 
         JOIN instruments AS i ON C2I.instrument_ID = i.ID
-        WHERE C2I.composition_ID = '$compositionID';
+        WHERE C2I.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -317,7 +338,7 @@ _END;
         for ($j = 0 ; $j < $numberOfInstRows ; ++$j) {
           $row = $resultInstrumentQuery->fetch_array(MYSQLI_NUM);
           /* var_dump ($row);*/
-          $instrumentName = htmlspecialchars($row[0]);
+          $instrumentName = $row[0];
           $instrumentString .= $instrumentName .", ";
             
         } /*for loop ending*/
@@ -338,7 +359,7 @@ _END;
         JOIN C2D ON c.ID = C2D.composition_ID
         JOIN difficulties AS d ON C2D.difficulty_ID = d.ID
         JOIN organizations as o On d.org_ID = o.ID AND o.org_name = 'General'
-        WHERE C2D.composition_ID = '$compositionID';
+        WHERE C2D.composition_ID = '$compositionIDAltered';
 
 
 _END;
@@ -355,7 +376,7 @@ _END;
         for ($j = 0 ; $j < $numberOfGenRows ; ++$j) {
           $row = $resultGenDiffQuery->fetch_array(MYSQLI_NUM);
           /*  var_dump ($row);*/
-          $diffGen = htmlspecialchars($row[0]);
+          $diffGen = $row[0];
           
         } /*for loop ending*/
     
@@ -370,7 +391,7 @@ _END;
         JOIN C2D ON c.ID = C2D.composition_ID
         JOIN difficulties AS d ON C2D.difficulty_ID = d.ID
         JOIN organizations as o On d.org_ID = o.ID AND o.org_name = 'ASP'
-        WHERE C2D.composition_ID = '$compositionID';
+        WHERE C2D.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -386,7 +407,7 @@ _END;
         for ($j = 0 ; $j < $numberOfASPRows ; ++$j) {
           $row = $resultASPDiffQuery->fetch_array(MYSQLI_NUM);
            /* var_dump ($row);*/
-          $diffASP = htmlspecialchars($row[0]);
+          $diffASP = $row[0];
             
         } /*for loop ending*/
 
@@ -406,7 +427,7 @@ _END;
           SELECT b.ID, b.title, b.tag1, b.tag2, b.book_vol, b.book_num, b.physBookLoc
           FROM books AS b
 
-          WHERE b.ID = '$compositionID' ;
+          WHERE b.ID = '$compositionIDAltered' ;
 
 _END;
 
@@ -423,16 +444,21 @@ _END;
             for ($j = 0; $j < $numberOfBookRows; ++$j) {
                 $row = $bookQueryResult->fetch_array(MYSQLI_NUM);
 
-                $bookID = htmlspecialchars($row[0]);
-                $bookTitle = htmlspecialchars($row[1]);
-                $bookTag1 = htmlspecialchars($row[2]);
-                $bookTag2 = htmlspecialchars($row[3]);
-                $bookVolume = htmlspecialchars($row[4]);
-                $bookNumber = htmlspecialchars($row[5]);
+                $bookID = $row[0];
+                $bookTitle = $row[1];
+                $bookTag1 = $row[2];
+                $bookTag2 = $row[3];
+                $bookVolume = $row[4];
+                $bookNumber = $row[5];
 
             }    /*forloop ending*/
 
         } /*end if book query result*/
+
+
+
+
+
 
        
     /*Retrieving all editor info for this book
@@ -462,11 +488,11 @@ _END;
     for ($j = 0; $j < $numEditorPeopleRows; ++$j) {
       $row = $resultEditorPeopleQuery->fetch_array(MYSQLI_NUM);
       /*var_dump ($row);*/
-      $editorPeopleID = htmlspecialchars($row[0]);
-      $editorPeopleFirstName = htmlspecialchars($row[1]);
-      $editorPeopleMiddleName = htmlspecialchars($row[2]);
-      $editorPeopleLastName = htmlspecialchars($row[3]);
-      $editorPeopleSuffix = htmlspecialchars($row[4]);
+      $editorPeopleID = $row[0];
+      $editorPeopleFirstName = $row[1];
+      $editorPeopleMiddleName = $row[2];
+      $editorPeopleLastName = $row[3];
+      $editorPeopleSuffix = $row[4];
       /*$editorPeopleString = implode(',',$instVal);*/
       $editorPeopleString .= $editorPeopleFirstName . " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . ", ";
 
@@ -506,9 +532,9 @@ _END;
     for ($j = 0; $j < $numPublisherOrgRows; ++$j) {
       $row = $resultPublisherOrgQuery->fetch_array(MYSQLI_NUM);
       /*var_dump ($row);*/
-      $publisherOrgID = htmlspecialchars($row[0]);
-      $publisherOrgName = htmlspecialchars($row[1]);
-      $publisherOrgLocation = htmlspecialchars($row[2]);
+      $publisherOrgID = $row[0];
+      $publisherOrgName = $row[1];
+      $publisherOrgLocation = $row[2];
 
       /*$editorPeopleString = implode(',',$instVal);*/
       $publisherOrgString .= $publisherOrgName . "</br> Publisher Location: " . $publisherOrgLocation . "</br><Publisher Name: ";
@@ -560,11 +586,11 @@ _END;
             for ($j = 0 ; $j < $numberOfComposerRows ; ++$j){
                 $row = $resultComposerQuery->fetch_array(MYSQLI_NUM);
 
-                $composerID = htmlspecialchars($row[0]);
-                $compFirst = htmlspecialchars($row[1]);
-                $compMiddle = htmlspecialchars($row[2]);
-                $compLast = htmlspecialchars($row[3]);
-                $compSuffix = htmlspecialchars($row[4]);
+                $composerID = $row[0];
+                $compFirst = $row[1];
+                $compMiddle = $row[2];
+                $compLast = $row[3];
+                $compSuffix = $row[4];
 
                 $composerString .= $compFirst .  " " . $compMiddle . " " . $compLast . " " . $compSuffix . ", ";
 
@@ -609,11 +635,11 @@ _END;
           for ($j = 0 ; $j < $numberOfArrRows ; ++$j){
             $row = $resultArrangerQuery->fetch_array(MYSQLI_NUM);
 
-            $arrangerID = htmlspecialchars($row[0]);
-            $arrFirst = htmlspecialchars($row[1]);
-            $arrMiddle = htmlspecialchars($row[2]);
-            $arrLast = htmlspecialchars($row[3]);
-            $arrSuffix = htmlspecialchars($row[4]);
+            $arrangerID = $row[0];
+            $arrFirst = $row[1];
+            $arrMiddle = $row[2];
+            $arrLast = $row[3];
+            $arrSuffix = $row[4];
 
             $arrangerString .= $arrFirst . " " . $arrMiddle . " " . $arrLast . " " . $arrSuffix . ", ";
 
@@ -658,11 +684,11 @@ _END;
           for ($j = 0 ; $j < $numberOfLyrRows ; ++$j){
             $row = $resultLyricistQuery->fetch_array(MYSQLI_NUM);
 
-            $lyricistID = htmlspecialchars($row[0]);
-            $lyrFirst = htmlspecialchars($row[1]);
-            $lyrMiddle = htmlspecialchars($row[2]);
-            $lyrLast = htmlspecialchars($row[3]);
-            $lyrSuffix = htmlspecialchars($row[4]);
+            $lyricistID = $row[0];
+            $lyrFirst = $row[1];
+            $lyrMiddle = $row[2];
+            $lyrLast = $row[3];
+            $lyrSuffix = $row[4];
 
             $lyricistString .= $lyrFirst . " " . $lyrMiddle . " " . $lyrLast . " " . $lyrSuffix . ", ";
 
@@ -852,17 +878,17 @@ echo <<<_END
 
 <div class="container-fluid bg-light pt-4 pb-5">
   <div class="col-md-4  pb-4 pt-3">
-    <h3>What would you like to do with this information?</h3>
+    <h3 class="noPrint">What would you like to do with this information?</h3>
     <form action='bookTitleSearch.php' method='post'>
-      <input  class="btn btn-secondary mb-3" type='submit' value='Add a new Composition for this Composer'/>
+      <input  class="btn btn-secondary mb-3 noPrint" type='submit' value='Add a new Composition for this Composer'/>
     </form>
 
     <form action='introPage.php' method='post'>
-      <input  class="btn btn-secondary mb-3" type='submit' value='New Library Search'/>
+      <input  class="btn btn-secondary mb-3 noPrint" type='submit' value='New Library Search'/>
     </form>
 
-    <form action='composerPrintPage.php' method='post'>
-      <input  class="btn btn-secondary mb-3" type='submit' value='Print'/>
+    <form action='displayComposer.php' method='post'>
+      <button class="btn btn-secondary mb-3 noPrint" onclick="window.print()">Print</button>
       <input type='hidden' name="compositionID" value='$compositionID'/>
       <input type='hidden' name="bookID" value='$bookID'/>
       <input type='hidden' name="composerPrintPage" value='true'/>
@@ -870,7 +896,7 @@ echo <<<_END
     </form>
 
     <form action='exitMessage.php' method='post'>
-      <input  class="btn btn-secondary mb-3" type='submit' value='Exit Library'/>
+      <input  class="btn btn-secondary mb-3 noPrint" type='submit' value='Exit Library'/>
     </form>
      
   </div>  <!-- end col -->

@@ -46,7 +46,7 @@ if(isset($_POST['login-submit'])) {
     }
 
 
-    }else{
+}else{
         header("Location:indexlogin.php");
         exit();
-    }/*end if(isset($_POST['login-submit']*/
+}/*end if(isset($_POST['login-submit']*/

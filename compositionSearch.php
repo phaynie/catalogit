@@ -23,7 +23,7 @@ $validationFailed = false;
 
 /*assign local variables to the REQUEST values*/
 
-if(isset($_REQUEST['bookID'])) {
+if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
     $bookID = $_REQUEST['bookID'];
 }
 
@@ -93,7 +93,7 @@ $debug_string .= "<xmp>" . $compositionsArray . "</xmp> \n<br/>";
 
 /*Validation code section
      if $validationFailed is true, we will show form pre-populated with error messages and user can re-submit values.
-     if $validationFailed is false, we will wash data coming from the form.*/
+     no variables will be washed in this page since there will be no variables used in db queries here.*/
 
 
 if($submit == 'true') {
@@ -144,7 +144,7 @@ echo <<<_END
       <div class="col-md-6">
       <form class="form-group  pt-3 " action='compositionSearch.php' method='post'>
           Composition Title: $searchCompositionTitleErr
-          <input class="form-control mb-3 " type="text" name="searchCompositionTitle" id="searchCompositionTitle" placeholder = "Please enter a Composition Title" />
+          <input class="form-control mb-3 " autocomplete="off"  type="text" name="searchCompositionTitle" id="searchCompositionTitle" placeholder = "Please enter a Composition Title" />
           <ul id="cmpsnArray"></ul>
           <input class="btn btn-secondary mt-4" type="submit" value="Search for this Composition"/>
           <input type="hidden" name="submit" value="true"/>

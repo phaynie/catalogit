@@ -46,7 +46,7 @@ $debug_string = "";
 
 /*Set local variables and assign the REQUEST values coming from the form or previous page. */
 
-if(isset($_REQUEST['bookID'])) {
+if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
     $bookID = $_REQUEST['bookID'];
 }
 
@@ -79,7 +79,7 @@ if(isset($_REQUEST['tag2'])) {
 }
 
 
-if(isset($_REQUEST['bookNum'])) {
+if(isset($_REQUEST['bookNum']) && is_numeric($_REQUEST['bookNum'])) {
     $bookNum = $_REQUEST['bookNum'];
 }
 
@@ -303,19 +303,19 @@ _END;
         if ($bookQueryResult) {
 
             $numberOfBookRows = $bookQueryResult->num_rows;
-            $bookTitleFound = ($numberOfBookRows > 0);
-            $bookTitleNotFound = ($numberOfBookRows === 0);
+            $bookTitleFound =$numberOfBookRows > 0;
+            $bookTitleNotFound = $numberOfBookRows === 0;
 
             for ($j = 0; $j < $numberOfBookRows; ++$j) {
                 $row = $bookQueryResult->fetch_array(MYSQLI_NUM);
                 /*Don't need to be washed. These are from the database, not a user*/
 
-                $bookTitle = htmlspecialchars($row[0]);
-                $tag1 = htmlspecialchars($row[1]);
-                $tag2 = htmlspecialchars($row[2]);
-                $bookVol = htmlspecialchars($row[3]);
-                $bookNum = htmlspecialchars($row[4]);
-                $physBookLocNote = htmlspecialchars($row[5]);
+                $bookTitle = $row[0];
+                $tag1 = $row[1];
+                $tag2 = $row[2];
+                $bookVol = $row[3];
+                $bookNum = $row[4];
+                $physBookLocNote = $row[5];
 
             } /*end bookquery loop*/
 
@@ -348,13 +348,13 @@ echo <<<_END
         <div class="form-group pt-4">
 
           
-          Book Title: $bookTitleErr <input class="form-control " type='text' name='bookTitle' value = "$bookTitle"/>
-          <br/>Tag 1: <input class="form-control"  type="text" name="tag1" value = "$tag1" />
-          <br/>Tag 2: <input class="form-control"  type="text" name="tag2" value = "$tag2"/>
-          <br/>Book Volume: <input class="form-control"  type="text" name="bookVol" value = "{$bookVol}" />
+          Book Title: $bookTitleErr <input class="form-control " type='text' name='bookTitle' value = "{$fn_encode($bookTitle)}"/>
+          <br/>Tag 1: <input class="form-control"  type="text" name="tag1" value = "{$fn_encode($tag1)}"/>
+          <br/>Tag 2: <input class="form-control"  type="text" name="tag2" value = "{$fn_encode($tag2)}"/>
+          <br/>Book Volume: <input class="form-control"  type="text" name="bookVol" value = "{$fn_encode($bookVol)}"/>
           <br/>  
-          Book Number: $bookNumErr<input class="form-control"  type="text" name="bookNum"value = "{$bookNum}" placeholder="{$placeHolder}"/>
-          <br/>Book Location: <input class="form-control"  type="text" name="physBookLocNote" value = "$physBookLocNote" />
+          Book Number: $bookNumErr<input class="form-control"  type="text" name="bookNum"value = "{$fn_encode($bookNum)}" placeholder="{$placeHolder}"/>
+          <br/>Book Location: <input class="form-control"  type="text" name="physBookLocNote" value = "{$fn_encode($physBookLocNote)}"/>
           <p> *If using quotes: Use single quotes rather than double</p>
           
             <br/><input class="btn btn-secondary" type='submit' value='Submit new information'/>

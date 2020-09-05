@@ -25,15 +25,18 @@ $bookID = "";
 
 /*create local variables for REQUEST values*/
 
-if(isset($_REQUEST['compositionID'])) {
+if(isset($_REQUEST['compositionID']) && is_numeric($_REQUEST['compositionID'])) {
     $compositionID = $_REQUEST['compositionID'];
 }
 
-if(isset($_REQUEST['bookID'])) {
+if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
     $bookID = $_REQUEST['bookID'];
 }
 
 
+/*Here we will wash any variables that will be used in a db query on this page*/
+$washPostVar = cleanup_post($bookID);
+$bookIDAltered = strip_before_insert($conn, $washPostVar);
 
 
 
@@ -46,7 +49,7 @@ $bookQuery  = <<<_END
           SELECT b.ID, b.title, b.tag1, b.tag2, b.book_vol, b.book_num, b.physBookLoc
           FROM books AS b
 
-          WHERE b.ID = $bookID ;
+          WHERE b.ID = '$bookIDAltered' ;
 
 _END;
 
@@ -63,13 +66,13 @@ if($bookQueryResult) {
     for ($j = 0; $j < $numberOfBookRows; ++$j) {
         $row = $bookQueryResult->fetch_array(MYSQLI_NUM);
 
-        $bookID = htmlspecialchars($row[0]);
-        $bookTitle = htmlspecialchars($row[1]);
-        $bookTag1 = htmlspecialchars($row[2]);
-        $bookTag2 = htmlspecialchars($row[3]);
-        $bookVolume = htmlspecialchars($row[4]);
-        $bookNumber = htmlspecialchars($row[5]);
-        $physBookLocNote = htmlspecialchars($row[6]);
+        $bookID = $row[0];
+        $bookTitle = $row[1];
+        $bookTag1 = $row[2];
+        $bookTag2 = $row[3];
+        $bookVolume = $row[4];
+        $bookNumber = $row[5];
+        $physBookLocNote = $row[6];
 
     }    /*forloop ending*/
 
@@ -86,7 +89,7 @@ $editorPeopleQuery = <<<_END
       FROM books AS b 
       LEFT JOIN B2R2P ON b.ID = B2R2P.book_ID
       LEFT JOIN people AS p ON p.ID= B2R2P.people_ID
-      WHERE b.ID = $bookID;
+      WHERE b.ID = '$bookIDAltered';
 
 _END;
 
@@ -105,11 +108,11 @@ if ($resultEditorPeopleQuery) {
     for ($j = 0 ; $j < $numEditorPeopleRows ; ++$j) {
         $row = $resultEditorPeopleQuery->fetch_array(MYSQLI_NUM);
         /*var_dump ($row);*/
-        $editorPeopleID = ($row[0]);
-        $editorPeopleFirstName = ($row[1]);
-        $editorPeopleMiddleName = ($row[2]);
-        $editorPeopleLastName = ($row[3]);
-        $editorPeopleSuffix = ($row[4]);
+        $editorPeopleID = $row[0];
+        $editorPeopleFirstName = $row[1];
+        $editorPeopleMiddleName = $row[2];
+        $editorPeopleLastName = $row[3];
+        $editorPeopleSuffix = $row[4];
         /*$editorPeopleString = implode(',',$instVal);*/
         $editorPeopleString .= $editorPeopleFirstName .  " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . "</br></br>Editor Name: ";
 
@@ -132,7 +135,7 @@ $publisherOrgQuery = <<<_END
       FROM books AS b 
       LEFT JOIN B2R2O ON b.ID = B2R2O.book_ID
       LEFT JOIN organizations AS o ON o.ID= B2R2O.org_ID
-      WHERE b.ID = $bookID;
+      WHERE b.ID = '$bookIDAltered';
 
 _END;
 
@@ -151,9 +154,9 @@ if ($resultPublisherOrgQuery) {
     for ($j = 0 ; $j < $numPublisherOrgRows ; ++$j) {
         $row = $resultPublisherOrgQuery->fetch_array(MYSQLI_NUM);
         /*var_dump ($row);*/
-        $publisherOrgID = ($row[0]);
-        $publisherOrgName = ($row[1]);
-        $publisherOrgLocation = ($row[2]);
+        $publisherOrgID = $row[0];
+        $publisherOrgName = $row[1];
+        $publisherOrgLocation = $row[2];
 
         /*$editorPeopleString = implode(',',$instVal);*/
         $publisherOrgString .= $publisherOrgName . "</br> Publisher Location: " . $publisherOrgLocation . "</br></br>Publisher Name: ";
@@ -195,7 +198,7 @@ _END;
     $compositionQuery = <<<_END
     SELECT c.ID, c.comp_name, c.book_ID, c.physCompositionLoc
     FROM compositions AS c
-    WHERE c.book_ID = $bookID;
+    WHERE c.book_ID = '$bookIDAltered';
 
 _END;
 
@@ -277,7 +280,7 @@ echo<<<_END
 </div> <!-- end container -->
 
 
-<form class="pl-3" action="displayBook.php" method="post">
+<form class="pl-3 noPrint" action="displayBook.php" method="post">
     <input class="btn btn-secondary mb-3" type="submit" value="Back to Display Book"/>
     <input type="hidden" name="bookID" value='$bookID'/>
 </form><br><br>

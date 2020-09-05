@@ -62,7 +62,7 @@ $submit = "";
 
 /*assigning variable names to post and get values*/
 
-if(isset($_REQUEST['bookID'])) {
+if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
     $bookID = $_REQUEST['bookID'];
 }
 
@@ -99,11 +99,11 @@ if(isset($_REQUEST['addNewLyricist'])) {
     $addNewLyricist = $_REQUEST['addNewLyricist'];
 }
 
-if(isset($_REQUEST['compositionID'])) {
+if(isset($_REQUEST['compositionID']) && is_numeric($_REQUEST['compositionID'])) {
     $compositionID = $_REQUEST['compositionID'];
 }
 
-if(isset($_REQUEST['oldPeopleID'])) {
+if(isset($_REQUEST['oldPeopleID']) && is_numeric($_REQUEST['oldPeopleID'])) {
     $oldPeopleID = $_REQUEST['oldPeopleID'];
 }
 
@@ -131,7 +131,7 @@ if(isset($_REQUEST['editEditor'])) {
     $editEditor = $_REQUEST['editEditor'];
 }
 
-if(isset($_REQUEST['newPeopleID'])) {
+if(isset($_REQUEST['newPeopleID']) && is_numeric($_REQUEST['newPeopleID'])) {
     $newPeopleID = $_REQUEST['newPeopleID'];
 }
 
@@ -254,8 +254,8 @@ if($submit == 'true') {
 
     if (!$validationFailed ) {
 
-        $washPostVar = cleanup_post($_POST['peopleFirstName']);
-        $peopleFirstName = strip_before_insert($conn, $washPostVar);
+        $washPostVar = cleanup_post($peopleFirstName);
+        $peopleFirstNameAltered = strip_before_insert($conn, $washPostVar);
 
 
 
@@ -263,20 +263,23 @@ if($submit == 'true') {
             $debug_string = "( 'peopleFirstName =' . '$peopleFirstName' . '<br/>')";
         }/*end debug*/
 
-        $washPostVar = cleanup_post($_POST['peopleMiddleName']);
-        $peopleMiddleName = strip_before_insert($conn, $washPostVar);
+        $washPostVar = cleanup_post($peopleMiddleName);
+        $peopleMiddleNameAltered = strip_before_insert($conn, $washPostVar);
 
-        $washPostVar = cleanup_post($_POST['peopleLastName']);
-        $peopleLastName = strip_before_insert($conn, $washPostVar);
+        $washPostVar = cleanup_post($peopleLastName);
+        $peopleLastNameAltered = strip_before_insert($conn, $washPostVar);
 
-        $washPostVar = cleanup_post($_POST['peopleSuffix']);
-        $peopleSuffix = strip_before_insert($conn, $washPostVar);
+        $washPostVar = cleanup_post($peopleSuffix);
+        $peopleSuffixAltered = strip_before_insert($conn, $washPostVar);
+
+        $washPostVar = cleanup_post($oldPeopleID);
+        $oldPeopleIDAltered = strip_before_insert($conn, $washPostVar);
 
 
         /*This is the code that will update the people table with the changes we made to the current People information.
     When we click on submit below the form, the user is returned to this same page to validate the edited information and then, if we are editing current people info,  it is here where that new information is updated in the people table. The $submit variable (we are still inside of) tells us this is not our first time through the code.  */
 
-        if ($oldPeopleID !== '' && $editPeople == 'true' ) {
+        if ($oldPeopleIDAltered !== '' && $editPeople == 'true' ) {
             $updatePeople =  "UPDATE people AS p  SET ";
             if($peopleFirstName == "") {
                 $updatePeople .= "p.firstname = NULL,";
@@ -284,26 +287,26 @@ if($submit == 'true') {
                 $updatePeople .= "p.firstname = '$peopleFirstName',";
             }
 
-            if($peopleMiddleName == "") {
+            if($peopleMiddleNameAltered == "") {
                 $updatePeople .= "p.middlename = NULL,";
             }else{
-                $updatePeople .= "p.middlename = '$peopleMiddleName',";
+                $updatePeople .= "p.middlename = '$peopleMiddleNameAltered',";
             }
 
-            if($peopleLastName == "") {
+            if($peopleLastNameAltered == "") {
                 $updatePeople .= "p.lastname = NULL,";
             }else{
-                $updatePeople .= "p.lastname = '$peopleLastName',";
+                $updatePeople .= "p.lastname = '$peopleLastNameAltered',";
             }
 
-            if($peopleSuffix == "") {
+            if($peopleSuffixAltered == "") {
                 $updatePeople .= "p.suffix = NULL";
             }else{
-                $updatePeople .= "p.suffix = '$peopleSuffix'";
+                $updatePeople .= "p.suffix = '$peopleSuffixAltered'";
             }
 
 
-            $updatePeople .= "WHERE p.ID = $oldPeopleID;";
+            $updatePeople .= "WHERE p.ID = $oldPeopleIDAltered;";
 
 
             $updatePeopleResult = $conn->query($updatePeople);
@@ -346,22 +349,22 @@ if($submit == 'true') {
                 $peopleInsertQuery .= "'$peopleFirstName',";
             }
 
-            if($peopleMiddleName == "") {
+            if($peopleMiddleNameAltered == "") {
                 $peopleInsertQuery .= "NULL,";
             }else{
-                $peopleInsertQuery .= "'$peopleMiddleName',";
+                $peopleInsertQuery .= "'$peopleMiddleNameAltered',";
             }
 
-            if($peopleLastName == "") {
+            if($peopleLastNameAltered == "") {
                 $peopleInsertQuery .= "NULL,";
             }else{
-                $peopleInsertQuery .= "'$peopleLastName',";
+                $peopleInsertQuery .= "'$peopleLastNameAltered',";
             }
 
-            if($peopleSuffix == "") {
+            if($peopleSuffixAltered == "") {
                 $peopleInsertQuery .= "NULL)";
             }else{
-                $peopleInsertQuery .= "'$peopleSuffix')";
+                $peopleInsertQuery .= "'$peopleSuffixAltered')";
             }
 
 
@@ -422,7 +425,7 @@ if($submit == "") {
 
       SELECT p.firstname, p.middlename, p.lastname, p.suffix
       FROM people AS p
-      WHERE p.ID = $oldPeopleID;
+      WHERE p.ID = $oldPeopleIDAltered;
 
 _END;
 
@@ -440,10 +443,10 @@ _END;
         for ($j = 0; $j < $numberOfPeopleRows; ++$j) {
             $row = $peopleQueryResult->fetch_array(MYSQLI_NUM);
 
-            $peopleFirstName = htmlspecialchars($row[0]);
-            $peopleMiddleName = htmlspecialchars($row[1]);
-            $peopleLastName = htmlspecialchars($row[2]);
-            $peopleSuffix = htmlspecialchars($row[3]);
+            $peopleFirstName = $row[0];
+            $peopleMiddleName = $row[1];
+            $peopleLastName = $row[2];
+            $peopleSuffix = $row[3];
 
 
         }    /*forloop ending*/
@@ -469,13 +472,13 @@ $instructionalText
 
 
             First Name: 
-            <input class="form-control" type="text" name="peopleFirstName" value = "{$peopleFirstName}"/><br/>
-            Middle Name: <input class="form-control"  type="text" name="peopleMiddleName" value = "{$peopleMiddleName}"/><br/>
+            <input class="form-control" type="text" name="peopleFirstName" value = "{$fn_encode($peopleFirstName)}"/><br/>
+            Middle Name: <input class="form-control"  type="text" name="peopleMiddleName" value = "{$fn_encode($peopleMiddleName)}"/><br/>
             Last Name: $peopleLastNameErr
-            <input class="form-control"  type="text" name="peopleLastName" value = "{$peopleLastName}"/><br/>
-            Suffix: <input class="form-control"  type="text" name="peopleSuffix" value = "{$peopleSuffix}"/><br/>
+            <input class="form-control"  type="text" name="peopleLastName" value = "{$fn_encode($peopleLastName)}"/><br/>
+            Suffix: <input class="form-control"  type="text" name="peopleSuffix" value = "{$fn_encode($peopleSuffix)}"/><br/>
             
-            <input class="btn btn-secondary mt-4" type='submit' value='Submit and Continue'/><br/>
+            <input class="btn btn-secondary mt-4" type='submit' value='Submit & Continue'/><br/>
             <input type='hidden' name="bookID" value="{$bookID}"/>
             <input type='hidden' name="oldPeopleID" value="{$oldPeopleID}"/>
             <input type='hidden' name="compositionID" value="{$compositionID}"/>

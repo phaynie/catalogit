@@ -93,7 +93,7 @@ if(isset($_REQUEST['searchPeopleLastName'])) {
     $searchPeopleLastName = $_REQUEST['searchPeopleLastName'];
 }
 
-if(isset($_REQUEST['bookID'])) {
+if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
     $bookID = $_REQUEST['bookID'];
 }
 
@@ -109,7 +109,7 @@ if(isset($_REQUEST['compositionID'])) {
     $compositionID = $_REQUEST['compositionID'];
 }
 
-if(isset($_REQUEST['oldPeopleID'])) {
+if(isset($_REQUEST['oldPeopleID']) && is_numeric($_REQUEST['oldPeopleID'])) {
     $oldPeopleID = $_REQUEST['oldPeopleID'];
 }
 
@@ -286,6 +286,13 @@ There is also the possibility that there is no Editor, or Composer etc. Since Ed
 $washPostVar = cleanup_post($searchPeopleLastName);
 $searchPeopleLastNameAltered = strip_before_insert($conn, $washPostVar);
 
+$washPostVar = cleanup_post($bookID);
+$bookIDAltered = strip_before_insert($conn, $washPostVar);
+
+$washPostVar = cleanup_post($compositionID);
+$compositionIDAltered = strip_before_insert($conn, $washPostVar);
+
+
 
 
 if (strlen($searchPeopleLastNameAltered) > 0) {
@@ -369,11 +376,11 @@ _END;
             for ($j = 0 ; $j < $numberOfPeopleRows ; $j++){
               $row = $resultPeopleQuery->fetch_array(MYSQLI_NUM);
 
-              $peopleID = htmlspecialchars($row[0]);
-              $peopleFirst = htmlspecialchars($row[1]);
-              $peopleMiddle = htmlspecialchars($row[2]);
-              $peopleLast = htmlspecialchars($row[3]);
-              $peopleSuffix = htmlspecialchars($row[4]);
+              $peopleID = $row[0];
+              $peopleFirst = $row[1];
+              $peopleMiddle = $row[2];
+              $peopleLast = $row[3];
+              $peopleSuffix = $row[4];
 
                 /*TODO: figure out what the form action here should be. */
                 /*TODO:  check out whether this should be oldPeopleID or newPeopleID and don't we need both?*/
@@ -476,9 +483,9 @@ if ($editReplaceDeletePerson == 'true') {
         SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
         FROM books AS b
         JOIN B2R2P ON b.ID = B2R2P.book_ID
-        JOIN roles AS r ON r.ID = B2R2P.role_ID AND r.role_name = "$role"
+        JOIN roles AS r ON r.ID = B2R2P.role_ID AND r.role_name = '$role'
         JOIN people AS p ON p.ID= B2R2P.people_ID
-        WHERE b.ID = '$bookID';
+        WHERE b.ID = '$bookIDAltered';
        
        
 _END;
@@ -500,9 +507,9 @@ _END;
         SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
         FROM compositions AS c
         JOIN C2R2P ON c.ID = C2R2P.composition_ID
-        JOIN roles AS r ON r.ID = C2R2P.role_ID AND r.role_name = "$role"
+        JOIN roles AS r ON r.ID = C2R2P.role_ID AND r.role_name = '$role'
         JOIN people AS p ON p.ID = C2R2P.people_ID
-        WHERE c.ID = '$compositionID';
+        WHERE c.ID = '$compositionIDAltered';
        
        
 _END;
@@ -568,11 +575,11 @@ _END;
             for ($j = 0; $j < $numERDPeopleRows; $j++) {
                 $row = $resultERDPeopleQuery->fetch_array(MYSQLI_NUM);
                 /*var_dump ($row);*/
-                $ERDPeopleID = htmlspecialchars($row[0]);
-                $ERDPeopleFirstName = htmlspecialchars($row[1]);
-                $ERDPeopleMiddleName = htmlspecialchars($row[2]);
-                $ERDPeopleLastName = htmlspecialchars($row[3]);
-                $ERDPeopleSuffix = htmlspecialchars($row[4]);
+                $ERDPeopleID = $row[0];
+                $ERDPeopleFirstName = $row[1];
+                $ERDPeopleMiddleName = $row[2];
+                $ERDPeopleLastName = $row[3];
+                $ERDPeopleSuffix = $row[4];
 
 
                 echo <<<_END
@@ -610,8 +617,8 @@ _END;
                                     <div class="col">
                                         <input class="btn btn-sm {$deleteButton}"  type='submit' value='DELETE'/>
                                         <input type='hidden' name='bookID' value='$bookID'/>
-                                        <input type='hidden' name='bookTitle' value='$bookTitle'/>
-                                        <input type='hidden' name='compName' value='$compName'/>
+                                        <input type='hidden' name='bookTitle' value="{$fn_encode($bookTitle)}"/>
+                                        <input type='hidden' name='compName' value="{$fn_encode($compName)}"/>
                                         <input type='hidden' name='compositionID' value='$compositionID'/>
                                         <input type='hidden' name='oldPeopleID' value='$ERDPeopleID'/>
                                        

@@ -54,7 +54,7 @@ if(isset($_REQUEST['searchPubName'])) {
     $searchPubName = $_REQUEST['searchPubName'];
 }
 
-if(isset($_REQUEST['bookID'])) {
+if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
     $bookID = $_REQUEST['bookID'];
 }
 
@@ -62,7 +62,7 @@ if(isset($_REQUEST['bookTitle'])) {
     $bookTitle = $_REQUEST['bookTitle'];
 }
 
-if(isset($_REQUEST['oldOrgID'])) {
+if(isset($_REQUEST['oldOrgID']) && is_numeric($_REQUEST['oldOrgID'])) {
     $oldOrgID = $_REQUEST['oldOrgID'];
 }
 
@@ -85,6 +85,9 @@ if(isset($_REQUEST['addNewPublisher'])) {
 if(isset($_REQUEST['editReplaceDeletePub'])) {
     $editReplaceDeletePub = $_REQUEST['editReplaceDeletePub'];
 }
+
+
+
 
 /*create logic to use variables for many situations*/
 
@@ -126,9 +129,12 @@ if($editReplaceDeletePub == 'true') {
 There is also the possibility that there is no Publisher. Since Publisher is the final step in collecting book information, the "No Publisher, continue" button takes the user either back to  displayBook.php or editBook.php to let the user decide what they want to do next*/
 
 
-/*here we wash the variable and give it a unique name to be used in the db*/
+/*here we wash the variables and give them unique names to be used in the db*/
 $washPostVar = cleanup_post($searchPubName);
 $searchPubNameAltered = strip_before_insert($conn, $washPostVar);
+
+$washPostVar = cleanup_post($bookID);
+$bookIDAltered = strip_before_insert($conn, $washPostVar);
 
 
 if (strlen($searchPubNameAltered) > 0  ) {
@@ -219,9 +225,9 @@ _END;
             for ($j = 0 ; $j < $numberOfOrgRows ; ++$j){
                 $row = $resultOrgQuery->fetch_array(MYSQLI_NUM);
 
-                $publisherID = htmlspecialchars($row[0]);
-                $publisherName = htmlspecialchars($row[1]);
-                $publisherLocation = htmlspecialchars($row[2]);
+                $publisherID = $row[0];
+                $publisherName = $row[1];
+                $publisherLocation = $row[2];
 
 
 /*TODO: figure out what the form action here should be. */
@@ -315,7 +321,7 @@ if($editReplaceDeletePub == "true") {
       FROM books AS b 
       JOIN B2R2O ON b.ID = B2R2O.book_ID
       JOIN organizations AS o ON o.ID= B2R2O.org_ID
-      WHERE b.ID = '$bookID';
+      WHERE b.ID = '$bookIDAltered';
 
 _END;
 
@@ -384,9 +390,9 @@ _END;
             for ($j = 0; $j < $numPublisherOrgRows; ++$j) {
                 $row = $resultPublisherOrgQuery->fetch_array(MYSQLI_NUM);
                 /*var_dump ($row);*/
-                $publisherOrgID = htmlspecialchars($row[0]);
-                $publisherOrgName = htmlspecialchars($row[1]);
-                $publisherOrgLocation = htmlspecialchars($row[2]);
+                $publisherOrgID = $row[0];
+                $publisherOrgName =$row[1];
+                $publisherOrgLocation = $row[2];
 
 
                 /*TODO: figure out what the form action here should be. */

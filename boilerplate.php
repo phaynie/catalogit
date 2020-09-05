@@ -4,7 +4,7 @@ setcookie("XDEBUG_SESSION_START", "PHPSTORM");
 
   session_start();
 
-$debug=true;
+$debug=false;
 
 if($debug) {
     print_r($_SESSION);
@@ -141,5 +141,14 @@ if (isset($_POST['delete']) && isset($_POST[$primaryKeyName]))
   {
     return $conn->real_escape_string($var);
   }
+
+/*Using a variable function trick so we can encode variables inside heredocs
+value = "$fn_encode($stringtoencode)"*/
+function fn_encode($data) {
+    return htmlspecialchars($data, ENT_QUOTES);
+}
+$fn_encode = 'fn_encode';
+
+
 
   ?>

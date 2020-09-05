@@ -200,3 +200,10 @@ p.editpage {
   font-size: 1.1rem;
 }
 
+
+
+@media print {
+  header, footer, .noPrint {
+    display: none;
+  }
+}

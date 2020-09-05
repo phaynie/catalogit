@@ -146,7 +146,7 @@ echo <<<_END
       <div class="col-md-6">
       <form class="form-group  pt-3 pb-3" action='bookTitleSearch.php' method='post'>
           Book Title: $searchBookTitleErr
-          <input class="form-control" type="text" name="searchBookTitle" id="searchBookTitle" placeholder = "Please enter a book title" />
+          <input class="form-control" autocomplete="off" type="text" name="searchBookTitle" id="searchBookTitle" placeholder = "Please enter a book title" />
           <ul id="bkTtlsArray"></ul>
           <p>If adding sheet music, add your selection to the book titled "Sheet Music Collection"</p>
           <p>OR create your own sheet music "book or collection" by searching for the name of the collection and adding a new "book" when it is not found. You will be able to add this music to as many collections as you like.</p>

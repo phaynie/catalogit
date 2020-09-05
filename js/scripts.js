@@ -61,7 +61,8 @@ function listener(elementID,  fullListArray, ulID) {
         let matchesArray = [];
 
         if (e.target.value) {
-            matchesArray = fullListArray.filter(item => item.toLowerCase().includes(e.target.value.toLowerCase()));
+            var target_value = e.target.value.replace(/\'/g, "&#039");
+            matchesArray = fullListArray.filter(item => item.toLowerCase().includes(target_value.toLowerCase()));
             matchesArray = matchesArray.map(item => `<li><a href="#" onclick="stuffValue(this, '${elementID}', '${ulID}');return false;">${item}</a></li>`);
         }
         showArray(matchesArray);

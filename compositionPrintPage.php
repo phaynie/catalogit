@@ -15,19 +15,32 @@ include 'beginningNav.php';
 
 
   
-$composerPeopleID = $_POST['composerPeopleID'];
-$compositionTitle = $_POST['compositionTitle'];
+/*Initializing Variables*/
+$compositionTitle = "";
+$compositionID = "";
 
 
-/*display name of Composition we have been searching forcomposer we just chose*/
-/*use query to get most recent composer information using the composer Poeple id*/
+/*Assigning local variable names to items in the Request array*/
+if(isset($_REQUEST['compositionID']) && is_numeric($_REQUEST['compositionID'])) {
+    $compositionID = $_REQUEST['compositionID'];
+}
+
+if(isset($_REQUEST['compositionTitle'])) {
+    $compositionTitle = $_REQUEST['compositionTitle'];
+}
+
+/*Here we are washing each variable that will be used in db queries on this page*/
+$washPostVar = cleanup_post($compositionID);
+$compositionIDAltered = strip_before_insert($conn, $washPostVar);
+
+$washPostVar = cleanup_post($compositionTitle);
+$compositionTitleAltered = strip_before_insert($conn, $washPostVar);
 
 
 
 
 
-
-/*find all compositions this composer is a composer for and display the composition and the book it is in. 
+/*find all compositions this composer is a composer for where the composition name = $compositionTitle and display the composition and the book it is in.
 We will do this inside a card with the composition information to the left and the book information to the right. 
 This will use a loop.*/
 
@@ -48,7 +61,7 @@ LEFT JOIN people AS p_composer ON C2R2P.people_ID = p_composer.ID AND r_composer
 LEFT JOIN people AS p_arranger ON C2R2P.people_ID = p_arranger.ID AND r_arranger.role_name = 'Arranger'
 LEFT JOIN people AS p_lyricist ON C2R2P.people_ID = p_lyricist.ID AND r_lyricist.role_name = 'Lyricist'
 
-WHERE c.comp_name = '$compositionTitle';
+WHERE c.comp_name = '$compositionTitleAltered';
 
 _END;
 
@@ -117,29 +130,29 @@ _END;
       /*  echo 'i at start of loop = ' . $i . '<br/><br/>';    */
       $row = $resultCompositionQuery->fetch_array(MYSQLI_NUM);
       /* var_dump ($row);*/
-      $compositionID = ($row[0]);
-      $compName = ($row[1]);            
-      $opusLike = ($row[2]);
-      $compNum = ($row[3]);
-      $compNo = ($row[4]);
-      $subTitle = ($row[5]);                          
-      $movement = ($row[6]);
-      $era = ($row[7]);            
-      $voice = ($row[8]);
-      $ensemble = ($row[9]);
-      $bookIDCheck = ($row[10]); 
-      $composerFirstName = ($row[11]);
-      $composerMiddleName = ($row[12]);
-      $composerLastName = ($row[13]);
-      $composerSuffix = ($row[14]);
-      $arrangerFirstName = ($row[15]);
-      $arrangerMiddleName = ($row[16]);
-      $arrangerLastName = ($row[17]);
-      $arrangerSuffix = ($row[18]);
-      $lyricistFirstName = ($row[19]);
-      $lyricistMiddleName = ($row[20]);
-      $lyricistLastName = ($row[21]);
-      $lyricistSuffix = ($row[22]);
+      $compositionID = $row[0];
+      $compName = $row[1];
+      $opusLike = $row[2];
+      $compNum = $row[3];
+      $compNo = $row[4];
+      $subTitle = $row[5];
+      $movement = $row[6];
+      $era = $row[7];
+      $voice = $row[8];
+      $ensemble = $row[9];
+      $bookIDCheck = $row[10];
+      $composerFirstName = $row[11];
+      $composerMiddleName = $row[12];
+      $composerLastName = $row[13];
+      $composerSuffix = $row[14];
+      $arrangerFirstName = $row[15];
+      $arrangerMiddleName = $row[16];
+      $arrangerLastName = $row[17];
+      $arrangerSuffix = $row[18];
+      $lyricistFirstName = $row[19];
+      $lyricistMiddleName = $row[20];
+      $lyricistLastName = $row[21];
+      $lyricistSuffix = $row[22];
 
 
       /*Retrieving all key signatures for this composition
@@ -150,7 +163,7 @@ _END;
         SELECT  k.key_name
         FROM C2K 
         LEFT JOIN keysignatures AS k ON C2K.keysig_ID = k.ID
-        WHERE C2K.composition_ID = $compositionID;
+        WHERE C2K.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -171,7 +184,7 @@ _END;
         for ($j = 0 ; $j < $numKeySigRows ; ++$j) {
           $row = $resultKeySigQuery->fetch_array(MYSQLI_NUM);
           /* var_dump ($row);*/
-          $keySigName = ($row[0]);
+          $keySigName = $row[0];
                               
         } /*for loop ending*/
 
@@ -191,7 +204,7 @@ _END;
         SELECT  g.genre_type
         FROM C2G 
         LEFT JOIN genres AS g ON C2G.genre_ID = g.ID
-        WHERE C2G.composition_ID = $compositionID;
+        WHERE C2G.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -211,7 +224,7 @@ _END;
           $row = $resultGenresQuery->fetch_array(MYSQLI_NUM);
           /* var_dump ($row);*/
 
-          $genreName = ($row[0]);
+          $genreName = $row[0];
 
         } /*for loop ending*/
 
@@ -231,7 +244,7 @@ _END;
       SELECT  i.instr_name
       FROM C2I 
       LEFT JOIN instruments AS i ON C2I.instrument_ID = i.ID
-      WHERE C2I.composition_ID = $compositionID;
+      WHERE C2I.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -249,7 +262,7 @@ _END;
         for ($j = 0 ; $j < $numInstrumentRows ; ++$j) {
           $row = $resultInstrumentQuery->fetch_array(MYSQLI_NUM);
           /*var_dump ($row);*/
-          $instrumentName = ($row[0]);
+          $instrumentName = $row[0];
           /*$instrumentString = implode(',',$instVal);*/
           $instrumentString .= $instrumentName.",";
       
@@ -270,7 +283,7 @@ _END;
         LEFT JOIN C2D ON c.ID = C2D.composition_ID
         LEFT JOIN difficulties AS d ON C2D.difficulty_ID = d.ID
         JOIN organizations as o On d.org_ID = o.ID AND o.org_name = 'General'
-        WHERE C2D.composition_ID = $compositionID;
+        WHERE C2D.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -286,7 +299,7 @@ _END;
         for ($j = 0 ; $j < $numGenDiffRows ; ++$j)  {
           $row = $resultGenDiffQuery->fetch_array(MYSQLI_NUM);
           /* var_dump ($row);*/
-          $GenDiffName = ($row[0]);
+          $GenDiffName = $row[0];
       } /*for loop ending*/
 
       } /*End if result gendiff query*/
@@ -301,7 +314,7 @@ _END;
         LEFT JOIN C2D ON c.ID = C2D.composition_ID
         LEFT JOIN difficulties AS d ON C2D.difficulty_ID = d.ID
         JOIN organizations as o On d.org_ID = o.ID AND o.org_name = 'ASP'
-        WHERE C2D.composition_ID = $compositionID;
+        WHERE C2D.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -318,7 +331,7 @@ _END;
           $row = $resultASPDiffQuery->fetch_array(MYSQLI_NUM);
           /* var_dump ($row);*/
 
-          $ASPDiffName = ($row[0]);
+          $ASPDiffName = $row[0];
     
         } /*for loop ending*/
 
@@ -338,7 +351,7 @@ _END;
         LEFT JOIN roles AS r_o ON r_o.ID = B2R2O.role_ID AND r_o.role_name = 'Publisher' 
         LEFT JOIN organizations AS o ON o.ID = B2R2O.org_ID 
         LEFT JOIN compositions AS c ON c.book_ID = b.ID
-        WHERE c.ID =  $compositionID ;
+        WHERE c.ID =  '$compositionIDAltered' ;
 
 _END;
 
@@ -354,18 +367,18 @@ _END;
         for ($j = 0 ; $j < $numberOfBookRows ; ++$j) {
           $row = $resultBookQuery->fetch_array(MYSQLI_NUM);
           /*Don't need to sanitize these they come from the db not the user*/
-          $bookID = ($row[0]);
-          $bookTitle = ($row[1]);
-          $bookTag1 = ($row[2]);
-          $bookTag2 = ($row[3]);
-          $bookVolume = ($row[4]);
-          $bookNumber = ($row[5]);
-          $publisherName = ($row[6]);
-          $publisherLocation = ($row[7]);
-          $editorFirstName = ($row[8]);
-          $editorMiddleName = ($row[9]);
-          $editorLastName = ($row[10]);
-          $editorSuffix = ($row[11]);
+          $bookID = $row[0];
+          $bookTitle = $row[1];
+          $bookTag1 = $row[2];
+          $bookTag2 = $row[3];
+          $bookVolume = $row[4];
+          $bookNumber = $row[5];
+          $publisherName = $row[6];
+          $publisherLocation = $row[7];
+          $editorFirstName = $row[8];
+          $editorMiddleName = $row[9];
+          $editorLastName = $row[10];
+          $editorSuffix = $row[11];
 
         }  /*end forloop*/  
 

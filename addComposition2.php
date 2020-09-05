@@ -89,7 +89,10 @@ if($ensemble == "NULL") {
 
 /*assign local variables to values from Request array (from previous page)*/
 
-if (isset($_REQUEST['bookID'])) {
+/*$bookID is used in a dbquery on this page
+here we make sure it is a number
+we will wash later*/
+if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
     $bookID = $_REQUEST['bookID'];
 }
 
@@ -97,11 +100,15 @@ if (isset($_REQUEST['submit'])) {
     $submit = $_REQUEST['submit'];
 }
 
-if (isset($_REQUEST['compositionID'])) {
+/*$compositionID is used in a dbquery on this page
+here we make sure it is a number
+we will wash later*/
+if (isset($_REQUEST['compositionID']) && is_numeric($_REQUEST['compositionID'])) {
     $compositionID = $_REQUEST['compositionID'];
 }
 
-if (isset($_REQUEST['oldCompositionID'])) {
+/*$oldCompositionID is not used in a dbquery on this page*/
+if (isset($_REQUEST['oldCompositionID']) && is_numeric($_REQUEST['oldCompositionID'])) {
     $oldCompositionID = $_REQUEST['oldCompositionID'];
 }
 
@@ -111,10 +118,6 @@ if (isset($_REQUEST['editComposition'])) {
 
 if (isset($_REQUEST['addNewComposition'])) {
     $addNewComposition = $_REQUEST['addNewComposition'];
-}
-
-if (isset($_REQUEST['bookID'])) {
-    $bookID = $_REQUEST['bookID'];
 }
 
 if (isset($_REQUEST['physCompositionLocNote'])) {
@@ -207,23 +210,23 @@ if($submit == 'true') {
 
     /*VALIDATION*/
     /*validate local submission vars*/
-    /*(count($compName) == 0 )*/
 
 
-    if($compName == "") {
+
+    if(strlen($compName) == 0) {
         $compNameErr = "<span class='error'>  * Name of Composition is required </span>";
         $validationFailed = true;
-    }/*end if(count($compName) == 0 )*/
+    }/*if(strlen($compName) == 0)*/
 
-    if($opusNum !== "" && !is_numeric($opusNum)) {
+    if(strlen($opusNum) !== 0 && !is_numeric($opusNum)) {
         $opusNumErr = "<span class='error'>  * Must be empty or a number </span>";
         $validationFailed = true;
-    }/*end if(count($compName) == 0 )*/
+    }/*if(strlen($opusNum) !== 0 && !is_numeric($opusNum))*/
 
-    if($compNum !== "" && !is_numeric($compNum)) {
+    if(strlen($compNum) !== 0 && !is_numeric($compNum)) {
         $compNumErr = "<span class='error'>  * Must be empty or a number </span>";
         $validationFailed = true;
-    }/*end if(count($compName) == 0 )*/
+    }/*if(strlen($opusNum) !== 0 && !is_numeric($opusNum))*/
 
     /*add check box validations here*/
     /*if checkbox validation fails, set checkbox error message and validationFailed = true*/
@@ -247,30 +250,30 @@ if($submit == 'true') {
         $validationFailed = true;
     }/*end if(count($instruments) == 0 )*/
 
-    if($era == "" ) {
+    if(strlen($era) == 0 ) {
         $eraErr = "<span class='error'>  * One item must be selected </span>";
         $validationFailed = true;
-    }/*end if(count($era) == 0 )*/
+    }/*if(strlen($era) == 0 )*/
 
-    if($voice == "" ) {
+    if(strlen($voice) == 0 ) {
         $voiceErr = "<span class='error'>  * One item must be selected </span>";
         $validationFailed = true;
-    }/*end if(count($voice) == 0 )*/
+    }/*if(strlen($voice == 0 )*/
 
-    if($ensemble == 0 ) {
+    if(strlen($ensemble) == 0 ) {
         $ensembleErr = "<span class='error'>  * One item must be selected </span>";
         $validationFailed = true;
-    }/*end if(count($ensemble) == 0 )*/
+    }/*if(strlen($ensemble) == 0 )*/
 
-    if($genDiff == 0 ) {
+    if(strlen($genDiff) == 0 ) {
         $genDiffErr = "<span class='error'> * One item must be selected </span>";
         $validationFailed = true;
-    }/*end if(count($genDiff) == 0 )*/
+    }/*if(strlen($genDiff) == 0 )*/
 
-    if($ASPDiff == 0 ) {
+    if(strlen($ASPDiff) == 0 ) {
         $ASPDiffErr = "<span class='error'>  * One item must be selected </span>";
         $validationFailed = true;
-    }/*end if(count($ASPDiffErr) == 0 )*/
+    }/*if(strlen($ASPDiff) == 0 )*/
 
 
 
@@ -283,6 +286,12 @@ if($submit == 'true') {
     if (!$validationFailed)
 
     {
+
+        $washPostVar = cleanup_post($bookID);
+        $bookIDAltered = strip_before_insert($conn, $washPostVar);
+
+        $washPostVar = cleanup_post($compositionID);
+        $compositionIDAltered = strip_before_insert($conn, $washPostVar);
 
         $washPostVar = cleanup_post($compName);
         $compNameAltered = strip_before_insert($conn, $washPostVar);
@@ -379,11 +388,11 @@ if($submit == 'true') {
             $updateCompositions .= "c.subtitle='$subTitleAltered', ";
         }
 
-        if($bookID =="") {
+        if($bookIDAltered =="") {
             $updateCompositions .= "c.book_ID=NULL, ";
         }
         else{
-            $updateCompositions .= "c.book_ID=$bookID, ";
+            $updateCompositions .= "c.book_ID=$bookIDAltered, ";
         }
 
         if($movementAltered =="") {
@@ -421,7 +430,7 @@ if($submit == 'true') {
             $updateCompositions .= "c.physCompositionLoc='$physCompositionLocNoteAltered' ";
         }
 
-            $updateCompositions .= "WHERE c.ID='$compositionID';";
+            $updateCompositions .= "WHERE c.ID='$compositionIDAltered';";
             
 
 
@@ -444,7 +453,7 @@ if($submit == 'true') {
         $deleteC2K = <<<_END
 
             DELETE FROM C2K
-            WHERE C2K.composition_ID = '$compositionID';
+            WHERE C2K.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -478,7 +487,7 @@ _END;
 
                 $C2KInsertQuery = <<<_END
                             INSERT INTO C2K (composition_ID, keysig_ID)
-                            VALUES ('$compositionID', '$value');
+                            VALUES ('$compositionIDAltered', '$value');
 
 _END;
 
@@ -504,7 +513,7 @@ _END;
     $deleteC2G = <<<_END
 
                 DELETE FROM C2G
-                WHERE C2G.composition_ID  = '$compositionID';
+                WHERE C2G.composition_ID  = '$compositionIDAltered';
 
 _END;
 
@@ -528,7 +537,7 @@ _END;
         foreach ($genres as $value) {
             $C2GInsertQuery = <<<_END
                 INSERT INTO C2G (composition_ID, genre_ID)
-                VALUES ('$compositionID', '$value');
+                VALUES ('$compositionIDAltered', '$value');
 
 _END;
 
@@ -556,7 +565,7 @@ _END;
     $deleteC2I = <<<_END
 
         DELETE FROM C2I
-        WHERE C2I.composition_ID = '$compositionID';
+        WHERE C2I.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -581,7 +590,7 @@ _END;
         foreach ($instruments as $value) {
             $C2IInsertQuery = <<<_END
                 INSERT INTO C2I (composition_ID, instrument_ID)
-                VALUES ('$compositionID', '$value');
+                VALUES ('$compositionIDAltered', '$value');
 
 _END;
 
@@ -607,7 +616,7 @@ _END;
         $deleteC2D = <<<_END
 
         DELETE FROM C2D
-        WHERE C2D.composition_ID = '$compositionID';
+        WHERE C2D.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -629,7 +638,7 @@ _END;
         /*Now, insert into C2D the first time for General difficulty*/
         $C2DInsertQuery = <<<_END
  INSERT INTO C2D (composition_ID, difficulty_ID)
- VALUES ('$compositionID', '$genDiff');
+ VALUES ('$compositionIDAltered', '$genDiffAltered');
 
 _END;
 
@@ -650,7 +659,7 @@ _END;
         /*Now, insert into C2D for a second time for ASP difficulty*/
         $C2DInsertQuery = <<<_END
  INSERT INTO C2D (composition_ID, difficulty_ID)
- VALUES ('$compositionID', '$ASPDiff');
+ VALUES ('$compositionIDAltered', '$ASPDiffAltered');
 
 _END;
 
@@ -739,11 +748,11 @@ VALUES (";
             $compositionInsertQuery .= " '$subTitleAltered', ";
         }
 
-        if($bookID == "") {
+        if($bookIDAltered == "") {
             $compositionInsertQuery .= " NULL, ";
         }
         else{
-            $compositionInsertQuery .= " '$bookID', ";
+            $compositionInsertQuery .= " '$bookIDAltered', ";
         }
 
         if($movementAltered == "") {
@@ -827,7 +836,7 @@ VALUES (";
 
             $C2KInsertQuery = <<<_END
         INSERT INTO C2K (composition_ID, keysig_ID)
-        VALUES ('$compositionID', '$value');
+        VALUES ('$compositionIDAltered', '$value');
 
 _END;
 
@@ -858,7 +867,7 @@ _END;
         foreach ($genres as &$value) {
             $C2GInsertQuery = <<<_END
     INSERT INTO C2G (composition_ID, genre_ID)
-    VALUES ('$compositionID', '$value');
+    VALUES ('$compositionIDAltered', '$value');
 
 _END;
 
@@ -889,7 +898,7 @@ _END;
         foreach ($instruments as &$value) {
             $C2IInsertQuery = <<<_END
         INSERT INTO C2I (composition_ID, instrument_ID)
-        VALUES ('$compositionID', '$value');
+        VALUES ('$compositionIDAltered', '$value');
 
 _END;
 
@@ -912,7 +921,7 @@ _END;
     /*Now, insert into C2D the first time for General difficulty*/
     $C2DInsertQuery = <<<_END
  INSERT INTO C2D (composition_ID, difficulty_ID)
- VALUES ('$compositionID', '$genDiff');
+ VALUES ('$compositionIDAltered', '$genDiffAltered');
 
 _END;
 
@@ -933,7 +942,7 @@ _END;
     /*Now, insert into C2D for a second time for ASP difficulty*/
     $C2DInsertQuery = <<<_END
  INSERT INTO C2D (composition_ID, difficulty_ID)
- VALUES ('$compositionID', '$ASPDiff');
+ VALUES ('$compositionIDAltered', '$ASPDiffAltered');
 
 _END;
 
@@ -983,7 +992,7 @@ if($submit == "" && $editComposition == 'true'){
       SELECT  k.ID
       FROM C2K
       LEFT JOIN keysignatures AS k ON C2K.keysig_ID = k.ID
-      WHERE C2K.composition_ID = '$compositionID';
+      WHERE C2K.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -1028,7 +1037,7 @@ _END;
         SELECT  g.ID
         FROM C2G 
         LEFT JOIN genres AS g ON C2G.genre_ID = g.ID
-        WHERE C2G.composition_ID = '$compositionID';
+        WHERE C2G.composition_ID = '$compositionIDAltered';
 
 
 _END;
@@ -1072,7 +1081,7 @@ _END;
       SELECT  i.ID
       FROM C2I 
       LEFT JOIN instruments AS i ON C2I.instrument_ID = i.ID
-      WHERE C2I.composition_ID = '$compositionID';
+      WHERE C2I.composition_ID = '$compositionIDAltered';
 
 
 _END;
@@ -1121,7 +1130,7 @@ _END;
       LEFT JOIN C2D ON c.ID = C2D.composition_ID
       LEFT JOIN difficulties AS d ON C2D.difficulty_ID = d.ID
       JOIN organizations as o On d.org_ID = o.ID AND o.org_name = 'General'
-      WHERE C2D.composition_ID = '$compositionID';
+      WHERE C2D.composition_ID = '$compositionIDAltered';
 
 
 _END;
@@ -1143,7 +1152,7 @@ _END;
 
             /*  var_dump ($row);*/
 
-            $genDiff = htmlspecialchars($row[0]);
+            $genDiff = $row[0];
 
         } /*for loop ending*/
 
@@ -1161,7 +1170,7 @@ _END;
       LEFT JOIN C2D ON c.ID = C2D.composition_ID
       LEFT JOIN difficulties AS d ON C2D.difficulty_ID = d.ID
       JOIN organizations as o On d.org_ID = o.ID AND o.org_name = 'ASP'
-      WHERE C2D.composition_ID = '$compositionID';
+      WHERE C2D.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -1182,7 +1191,7 @@ _END;
 
             /* var_dump ($row);*/
 
-            $ASPDiff = htmlspecialchars($row[0]);
+            $ASPDiff = $row[0];
 
 
         } /*for loop ending*/
@@ -1195,7 +1204,7 @@ _END;
         FROM compositions AS c
         LEFT JOIN books AS b ON c.book_ID = b.ID
 
-        WHERE c.ID = '$compositionID';
+        WHERE c.ID = '$compositionIDAltered';
        
 _END;
 
@@ -1215,18 +1224,18 @@ _END;
 
             /*  var_dump ($row);*/
 
-            $compositionID = htmlspecialchars($row[0]);
-            $compName = htmlspecialchars($row[1]);
-            $opus = htmlspecialchars($row[2]);
-            $opusNum = htmlspecialchars($row[3]);
-            $compNum = htmlspecialchars($row[4]);
-            $subTitle = htmlspecialchars($row[5]);
-            $movement = htmlspecialchars($row[6]);
-            $era = htmlspecialchars($row[7]);
-            $voice = htmlspecialchars($row[8]);
-            $ensemble = htmlspecialchars($row[9]);
-            $compBookID = htmlspecialchars($row[10]);
-            $physCompositionLocNote = htmlspecialchars($row[11]);
+            $compositionID = $row[0];
+            $compName = $row[1];
+            $opus = $row[2];
+            $opusNum = $row[3];
+            $compNum = $row[4];
+            $subTitle = $row[5];
+            $movement = $row[6];
+            $era = $row[7];
+            $voice = $row[8];
+            $ensemble = $row[9];
+            $compBookID = $row[10];
+            $physCompositionLocNote = $row[11];
 
 
         } /*for loop ending*/
@@ -1263,13 +1272,13 @@ if($opusNum == 'NULL') {
         <div class="form-group">
 
             <label for="compositionName">Composition Name: <?php echo $compNameErr ?></label>
-            <input type="text" class="form-control" id="compositionName" name="compName" value="<?php echo $compName ?>" /><br/>
+            <input type="text" class="form-control" id="compositionName" name="compName" value="<?php echo htmlspecialchars($compName, ENT_QUOTES) ?>" /><br/>
 
             <label for="opusLike">Opus-Like:  </label>
-            <input type="text" class="form-control" id="opusLike" name="opus" value="<?php echo $opus ?>"/><br/>
+            <input type="text" class="form-control" id="opusLike" name="opus" value="<?php echo htmlspecialchars($opus, ENT_QUOTES) ?>"/><br/>
 
             <label for="opusNum">Opus No.:<?php echo $opusNumErr ?> </label>
-            <input type="text" class="form-control" id="opusNum" name="opusNum" value="<?php echo $opusNum ?>"/><br/>
+            <input type="text" class="form-control" id="opusNum" name="opusNum" value="<?php echo htmlspecialchars($opusNum, ENT_QUOTES) ?>"/><br/>
 
 
 
@@ -1289,13 +1298,13 @@ if($opusNum == 'NULL') {
 
 
                 <label for="compositionNum">Composition No.:<?php echo $compNumErr ?> </label>
-                <input type="number" class="form-control" id="compositionNum" name="compNum" min="0" value="<?php echo $compNum ?>"/><br/>
+                <input type="number" class="form-control" id="compositionNum" name="compNum" min="0" value="<?php echo htmlspecialchars($compNum, ENT_QUOTES) ?>"/><br/>
 
                 <label for="subTitle">Subtitle: </label> 
-                <input type="text" class="form-control" id="subTitle" name="subTitle" value="<?php echo $subTitle ?>"/><br/>
+                <input type="text" class="form-control" id="subTitle" name="subTitle" value="<?php echo htmlspecialchars($subTitle, ENT_QUOTES) ?>"/><br/>
 
                 <label for="mvmnt">Movement: </label>
-                <input type="text" class="form-control" id="mvmnt" name="movement" value="<?php echo $movement ?>"/><br/>
+                <input type="text" class="form-control" id="mvmnt" name="movement" value="<?php echo htmlspecialchars($movement, ENT_QUOTES) ?>"/><br/>
 
 
           </div> <!-- end form-group -->
@@ -2112,7 +2121,7 @@ if($opusNum == 'NULL') {
                   <div class="card-body bg-light">
                       <div class="form-group pt-2">
                           <label for="physCompositionLoc">Composition Location: Type in the Composition Location for your library</label>
-                          <input type="text" class="form-control" id="physCompositionLoc" name="physCompositionLocNote" value="<?php echo $physCompositionLocNote ?>"/><br/>
+                          <input type="text" class="form-control" id="physCompositionLoc" name="physCompositionLocNote" value="<?php echo htmlspecialchars($physCompositionLocNote, ENT_QUOTES) ?>"/><br/>
                           <p>If using quotes: Opt for single quotes rather than double</p></p>
                       </div> <!-- end form-group -->
                   </div> <!-- end card-body -->

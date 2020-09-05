@@ -54,7 +54,7 @@ $disableERDEditor = "";
 
 
 
-if(isset($_REQUEST['bookID'])) {
+if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
     $bookID = $_REQUEST['bookID'];
 }
 
@@ -68,7 +68,7 @@ if(isset($_REQUEST['deletePublisherFromBookSuccess'])) {
 
 
 
-/*TODO: finish passing along the variables that need to be here to complete the following code*/
+
 /*Logic for specific instances*/
 $notEntered = "<span style='color:rgba(0,0,0,0.4);'>Not Entered</span>";
 
@@ -81,8 +81,14 @@ if($deletePublisherFromBookSuccess=='true') {
     echo 'This ' . $publisherOrgName .  'has successfully been deleted from the book called ' . $bookTitle . '.';
 }
 
+/*Here we will wash any variables needed in the queries for this page*/
+$washPostVar = cleanup_post($bookID);
+$bookIDAltered = strip_before_insert($conn, $washPostVar);
 
-if (isset($editBook) || $bookID){
+
+
+
+if (isset($editBook) || $bookIDAltered){
 
 
         $bookQuery  = <<<_END
@@ -90,7 +96,7 @@ if (isset($editBook) || $bookID){
           SELECT b.ID, b.title, b.tag1, b.tag2, b.book_vol, b.book_num, b.physBookLoc
           FROM books AS b
 
-          WHERE b.ID = '$bookID' ;
+          WHERE b.ID = '$bookIDAltered' ;
 
 _END;
 
@@ -107,13 +113,13 @@ if($bookQueryResult) {
     for ($j = 0; $j < $numberOfBookRows; ++$j) {
         $row = $bookQueryResult->fetch_array(MYSQLI_NUM);
 
-        $bookID = htmlspecialchars($row[0]);
-        $bookTitle = htmlspecialchars($row[1]);
-        $bookTag1 = htmlspecialchars($row[2]);
-        $bookTag2 = htmlspecialchars($row[3]);
-        $bookVolume = htmlspecialchars($row[4]);
-        $bookNumber = htmlspecialchars($row[5]);
-        $physBookLocNote = htmlspecialchars($row[6]);
+        $bookID = $row[0];
+        $bookTitle = $row[1];
+        $bookTag1 = $row[2];
+        $bookTag2 = $row[3];
+        $bookVolume = $row[4];
+        $bookNumber = $row[5];
+        $physBookLocNote = $row[6];
 
     }    /*forloop ending*/
 
@@ -130,7 +136,7 @@ if($bookQueryResult) {
       FROM books AS b 
       JOIN B2R2P ON b.ID = B2R2P.book_ID
       JOIN people AS p ON p.ID= B2R2P.people_ID
-      WHERE b.ID = '$bookID';
+      WHERE b.ID = '$bookIDAltered';
 
 _END;
 
@@ -149,11 +155,11 @@ _END;
         for ($j = 0 ; $j < $numEditorPeopleRows ; ++$j) {
             $row = $resultEditorPeopleQuery->fetch_array(MYSQLI_NUM);
             /*var_dump ($row);*/
-            $editorPeopleID = htmlspecialchars($row[0]);
-            $editorPeopleFirstName = htmlspecialchars($row[1]);
-            $editorPeopleMiddleName = htmlspecialchars($row[2]);
-            $editorPeopleLastName = htmlspecialchars($row[3]);
-            $editorPeopleSuffix = htmlspecialchars($row[4]);
+            $editorPeopleID = $row[0];
+            $editorPeopleFirstName = $row[1];
+            $editorPeopleMiddleName = $row[2];
+            $editorPeopleLastName = $row[3];
+            $editorPeopleSuffix = $row[4];
             /*$editorPeopleString = implode(',',$instVal);*/
             $editorPeopleString .= $editorPeopleFirstName . " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . ", ";
 
@@ -179,7 +185,7 @@ _END;
       FROM books AS b 
       JOIN B2R2O ON b.ID = B2R2O.book_ID
       JOIN organizations AS o ON o.ID= B2R2O.org_ID
-      WHERE b.ID = '$bookID';
+      WHERE b.ID = '$bookIDAltered';
 
 _END;
 
@@ -198,9 +204,9 @@ _END;
         for ($j = 0 ; $j < $numPublisherOrgRows ; ++$j) {
             $row = $resultPublisherOrgQuery->fetch_array(MYSQLI_NUM);
             /*var_dump ($row);*/
-            $publisherOrgID = htmlspecialchars($row[0]);
-            $publisherOrgName = htmlspecialchars($row[1]);
-            $publisherOrgLocation = htmlspecialchars($row[2]);
+            $publisherOrgID = $row[0];
+            $publisherOrgName = $row[1];
+            $publisherOrgLocation = $row[2];
 
             /*$editorPeopleString = implode(',',$instVal);*/
             $publisherOrgString .= $publisherOrgName . "</br> Publisher Location: " . $publisherOrgLocation . "</br>Publisher Name: ";
@@ -292,7 +298,7 @@ _END;
                
                    <form class="mt-4" action='addBook.php' method='post'>
                       <div class="form-check">
-                          <input class="btn  btn-light" type='submit' value="Edit Existing General Book Information for '$bookTitle' "/>
+                          <input class="btn  btn-light" type='submit' value="Edit Existing General Book Information for &quot;{$fn_encode($bookTitle)}&quot; "/>
                           <input type='hidden' name="bookID" value='$bookID'/>
                           <input type='hidden' name="editBook" value= 'true' />
                        </div>  <!-- end form-check -->      
@@ -300,19 +306,19 @@ _END;
                   
                    <form action='delete.php' method='post'>
                        <div class="form-check">
-                            <input class="btn btn-light confirm deletebook_button" type="submit" value="Delete the book '$bookTitle' from library "/>
+                            <input class="btn btn-light confirm deletebook_button" type="submit" value="Delete the book &quot;{$fn_encode($bookTitle)}&quot; from library "/>
                             <input type="hidden" name="editBook" value ="true" />
                             <input type="hidden" name="bookID" value= "$bookID" />
-                            <input type="hidden" name="bookTitle" value="$bookTitle"/>
+                            <input type="hidden" name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                             <input type="hidden" name="deleteBook" value= "true" />
                           </div><!-- end form-check -->
                   </form>
         
                   <form class="mt-4" action='peopleOptions.php' method='post'>
                     <div class="form-check">
-                        <input class="btn  btn-light" type='submit' $disableERDEditor value="Edit/Replace/Delete Existing Editor Information for '$bookTitle' "  />
+                        <input class="btn  btn-light" type='submit' $disableERDEditor value="Edit/Replace/Delete Existing Editor Information for &quot;{$fn_encode($bookTitle)}&quot;"  />
                         <input type='hidden' name="bookID" value='$bookID'/>
-                        <input type='hidden' name="bookTitle" value='$bookTitle'/>
+                        <input type='hidden' name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                         <input type='hidden' name="editBook" value= 'true' />
                         <input type='hidden' name="editReplaceDeleteEditor" value= 'true' />
                     </div>  <!-- end form-check --> 
@@ -321,9 +327,9 @@ _END;
                   
                    <form class="mt-4" action='peopleSearch.php' method='post'>
                       <div class="form-check">
-                          <input class="btn  btn-light" type='submit' value="Add a NEW Editor to '$bookTitle'"/>
+                          <input class="btn  btn-light" type='submit' value="Add a NEW Editor to &quot;{$fn_encode($bookTitle)}&quot;"/>
                           <input type='hidden' name="bookID" value='$bookID'/>
-                          <input type='hidden' name="bookTitle" value='$bookTitle'/>
+                          <input type='hidden' name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                           <input type='hidden' name="editBook" value= 'true' />
                           <input type='hidden' name="oldPeopleID" value= '$peopleID' />
                           <input type='hidden' name="addNewEditor" value= 'true' />
@@ -333,9 +339,9 @@ _END;
         
                   <form class="mt-4" action='orgOptions.php' method='post'>
                      <div class="form-check">
-                        <input class="btn  btn-light" type='submit' $disableERDPub value="Edit/Replace/Delete Existing Publisher Information for '$bookTitle'"  />
+                        <input class="btn  btn-light" type='submit' $disableERDPub value="Edit/Replace/Delete Existing Publisher Information for &quot;{$fn_encode($bookTitle)}&quot;"  />
                         <input type='hidden' name="bookID" value='$bookID'/>
-                        <input type='hidden' name="bookTitle" value='$bookTitle'/>
+                        <input type='hidden' name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                         <input type='hidden' name="editBook" value= 'true' />
                         <input type='hidden' name="editReplaceDeletePub" value= 'true' />
                      </div>  <!-- end form-check --> 
@@ -344,9 +350,9 @@ _END;
         
                   <form class="mt-4" action='orgSearch.php' method='post'>
                       <div class="form-check">
-                          <input class="btn  btn-light" type='submit' value="Add a NEW Publisher to '$bookTitle'"/>
+                          <input class="btn  btn-light" type='submit' value="Add a NEW Publisher to &quot;{$fn_encode($bookTitle)}&quot;"/>
                           <input type='hidden' name="bookID" value='$bookID'/>
-                          <input type='hidden' name="bookTitle" value='$bookTitle'/>
+                          <input type='hidden' name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                           <input type='hidden' name="editBook" value= 'true' />
                           <input type='hidden' name="addNewPublisher" value= 'true' />
                        </div>  <!-- end form-check -->      
@@ -354,7 +360,7 @@ _END;
                                                
                   <form class="mt-4" action='displayBook.php' method='post'>
                       <div class="form-check">
-                         <input class="btn  btn-light" type='submit' value="Done Editing '$bookTitle'"/>
+                         <input class="btn  btn-light" type='submit' value="Done Editing &quot;{$fn_encode($bookTitle)}&quot;"/>
                          <input type='hidden' name="bookID" value='$bookID'/>
                       </div>  <!-- end form-check --> 
                   </form>  <!-- end form --><br><br><br>
