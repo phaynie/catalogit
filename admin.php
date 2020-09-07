@@ -5,7 +5,6 @@ include 'boilerplate.php';
 // then changing the names in the source dump to the target database
 // then running the dump file to create or overwrite the target database
 
-// these variables are defined in login.php -  $hn, $un, $pw
 
 // DANGER DANGER - WASH THESE VARIABLES
 
@@ -211,7 +210,7 @@ include 'beginningNav.php';
 //-TODO make sure to add a warning when someone clicks on delete database. 'ARE YOU SURE YOU WANT TO DELETE' .  $databaseName . '?'
 
 
-include 'footer.html';
+include 'footer.php';
 include 'endingBoilerplate.php';
 
 

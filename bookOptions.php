@@ -384,7 +384,7 @@ _END;
 } /*end if isset searchBookTitle*/
   
 
-include 'footer.html';
+include 'footer.php';
 include 'endingBoilerplate.php';
 
 ?>

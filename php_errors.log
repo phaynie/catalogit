@@ -13122,3 +13122,13 @@
 [26-Aug-2020 22:14:47 UTC] PHP Parse error:  syntax error, unexpected ',' in C:\Ampps\www\catalogit\compositionPrintPage.php on line 151
 [30-Aug-2020 18:59:31 UTC] PHP Parse error:  syntax error, unexpected '}', expecting ')' in C:\Ampps\www\catalogit\addPeople.php on line 476
 [31-Aug-2020 18:19:40 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ')' in C:\Ampps\www\catalogit\compositionSearch.php on line 72
+[06-Sep-2020 13:15:02 UTC] PHP Parse error:  syntax error, unexpected ')' in C:\Ampps\www\catalogit\boilerplate.php on line 14
+[06-Sep-2020 13:15:09 UTC] PHP Parse error:  syntax error, unexpected ')' in C:\Ampps\www\catalogit\boilerplate.php on line 14
+[06-Sep-2020 13:16:44 UTC] PHP Parse error:  syntax error, unexpected '{' in C:\Ampps\www\catalogit\boilerplate.php on line 14
+[06-Sep-2020 13:16:47 UTC] PHP Parse error:  syntax error, unexpected '{' in C:\Ampps\www\catalogit\boilerplate.php on line 14
+[06-Sep-2020 13:34:56 UTC] PHP Parse error:  syntax error, unexpected '||' (T_BOOLEAN_OR) in C:\Ampps\www\catalogit\boilerplate.php on line 15
+[06-Sep-2020 13:40:09 UTC] PHP Parse error:  syntax error, unexpected '{' in C:\Ampps\www\catalogit\boilerplate.php on line 15
+[06-Sep-2020 14:09:35 UTC] PHP Parse error:  syntax error, unexpected ']' in C:\Ampps\www\catalogit\boilerplate.php on line 16
+[06-Sep-2020 18:11:47 UTC] PHP Parse error:  syntax error, unexpected ';' in C:\Ampps\www\catalogit\boilerplate.php on line 31
+[06-Sep-2020 18:12:19 UTC] PHP Parse error:  syntax error, unexpected ';' in C:\Ampps\www\catalogit\boilerplate.php on line 32
+[06-Sep-2020 19:22:01 UTC] PHP Parse error:  syntax error, unexpected '<' in C:\Ampps\www\catalogit\beginningNav.php on line 6

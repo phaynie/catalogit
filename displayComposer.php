@@ -908,7 +908,7 @@ _END;
 }/*end ifcompositionsFound*/
 } /*END if ($resultCompositionQuery)*/
 
-include 'footer.html';
+include 'footer.php';
 include 'endingBoilerplate.php';
 
 ?>

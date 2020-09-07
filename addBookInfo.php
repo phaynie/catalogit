@@ -307,7 +307,7 @@ unset($_SESSION['addRole_bookID_value']);
 
 
 
-include 'footer.html';
+include 'footer.php';
 include 'endingBoilerplate.php';
 
 ?>

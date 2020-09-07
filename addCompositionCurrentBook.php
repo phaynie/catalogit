@@ -1360,7 +1360,7 @@ unset($_SESSION['postASPDiffID33_value']);
 
 
 
-include 'footer.html';
+include 'footer.php';
 include 'endingBoilerplate.php';
 
 

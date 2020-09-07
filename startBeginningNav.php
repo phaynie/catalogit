@@ -45,7 +45,8 @@ _END;
               echo '
                   <form action="logout_script.php" method="post"><br>
                   <button class="navButton"  type="submit" name="logout-submit">Logout</button><br>
-                  </form> ';
+                  </form>
+                  <h5 class="nav-item burnt"> You are Logged in!</h5>';
               }else{
               echo '
                   <form action="userLogin.php" method="post">

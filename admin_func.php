@@ -14,7 +14,6 @@ _END;
 
 
 if(isset($_POST['admin-submit'])) {
-    require 'login.php';  /*login.php does not have the if(!conn) error. that is in boilerplate.php. Need to handle that. */
     $username = $_POST['uid'];
     $email = $_POST['mail'];
     $password = $_POST['pwd'];

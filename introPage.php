@@ -1,4 +1,9 @@
 <?php
+
+
+
+
+
 include 'boilerplate.php';
 if($debug) {
     echo <<<_END
@@ -10,8 +15,13 @@ _END;
 } /*end debug*/
 
 
+
+$pageName = $_SERVER['PHP_SELF'];
+echo $pageName;
+
+
 include 'beginningNav.php';
-unset($_SESSION['bookID']); /*old code?*/
+
 echo <<<_END
 
 <div class="jumbotron-fluid bg-light pt-3 pb-4">
@@ -65,7 +75,7 @@ _END;
 
 
 
-include 'footer.html';
+include 'footer.php';
 
 include 'endingBoilerplate.php';
   ?>

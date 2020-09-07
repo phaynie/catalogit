@@ -229,7 +229,7 @@ if ($resultInstrumentsArrayQuery) {
 $instrumentsArray = rtrim($instrumentsArray,', ');
 $instrumentsArray .="]</script>";
 
-$debug_string .="print_r($instrumentsArray)";
+$debug_string .="$instrumentsArray";
 
 
 
@@ -274,7 +274,7 @@ $debug_string .="print_r($instrumentsArray)";
     $composerArray = rtrim($composerArray,', ');
     $composerArray .="]</script>";
 
-$debug_string .="print_r($composerArray)";
+$debug_string .="$composerArray";
 
 
 
@@ -319,7 +319,7 @@ if ($resultArrangersArrayQuery) {
 $arrangersArray = rtrim($arrangersArray,', ');
 $arrangersArray .="]</script>";
 
-$debug_string .= "print_r($arrangersArray)";
+$debug_string .= "$arrangersArray";
 
 
 /*retrieve  lyricist last name values from db and put into an array*/
@@ -362,7 +362,7 @@ if ($resultLyricistsArrayQuery) {
 $lyricistsArray = rtrim($lyricistsArray,', ');
 $lyricistsArray .="]</script>";
 
-$debug_string .= "print_r($lyricistsArray)";
+$debug_string .= "$lyricistsArray";
 
 
 
@@ -407,7 +407,7 @@ if ($resultCompositionsArrayQuery) {
 $compositionsArray = rtrim($compositionsArray,', ');
 $compositionsArray .="]</script>";
 
-$debug_string .= "print_r($compositionsArray)";
+$debug_string .= "$compositionsArray";
 
 
 
@@ -1186,7 +1186,7 @@ echo <<<_END
 
 _END;
 
-  include 'footer.html';
+  include 'footer.php';
 
   include 'endingBoilerplate.php';
 

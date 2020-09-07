@@ -2159,7 +2159,7 @@ Pre-populates the form with current Composer,arranger or lyricist info so user c
 When submitted, those new values will be validated and the people table will be updated*/
 
 
-include 'footer.html';
+include 'footer.php';
 include 'endingBoilerplate.php';
 
 ?>

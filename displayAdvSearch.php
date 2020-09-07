@@ -520,7 +520,7 @@ echo <<<_END
 _END;
 
 
-include 'footer.html';
+include 'footer.php';
 include 'endingBoilerplate.php';
 
 

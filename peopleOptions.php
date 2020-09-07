@@ -690,7 +690,7 @@ _END;
 
 
 
-include 'footer.html';
+include 'footer.php';
 include 'endingBoilerplate.php';
 
 ?>

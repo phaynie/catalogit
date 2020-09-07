@@ -1,5 +1,10 @@
 <!-- boiler plate and nav bar included in all pages. Will make this an include eventually. -->
 <?php
+$disabled = "";
+if(!isset($_SESSION['userId'])) {
+    $disabled = 'disabled';
+    $welcomeLink = "<a class='nav-link ' href='index.php''>Welcome!</a>";
+}
 
 
 echo<<<_END
@@ -20,14 +25,14 @@ echo<<<_END
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="introPage.php">Home</a>
+                    <li class="nav-item ">
+                        <a class="nav-link $disabled" href="introPage.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="introPage.php">Search-it</a>
+                        <a class="nav-link $disabled" href="introPage.php">Search-it</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="answer.php">Answer-it</a>
+                        <a class="nav-link $disabled" href="answer.php">Answer-it</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="about.php">About-it</a>
@@ -35,11 +40,14 @@ echo<<<_END
                     <li class="nav-item">
                         <a class="nav-link " href="contact.php">Contact-it</a>
                     </li>
+                   <!-- <li class="nav-item">
+                        <a class="nav-link $disabled" href="signup.php">Admin-it</a>
+                    </li> -->
                     <li class="nav-item">
-                        <a class="nav-link " href="signup.php">Admin-it</a>
+                        <a class="nav-link $disabled" href="review.php">Review-it</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="review.php">Review-it</a>
+                        $welcomeLink
                     </li>
                 </ul>
             </div><!-- navbar-collapse -->

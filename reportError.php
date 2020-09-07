@@ -55,7 +55,7 @@ if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
 
 _END;
 
-include 'footer.html';
+include 'footer.php';
 include 'endingBoilerplate.php';
 
 ?>

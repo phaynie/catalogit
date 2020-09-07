@@ -27,7 +27,7 @@ _END;
 echo<<<_END
             
             
-            <h1 class="pb-4 pt-4"> Login to Continue</h1>
+            <h1 class="pb-4 pt-4"> Log in to Continue</h1>
         </div><!--end col 1-->
         
         
@@ -50,7 +50,7 @@ echo<<<_END
 _END;
 
 
-include 'footer.html';
+include 'footer.php';
 include 'endingBoilerplate.php';
 
 

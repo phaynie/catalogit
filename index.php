@@ -1,9 +1,5 @@
 <?php
 
-session_start();
-session_unset();
-session_destroy();
-
 
 include 'boilerplate.php';
 
@@ -16,9 +12,11 @@ _END;
 
 } /*end debug*/
 
+
+
 /*we will include startBeginningNav.php instead of beginningNav.php. It's different for this one page.*/
 
-include 'startBeginningNav.php';
+include 'beginningNav.php';
 
 echo <<<_END
 
@@ -61,7 +59,7 @@ _END;
 
 
 
-include 'footer.html';
+include 'footer.php';
 
 include 'endingBoilerplate.php';
 ?>

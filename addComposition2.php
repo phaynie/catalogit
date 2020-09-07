@@ -1,4 +1,8 @@
 <?php
+
+
+
+
 include 'boilerplate.php';
 /*Most current addComposition page*/
 
@@ -2149,7 +2153,7 @@ if($opusNum == 'NULL') {
 
 <?php
 
-include 'footer.html';
+include 'footer.php';
 include 'endingBoilerplate.php';
 
 ?>

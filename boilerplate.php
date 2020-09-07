@@ -4,17 +4,51 @@ setcookie("XDEBUG_SESSION_START", "PHPSTORM");
 
   session_start();
 
-$debug=false;
+$debug=true;
 
 if($debug) {
     print_r($_SESSION);
 } /*end debug*/
+
+/*if no session user id and not already on index.php or answer it, or about it, or contact it, then redirect to index.php*/
+/*Boiler plate is not a good place for this code. There are too many contingencies. It needs to be put on each page.*/
+$pageName = $_SERVER['PHP_SELF'];
+
+// load pages that can be seen without being logged in into array or list
+
+// change logic below to check if $pageName is not in the list
+
+$openPage = array(
+        "/catalogit/index.php",
+        "/catalogit/userLogin.php",
+        "/catalogit/login_script.php",
+        "/catalogit/indexlogin.php",
+        "/catalogit/about.php",
+        "/catalogit/answer.php",
+        "/catalogit/contact.php",
+        "/catalogit/logout_script.php");
+
+
+if(!isset($_SESSION['userId'])  &&  !in_array($pageName, $openPage, TRUE )) {
+            header("Location: index.php");
+}
+
+
+
+
+
+
 
 // extract the db name from the original request URL
 $requestString = $_SERVER['REQUEST_URI'];  // example = /catalogit/dbname/intropage.php
 $startPosition = strpos($requestString, "/", 1) + 1;  // character after second slash
 $length = strpos($requestString, "/", $startPosition) - $startPosition; // use position of third slash
 $dbname = substr($requestString, $startPosition, $length);
+
+$hn = 'localhost';
+$db = $dbname;
+$un = 'root';
+$pw = 'mysql';
 
 if($debug) {
     echo("<br/>site / dbname = ");
@@ -47,7 +81,6 @@ if($debug) {
 <body class="container-fluid bg-light mt-5 ">
 
 <?php
-  require_once 'login.php';
   $conn = new mysqli($hn ,$un, $pw, $db);
   if ($conn->connect_error) die("Fatal Error");
 

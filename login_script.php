@@ -3,7 +3,6 @@ include 'boilerplate.php';
 
 if(isset($_POST['login-submit'])) {
 
-    require 'login.php';
     $mailuid = $_POST['mailuid'];
     $password = $_POST['pwd'];
 

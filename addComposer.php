@@ -83,7 +83,7 @@ unset($_SESSION['compositionID']);
 
 
 
-include 'footer.html';
+include 'footer.php';
 include 'endingBoilerplate.php';
 
 ?>

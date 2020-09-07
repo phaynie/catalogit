@@ -76,7 +76,7 @@ unset($_SESSION['addLyricist_lyricistSuffix_value']);
 unset($_SESSION['bookID']);
 unset($_SESSION['compositionID']);
 
-include 'footer.html';
+include 'footer.php';
 include 'endingBoilerplate.php';
 
 ?>

@@ -1,4 +1,8 @@
 <?php
+
+
+
+
 /*This page provides a form with which to add or edit book info.
 When we are editing a book we see the form pre-populated with current book info we will validate, wash and update. goes to edit book again and again until user is finished updating and chooses "Done".
 When we are adding new book info, we will validate, wash and insert new info. we are sent to editBook to continue adding information to the book.
@@ -401,7 +405,7 @@ _END;
 
 
 
-include 'footer.html';
+include 'footer.php';
 include 'endingBoilerplate.php';
 
 ?>
