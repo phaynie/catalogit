@@ -16,8 +16,7 @@ _END;
 
 
 
-$pageName = $_SERVER['PHP_SELF'];
-echo $pageName;
+
 
 
 include 'beginningNav.php';
