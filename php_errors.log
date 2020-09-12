@@ -13132,3 +13132,6 @@
 [06-Sep-2020 18:11:47 UTC] PHP Parse error:  syntax error, unexpected ';' in C:\Ampps\www\catalogit\boilerplate.php on line 31
 [06-Sep-2020 18:12:19 UTC] PHP Parse error:  syntax error, unexpected ';' in C:\Ampps\www\catalogit\boilerplate.php on line 32
 [06-Sep-2020 19:22:01 UTC] PHP Parse error:  syntax error, unexpected '<' in C:\Ampps\www\catalogit\beginningNav.php on line 6
+[12-Sep-2020 12:32:07 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\displayComposer.php on line 917
+[12-Sep-2020 12:57:27 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\Ampps\www\catalogit\displayComposer.php on line 64
+[12-Sep-2020 13:10:12 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\Ampps\www\catalogit\displayComposer.php on line 72

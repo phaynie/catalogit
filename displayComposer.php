@@ -25,8 +25,8 @@ peopleOptions.php */
 /*Initialize local variables for values coming from other pages*/
 
 $composerID = "";
-$compositionID = "";
-$bookID = "";
+/*$compositionID = "";*/
+/*$bookID = "";*/
 
 $bookTitle = "";
 $bookTag1 = "";
@@ -59,16 +59,17 @@ $physCompositionLocNote = "";
 
 
 
-
-
+/*if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
+    $bookID = $_REQUEST['bookID'];
+}*/
 
 if(isset($_REQUEST['composerID']) && is_numeric($_REQUEST['composerID'])) {
     $composerID = $_REQUEST['composerID'];
 }
 
-if(isset($_REQUEST['compositionID']) && is_numeric($_REQUEST['compositionID'])) {
+/*if(isset($_REQUEST['compositionID']) && is_numeric($_REQUEST['compositionID'])) {
     $compositionID = $_REQUEST['compositionID'];
-}
+}*/
 
 
 $notEntered = "<span style='color:rgba(0,0,0,0.4);'>Not Entered</span>";
@@ -78,11 +79,11 @@ $notEntered = "<span style='color:rgba(0,0,0,0.4);'>Not Entered</span>";
 $washPostVar = cleanup_post($composerID);
 $composerIDAltered = strip_before_insert($conn, $washPostVar);
 
-$washPostVar = cleanup_post($compositionID);
-$compositionIDAltered = strip_before_insert($conn, $washPostVar);
+/*$washPostVar = cleanup_post($compositionID);
+$compositionID = strip_before_insert($conn, $washPostVar);*/
 
-$washPostVar = cleanup_post($bookID);
-$bookIDAltered = strip_before_insert($conn, $washPostVar);
+/*$washPostVar = cleanup_post($bookID);
+$bookIDAltered = strip_before_insert($conn, $washPostVar);*/
 
 
 
@@ -215,7 +216,7 @@ _END;
     <div class="container-fluid bg-light pt-4 pb-3">
       <h3 class="display-4 pb-3 noPrint">Success!</h3>
       <h3>Composer:</h3>
-      <h3 class="display-4">  $currentCompFirst $currentCompMiddle $currentCompLast $currentCompSuffix </h3><br/>
+      <h3 class="display-4">  $currentCompFirst $currentCompMiddle $currentCompLast $currentCompSuffix </h3>
     </div> <!--end container-->
         
 _END;
@@ -247,7 +248,7 @@ _END;
         SELECT  k.key_name
         FROM C2K
         JOIN keysignatures AS k ON C2K.keysig_ID = k.ID
-        WHERE C2K.composition_ID = '$compositionIDAltered';
+        WHERE C2K.composition_ID = '$compositionID';
 /*Does the composition Id come from the query above? */
 _END;
 
@@ -286,7 +287,7 @@ _END;
         SELECT  g.genre_type
         FROM C2G 
         JOIN genres AS g ON C2G.genre_ID = g.ID
-        WHERE C2G.composition_ID = '$compositionIDAltered';
+        WHERE C2G.composition_ID = '$compositionID';
 
 _END;
 
@@ -320,7 +321,7 @@ _END;
         SELECT  i.instr_name
         FROM C2I 
         JOIN instruments AS i ON C2I.instrument_ID = i.ID
-        WHERE C2I.composition_ID = '$compositionIDAltered';
+        WHERE C2I.composition_ID = '$compositionID';
 
 _END;
 
@@ -359,7 +360,7 @@ _END;
         JOIN C2D ON c.ID = C2D.composition_ID
         JOIN difficulties AS d ON C2D.difficulty_ID = d.ID
         JOIN organizations as o On d.org_ID = o.ID AND o.org_name = 'General'
-        WHERE C2D.composition_ID = '$compositionIDAltered';
+        WHERE C2D.composition_ID = '$compositionID';
 
 
 _END;
@@ -391,7 +392,7 @@ _END;
         JOIN C2D ON c.ID = C2D.composition_ID
         JOIN difficulties AS d ON C2D.difficulty_ID = d.ID
         JOIN organizations as o On d.org_ID = o.ID AND o.org_name = 'ASP'
-        WHERE C2D.composition_ID = '$compositionIDAltered';
+        WHERE C2D.composition_ID = '$compositionID';
 
 _END;
 
@@ -422,14 +423,35 @@ _END;
       2- Composition information minus the composer, Arranger, or Lyricist*/
 
 
-        $bookQuery = <<<_END
+    /*    $bookQuery = <<<_END
 
           SELECT b.ID, b.title, b.tag1, b.tag2, b.book_vol, b.book_num, b.physBookLoc
           FROM books AS b
 
-          WHERE b.ID = '$compositionIDAltered' ;
+          WHERE c.ID = '$compositionID' ;
+
+_END;*/
+
+
+
+
+       $bookQuery = <<<_END
+        
+        SELECT c.ID, b.ID, b.title, b.tag1, b.tag2, b.book_vol, b.book_num, b.physBookLoc
+          FROM compositions AS c
+          JOIN books as b ON b.ID = c.book_ID
+
+          WHERE c.ID = '$compositionID' ;
+        
 
 _END;
+
+
+
+
+
+
+
 
         $bookQueryResult = $conn->query($bookQuery);
 
@@ -444,12 +466,13 @@ _END;
             for ($j = 0; $j < $numberOfBookRows; ++$j) {
                 $row = $bookQueryResult->fetch_array(MYSQLI_NUM);
 
-                $bookID = $row[0];
-                $bookTitle = $row[1];
-                $bookTag1 = $row[2];
-                $bookTag2 = $row[3];
-                $bookVolume = $row[4];
-                $bookNumber = $row[5];
+                $compositionID = $row[0];
+                $bookID = $row[1];
+                $bookTitle = $row[2];
+                $bookTag1 = $row[3];
+                $bookTag2 = $row[4];
+                $bookVolume = $row[5];
+                $bookNumber = $row[6];
 
             }    /*forloop ending*/
 
@@ -880,7 +903,7 @@ echo <<<_END
   <div class="col-md-4  pb-4 pt-3">
     <h3 class="noPrint">What would you like to do with this information?</h3>
     <form action='bookTitleSearch.php' method='post'>
-      <input  class="btn btn-secondary mb-3 noPrint" type='submit' value='Add a new Composition for this Composer'/>
+      <input  class="btn btn-secondary mb-3 noPrint" type='submit' value='Add or find a Book'/>
     </form>
 
     <form action='introPage.php' method='post'>

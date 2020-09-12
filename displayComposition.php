@@ -772,8 +772,12 @@ if($diffGen == 'none') {
 /* H- Display Book information and Composition info Using HTML*/
   echo <<<_END
 
+
+
   <div class="container-fluid bg-light pt-4 pb-3">
   <h3 class="display-4 pb-3  noPrint">Success!</h3>
+  <h3>Composition:</h3>
+  <h3 class="display-4">  $compName </h3><br/>
   <h3 class=" noPrint">What would you like to do with this composition information?</h3>
   </div>
  

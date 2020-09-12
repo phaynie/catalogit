@@ -1,10 +1,7 @@
 
 
+<?php
 
-
-
-
-/***********/
 
 
 include 'boilerplate.php';
@@ -209,7 +206,7 @@ _END;
 
             if ($compositionIDFound) {
 
-
+/*should this be encased in a if debug?*/
                 echo "compositionIDList = $compositionIDList ";
                 $advSearchDisplayQuery = "
             SELECT  c.comp_name, p.firstname, p.lastname, b.title, b.ID

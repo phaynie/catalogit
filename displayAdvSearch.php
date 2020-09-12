@@ -374,7 +374,7 @@ _END;
 
                 if ($advSearchCompositionNameQueryResult) {
                     $numberOfAdvSearchCompositionNameQueryRows = $advSearchCompositionNameQueryResult->num_rows;
-                    $compositionNameFound = ($advSearchCompositionNameQueryResult > 0);
+                    $compositionNameFound = ($numberOfAdvSearchCompositionNameQueryRows > 0);
                     $compositionNameNotFound = ($numberOfAdvSearchCompositionNameQueryRows === 0);
 
 
@@ -413,6 +413,7 @@ _END;
                             $advancedComposerSearchNotFound = ($numberOfAdvSearchComposerQueryRows === 0);
 
                             $composerString = "";
+                            $composerChunk="";
 
                             for ($i = 0; $i < $numberOfAdvSearchComposerQueryRows; ++$i) {
                                 $row = $advSearchComposerQueryResult->fetch_array(MYSQLI_NUM);
@@ -422,12 +423,16 @@ _END;
                                 $composerLastName = $row[1];
                                 $composerID = $row[2];
 
-                                $composerString .= $composerFirstName .  " " . $composerLastName . "</br> ";
+                                $composerString = $composerFirstName .  " " . $composerLastName;
+                                $composerChunk .= "<a href=\"displayComposer.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&composerID=${composerID}&advSearch=true\">$composerString</a></br> ";
+                            } /* for loop ending*/
+                            $composerChunk = substr($composerChunk, 0, strrpos($composerChunk, "</br> " ));
 
-                            } /*for loop ending*/
+
                         } /*END if ($advSearchComposerQueryResult)*/
 
-                    $displayComposerString = substr($composerString, 0, strrpos($composerString, "</br> " ));
+
+
 
 
 
@@ -442,18 +447,19 @@ _END;
                 
                                             <div class="row ">
                                                 <div class="col-md-2  ">
-                                            </div>
-                                            <div class="col-md-3  ">
-                                                 <a href="displayComposition.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&advSearch=true">$compositionName</a>
-                                            </div>
-                                            <div class="col-md-3  "> 
-                                                 <h6 >composed by </h6> 
-                                            </div>
-                                                
-                                                <div class="col-md-4  "> 
-                                                          <a href="displayComposer.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&composerID=${composerID}&advSearch=true">$displayComposerString</a>
-                                                 </div>
-                                            </div> <!--end row-->
+                                                </div>
+                                                <div class="col-md-3 text-left ">
+                                                     <a href="displayComposition.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&advSearch=true">$compositionName</a>
+                                                </div>
+                                                <div class="col-md-2  "> 
+                                                     <h6 >composed by </h6> 
+                                                </div>
+                                                <div class="col-md-3 text-right"> 
+                                                    $composerChunk 
+                                                </div>
+                                                <div class="col-md-2  ">
+                                                </div>                                               
+                                            </div><br/> <!--end row-->
                                                    
                                            
                                                   
