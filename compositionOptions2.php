@@ -881,7 +881,7 @@ _END;
                      
                     
                 
-                    <form class="mt-4" action='editComposition.php' method='post'>
+                    <form class="mt-4" action='displayComposition.php' method='post'>
                         <div class="form-check">
                           Composition Title:<strong> $compName</strong><br>
                           Opus or sim: $opus<br>

@@ -327,10 +327,10 @@ _END;
                                   
                                     <h3 class="display-4 pt-4 pb-4 text-center"> Your Search Results </h3>
                                     <h5> You searched for: </h5>
-                                    $searchString
-                                  <form  class="pt-4 pb-4 text-center" action="" method = "" >
+                                    $searchString <br/><br/>
+                                  <!-- <form  class="pt-4 pb-4 text-center" action="" method = "" >
                                    
-                                   <!-- <input type="radio" id="groupByBook" name="groupBy" checked = "checked" value="book">
+                                   <input type="radio" id="groupByBook" name="groupBy" checked = "checked" value="book">
                                     <label for="groupByBook" style="display:inline;">Group by Book</label>&nbsp;&nbsp;&nbsp;&nbsp; 
                                     <input type="radio" id="groupByComposition" name="groupBy" value="composition" style="display:inline;">
                                     <label for="groupByComposition">Group by Composition</label><br>
@@ -445,7 +445,7 @@ _END;
                                 echo <<<_END
                                                    
                 
-                                            <div class="row ">
+                                            <div class="row mt-4 pt-4">
                                                 <div class="col-md-2  ">
                                                 </div>
                                                 <div class="col-md-3 text-left ">
@@ -509,15 +509,15 @@ echo <<<_END
             <div class="container-fluid bg-secondary text-light pt-4 pb-4 ">
             
                <br><form action="introPage.php" method='post'>
-                    <input class="btn btn-light" type='submit' value='Back to Site Options'/>
+                    <input class="btn btn-light noPrint" type='submit' value='Back to Site Options'/>
                 </form> <!-- end form --><br>
                 
-               <br><form action="Print Search Results.php" method='post'>
-                    <input class="btn btn-light" type='submit' $notFound value='Print Search Results'/>     
+               <form action="displayAdvSearch.php" method='post'>
+                    <input class="btn btn-light noPrint" onclick="window.print()" type='submit' $notFound value='Print Search Results'/>     
                 </form> <!-- end form --><br>
         
                 <form action="advancedSearch.php" method='post'>
-                  <input class="btn btn-light" type='submit' value='Try Another Advanced Search'/>
+                  <input class="btn btn-light noPrint" type='submit' value='Try Another Advanced Search'/>
                   <input type='hidden' name='advSearch' value= 'true' />
                 </form> <!-- end form -->
             </div> <!-- end container -->

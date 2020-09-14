@@ -288,7 +288,7 @@ _END;
 
 
 
-      /*Retrieving the General difficluty for this composition*/
+      /*Retrieving the General difficulty for this composition*/
 
       $genDiffQuery = <<<_END
         SELECT  d.difficulty_level
