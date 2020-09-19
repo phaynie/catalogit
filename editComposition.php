@@ -411,14 +411,16 @@ _END;
       $editorPeopleLastName = $row[3];
       $editorPeopleSuffix = $row[4];
       /*$editorPeopleString = implode(',',$instVal);*/
-      $editorPeopleString .= $editorPeopleFirstName . " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . ", ";
+      $editorPeopleString .= $editorPeopleFirstName . " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . "</br>Editor Name: ";
+
+
 
     } /*for loop ending*/
 
   } /*End if $resultEditorPeopleQuery query*/
 
   /*$displayEditorPeopleString = rtrim($editorPeopleString, 'Editor Name: ');*/
-  $displayEditorPeopleString = substr($editorPeopleString, 0, strrpos($editorPeopleString, ", " ));
+  $displayEditorPeopleString = substr($editorPeopleString, 0, strrpos($editorPeopleString, "</br>Editor Name: " ));
 
 
   /*Retrieving all publisher info for this book
@@ -461,6 +463,9 @@ _END;
 
   /*$displayPublisherOrgString = rtrim($publisherOrgString, "</br>Publisher Name: ");*/
   $displayPublisherOrgString = substr($publisherOrgString, 0, strrpos($publisherOrgString, "</br>Publisher Name: " ));
+
+
+
 
   /*end new book query*/
 } /*end if bookID > 0}*/
@@ -557,13 +562,14 @@ _END;
       $compLast = $row[3];
       $compSuffix = $row[4];
 
-      $composerString .= $compFirst . " " . $compMiddle . " " . $compLast . " " . $compSuffix . ", ";
+      $composerString .= $compFirst . " " . $compMiddle . " " . $compLast . " " . $compSuffix . "</br>Composer Name: ";
 
     } /*for loop ending*/
   } /*END if result composer query*/
 
 /*$displayComposerString = rtrim($composerString, "Composer Name: ");*/
-$displayComposerString = substr($composerString, 0, strrpos($composerString, ", " ));
+$displayComposerString = substr($composerString, 0, strrpos($composerString, "</br>Composer Name: " ));
+
 
 
 if($displayComposerString == ""){
@@ -610,16 +616,19 @@ _END;
       $arrLast = $row[3];
       $arrSuffix = $row[4];
 
-      $arrangerString .= $arrFirst . " " . $arrMiddle . " " . $arrLast . " " . $arrSuffix . ", ";
+      $arrangerString .= $arrFirst . " " . $arrMiddle . " " . $arrLast . " " . $arrSuffix . "</br>Arranger Name: ";
 
     } /*for loop ending*/
 
   } /*END if result arranger Query*/
 
   /*$displayArrangerString = rtrim($arrangerString, "Arranger Name: ");*/
-  $displayArrangerString = substr($arrangerString, 0, strrpos($arrangerString, ", " ));
+  $displayArrangerString = substr($arrangerString, 0, strrpos($arrangerString, "</br>Arranger Name: " ));
 
-if($displayArrangerString == ""){
+
+
+
+  if($displayArrangerString == ""){
   $disableERDArranger = 'disabled';
 }
 
@@ -664,13 +673,15 @@ _END;
       $lyrLast = $row[3];
       $lyrSuffix = $row[4];
 
-      $lyricistString .= $lyrFirst . " " . $lyrMiddle . " " . $lyrLast . " " . $lyrSuffix . ", ";
+      $lyricistString .= $lyrFirst . " " . $lyrMiddle . " " . $lyrLast . " " . $lyrSuffix . "</br>Lyricist Name: ";
 
     } /*for loop ending*/
 
   } /*END if result arranger Query*/
 
-$displayLyricistString = substr($lyricistString, 0, strrpos($lyricistString, ", " ));
+$displayLyricistString = substr($lyricistString, 0, strrpos($lyricistString, "</br>Lyricist Name: " ));
+
+
 
 
 if($displayLyricistString == ""){

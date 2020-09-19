@@ -359,7 +359,7 @@ echo <<<_END
           <br/>  
           Book Number: $bookNumErr<input class="form-control"  type="text" name="bookNum"value = "{$fn_encode($bookNum)}" placeholder="{$placeHolder}"/>
           <br/>Book Location: <input class="form-control"  type="text" name="physBookLocNote" value = "{$fn_encode($physBookLocNote)}"/>
-          <p> *If using quotes: Use single quotes rather than double</p>
+     
           
             <br/><input class="btn btn-secondary" type='submit' value='Submit new information'/>
             <input type='hidden' name='submit' value='true'/>

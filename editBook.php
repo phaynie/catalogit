@@ -1,4 +1,5 @@
 <?php
+
 include 'boilerplate.php';
 if($debug) {
      echo 'editBook.php-5';
@@ -161,14 +162,14 @@ _END;
             $editorPeopleLastName = $row[3];
             $editorPeopleSuffix = $row[4];
             /*$editorPeopleString = implode(',',$instVal);*/
-            $editorPeopleString .= $editorPeopleFirstName . " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . ", ";
+            $editorPeopleString .=  $editorPeopleFirstName . " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . "<br> Editor Name: " ;
 
         } /*for loop ending*/
 
     } /*End if $resultEditorPeopleQuery query*/
 
 
-    $displayEditorPeopleString = substr($editorPeopleString, 0, strrpos($editorPeopleString, ", " ));
+    $displayEditorPeopleString = substr($editorPeopleString, 0, strrpos($editorPeopleString, "Editor Name: " ));
 
     if($displayEditorPeopleString == ""){
         $disableERDEditor = 'disabled';
@@ -208,7 +209,7 @@ _END;
             $publisherOrgName = $row[1];
             $publisherOrgLocation = $row[2];
 
-            /*$editorPeopleString = implode(',',$instVal);*/
+
             $publisherOrgString .= $publisherOrgName . "</br> Publisher Location: " . $publisherOrgLocation . "</br>Publisher Name: ";
 
         } /*for loop ending*/

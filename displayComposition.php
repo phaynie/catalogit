@@ -442,13 +442,15 @@ _END;
             $publisherOrgLocation = $row[2];
 
             /*$editorPeopleString = implode(',',$instVal);*/
-            $publisherOrgString .= $publisherOrgName . "</br> Publisher Location: " . $publisherOrgLocation . ", ";
+            $publisherOrgString .= $publisherOrgName . "</br> Publisher Location: " . $publisherOrgLocation . "</br>Publisher Name: ";
 
         } /*for loop ending*/
 
     } /*End if $resultPublisherOrgQuery*/
 
-    $displayPublisherOrgString = substr($publisherOrgString, 0, strrpos($publisherOrgString, ", " ));
+    $displayPublisherOrgString = substr($publisherOrgString, 0, strrpos($publisherOrgString, "</br>Publisher Name: " ));
+
+
 
     /*end new book query*/
 } /*end if bookID > 0}*/elseif($bookIDAltered == "") {

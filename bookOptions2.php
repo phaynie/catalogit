@@ -213,7 +213,7 @@ _END;
             
         <form action='bookTitleSearch.php' method='post'>
           <input class="btn btn-light" type='submit' value='Try another Book Title Search' />
-        </form> <!-- end form -->
+        </form><br/> <!-- end form -->
         <form action="addBook.php" method='post'>
           <input class="btn btn-light" type='submit' value='Add New Book Info'/>
           <input type='hidden' name='addNewBook' value='true'/>
@@ -289,7 +289,7 @@ _END;
         <h2 class="mb-3">None of these Book Options match</h2>
         <form action="bookTitleSearch.php" method='post'>
           <input class="btn btn-light" type='submit' value='Try Another Book Search'/>
-        </form> <!-- end form -->
+        </form><br/> <!-- end form -->
         <form action="addBook.php" method='post'>
           <input class="btn btn-light" type='submit' value='Add New Book Info'/>
           <input type='hidden' name='addNewBook' value='true'/>

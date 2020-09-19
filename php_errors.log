@@ -13135,3 +13135,60 @@
 [12-Sep-2020 12:32:07 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\displayComposer.php on line 917
 [12-Sep-2020 12:57:27 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\Ampps\www\catalogit\displayComposer.php on line 64
 [12-Sep-2020 13:10:12 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\Ampps\www\catalogit\displayComposer.php on line 72
+[14-Sep-2020 18:33:14 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\displayAdvSearch.php on line 638
+[14-Sep-2020 18:48:42 UTC] PHP Parse error:  syntax error, unexpected '&&' (T_BOOLEAN_AND) in C:\Ampps\www\catalogit\displayAdvSearch.php on line 480
+[14-Sep-2020 18:52:56 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\displayAdvSearch.php on line 638
+[14-Sep-2020 18:57:57 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\displayAdvSearch.php on line 647
+[14-Sep-2020 22:28:55 UTC] PHP Warning:  Use of undefined constant arrangerID - assumed 'arrangerID' (this will throw an Error in a future version of PHP) in C:\Ampps\www\catalogit\displayComposer.php on line 100
+[14-Sep-2020 22:28:55 UTC] PHP Stack trace:
+[14-Sep-2020 22:28:55 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayComposer.php:0
+[14-Sep-2020 22:28:55 UTC] PHP Warning:  Use of undefined constant lyricistID - assumed 'lyricistID' (this will throw an Error in a future version of PHP) in C:\Ampps\www\catalogit\displayComposer.php on line 103
+[14-Sep-2020 22:28:55 UTC] PHP Stack trace:
+[14-Sep-2020 22:28:55 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayComposer.php:0
+[14-Sep-2020 22:28:55 UTC] PHP Warning:  Use of undefined constant peopleID - assumed 'peopleID' (this will throw an Error in a future version of PHP) in C:\Ampps\www\catalogit\displayComposer.php on line 106
+[14-Sep-2020 22:28:55 UTC] PHP Stack trace:
+[14-Sep-2020 22:28:55 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayComposer.php:0
+[14-Sep-2020 23:59:57 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\Ampps\www\catalogit\addPeople.php:376) in C:\Ampps\www\catalogit\addPeople.php on line 389
+[14-Sep-2020 23:59:57 UTC] PHP Stack trace:
+[14-Sep-2020 23:59:57 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\addPeople.php:0
+[14-Sep-2020 23:59:57 UTC] PHP   2. header() C:\Ampps\www\catalogit\addPeople.php:389
+[17-Sep-2020 18:36:36 UTC] PHP Parse error:  syntax error, unexpected 'Editor' (T_STRING) in C:\Ampps\www\catalogit\editBook.php on line 164
+[17-Sep-2020 18:37:08 UTC] PHP Parse error:  syntax error, unexpected 'Editor' (T_STRING) in C:\Ampps\www\catalogit\editBook.php on line 164
+[17-Sep-2020 18:37:11 UTC] PHP Parse error:  syntax error, unexpected 'Editor' (T_STRING) in C:\Ampps\www\catalogit\editBook.php on line 164
+[17-Sep-2020 18:40:05 UTC] PHP Parse error:  syntax error, unexpected ''Editor Name: '' (T_CONSTANT_ENCAPSED_STRING) in C:\Ampps\www\catalogit\editBook.php on line 164
+[17-Sep-2020 19:16:03 UTC] PHP Warning:  Use of undefined constant n - assumed 'n' (this will throw an Error in a future version of PHP) in C:\Ampps\www\catalogit\editBook.php on line 164
+[17-Sep-2020 19:16:03 UTC] PHP Stack trace:
+[17-Sep-2020 19:16:03 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\editBook.php:0
+[17-Sep-2020 19:16:03 UTC] PHP Warning:  A non-numeric value encountered in C:\Ampps\www\catalogit\editBook.php on line 164
+[17-Sep-2020 19:16:03 UTC] PHP Stack trace:
+[17-Sep-2020 19:16:03 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\editBook.php:0
+[17-Sep-2020 19:16:03 UTC] PHP Warning:  A non-numeric value encountered in C:\Ampps\www\catalogit\editBook.php on line 164
+[17-Sep-2020 19:16:03 UTC] PHP Stack trace:
+[17-Sep-2020 19:16:03 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\editBook.php:0
+[17-Sep-2020 19:16:03 UTC] PHP Warning:  Division by zero in C:\Ampps\www\catalogit\editBook.php on line 164
+[17-Sep-2020 19:16:03 UTC] PHP Stack trace:
+[17-Sep-2020 19:16:03 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\editBook.php:0
+[17-Sep-2020 19:16:03 UTC] PHP Warning:  Use of undefined constant n - assumed 'n' (this will throw an Error in a future version of PHP) in C:\Ampps\www\catalogit\editBook.php on line 164
+[17-Sep-2020 19:16:03 UTC] PHP Stack trace:
+[17-Sep-2020 19:16:03 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\editBook.php:0
+[17-Sep-2020 19:16:03 UTC] PHP Warning:  A non-numeric value encountered in C:\Ampps\www\catalogit\editBook.php on line 164
+[17-Sep-2020 19:16:03 UTC] PHP Stack trace:
+[17-Sep-2020 19:16:03 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\editBook.php:0
+[17-Sep-2020 19:16:03 UTC] PHP Warning:  A non-numeric value encountered in C:\Ampps\www\catalogit\editBook.php on line 164
+[17-Sep-2020 19:16:03 UTC] PHP Stack trace:
+[17-Sep-2020 19:16:03 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\editBook.php:0
+[17-Sep-2020 19:16:03 UTC] PHP Warning:  Division by zero in C:\Ampps\www\catalogit\editBook.php on line 164
+[17-Sep-2020 19:16:03 UTC] PHP Stack trace:
+[17-Sep-2020 19:16:03 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\editBook.php:0
+[17-Sep-2020 19:16:03 UTC] PHP Warning:  Use of undefined constant n - assumed 'n' (this will throw an Error in a future version of PHP) in C:\Ampps\www\catalogit\editBook.php on line 164
+[17-Sep-2020 19:16:03 UTC] PHP Stack trace:
+[17-Sep-2020 19:16:03 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\editBook.php:0
+[17-Sep-2020 19:16:03 UTC] PHP Warning:  A non-numeric value encountered in C:\Ampps\www\catalogit\editBook.php on line 164
+[17-Sep-2020 19:16:03 UTC] PHP Stack trace:
+[17-Sep-2020 19:16:03 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\editBook.php:0
+[17-Sep-2020 19:16:03 UTC] PHP Warning:  A non-numeric value encountered in C:\Ampps\www\catalogit\editBook.php on line 164
+[17-Sep-2020 19:16:03 UTC] PHP Stack trace:
+[17-Sep-2020 19:16:03 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\editBook.php:0
+[17-Sep-2020 19:16:03 UTC] PHP Warning:  Division by zero in C:\Ampps\www\catalogit\editBook.php on line 164
+[17-Sep-2020 19:16:03 UTC] PHP Stack trace:
+[17-Sep-2020 19:16:03 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\editBook.php:0

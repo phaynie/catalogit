@@ -343,10 +343,10 @@ if($submit == 'true') {
 
             $peopleInsertQuery = "INSERT INTO people (firstname, middlename, lastname, suffix) VALUES(";
 
-            if($peopleFirstName == "") {
+            if($peopleFirstNameAltered == "") {
                 $peopleInsertQuery .= "NULL,";
-            }else{
-                $peopleInsertQuery .= "'$peopleFirstName',";
+             }else{
+                $peopleInsertQuery .= "'$peopleFirstNameAltered',";
             }
 
             if($peopleMiddleNameAltered == "") {
@@ -388,6 +388,9 @@ if($submit == 'true') {
 if($editBook == 'true') {
     header('Location: addRole.php?bookID=' . $bookID . '&newPeopleID=' . $newPeopleID . '&oldPeopleID=' . $oldPeopleID . '&addNewEditor=' . $addNewEditor . '&editBook=true');
     exit();
+
+
+
 
 }elseif($editComposition == 'true') {
     header('Location: addRole.php?bookID=' . $bookID . '&newPeopleID=' . $newPeopleID . '&oldPeopleID=' . $oldPeopleID . '&addNewComposer=' . $addNewComposer . '&addNewArranger=' . $addNewArranger . '&addNewLyricist=' . $addNewLyricist . '&replaceComposer=' . $replaceComposer . '&replaceArranger=' . $replaceArranger . '&replaceLyricist=' . $replaceLyricist . '&compositionID=' . $compositionID . '&editComposition=true');

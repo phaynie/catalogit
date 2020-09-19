@@ -25,6 +25,9 @@ peopleOptions.php */
 /*Initialize local variables for values coming from other pages*/
 
 $composerID = "";
+$arrangerID = "";
+$lyricistID = "";
+$peopleID = "";
 /*$compositionID = "";*/
 /*$bookID = "";*/
 
@@ -65,6 +68,21 @@ $physCompositionLocNote = "";
 
 if(isset($_REQUEST['composerID']) && is_numeric($_REQUEST['composerID'])) {
     $composerID = $_REQUEST['composerID'];
+    $role = 'Composer';
+}
+
+if(isset($_REQUEST['arrangerID']) && is_numeric($_REQUEST['arrangerID'])) {
+    $arrangerID = $_REQUEST['arrangerID'];
+    $role = 'Arranger';
+}
+
+if(isset($_REQUEST['lyricistID']) && is_numeric($_REQUEST['lyricistID'])) {
+    $lyricistID = $_REQUEST['lyricistID'];
+    $role = 'Lyricist';
+}
+
+if(isset($_REQUEST['peopleID']) && is_numeric($_REQUEST['peopleID'])) {
+    $peopleID = $_REQUEST['peopleID'];
 }
 
 /*if(isset($_REQUEST['compositionID']) && is_numeric($_REQUEST['compositionID'])) {
@@ -79,6 +97,15 @@ $notEntered = "<span style='color:rgba(0,0,0,0.4);'>Not Entered</span>";
 $washPostVar = cleanup_post($composerID);
 $composerIDAltered = strip_before_insert($conn, $washPostVar);
 
+$washPostVar = cleanup_post($arrangerID);
+$arrangerIDAltered = strip_before_insert($conn, $washPostVar);
+
+$washPostVar = cleanup_post($lyricistID);
+$lyricistIDAltered = strip_before_insert($conn, $washPostVar);
+
+$washPostVar = cleanup_post($peopleID);
+$peopleIDAltered = strip_before_insert($conn, $washPostVar);
+
 /*$washPostVar = cleanup_post($compositionID);
 $compositionID = strip_before_insert($conn, $washPostVar);*/
 
@@ -91,50 +118,50 @@ $bookIDAltered = strip_before_insert($conn, $washPostVar);*/
 /*display composer we just chose*/
 /*use query to get most recent composer information using the composerid*/
 
-$composerQuery = <<<_END
+$peopleQuery = <<<_END
 
 SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
   FROM compositions As c
   JOIN C2R2P ON c.ID = C2R2P.composition_ID
   JOIN people AS p ON C2R2P.people_ID = p.ID
-  JOIN roles AS r_composer ON C2R2P.role_ID = r_composer.ID AND r_composer.role_name = 'Composer'
-  WHERE p.ID = '$composerIDAltered';
+  JOIN roles AS r_people ON C2R2P.role_ID = r_people.ID AND r_people.role_name = '$role'
+  WHERE p.ID = '$peopleIDAltered';
 
 _END;
 
 if($debug) {
-    echo 'composerQuery = ' . $composerQuery . '<br/><br/>';
+    echo '$peopleQuery = ' . $peopleQuery . '<br/><br/>';
 }/*end debug*/
 
 /*send the query*/
-$resultComposerQuery = $conn->query($composerQuery);
+$resultPeopleQuery = $conn->query($peopleQuery);
 
 if($debug) {
-    if (!$resultComposerQuery) echo("\n Error description composerQuery: " . mysqli_error($conn) . "\n<br/>");
+    if (!$resultPeopleQuery) echo("\n Error description peopleQuery: " . mysqli_error($conn) . "\n<br/>");
 }/*end debug*/
 
-if ($resultComposerQuery){
+if ($resultPeopleQuery){
        
-  $numberOfComposerRows = $resultComposerQuery->num_rows;
-  $composerString = "";
+  $numberOfPeopleRows = $resultPeopleQuery->num_rows;
+  $peopleString = "";
 
 if($debug) {
-    echo 'numberOfComposerRows = ' . $numberOfComposerRows . '<br/><br/>';
+    echo 'numberOfPeopleRows = ' . $numberOfPeopleRows . '<br/><br/>';
 }/*end debug*/
 
-  for ($j = 0 ; $j < $numberOfComposerRows ; ++$j){
-    $row = $resultComposerQuery->fetch_array(MYSQLI_NUM);
+  for ($j = 0 ; $j < $numberOfPeopleRows ; ++$j){
+    $row = $resultPeopleQuery->fetch_array(MYSQLI_NUM);
 
-    $currentComposerID = $row[0];
-    $currentCompFirst = $row[1];
-    $currentCompMiddle = $row[2];
-    $currentCompLast = $row[3];
-    $currentCompSuffix = $row[4];
+    $currentPeopleID = $row[0];
+    $currentPeopleFirst = $row[1];
+    $currentPeopleMiddle = $row[2];
+    $currentPeopleLast = $row[3];
+    $currentPeopleSuffix = $row[4];
 
   } /*for loop ending*/
 
 if($debug) {
-    echo 'composerID =' . $composerID . "<br/>";
+    echo 'peopleID =' . $peopleID . "<br/>";
 }/*end debug*/
 
 } /*END if result composer query*/
@@ -156,9 +183,9 @@ c.movement, e.description,v.voicing_type, ens.ensemble_type, c.book_ID, c.physCo
     LEFT JOIN ensembles AS ens ON c.ensemble_ID = ens.ID
 	LEFT JOIN C2R2P ON c.ID = C2R2P.composition_ID
     LEFT JOIN people AS p ON C2R2P.people_ID = p.ID
-    LEFT JOIN roles AS r_composer ON C2R2P.role_ID = r_composer.ID AND r_composer.role_name = 'Composer'
+    LEFT JOIN roles AS r_composer ON C2R2P.role_ID = r_composer.ID AND r_composer.role_name = '$role'
         
-    WHERE p.ID = '$composerIDAltered'
+    WHERE p.ID = '$peopleIDAltered'
     ORDER BY c.comp_name ASC;
 
 _END;
@@ -186,7 +213,7 @@ if($debug) {
     echo <<<_END
     <div class="container-fluid bg-secondary pt-4 pb-3">
       <h2 class="display-4 text-light" >Bummer!</h2>
-      <h2 class="text-dark">No compositions from  "$currentCompFirst $currentCompMiddle $currentCompLast $currentCompSuffix" were found. <br/><br/></h2>
+      <h2 class="text-dark">No compositions from  "$currentPeopleFirst $currentPeopleMiddle $currentPeopleLast $currentPeopleSuffix" were found. <br/><br/></h2>
       <h4 class="text-light"> Which would you like to do? <br/><br/></h4>
       <form action="composerSearch.php" method="post">
         <input class="btn btn-light"  type='submit' value='Try another Composer Search'/> 
@@ -215,8 +242,8 @@ _END;
 
     <div class="container-fluid bg-light pt-4 pb-3">
       <h3 class="display-4 pb-3 noPrint">Success!</h3>
-      <h3>Composer:</h3>
-      <h3 class="display-4">  $currentCompFirst $currentCompMiddle $currentCompLast $currentCompSuffix </h3>
+      <h3>$role:</h3>
+      <h3 class="display-4">  $currentPeopleFirst $currentPeopleMiddle $currentPeopleLast $currentPeopleSuffix </h3>
     </div> <!--end container-->
         
 _END;

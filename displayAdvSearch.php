@@ -144,10 +144,9 @@ if($advSearch == 'true') {
 
 /*here we wash the values that will be used in the db*/
 
-    /*$compositionID is not retrieved until later. It is washed there*/
+    /*$compositionID is collected on this page. Does not need to be washed.*/
 
-    $washPostVar = cleanup_post($compositionID);
-    $compositionIDAltered = strip_before_insert($conn, $washPostVar);
+
 
     $washPostVar = cleanup_post($searchBoxGeneralCompTitle);
     $searchBoxGeneralCompTitleAltered = strip_before_insert($conn, $washPostVar);
@@ -328,13 +327,7 @@ _END;
                                     <h3 class="display-4 pt-4 pb-4 text-center"> Your Search Results </h3>
                                     <h5> You searched for: </h5>
                                     $searchString <br/><br/>
-                                  <!-- <form  class="pt-4 pb-4 text-center" action="" method = "" >
-                                   
-                                   <input type="radio" id="groupByBook" name="groupBy" checked = "checked" value="book">
-                                    <label for="groupByBook" style="display:inline;">Group by Book</label>&nbsp;&nbsp;&nbsp;&nbsp; 
-                                    <input type="radio" id="groupByComposition" name="groupBy" value="composition" style="display:inline;">
-                                    <label for="groupByComposition">Group by Composition</label><br>
-                                    </form><br><br>-->
+                                 
 
 _END;
 
@@ -350,8 +343,7 @@ _END;
 
 
 
-                $washPostVar = cleanup_post($compositionID);
-                $compositionIDAltered = strip_before_insert($conn, $washPostVar);
+
 
 
 
@@ -360,7 +352,7 @@ _END;
                 FROM compositions AS c 
                 JOIN books AS b ON c.book_ID = b.ID
                 
-                WHERE c.ID = '$compositionIDAltered';
+                WHERE c.ID = '$compositionID';
                 
                 
                 ";
@@ -389,13 +381,15 @@ _END;
 
                 }/* end if ($advSearchCompositionNameQueryResult)*/
 
+
+
                         $advSearchComposerQuery = "
                        SELECT p.firstname, p.lastname, p.ID
                         FROM compositions AS c
                         JOiN C2R2P ON c.ID = C2R2P.composition_ID
                         JOIN people AS p ON C2R2P.people_ID = p.ID AND C2R2P.role_ID='1'
                         
-                        Where c.ID = '$compositionIDAltered';
+                        Where c.ID = '$compositionID';
                         
                         
                         ";
@@ -406,6 +400,7 @@ _END;
                             echo 'advSearchComposerQuery =' . $advSearchComposerQuery . '</br>';
                             if (!$advSearchComposerQueryResult) echo("\n Error description query advSearchComposerQuery: " . mysqli_error($conn) . "\n<br/>");
                         }
+                        $advancedComposerSearchNotFound = "";
 
                         if ($advSearchComposerQueryResult) {
                             $numberOfAdvSearchComposerQueryRows = $advSearchComposerQueryResult->num_rows;
@@ -413,7 +408,8 @@ _END;
                             $advancedComposerSearchNotFound = ($numberOfAdvSearchComposerQueryRows === 0);
 
                             $composerString = "";
-                            $composerChunk="";
+                            $personChunk="";
+                            $createdby = 'composed by';
 
                             for ($i = 0; $i < $numberOfAdvSearchComposerQueryRows; ++$i) {
                                 $row = $advSearchComposerQueryResult->fetch_array(MYSQLI_NUM);
@@ -424,12 +420,126 @@ _END;
                                 $composerID = $row[2];
 
                                 $composerString = $composerFirstName .  " " . $composerLastName;
-                                $composerChunk .= "<a href=\"displayComposer.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&composerID=${composerID}&advSearch=true\">$composerString</a></br> ";
+                                $personChunk .= "<a href=\"displayComposer.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&composerID=${composerID}&peopleID=${composerID}&advSearch=true\">$composerString</a></br> ";
                             } /* for loop ending*/
-                            $composerChunk = substr($composerChunk, 0, strrpos($composerChunk, "</br> " ));
+                            $personChunk = substr($personChunk, 0, strrpos($personChunk, "</br> " ));
 
 
                         } /*END if ($advSearchComposerQueryResult)*/
+
+
+
+
+
+
+       /* ***** trying this out**** */
+
+
+                        if ($advancedComposerSearchNotFound) {
+                            $advSearchArrangerQuery = "
+                            
+                        SELECT p.firstname, p.lastname, p.ID
+                        FROM compositions AS c
+                        JOiN C2R2P ON c.ID = C2R2P.composition_ID
+                        JOIN people AS p ON C2R2P.people_ID = p.ID AND C2R2P.role_ID='2'
+                        
+                        Where c.ID = '$compositionID';";
+
+
+                            $advSearchArrangerQueryResult = $conn->query($advSearchArrangerQuery);
+
+                            if ($debug) {
+                                echo 'advSearchArrangerQuery =' . $advSearchArrangerQuery . '</br>';
+                                if (!$advSearchArrangerQueryResult) echo("\n Error description query advSearchArrangerQuery: " . mysqli_error($conn) . "\n<br/>");
+                            }
+
+
+                            if ($advSearchArrangerQueryResult) {
+                                $numberOfAdvSearchArrangerQueryRows = $advSearchArrangerQueryResult->num_rows;
+                                $advancedArrangerSearchFound = ($numberOfAdvSearchArrangerQueryRows > 0);
+                                $advancedArrangerSearchNotFound = ($numberOfAdvSearchArrangerQueryRows === 0);
+
+                                $ArrangerString = "";
+                                $personChunk = "";
+                                $createdby = 'arranged by';
+
+                                for ($i = 0; $i < $numberOfAdvSearchArrangerQueryRows; ++$i) {
+                                    $row = $advSearchArrangerQueryResult->fetch_array(MYSQLI_NUM);
+
+
+                                    $arrangerFirstName = $row[0];
+                                    $arrangerLastName = $row[1];
+                                    $arrangerID = $row[2];
+
+                                    $arrangerString = $arrangerFirstName . " " . $arrangerLastName;
+                                    $personChunk .= "<a href=\"displayComposer.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&arrangerID=${arrangerID}&peopleID=${arrangerID}&advSearch=true\">$arrangerString</a></br> ";
+                                } /* for loop ending*/
+                                $personChunk = substr($personChunk, 0, strrpos($personChunk, "</br> "));
+
+
+                            } /*END if ($advSearchArrangerQueryResult)*/
+                        } /*END if ($advancedComposerSearchNotFound)*/
+
+
+
+
+
+                        if($advancedComposerSearchNotFound && $advancedArrangerSearchNotFound) {
+                            $advSearchLyricistQuery = "
+                                            
+                                        SELECT p.firstname, p.lastname, p.ID
+                                        FROM compositions AS c
+                                        JOiN C2R2P ON c.ID = C2R2P.composition_ID
+                                        JOIN people AS p ON C2R2P.people_ID = p.ID AND C2R2P.role_ID='3'
+                                        
+                                        Where c.ID = '$compositionID';";
+
+
+                            $advSearchLyricistQueryResult = $conn->query($advSearchLyricistQuery);
+
+                            if ($debug) {
+                                echo 'advSearchLyricistQuery =' . $advSearchLyricistQuery . '</br>';
+                                if (!$advSearchLyricistQueryResult) echo("\n Error description query advSearchLyricistQuery: " . mysqli_error($conn) . "\n<br/>");
+                            }
+                            $advancedLyricistSearchNotFound = "";
+
+                            if ($advSearchLyricistQueryResult) {
+                                $numberOfAdvSearchLyricistQueryRows = $advSearchLyricistQueryResult->num_rows;
+                                $advancedLyricistSearchFound = ($numberOfAdvSearchLyricistQueryRows > 0);
+                                $advancedLyricistSearchNotFound = ($numberOfAdvSearchLyricistQueryRows === 0);
+
+                                $LyricistString = "";
+                                $personChunk = "";
+                                $createdby = 'words by';
+
+
+                                for ($i = 0; $i < $numberOfAdvSearchLyricistQueryRows; ++$i) {
+                                    $row = $advSearchLyricistQueryResult->fetch_array(MYSQLI_NUM);
+
+
+                                    $lyricistFirstName = $row[0];
+                                    $lyricistLastName = $row[1];
+                                    $lyricistID = $row[2];
+
+                                    $lyricistString = $lyricistFirstName . " " . $lyricistLastName;
+                                    $personChunk .= "<a href=\"displayComposer.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&lyricistID=${lyricistID}&peopleID=${lyricistID}&advSearch=true\">$lyricistString</a></br> ";
+                                } /* for loop ending*/
+                                $personChunk = substr($personChunk, 0, strrpos($personChunk, "</br> "));
+
+
+                            } /*END if ($advSearchLyricistQueryResult)*/
+                        } /*END if ($advancedComposerSearchNotFound && $advancedArrangerSearchNotFound)*/
+
+
+
+
+
+
+
+
+
+/*  **** Trying this out ***  */
+
 
 
 
@@ -452,10 +562,10 @@ _END;
                                                      <a href="displayComposition.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&advSearch=true">$compositionName</a>
                                                 </div>
                                                 <div class="col-md-2  "> 
-                                                     <h6 >composed by </h6> 
+                                                     <h6 >$createdby </h6> 
                                                 </div>
                                                 <div class="col-md-3 text-right"> 
-                                                    $composerChunk 
+                                                    $personChunk 
                                                 </div>
                                                 <div class="col-md-2  ">
                                                 </div>                                               
