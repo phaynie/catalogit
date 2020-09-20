@@ -12,8 +12,9 @@ _END;
 
 include 'beginningNav.php';
 /* We arrive at this page if
-    -we are adding  a new book or composition to the library and have searched for an Editor, composer, arranger, or Lyricist (as a person) and found that the person is not already existing in the db and would like to add the information to the db.
-    -we are editing a current book or composition and want to add or replace  a person and the new person is not already in the database and we would like to add the new information to the db.*/
+    A. We are adding  a new book or composition to the library and have searched for an Editor, composer, arranger, or Lyricist (as a person) and found that the person is not already existing in the db and would like to add the information to the db.
+    B. We are editing a current book or composition and want to add or replace  a person and the new person is not already in the database and we would like to add the new information to the db.
+    C. We are editing a book, and choose to edit the Editor, Composer, Arranger or Lyricist information. In this case, our form should be pre-populated with the current publisher information, and allow us to edit the information. This will then, need to be validated and the People table updated. */
 
 /*This page
     -provides a form (and button) to submit new people (editor, composer, arranger, lyricist) information.
@@ -47,6 +48,7 @@ $editPeople = "";
 $editEditor = "";
 $newPeopleID = "";
 $oldPeopleID = "";
+$oldPeopleIDAltered = "";
 $addNewEditor = "";
 $peopleFirstName = "";
 $peopleMiddleName = "";
@@ -275,6 +277,8 @@ if($submit == 'true') {
         $washPostVar = cleanup_post($oldPeopleID);
         $oldPeopleIDAltered = strip_before_insert($conn, $washPostVar);
 
+    }/*End if (!$validationFailed )*/
+
 
         /*This is the code that will update the people table with the changes we made to the current People information.
     When we click on submit below the form, the user is returned to this same page to validate the edited information and then, if we are editing current people info,  it is here where that new information is updated in the people table. The $submit variable (we are still inside of) tells us this is not our first time through the code.  */
@@ -306,17 +310,30 @@ if($submit == 'true') {
             }
 
 
-            $updatePeople .= "WHERE p.ID = $oldPeopleIDAltered;";
+            $updatePeople .= " WHERE p.ID = $oldPeopleIDAltered;";
 
 
             $updatePeopleResult = $conn->query($updatePeople);
+
+            if ($debug) {
+                echo 'updatePeople = ' . $updatePeople . '<br/><br/>';
+
+                if (!$updatePeopleResult) echo("\n Error description updatePeople: " . mysqli_error($conn) . "\n<br/>");
+            }/*end debug*/
+
+            /*Check to make sure query did not fail. If fails do not go to next page. Show same page with error message
+            Data base error: Tell Site admin.*/
+            /*If it fails make sure there is an error message*/
 
             if ($debug) {
                 $debug_string .= "('\nupdatePeople = ' . $updatePeople . '\n<br/>')";
                 if (!$updatePeopleResult) $debug_string .= "\n Error description updatePeople: " . mysqli_error($conn) . "\n<br/>";
             }/*end debug*/
 
-
+            if (!$updatePeopleResult) {
+                echo "<p class='error'> Database did not update. Contact Administrator </p> . '\n<br/>'";
+                exit();
+            }
           /* echo $debug_string;
           exit();*/
 
@@ -394,8 +411,8 @@ if($editBook == 'true') {
 
 }elseif($editComposition == 'true') {
     header('Location: addRole.php?bookID=' . $bookID . '&newPeopleID=' . $newPeopleID . '&oldPeopleID=' . $oldPeopleID . '&addNewComposer=' . $addNewComposer . '&addNewArranger=' . $addNewArranger . '&addNewLyricist=' . $addNewLyricist . '&replaceComposer=' . $replaceComposer . '&replaceArranger=' . $replaceArranger . '&replaceLyricist=' . $replaceLyricist . '&compositionID=' . $compositionID . '&editComposition=true');
-}
-    }/*end if (!$validationFailed)*/
+}/*End else if*/
+
 } /*end If($submit == 'true')*/
 
     /*Here we add some additional variables to change the wording of the form in different situations*/
@@ -404,7 +421,7 @@ if($editBook == 'true') {
         $instructionalText = "<h2> Please enter New $role Information Below</h2>";
 
     } elseif ($editPeople == 'true') {
-        $instructionalText = "<h2> Please edit the $role Information Below</h2>";
+        $instructionalText = "<h2> Please edit the $role Information Below</h2><br/><h6 class='burnt'>If you edit the information below it will be changed everywhere in the library. </h6><h6 class='burnt'>If you want to replace the $role with a different $role choose the \"Back to Edit Book Options\" Button and choose the Replace option.</h6>";
     } elseif ($replacePeople == 'true') {
         $instructionalText = "<h2> Please enter the new replacement information for the $role below</h2>";
     } else {
@@ -424,6 +441,11 @@ When submitted, those new values will be validated and the people table will be 
 if($submit == "") {
     /*This query works only if the $oldPeopleID reflects the people ID of the Editor, composer, Arranger or Lyricist*/
     if ($editPeople == 'true') {
+
+        $washPostVar = cleanup_post($oldPeopleID);
+        $oldPeopleIDAltered = strip_before_insert($conn, $washPostVar);
+
+
         $peopleQuery = <<<_END
 
       SELECT p.firstname, p.middlename, p.lastname, p.suffix

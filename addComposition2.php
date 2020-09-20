@@ -2126,7 +2126,7 @@ if($opusNum == 'NULL') {
                       <div class="form-group pt-2">
                           <label for="physCompositionLoc">Composition Location: Type in the Composition Location for your library</label>
                           <input type="text" class="form-control" id="physCompositionLoc" name="physCompositionLocNote" value="<?php echo htmlspecialchars($physCompositionLocNote, ENT_QUOTES) ?>"/><br/>
-                          <p>If using quotes: Opt for single quotes rather than double</p></p>
+                          
                       </div> <!-- end form-group -->
                   </div> <!-- end card-body -->
               </div> <!-- end card -->

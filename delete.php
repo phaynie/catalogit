@@ -41,7 +41,7 @@ if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
     $bookID = $_REQUEST['bookID'];
 }
 
-if(isset($_REQUEST['compositionID']) && is_numeric($_REQUEST['compositionId'])) {
+if(isset($_REQUEST['compositionID']) && is_numeric($_REQUEST['compositionID'])) {
     $compositionID = $_REQUEST['compositionID'];
 }
 
@@ -156,7 +156,7 @@ $washPostVar = cleanup_post($compositionID);
 $compositionIDAltered = strip_before_insert($conn, $washPostVar);
 
 $washPostVar = cleanup_post($roleID);
-$roleIDIDAltered = strip_before_insert($conn, $washPostVar);
+$roleIDAltered = strip_before_insert($conn, $washPostVar);
 
 
 
@@ -633,7 +633,7 @@ if($editComposition == 'true') {
             <<<_END
             DELETE FROM C2R2P
             WHERE C2R2P.composition_ID = '$compositionIDAltered'
-            AND C2R2P.role_ID = '$roleIDIDAltered'
+            AND C2R2P.role_ID = '$roleIDAltered'
             AND C2R2P.people_ID = '$oldPeopleIDAltered';
             
 _END;

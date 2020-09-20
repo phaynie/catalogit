@@ -41,6 +41,11 @@ $oldOrgID = "";
 $addNewPublisher = "";
 $submit = "";
 
+
+$debug_string = "";
+$sendReplacePublisher = "";
+
+
 $validationFailed = false; /*A single place to track whether any validation has failed.*/
 
 /*we use REQUEST here because then we can find our Key whether it is in the Post array or the Get Array. REQUEST includes both*/

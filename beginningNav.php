@@ -1,5 +1,6 @@
 <!-- boiler plate and nav bar included in all pages. Will make this an include eventually. -->
 <?php
+$welcomeLink = "";
 $disabled = "";
 if(!isset($_SESSION['userId'])) {
     $disabled = 'disabled';

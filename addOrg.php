@@ -13,8 +13,9 @@ _END;
 /*include 'beginningNav.html';*/
 include 'beginningNav.php';
 /* We arrive at this page if
-    -we are adding a new book to the library and have searched for a publisher and found that it is not already existing in the db and would like to add the information to the db.
-    -we are editing a current book and want to add or replace the publisher and the new publisher is not already in the database and we would like to add the new information to the db.*/
+    A. We are adding a new book to the library and have searched for a publisher and found that it is not already existing in the db and would like to add the information to the db.
+    B. We are editing a current book and want to add or replace the publisher and the new publisher is not already in the database and we would like to add the new information to the db.
+    C. We are editing a book, and choose to edit the publisher information. In this case, our form should be prepopulated with the current publisher information, and allow us to edit the information. This will then, need to be validated and the organizations table updated. */
 
 /*This page
     -provides a form (and button) to submit new organization (publisher) information.
@@ -116,15 +117,15 @@ if (strlen($pubName) == 0 && $submit=='true') {
     /* Perform all validations needed for all fields*/
         $pubNameErr = " * Publisher Name is required";
         $validationFailed = true;
-    } /*end if (strlen($pubName) == 0 && $submit=='true')*/
+} /*end if (strlen($pubName) == 0 && $submit=='true')*/
 
 
     /*If any validation failed, save all form values in variables*/
-    if ($validationFailed) {
+if ($validationFailed) {
         $pubName_value = $pubName;
         $pubLoc_value = $pubLoc;
         $pubNameErr_value = "<span class=\"error\"> {$pubNameErr} </span>";
-    }/*end if validationFailed*/
+}/*end if validationFailed*/
 
 
 
@@ -132,8 +133,7 @@ if (strlen($pubName) == 0 && $submit=='true') {
 Here we wash all values that come from the form*/
 
 
-if (!$validationFailed && $submit=='true') {
-
+if (!$validationFailed) {
 
     $washPostVar = cleanup_post($oldOrgID);
     $oldOrgIDAltered = strip_before_insert($conn, $washPostVar);
@@ -141,13 +141,15 @@ if (!$validationFailed && $submit=='true') {
     $washPostVar = cleanup_post($pubName);
     $pubNameAltered = strip_before_insert($conn, $washPostVar);
 
-    if($debug) {
+    if ($debug) {
         $debug_string = 'pubName =' . $pubNameAltered . '<br/>';
     }/*end debug*/
 
     $washPostVar = cleanup_post($pubLoc);
     $pubLocAltered = strip_before_insert($conn, $washPostVar);
+}
 
+if (!$validationFailed && $submit=='true') {
 /*This is the code that will update the organization table with the changes we made to the current Publisher information.
 When we click on submit below the form, the user is returned to this same page to validate the edited information and then, if we are editing current publisher info,  it is here where that new information is updated in the organizations table. The $submit variable tells us this is not our first time through the code.  */
 
@@ -169,10 +171,15 @@ When we click on submit below the form, the user is returned to this same page t
 
         $updateOrganizationsResult = $conn->query($updateOrganizations);
 
-        if ($debug) {
+             if ($debug) {
             $debug_string .="\nupdateOrganizations= " . $updateOrganizations . "\n<br/>";
-            if (!$updateOrganizationsResult) $debug_string .="\n Error description updateOrganizations: " . mysqli_error($conn) . "\n<br/>";
-        }/*end debug*/
+                if (!$updateOrganizationsResult) $debug_string .="\n Error description updateOrganizations: " . mysqli_error($conn) . "\n<br/>";
+            }/*end debug*/
+
+        if (!$updateOrganizationsResult) {
+            echo "<p class='error'> Database did not update . Contact administrator </p> . '\n<br/>'";
+            exit();
+        }
 
 
        /* echo $debug_string;
@@ -236,7 +243,7 @@ if($replacePublisher == 'true') {
     $instructionalText = "<h2> Please enter New Publisher Information Below</h2>";
 
 }elseif($editPublisher=='true'){
-    $instructionalText = "<h2> Please edit the Publisher Information Below</h2>";
+    $instructionalText = "<h2> Please edit the Publisher Information Below</h2><br/><h6 class='burnt'>If you edit the information below it will be changed everywhere in the library. </h6><h6 class='burnt'>If you want to replace the publisher with a different publisher choose the \"Back to Edit Book\" Button and choose the Replace option.</h6>";
 }else{
     $instructionalText = "<h2> Please enter Publisher Information Below</h2>";
 }/*end if isset replace publisher*/
@@ -248,6 +255,8 @@ This searches the db for the current publisher
 Pre-populates the form with current Publisher info so user can correct spellings or complete incomplete portions.
 When submitted, those new values will be validated and the organizations table will be updated*/
 if($editPublisher=='true') {
+
+
     $organizationsPublisherQuery  = <<<_END
 
       SELECT o.org_name, o.location
