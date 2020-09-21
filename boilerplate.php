@@ -184,4 +184,15 @@ $fn_encode = 'fn_encode';
 
 
 
+
+/*Function created to make user aware the database action was not successful*/
+function failureToExecute($result, $errorNumber, $action) {
+    if (!$result) {
+        echo "<h2 class='db_error' > Error# $errorNumber : Database $action was not successful. Contact the Administrator.</h2><br/><br/>";
+        exit();
+    }
+}
+
+
+
   ?>

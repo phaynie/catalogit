@@ -448,8 +448,10 @@ if($submit == 'true') {
         }
     }/*end debug*/
 
+        failureToExecute ($updateCompositionsResult, 'U701', 'Update ' );
 
-    /*delete past row(s) from the junction tables C2k, C2Gk, C2I before inserting new row*/
+
+        /*delete past row(s) from the junction tables C2k, C2Gk, C2I before inserting new row*/
 
 
     if ($updateCompositionsResult) {
@@ -473,6 +475,9 @@ _END;
                 $debug_string .= "\n Error description deleteC2K: " . mysqli_error($conn) . "\n<br/>";
             }
         }/*end debug*/
+
+        failureToExecute ($deleteC2KResult, 'D800', 'Delete ' );
+
         /*End deleting from C2K*/
 
 
@@ -507,6 +512,8 @@ _END;
                         $debug_string .= "\n Error description C2KInsertQuery: " . mysqli_error($conn) . "\n<br/>";
                     }
                 }/*end debug*/
+                failureToExecute ($C2KInsertQueryResult, 'I601', 'Insert ' );
+
             }/*end foreach keySigs Array*/
 
         }/*end if (count($keySigs) > 0)*/
@@ -534,7 +541,10 @@ _END;
         }
     }/*end debug*/
 
-    /*Now, insert into    C2G*/
+        failureToExecute ($deleteC2GResult, 'D801', 'Delete ' );
+
+
+        /*Now, insert into    C2G*/
     /*Here i must go find the id number for each genre entered by the user and insert a row into the C2G table */
     if (count($genres) > 0) {
 
@@ -558,6 +568,9 @@ _END;
                     $debug_string .= "\n Error description C2GInsertQuery: " . mysqli_error($conn) . "\n<br/>";
                 }
             }/*end debug*/
+
+            failureToExecute ($C2GInsertQueryResult, 'I602', 'Insert ' );
+
 
         }/*end foreach genres Array*/
 
@@ -585,7 +598,10 @@ _END;
             $debug_string .= "('\n Error description deleteC2I: ' . mysqli_error($conn) . '\n<br/>')";
         }
     }/*end debug*/
-    /*end delete from C2I*/
+
+        failureToExecute ($deleteC2IResult, 'D802', 'Delete ' );
+
+        /*end delete from C2I*/
 
     /*Now, insert into C2I*/
     /*Here i must go find the id number for each instrument entered by the user and insert a row into the C2I table */
@@ -610,6 +626,9 @@ _END;
                     $debug_string .= "\n Error description C2IInsertQuery: " . mysqli_error($conn) . "\n<br/>";
                 }
             } /*end debug*/
+
+            failureToExecute ($C2IInsertQueryResult, 'I603', 'Insert ' );
+
         } /*end foreach instruments Array*/
     }/* end if (count($instruments) > 0)*/
 
@@ -636,6 +655,9 @@ _END;
                 $debug_string .= "('\n Error description deleteC2D: ' . mysqli_error($conn) . '\n<br/>')";
             }
         }/*end debug*/
+
+        failureToExecute ($deleteC2DResult, 'D803', 'Delete ' );
+
         /*end delete from C2D*/
 
 
@@ -656,6 +678,9 @@ _END;
         if($debug) {
             if (!$C2DInsertQueryResult) $debug_string .= "\n Error description C2DInsertQuery: " . mysqli_error($conn) . "\n<br/>";
         }/*end debug*/
+
+        failureToExecute ($C2DInsertQueryResult, 'I604', 'Insert ' );
+
 
 
 
@@ -678,6 +703,7 @@ _END;
             if (!$C2DInsertQueryResult) $debug_string .= "\n Error description C2DInsertQuery: " . mysqli_error($conn) . "\n<br/>";
         }/*end debug*/
 
+        failureToExecute ($C2DInsertQueryResult, 'I605', 'Insert ' );
 
 
 
@@ -694,8 +720,10 @@ _END;
 
 
 
-  /*    echo $debug_string;
-        exit();*/
+
+
+        /*    echo $debug_string;
+              exit();*/
 
 
 
@@ -812,6 +840,9 @@ VALUES (";
         if (!$compositionInsertQueryResult) $debug_string .= "\n Error description compositionInsertQuery: " . mysqli_error($conn) . "\n<br/>";
     }/*end debug*/
 
+    failureToExecute ($compositionInsertQueryResult, 'I606', 'Insert ' );
+
+
     /*Here I will want to get the composition ID I just created*/
     $compositionID = $conn->insert_id;
 
@@ -854,6 +885,9 @@ _END;
             if($debug) {
                 if (!$C2KInsertQueryResult) $debug_string .= "\n Error description C2KInsertQuery: " . mysqli_error($conn) . "\n<br/>";
             }/*end debug*/
+
+            failureToExecute ($C2KInsertQueryResult, 'I607', 'Insert ' );
+
         }/*end foreach keysig Array*/
     }/*end if is array*/
 
@@ -886,6 +920,9 @@ _END;
                 if (!$C2GInsertQueryResult) $debug_string .= "\n Error description C2GInsertQuery: " . mysqli_error($conn) . "\n<br/>";
             }/*end debug*/
 
+            failureToExecute ($C2GInsertQueryResult, 'I608', 'Insert ' );
+
+
         }/*end foreach genre Array*/
 
     }/*!is_array($keySigID)*/
@@ -916,6 +953,9 @@ _END;
             if($debug) {
                 if (!$C2IInsertQueryResult) $debug_string .= "\n Error description C2IInsertQuery: " . mysqli_error($conn) . "\n<br/>";
             }/*end debug*/
+
+            failureToExecute ($C2IInsertQueryResult, 'I609', 'Insert ' );
+
         }/*end foreach instrument Array*/
     }/* end instrument is array*/
 
@@ -940,6 +980,9 @@ _END;
         if (!$C2DInsertQueryResult) $debug_string .= "\n Error description C2DInsertQuery: " . mysqli_error($conn) . "\n<br/>";
     }/*end debug*/
 
+    failureToExecute ($C2DInsertQueryResult, 'I610', 'Insert ' );
+
+
 
 
 
@@ -961,13 +1004,16 @@ _END;
         if (!$C2DInsertQueryResult) $debug_string .= "\n Error description C2DInsertQuery: " . mysqli_error($conn) . "\n<br/>";
     }/*end debug*/
 
+    failureToExecute ($C2DInsertQueryResult, 'I611', 'Insert ' );
 
 
 
 
 
- /*echo $debug_string;
-    exit();*/
+
+
+    /*echo $debug_string;
+       exit();*/
 
 
 
@@ -1005,6 +1051,9 @@ _END;
         echo '$keySigsQuery = ' . $keySigsQuery . '<br/><br/>';
         if (!$resultKeySigsQuery) echo("\n Error description $keySigsQuery: " . mysqli_error($conn) . "\n<br/>");
     }/*end debug*/
+
+    failureToExecute ($resultKeySigsQuery, 'S501', 'Select ' );
+
 
     if ($resultKeySigsQuery) {
 
@@ -1052,6 +1101,9 @@ _END;
         if (!$resultGenresQuery) echo("\n Error description genresQuery: " . mysqli_error($conn) . "\n<br/>");
     }/*end debug*/
 
+    failureToExecute ($resultGenresQuery, 'S502', 'Select ' );
+
+
     if ($resultGenresQuery) {
 
         $numberOfRows = $resultGenresQuery->num_rows;
@@ -1070,6 +1122,8 @@ _END;
             $genresString .= $genres .", ";
 
         } /*for loop ending*/
+
+
 
     } /*End if result genres query*/
 
@@ -1095,6 +1149,9 @@ _END;
         echo '$instrumentsQuery = ' . $instrumentsQuery . '<br/><br/>';
         if (!$resultInstrumentsQuery) echo ("\n Error description instrumentsQuery: " . mysqli_error($conn) . "\n<br/>");
     }/*end debug*/
+
+    failureToExecute ($resultInstrumentsQuery, 'S503', 'Select ' );
+
 
     if ($resultInstrumentsQuery) {
 
@@ -1145,6 +1202,9 @@ _END;
         if (!$resultGenDiffQuery) echo("\n Error description genDiffQuery: " . mysqli_error($conn) . "\n<br/>");
     }/*end debug*/
 
+    failureToExecute ($resultGenDiffQuery, 'S504', 'Select ' );
+
+
     if ($resultGenDiffQuery) {
 
         $GenNumberOfRows = $resultGenDiffQuery->num_rows;
@@ -1184,6 +1244,9 @@ _END;
         if (!$resultASPDiffQuery) echo("\n Error description: ASPDiffQuery: " . mysqli_error($conn) . "\n<br/>");
     }/*end debug*/
 
+    failureToExecute ($resultASPDiffQuery, 'S505', 'Select ' );
+
+
     if ($resultASPDiffQuery) {
 
         $ASPNumberOfRows = $resultASPDiffQuery->num_rows;
@@ -1217,6 +1280,9 @@ _END;
         echo 'compositionQuery = ' . $compositionQuery . '<br/><br/>';
         if (!$resultCompositionQuery) echo("\n Error description compositionQuery: " . mysqli_error($conn) . "\n<br/>");
     }/*end debug*/
+
+    failureToExecute ($resultCompositionQuery, 'S506', 'Select ' );
+
 
     if ($resultCompositionQuery) {
 
@@ -2126,7 +2192,7 @@ if($opusNum == 'NULL') {
                       <div class="form-group pt-2">
                           <label for="physCompositionLoc">Composition Location: Type in the Composition Location for your library</label>
                           <input type="text" class="form-control" id="physCompositionLoc" name="physCompositionLocNote" value="<?php echo htmlspecialchars($physCompositionLocNote, ENT_QUOTES) ?>"/><br/>
-                          
+
                       </div> <!-- end form-group -->
                   </div> <!-- end card-body -->
               </div> <!-- end card -->

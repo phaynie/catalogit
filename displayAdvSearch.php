@@ -293,6 +293,9 @@ WHERE 1=1";
     }
 
     if (!$advIDSearchQueryResult) echo("\n Error description query advIDSearchQuery: " . mysqli_error($conn) . "\n<br/>");
+
+    failureToExecute ($advIDSearchQueryResult, 'S531', 'Select ' );
+
     if ($advIDSearchQueryResult) {
         $numberOfAdvSearchIDQueryRows = $advIDSearchQueryResult->num_rows;
         $compositionIDFound = ($numberOfAdvSearchIDQueryRows > 0);
@@ -364,6 +367,9 @@ _END;
                     if (!$advSearchCompositionNameQueryResult) echo("\n Error description query $advSearchCompositionNameQuery: " . mysqli_error($conn) . "\n<br/>");
                 }
 
+                failureToExecute ($advSearchCompositionNameQueryResult, 'S532', 'Select ' );
+
+
                 if ($advSearchCompositionNameQueryResult) {
                     $numberOfAdvSearchCompositionNameQueryRows = $advSearchCompositionNameQueryResult->num_rows;
                     $compositionNameFound = ($numberOfAdvSearchCompositionNameQueryRows > 0);
@@ -400,7 +406,11 @@ _END;
                             echo 'advSearchComposerQuery =' . $advSearchComposerQuery . '</br>';
                             if (!$advSearchComposerQueryResult) echo("\n Error description query advSearchComposerQuery: " . mysqli_error($conn) . "\n<br/>");
                         }
-                        $advancedComposerSearchNotFound = "";
+
+                failureToExecute ($advSearchComposerQueryResult, 'S533', 'Select ' );
+
+
+                $advancedComposerSearchNotFound = "";
 
                         if ($advSearchComposerQueryResult) {
                             $numberOfAdvSearchComposerQueryRows = $advSearchComposerQueryResult->num_rows;
@@ -453,6 +463,9 @@ _END;
                                 if (!$advSearchArrangerQueryResult) echo("\n Error description query advSearchArrangerQuery: " . mysqli_error($conn) . "\n<br/>");
                             }
 
+                            failureToExecute ($advSearchArrangerQueryResult, 'S534', 'Select ' );
+
+
 
                             if ($advSearchArrangerQueryResult) {
                                 $numberOfAdvSearchArrangerQueryRows = $advSearchArrangerQueryResult->num_rows;
@@ -501,6 +514,10 @@ _END;
                                 echo 'advSearchLyricistQuery =' . $advSearchLyricistQuery . '</br>';
                                 if (!$advSearchLyricistQueryResult) echo("\n Error description query advSearchLyricistQuery: " . mysqli_error($conn) . "\n<br/>");
                             }
+
+                            failureToExecute ($advSearchLyricistQueryResult, 'S535', 'Select ' );
+
+
                             $advancedLyricistSearchNotFound = "";
 
                             if ($advSearchLyricistQueryResult) {

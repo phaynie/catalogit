@@ -101,6 +101,10 @@ _END;
       }
 
       if (!$bookQueryResult) echo ("\n Error description query bookQuery: " . mysqli_error($conn) . "\n<br/>");
+
+      failureToExecute ($bookQueryResult, 'S536', 'Select ' );
+
+
       if($bookQueryResult) {
           $numberOfBookRows = $bookQueryResult->num_rows;
 
@@ -140,6 +144,9 @@ _END;
 
           if (!$resultEditorPeopleQuery) echo ("\n Error description editorPeopleQuery: " . mysqli_error($conn) . "\n<br/>");
       }/*end debug*/
+
+      failureToExecute ($resultEditorPeopleQuery, 'S537', 'Select ' );
+
 
       if ($resultEditorPeopleQuery) {
           $numEditorPeopleRows = $resultEditorPeopleQuery->num_rows;
@@ -186,6 +193,9 @@ _END;
 
           if (!$resultPublisherOrgQuery) echo ("\n Error description publisherOrgQuery: " . mysqli_error($conn) . "\n<br/>");
       }/*end debug*/
+
+      failureToExecute ($resultPublisherOrgQuery, 'S538', 'Select ' );
+
 
       if ($resultPublisherOrgQuery) {
           $numPublisherOrgRows = $resultPublisherOrgQuery->num_rows;
@@ -288,7 +298,10 @@ if($debug) {
     if (!$resultCompositionQuery) echo ("\n Error description resultCompositionQuery: " . mysqli_error($conn) . "\n<br/>");
 }/*end debug*/
 
-if ($resultCompositionQuery) {
+      failureToExecute ($resultCompositionQuery, 'S539', 'Select ' );
+
+
+      if ($resultCompositionQuery) {
     $numberOfCompositionRows = $resultCompositionQuery->num_rows;
     if ($debug) {
         echo 'rows = ' . $numberOfCompositionRows . '<br/><br/>';

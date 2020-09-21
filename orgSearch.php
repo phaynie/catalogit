@@ -124,6 +124,9 @@ if($debug) {
     if (!$resultOrgNamesArrayQuery) $debug_string.="('\n Error description orgNamesArrayQuery: ' . mysqli_error($conn) . '\n<br/>')";
 }/*end debug*/
 
+failureToExecute ($resultOrgNamesArrayQuery, 'S582', 'Select ' );
+
+
 if ($resultOrgNamesArrayQuery) {
 
     $orgNamesArrayNumberOfRows = $resultOrgNamesArrayQuery->num_rows;
@@ -223,6 +226,9 @@ if ($debug) {
 }
 
 if (!$bookQueryResult) echo("\n Error description query bookQuery: " . mysqli_error($conn) . "\n<br/>");
+
+    failureToExecute ($bookQueryResult, 'S583', 'Select ' );
+
 
 $numberOfRows = $bookQueryResult->num_rows;
 

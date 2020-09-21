@@ -167,6 +167,9 @@ _END;
         if (!$resultOrgQuery) echo("\n Error description resultOrgQuery: " . mysqli_error($conn) . "\n<br/>");
     }/*end debug*/
 
+    failureToExecute ($resultOrgQuery, 'S580', 'Select ' );
+
+
     if ($resultOrgQuery){
         if($debug) {
             echo ("tattletale") ;
@@ -331,6 +334,9 @@ _END;
 
         if (!$resultPublisherOrgQuery) echo("\n Error description publisherOrgQuery: " . mysqli_error($conn) . "\n<br/>");
     }/*end debug*/
+
+    failureToExecute ($resultPublisherOrgQuery, 'S581', 'Select ' );
+
 
     if ($resultPublisherOrgQuery) {
         $numPublisherOrgRows = $resultPublisherOrgQuery->num_rows;

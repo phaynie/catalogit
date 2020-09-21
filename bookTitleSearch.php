@@ -60,6 +60,9 @@ if($debug) {
     if (!$resultBookTitlesArrayQuery) $debug_string.="('\n Error description bookTitlesArrayQuery: ' . mysqli_error($conn) . '\n<br/>')";
 }/*end debug*/
 
+failureToExecute ($resultBookTitlesArrayQuery, 'S517', 'Select ' );
+
+
 if ($resultBookTitlesArrayQuery) {
 
     $bookTitlesArrayNumberOfRows = $resultBookTitlesArrayQuery->num_rows;

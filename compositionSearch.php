@@ -57,6 +57,9 @@ if($debug) {
     if (!$resultCompositionsArrayQuery) $debug_string.='("\n Error description compositionsArrayQuery: " . mysqli_error($conn) . "\n<br/>")';
 }/*end debug*/
 
+failureToExecute ($resultCompositionsArrayQuery, 'S530', 'Select ' );
+
+
 if ($resultCompositionsArrayQuery) {
 
     $compositionsArrayNumberOfRows = $resultCompositionsArrayQuery->num_rows;

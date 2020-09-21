@@ -176,10 +176,7 @@ When we click on submit below the form, the user is returned to this same page t
                 if (!$updateOrganizationsResult) $debug_string .="\n Error description updateOrganizations: " . mysqli_error($conn) . "\n<br/>";
             }/*end debug*/
 
-        if (!$updateOrganizationsResult) {
-            echo "<p class='error'> Database did not update . Contact administrator </p> . '\n<br/>'";
-            exit();
-        }
+        failureToExecute ($updateOrganizationsResult, 'U702', 'Update ' );
 
 
        /* echo $debug_string;
@@ -218,6 +215,8 @@ When we click on submit below the form, the user is returned to this same page t
             if (!$organizationsInsertQueryResult) echo("\n Error description organizationsInsertQuery: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
 
+        failureToExecute ($organizationsInsertQueryResult, 'I612', 'Insert ' );
+
         /*Getting org ID for the organization just inserted into database*/
         /*This needs to be newOrgID when an Organization does not exist and we are adding a new organization*/
         $newOrgID = $conn->insert_id;
@@ -225,6 +224,8 @@ When we click on submit below the form, the user is returned to this same page t
         if ($debug) {
             echo("newOrgID = " . $newOrgID . "<br/>");
         }/*end debug*/
+
+
     } /*end else*/
 
 
@@ -273,6 +274,9 @@ _END;
         echo 'organizationsPublisherQuery = ' . $organizationsPublisherQuery . '<br/><br/>';
         if (!$organizationsPublisherQueryResult) echo("\n Error description query organizationsPublisherQuery: " . mysqli_error($conn) . "\n<br/>");
     }/*end debug*/
+
+    failureToExecute ($organizationsPublisherQueryResult, 'S507', 'Select ' );
+
 
     $numberOfRows = $organizationsPublisherQueryResult->num_rows;
 

@@ -321,6 +321,9 @@ if($submit == 'true') {
                 if (!$updatePeopleResult) echo("\n Error description updatePeople: " . mysqli_error($conn) . "\n<br/>");
             }/*end debug*/
 
+            failureToExecute ($updatePeopleResult, 'U703', 'Update ' );
+
+
             /*Check to make sure query did not fail. If fails do not go to next page. Show same page with error message
             Data base error: Tell Site admin.*/
             /*If it fails make sure there is an error message*/
@@ -330,10 +333,9 @@ if($submit == 'true') {
                 if (!$updatePeopleResult) $debug_string .= "\n Error description updatePeople: " . mysqli_error($conn) . "\n<br/>";
             }/*end debug*/
 
-            if (!$updatePeopleResult) {
-                echo "<p class='error'> Database did not update. Contact Administrator </p> . '\n<br/>'";
-                exit();
-            }
+
+
+
           /* echo $debug_string;
           exit();*/
 
@@ -392,6 +394,11 @@ if($submit == 'true') {
                 echo("\npeopleInsertQuery= " . $peopleInsertQuery . "\n<br/>");
                 if (!$peopleInsertQueryResult) echo("\n Error description peopleInsertQuery: " . mysqli_error($conn) . "\n<br/>");
             }/*end debug*/
+
+
+
+
+            failureToExecute ($peopleInsertQueryResult, 'I600', 'Insert ');
 
             /*Getting people ID for the organization just inserted into database*/
             /*This needs to be newPeopleID when a person does not exist and we are adding a new person*/
@@ -462,6 +469,12 @@ _END;
             echo 'peopleQuery = ' . $peopleQuery . '<br/><br/>';
             if (!$peopleQueryResult) echo("\n Error description query peopleQuery: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
+
+
+
+
+        failureToExecute ($peopleQueryResult, 'S500', 'Select ');
+
 
         $numberOfPeopleRows = $peopleQueryResult->num_rows;
 

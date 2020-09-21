@@ -220,6 +220,9 @@ if($debug) {
     if (!$resultPersonsArrayQuery) $debug_string.="('\n Error description personsArrayQuery: ' . mysqli_error($conn) . '\n<br/>')";
 }/*end debug*/
 
+failureToExecute ($resultPersonsArrayQuery, 'S587', 'Select ' );
+
+
 if ($resultPersonsArrayQuery) {
 
     $personsArrayNumberOfRows = $resultPersonsArrayQuery->num_rows;
@@ -326,6 +329,10 @@ _END;
         }
 
         if (!$bookQueryResult) echo ("\n Error description query bookQuery: " . mysqli_error($conn) . "\n<br/>");
+
+        failureToExecute ($bookQueryResult, 'S588', 'Select ' );
+
+
         if($bookQueryResult) {
             $numberOfBookRows = $bookQueryResult->num_rows;
 
@@ -365,6 +372,9 @@ _END;
 
             if (!$resultEditorPeopleQuery) echo ("\n Error description editorPeopleQuery: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
+
+        failureToExecute ($resultEditorPeopleQuery, 'S589', 'Select ' );
+
 
         if ($resultEditorPeopleQuery) {
             $numEditorPeopleRows = $resultEditorPeopleQuery->num_rows;
@@ -412,6 +422,9 @@ _END;
 
             if (!$resultPublisherOrgQuery) echo ("\n Error description publisherOrgQuery: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
+
+        failureToExecute ($resultPublisherOrgQuery, 'S590', 'Select ' );
+
 
         if ($resultPublisherOrgQuery) {
             $numPublisherOrgRows = $resultPublisherOrgQuery->num_rows;

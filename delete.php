@@ -184,6 +184,9 @@ _END;
            if (!$deleteB2R2PResult) echo("\n Error description deleteB2R2P: " . mysqli_error($conn) . "\n<br/>");
        }/*end debug*/
 
+       failureToExecute ($deleteB2R2PResult, 'D804', 'Delete ' );
+
+
 
        if ($deleteB2R2PResult) {
            $deleteB2R2O = <<<_END
@@ -202,6 +205,9 @@ _END;
            if ($debug) {
                if (!$deleteB2R2OResult) echo("\n Error description deleteB2R2O: " . mysqli_error($conn) . "\n<br/>");
            }/*end debug*/
+
+           failureToExecute ($deleteB2R2OResult, 'D805', 'Delete ' );
+
 
 
            if ($deleteB2R2OResult) {
@@ -222,6 +228,9 @@ _END;
                    if (!$deleteC2IResult) echo("\n Error description deleteC2I: " . mysqli_error($conn) . "\n<br/>");
                }/*end debug*/
 
+               failureToExecute ($deleteC2IResult, 'D806', 'Delete ' );
+
+
 
                if ($deleteC2IResult) {
                    $deleteC2K = <<<_END
@@ -240,6 +249,9 @@ _END;
                    if ($debug) {
                        if (!$deleteC2KResult) echo("\n Error description deleteC2K: " . mysqli_error($conn) . "\n<br/>");
                    }/*end debug*/
+
+                   failureToExecute ($deleteC2KResult, 'D807', 'Delete ' );
+
 
 
                    if ($deleteC2KResult) {
@@ -260,6 +272,9 @@ _END;
                            if (!$deleteC2DResult) echo("\n Error description deleteC2D: " . mysqli_error($conn) . "\n<br/>");
                        }/*end debug*/
 
+                       failureToExecute ($deleteC2DResult, 'D808', 'Delete ' );
+
+
 
                        if ($deleteC2DResult) {
                            $deleteC2G = <<<_END
@@ -278,6 +293,9 @@ _END;
                            if ($debug) {
                                if (!$deleteC2GResult) echo("\n Error description deleteC2G: " . mysqli_error($conn) . "\n<br/>");
                            }/*end debug*/
+
+                           failureToExecute ($deleteC2GResult, 'D809', 'Delete ' );
+
 
 
                            if ($deleteC2GResult) {
@@ -298,6 +316,8 @@ _END;
                                 if (!$deleteC2R2PResult) echo("\n Error description deleteC2R2P: " . mysqli_error($conn) . "\n<br/>");
                                 }/*end debug*/
 
+                               failureToExecute ($deleteC2R2PResult, 'D810', 'Delete ' );
+
 
                                 if ($deleteC2R2PResult) {
                                     $deleteCompositions = <<<_END
@@ -316,8 +336,11 @@ _END;
                                     if (!$deleteCompositionsResult) echo("\n Error description deleteCompositions: " . mysqli_error($conn) . "\n<br/>");
                                         }/*end debug*/
 
+                                    failureToExecute ($deleteCompositionsResult, 'D811', 'Delete ' );
 
-                                        if ($deleteCompositionsResult) {
+
+
+                                    if ($deleteCompositionsResult) {
 
                                             $deleteBooks = <<<_END
                                                     DELETE FROM books
@@ -335,8 +358,11 @@ _END;
                                                 if (!$deleteBooksResult) echo("\n Error description deleteBooks: " . mysqli_error($conn) . "\n<br/>");
                                             }/*end debug*/
 
+                                        failureToExecute ($deleteBooksResult, 'D812', 'Delete ' );
 
-                                            if ($deleteBooksResult) {
+
+
+                                        if ($deleteBooksResult) {
 
                                                 echo<<<_END
                                                    
@@ -412,6 +438,9 @@ _END;
         if (!$deleteC2IResult) echo("\n Error description deleteC2I: " . mysqli_error($conn) . "\n<br/>");
     }/*end debug*/
 
+    failureToExecute ($deleteC2IResult, 'D813', 'Delete ' );
+
+
 
     if ($deleteC2IResult){
         $deleteC2K  =  <<<_END
@@ -431,6 +460,9 @@ _END;
         if($debug) {
             if (!$deleteC2KResult) echo("\n Error description deleteC2K: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
+
+        failureToExecute ($deleteC2KResult, 'D814', 'Delete ' );
+
 
 
         if ($deleteC2KResult){
@@ -452,6 +484,9 @@ _END;
                 if (!$deleteC2DResult) echo("\n Error description deleteC2D: " . mysqli_error($conn) . "\n<br/>");
             }/*end debug*/
 
+            failureToExecute ($deleteC2DResult, 'D815', 'Delete ' );
+
+
 
             if ($deleteC2DResult){
                 $deleteC2G  =  <<<_END
@@ -471,6 +506,9 @@ _END;
                 if($debug) {
                     if (!$deleteC2GResult) echo("\n Error description deleteC2G: " . mysqli_error($conn) . "\n<br/>");
                 }/*end debug*/
+
+                failureToExecute ($deleteC2GResult, 'D816', 'Delete ' );
+
 
 
                 if ($deleteC2GResult){
@@ -492,6 +530,9 @@ _END;
                         if (!$deleteC2R2PResult) echo("\n Error description deleteC2R2P: " . mysqli_error($conn) . "\n<br/>");
                     }/*end debug*/
 
+                    failureToExecute ($deleteC2R2PResult, 'D817', 'Delete ' );
+
+
 
                     if ($deleteC2R2PResult){
                         $deleteCompositions  =  <<<_END
@@ -511,6 +552,9 @@ _END;
                         if($debug) {
                             if (!$deleteCompositionsResult) echo("\n Error description deleteCompositions: " . mysqli_error($conn) . "\n<br/>");
                         }/*end debug*/
+
+                        failureToExecute ($deleteCompositionsResult, 'D818', 'Delete ' );
+
 
 
                         if ($deleteCompositionsResult){
@@ -582,6 +626,9 @@ _END;
             if (!$deleteEditorQueryResult) echo("\n Error description deleteEditorQuery: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
 
+        failureToExecute ($deleteEditorQueryResult, 'D819', 'Delete ' );
+
+
         header('Location: editBook.php?bookID=' . $bookID . '&peopleID=' . $peopleID . '&editBook=true');
         exit();
     }elseif($deletePublisher =='true') {
@@ -602,6 +649,10 @@ _END;
         if($debug) {
             if (!$deletePublisherQueryResult) echo("\n Error description deletePublisherQuery: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
+
+        failureToExecute ($deletePublisherQueryResult, 'D820', 'Delete ' );
+
+
         if($deletePublisherQueryResult) {
             $deletePublisherFromBookSuccess = 'true';
         }
@@ -643,6 +694,9 @@ _END;
         if ($debug) {
             if (!$deletePeopleQueryResult) echo("\n Error description deletePeopleQueryQuery: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
+
+        failureToExecute ($deletePeopleQueryResult, 'D821', 'Delete ' );
+
 
         header('Location: editComposition.php?bookID=' . $bookID . '&compositionID=' . $compositionID . '&peopleID=' . $peopleID . '&editComposition=true');
         exit();

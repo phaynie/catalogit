@@ -108,7 +108,12 @@ _END;
        }
      
       if (!$bookQueryResult) echo ("\n Error description query bookQuery: " . mysqli_error($conn) . "\n<br/>");
-if($bookQueryResult) {
+
+    failureToExecute ($bookQueryResult, 'S565', 'Select ' );
+
+
+    if($bookQueryResult) {
+
     $numberOfBookRows = $bookQueryResult->num_rows;
 
     for ($j = 0; $j < $numberOfBookRows; ++$j) {
@@ -147,6 +152,9 @@ _END;
 
         if (!$resultEditorPeopleQuery) echo ("\n Error description editorPeopleQuery: " . mysqli_error($conn) . "\n<br/>");
     }/*end debug*/
+
+    failureToExecute ($resultEditorPeopleQuery, 'S566', 'Select ' );
+
 
     if ($resultEditorPeopleQuery) {
         $numEditorPeopleRows = $resultEditorPeopleQuery->num_rows;
@@ -196,6 +204,9 @@ _END;
 
         if (!$resultPublisherOrgQuery) echo ("\n Error description publisherOrgQuery: " . mysqli_error($conn) . "\n<br/>");
     }/*end debug*/
+
+    failureToExecute ($resultPublisherOrgQuery, 'S567', 'Select ' );
+
 
     if ($resultPublisherOrgQuery) {
         $numPublisherOrgRows = $resultPublisherOrgQuery->num_rows;

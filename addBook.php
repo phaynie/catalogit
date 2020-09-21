@@ -211,6 +211,8 @@ Here we will wash all values that come from the form to be used in the db querie
                 if (!$updateBooksResult) $debug_string .="\n Error description updateBooks: " . mysqli_error($conn) . "\n<br/>";
             }/*end debug*/
 
+            failureToExecute ($updateBooksResult, 'U700', 'Update ' );
+
              /* echo $debug_string;
        exit();*/
 
@@ -263,6 +265,8 @@ Here we will wash all values that come from the form to be used in the db querie
                 echo("\nbookInsertQuery= " . $bookInsertQuery . "\n<br/>");
                 if (!$bookInsertQueryResult) echo("\n Error description bookInsertQuery: " . mysqli_error($conn) . "\n<br/>");
             }/*end debug*/
+
+            failureToExecute ($bookInsertQueryResult);
 
             /*Getting book ID for the book just inserted into database*/
             $bookID = $conn->insert_id;

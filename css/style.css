@@ -145,6 +145,15 @@ h5.mossaccent {
 }
 
 
+.db_error {
+  color: #cc0033;
+  display: inline-block;
+  font-size: 15px;
+  line-height: 20px;
+  margin: 5px 0 0;
+}
+
+
 .signupsuccess  {
   color: #0a12cc;
   display: block;

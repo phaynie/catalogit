@@ -235,6 +235,9 @@ _END;
              if (!$B2R2PInsertQueryResult) echo("\n Error description B2R2PInsertQuery: " . mysqli_error($conn) . "\n<br/>");
          }/*end debug*/
 
+         failureToExecute ($B2R2PInsertQueryResult, 'I613', 'Insert ' );
+
+
 
          /* if ($debug) {
               echo 'debug only to make visible';
@@ -259,6 +262,7 @@ _END;
              if (!$C2R2PInsertQueryResult) echo("\n Error description C2R2PInsertQuery: " . mysqli_error($conn) . "\n<br/>");
          }/*end debug*/
 
+         failureToExecute ($C2R2PInsertQueryResult, 'I614', 'Insert ' );
 
 
 
@@ -285,6 +289,7 @@ _END;
          if (!$B2R2OInsertQueryResult) echo("\n Error description B2R2OInsertQuery: " . mysqli_error($conn) . "\n<br/>");
      }/*end debug*/
 
+    failureToExecute ($B2R2OInsertQueryResult, 'I615', 'Insert ' );
 
      /* if ($debug) {
           echo 'debug only to make visible';
@@ -324,6 +329,8 @@ _END;
 
      } /*end debug*/
 
+         failureToExecute ($updateB2R2PResult, 'U704', 'Update ' );
+
      header('Location: editBook.php?bookID=' . $bookID . '&peopleID=' . $newPeopleID . '&editBook=true&replaceEditor=true&searchPeopleLastName_value=' . $searchPeopleLastName_value);
      exit();
 
@@ -346,7 +353,10 @@ _END;
              if (!$updateC2R2PResult) echo("\n Error description updateC2R2P: " . mysqli_error($conn) . "\n<br/>");
 
          } /*end debug*/
-/*todo: Not certain we need all these variables to head to the editComposition page. Will look into*/
+
+         failureToExecute ($updateC2R2PResult, 'U704', 'Update ' );
+
+         /*todo: Not certain we need all these variables to head to the editComposition page. Will look into*/
          header('Location: editComposition.php?bookID=' . $bookID . '&peopleID=' . $newPeopleID . '&editComposition=true&replaceComposer=' . $replaceComposer . '&replaceArranger=' . $replaceArranger . '&replaceLyricist=' . $replaceLyricist . '&compositionID=' . $compositionID . '&searchPeopleLastName_value=' . $searchPeopleLastName_value);
          exit();
 
@@ -370,8 +380,11 @@ _END;
          if (!$updatePublisherResult) echo("\n Error description updatePublisher: " . mysqli_error($conn) . "\n<br/>");
 
      } /*end debug*/
+         failureToExecute ($updatePublisherResult, 'U705', 'Update ' );
 
-     header('Location: editBook.php?bookID=' . $bookID . '&orgID=' . $newOrgID . '&editBook=true&replacePublisher=true&searchPubName_value=' . $searchPubName_value);
+
+
+        header('Location: editBook.php?bookID=' . $bookID . '&orgID=' . $newOrgID . '&editBook=true&replacePublisher=true&searchPubName_value=' . $searchPubName_value);
      exit();
 
  }/*end if(isset($replacePublisher) && isset($newOrgID*/

@@ -140,6 +140,9 @@ if($debug) {
     if (!$resultPeopleQuery) echo("\n Error description peopleQuery: " . mysqli_error($conn) . "\n<br/>");
 }/*end debug*/
 
+failureToExecute ($resultPeopleQuery, 'S540', 'Select ' );
+
+
 if ($resultPeopleQuery){
        
   $numberOfPeopleRows = $resultPeopleQuery->num_rows;
@@ -195,6 +198,9 @@ if($debug) {
     echo 'compositionQuery =' . $compositionQuery . '<br/><br/>';
     if (!$resultCompositionQuery) echo("\n Error description compositionQuery: " . mysqli_error($conn) . "\n<br/>");
 }/*end debug*/
+
+failureToExecute ($resultCompositionQuery, 'S541', 'Select ' );
+
 
 if ($resultCompositionQuery) {     
 
@@ -285,7 +291,10 @@ _END;
           if (!$resultKeySigQuery) echo("\n Error description keySigQuery: " . mysqli_error($conn) . "\n<br/>");
       }/*end debug*/
 
-      if ($resultKeySigQuery) {     
+        failureToExecute ($resultKeySigQuery, 'S542', 'Select ' );
+
+
+        if ($resultKeySigQuery) {
 
         $numberOfKeySigRows = $resultKeySigQuery->num_rows;
         /*Build comma separated list of key signatures in a string*/
@@ -324,7 +333,10 @@ _END;
             if (!$resultGenresQuery) echo("\n Error description genresQuery: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
 
-      if ($resultGenresQuery) {     
+        failureToExecute ($resultGenresQuery, 'S543', 'Select ' );
+
+
+        if ($resultGenresQuery) {
         $numberOfGenreRows = $resultGenresQuery->num_rows;
         /*Build comma separated list of genres in a string*/
         $genreString= "";
@@ -358,7 +370,10 @@ _END;
             if (!$resultInstrumentQuery) echo("\n Error description instrumentQuery: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
 
-      if ($resultInstrumentQuery) {     
+        failureToExecute ($resultInstrumentQuery, 'S544', 'Select ' );
+
+
+        if ($resultInstrumentQuery) {
         $numberOfInstRows = $resultInstrumentQuery->num_rows;
         /*Build comma separated list of instruments in a string*/
         $instrumentString= "";
@@ -398,7 +413,10 @@ _END;
             if (!$resultGenDiffQuery) echo("\n Error description genDiffQuery: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
 
-      if ($resultGenDiffQuery) {     
+        failureToExecute ($resultGenDiffQuery, 'S545', 'Select ' );
+
+
+        if ($resultGenDiffQuery) {
         $numberOfGenRows = $resultGenDiffQuery->num_rows;
 
         for ($j = 0 ; $j < $numberOfGenRows ; ++$j) {
@@ -429,7 +447,10 @@ _END;
             if (!$resultASPDiffQuery) echo("\n Error description ASPDiffQuery: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
 
-      if ($resultASPDiffQuery) {     
+        failureToExecute ($resultASPDiffQuery, 'S546', 'Select ' );
+
+
+        if ($resultASPDiffQuery) {
         $numberOfASPRows = $resultASPDiffQuery->num_rows;
 
         for ($j = 0 ; $j < $numberOfASPRows ; ++$j) {
@@ -473,20 +494,17 @@ _END;*/
 
 _END;
 
-
-
-
-
-
-
-
-        $bookQueryResult = $conn->query($bookQuery);
+       $bookQueryResult = $conn->query($bookQuery);
 
         if ($debug) {
             echo 'bookQuery =' . $bookQuery . '</br>';
         }
 
         if (!$bookQueryResult) echo("\n Error description query bookQuery: " . mysqli_error($conn) . "\n<br/>");
+
+        failureToExecute ($bookQueryResult, 'S547', 'Select ' );
+
+
         if ($bookQueryResult) {
             $numberOfBookRows = $bookQueryResult->num_rows;
 
@@ -530,7 +548,10 @@ _END;
     if (!$resultEditorPeopleQuery) echo("\n Error description editorPeopleQuery: " . mysqli_error($conn) . "\n<br/>");
   }/*end debug*/
 
-  if ($resultEditorPeopleQuery) {
+        failureToExecute ($resultEditorPeopleQuery, 'S548', 'Select ' );
+
+
+        if ($resultEditorPeopleQuery) {
     $numEditorPeopleRows = $resultEditorPeopleQuery->num_rows;
     /*Build comma separated list of editorPeople in a string*/
     $editorPeopleString = "";
@@ -574,7 +595,10 @@ _END;
     if (!$resultPublisherOrgQuery) echo("\n Error description publisherOrgQuery: " . mysqli_error($conn) . "\n<br/>");
   }/*end debug*/
 
-  if ($resultPublisherOrgQuery) {
+        failureToExecute ($resultPublisherOrgQuery, 'S549', 'Select ' );
+
+
+        if ($resultPublisherOrgQuery) {
     $numPublisherOrgRows = $resultPublisherOrgQuery->num_rows;
     /*Build comma separated list of publisherOrg in a string*/
     $publisherOrgString = "";
@@ -628,6 +652,9 @@ _END;
             if (!$resultComposerQuery) echo("\n Error description composerQuery: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
 
+        failureToExecute ($resultComposerQuery, 'S550', 'Select ' );
+
+
         if ($resultComposerQuery){
 
             $numberOfComposerRows = $resultComposerQuery->num_rows;
@@ -678,6 +705,9 @@ _END;
             if (!$resultArrangerQuery) echo("\n Error description arrangerQuery: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
 
+        failureToExecute ($resultArrangerQuery, 'S551', 'Select ' );
+
+
         if ($resultArrangerQuery){
           $numberOfArrRows = $resultArrangerQuery->num_rows;
             $arrangerString = "";
@@ -726,6 +756,9 @@ _END;
         if($debug) {
             if (!$resultLyricistQuery) echo("\n Error description lyricistQuery: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
+
+        failureToExecute ($resultLyricistQuery, 'S552', 'Select ' );
+
 
         if ($resultLyricistQuery){
           $numberOfLyrRows = $resultLyricistQuery->num_rows;

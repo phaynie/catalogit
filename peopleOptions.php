@@ -318,7 +318,10 @@ _END;
             if (!$resultPeopleQuery) echo("\nError description PeopleQuery: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
 
-      if ($resultPeopleQuery){
+    failureToExecute ($resultPeopleQuery, 'S584', 'Select ' );
+
+
+    if ($resultPeopleQuery){
         $numberOfPeopleRows = $resultPeopleQuery->num_rows;
         $peopleFound = ($numberOfPeopleRows > 0);
         $peopleNotFound = ($numberOfPeopleRows === 0);
@@ -497,6 +500,9 @@ _END;
             if (!$resultERDPeopleQuery) echo("\n Error description ERDPeopleQuery: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
 
+        failureToExecute ($resultERDPeopleQuery, 'S585', 'Select ' );
+
+
 
     } elseif($editComposition == 'true') {
         /*logic to make this code useful for all people associated with the composition is at the beginning of the page under the initialized variable section.*/
@@ -520,6 +526,10 @@ _END;
 
             if (!$resultERDPeopleQuery) echo("\n Error description ERDPeopleQuery: " . mysqli_error($conn) . "\n<br/>");
         }/*end debug*/
+
+        failureToExecute ($resultERDPeopleQuery, 'S586', 'Select ' );
+
+
     }/*end if editBook elseif editComposition*/
 
 

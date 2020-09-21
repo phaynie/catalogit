@@ -206,6 +206,9 @@ if($debug) {
     if (!$resultInstrumentsArrayQuery) $debug_string.='("\n Error description instrumentsArrayQuery: " . mysqli_error($conn) . "\n<br/>")';
 }/*end debug*/
 
+failureToExecute ($resultInstrumentsArrayQuery, 'S513', 'Select ' );
+
+
 if ($resultInstrumentsArrayQuery) {
 
     $instrumentsArrayNumberOfRows = $resultInstrumentsArrayQuery->num_rows;
@@ -250,6 +253,9 @@ $debug_string .="$instrumentsArray";
         $debug_string.=" 'composerArrayQuery = ' . $composerArrayQuery . '<br/><br/>'";
         if (!$resultComposerArrayQuery) $debug_string.="('\n Error description composerArrayQuery: ' . mysqli_error($conn) . '\n<br/>')";
     }/*end debug*/
+
+failureToExecute ($resultComposerArrayQuery, 'S512', 'Select ' );
+
 
     if ($resultComposerArrayQuery) {
 
@@ -297,6 +303,9 @@ if($debug) {
     if (!$resultArrangersArrayQuery) $debug_string.="('\n Error description arrangersArrayQuery: ' . mysqli_error($conn) . '\n<br/>')";
 }/*end debug*/
 
+failureToExecute ($resultArrangersArrayQuery, 'S511', 'Select ' );
+
+
 if ($resultArrangersArrayQuery) {
 
     $arrangersArrayNumberOfRows = $resultArrangersArrayQuery->num_rows;
@@ -338,6 +347,9 @@ if($debug) {
     $debug_string.=" 'lyricistsArrayQuery = ' . $lyricistsArrayQuery . '<br/><br/>'";
     if (!$resultLyricistsArrayQuery) $debug_string.='("\n Error description lyricistsArrayQuery: " . mysqli_error($conn) . "\n<br/>")';
 }/*end debug*/
+
+failureToExecute ($resultLyricistsArrayQuery, 'S510', 'Select ' );
+
 
 if ($resultLyricistsArrayQuery) {
 
@@ -383,6 +395,9 @@ if($debug) {
     $debug_string.=" 'compositionsArrayQuery = ' . $compositionsArrayQuery . '<br/><br/>'";
     if (!$resultCompositionsArrayQuery) $debug_string.='("\n Error description compositionsArrayQuery: " . mysqli_error($conn) . "\n<br/>")';
 }/*end debug*/
+
+failureToExecute ($resultCompositionsArrayQuery, 'S509', 'Select ' );
+
 
 if ($resultCompositionsArrayQuery) {
 

@@ -12,7 +12,7 @@ include 'boilerplate.php';
 if($debug) {
     echo <<<_END
   
-  <p>bookoptions2-3</p>
+  <p>bookOptions2-3</p>
 
 _END;
 
@@ -81,6 +81,8 @@ _END;
     }
 
     if (!$bookQueryResult) echo("\n Error description query bookQuery: " . mysqli_error($conn) . "\n<br/>");
+    failureToExecute ($bookQueryResult, 'S514', 'Select ' );
+
     if ($bookQueryResult) {
         $numberOfBookRows = $bookQueryResult->num_rows;
 
@@ -129,6 +131,9 @@ _END;
                 if (!$resultEditorPeopleQuery) echo("\n Error description editorPeopleQuery: " . mysqli_error($conn) . "\n<br/>");
             }/*end debug*/
 
+            failureToExecute ($resultEditorPeopleQuery, 'S515', 'Select ' );
+
+
             if ($resultEditorPeopleQuery) {
                 $numEditorPeopleRows = $resultEditorPeopleQuery->num_rows;
                 /*Build comma separated list of editorPeople in a string*/
@@ -174,6 +179,9 @@ _END;
 
                 if (!$resultPublisherOrgQuery) echo("\n Error description publisherOrgQuery: " . mysqli_error($conn) . "\n<br/>");
             }/*end debug*/
+
+            failureToExecute ($resultPublisherOrgQuery, 'S516', 'Select ' );
+
 
             if ($resultPublisherOrgQuery) {
                 $numPublisherOrgRows = $resultPublisherOrgQuery->num_rows;
