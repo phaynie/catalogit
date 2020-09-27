@@ -206,8 +206,6 @@ include 'beginningNav.php';
 
 
 
-<?php
-//-TODO make sure to add a warning when someone clicks on delete database. 'ARE YOU SURE YOU WANT TO DELETE' .  $databaseName . '?'
 
 
 include 'footer.php';

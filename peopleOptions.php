@@ -187,7 +187,7 @@ if(isset($_REQUEST['findComposer'])) {
 if($editBook == 'true') {
     $sendEditBook = "<input type='hidden' name='editBook' value='$editBook' /> ";
     $formAction = 'editBook.php';
-    $formActionChoose = 'editBook.php'; /*might need to be addRole here*/
+    $formActionChoose = 'addRole.php'; /*might need to be addRole here*/
     $Title = $bookTitle;
     $page = 'Book Editing Options';
 }elseif($editComposition == 'true') {

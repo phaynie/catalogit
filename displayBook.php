@@ -1,7 +1,8 @@
 
  
 <?php
-
+/*How we arrived here:
+    A. from bookOptions.php we are searching for a book and chose this option. This page displays the book we are searching for.*/
 
 include 'boilerplate.php';
 
@@ -68,6 +69,7 @@ $bookIDAltered = strip_before_insert($conn, $washPostVar);
 
 
 
+
     
 
 echo <<<_END
@@ -111,7 +113,7 @@ _END;
           for ($j = 0; $j < $numberOfBookRows; ++$j) {
               $row = $bookQueryResult->fetch_array(MYSQLI_NUM);
 
-              $bookID = $row[0];
+              $db_bookID = $row[0];
               $bookTitle = $row[1];
               $bookTag1 = $row[2];
               $bookTag2 = $row[3];
@@ -134,7 +136,7 @@ _END;
       FROM books AS b 
       JOIN B2R2P ON b.ID = B2R2P.book_ID
       JOIN people AS p ON p.ID= B2R2P.people_ID
-      WHERE b.ID = '$bookIDAltered';
+      WHERE b.ID = '$db_bookID';
 
 _END;
 
@@ -162,7 +164,7 @@ _END;
               $editorPeopleLastName = $row[3];
               $editorPeopleSuffix = $row[4];
               /*$editorPeopleString = implode(',',$instVal);*/
-              $editorPeopleString .= $editorPeopleFirstName .  " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . ", ";
+              $editorPeopleString .= $editorPeopleFirstName .  " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . "<br/>Editor Name: ";
 
           } /*for loop ending*/
 
@@ -170,7 +172,7 @@ _END;
 
       /*$displayEditorPeopleString = rtrim($editorPeopleString,'</br>Editor Name: ');*/
 
-      $displayEditorPeopleString = substr($editorPeopleString, 0, strrpos($editorPeopleString, ", " ));
+      $displayEditorPeopleString = substr($editorPeopleString, 0, strrpos($editorPeopleString, "<br/>Editor Name: " ));
 
 
 
@@ -183,7 +185,7 @@ _END;
       FROM books AS b 
       JOIN B2R2O ON b.ID = B2R2O.book_ID
       JOIN organizations AS o ON o.ID= B2R2O.org_ID
-      WHERE b.ID = '$bookIDAltered';
+      WHERE b.ID = '$db_bookID';
 
 _END;
 
@@ -218,7 +220,7 @@ _END;
 
      /* $displayPublisherOrgString = rtrim($publisherOrgString,'</br>Publisher Name: ');*/
 
-      $displayPublisherOrgString = substr($publisherOrgString, 0, strrpos($publisherOrgString, "</br></br>Publisher Name: " ));
+      $displayPublisherOrgString = substr($publisherOrgString, 0, strrpos($publisherOrgString, "</br>Publisher Name: " ));
 
 
 

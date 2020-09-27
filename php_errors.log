@@ -13192,3 +13192,47 @@
 [17-Sep-2020 19:16:03 UTC] PHP Warning:  Division by zero in C:\Ampps\www\catalogit\editBook.php on line 164
 [17-Sep-2020 19:16:03 UTC] PHP Stack trace:
 [17-Sep-2020 19:16:03 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\editBook.php:0
+[21-Sep-2020 23:09:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function cleanup_post() in C:\Ampps\www\catalogit\displayBook.php:67
+Stack trace:
+#0 {main}
+  thrown in C:\Ampps\www\catalogit\displayBook.php on line 67
+[21-Sep-2020 23:13:16 UTC] PHP Fatal error:  Cannot redeclare test_input() (previously declared in C:\Ampps\www\catalogit\boilerplate.php:113) in C:\Ampps\www\catalogit\boilerplate.php on line 118
+[21-Sep-2020 23:13:16 UTC] PHP Stack trace:
+[21-Sep-2020 23:13:16 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayBook.php:0
+[22-Sep-2020 00:07:13 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in C:\Ampps\www\catalogit\boilerplate.php on line 5
+[22-Sep-2020 00:07:13 UTC] PHP Stack trace:
+[22-Sep-2020 00:07:13 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\bookOptions2.php:0
+[22-Sep-2020 00:07:13 UTC] PHP   2. include() C:\Ampps\www\catalogit\bookOptions2.php:12
+[22-Sep-2020 00:07:13 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in C:\Ampps\www\catalogit\boilerplate.php on line 5
+[22-Sep-2020 00:07:13 UTC] PHP Stack trace:
+[22-Sep-2020 00:07:13 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\bookTitleSearch.php:0
+[22-Sep-2020 00:07:13 UTC] PHP   2. include() C:\Ampps\www\catalogit\bookTitleSearch.php:9
+[22-Sep-2020 00:07:13 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in C:\Ampps\www\catalogit\boilerplate.php on line 5
+[22-Sep-2020 00:07:13 UTC] PHP Stack trace:
+[22-Sep-2020 00:07:13 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\introPage.php:0
+[22-Sep-2020 00:07:13 UTC] PHP   2. include() C:\Ampps\www\catalogit\introPage.php:7
+[22-Sep-2020 00:07:13 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in C:\Ampps\www\catalogit\boilerplate.php on line 5
+[22-Sep-2020 00:07:13 UTC] PHP Stack trace:
+[22-Sep-2020 00:07:13 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\editBook.php:0
+[22-Sep-2020 00:07:13 UTC] PHP   2. include() C:\Ampps\www\catalogit\editBook.php:3
+[22-Sep-2020 00:07:13 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in C:\Ampps\www\catalogit\boilerplate.php on line 5
+[22-Sep-2020 00:07:13 UTC] PHP Stack trace:
+[22-Sep-2020 00:07:13 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\bookTitleSearch.php:0
+[22-Sep-2020 00:07:13 UTC] PHP   2. include() C:\Ampps\www\catalogit\bookTitleSearch.php:9
+[22-Sep-2020 00:07:13 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in C:\Ampps\www\catalogit\boilerplate.php on line 5
+[22-Sep-2020 00:07:13 UTC] PHP Stack trace:
+[22-Sep-2020 00:07:13 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\index.php:0
+[22-Sep-2020 00:07:13 UTC] PHP   2. include() C:\Ampps\www\catalogit\index.php:4
+[22-Sep-2020 00:07:13 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in C:\Ampps\www\catalogit\boilerplate.php on line 5
+[22-Sep-2020 00:07:13 UTC] PHP Stack trace:
+[22-Sep-2020 00:07:13 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\index.php:0
+[22-Sep-2020 00:07:13 UTC] PHP   2. include() C:\Ampps\www\catalogit\index.php:4
+[22-Sep-2020 00:07:13 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in C:\Ampps\www\catalogit\boilerplate.php on line 5
+[22-Sep-2020 00:07:13 UTC] PHP Stack trace:
+[22-Sep-2020 00:07:13 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\bookTitleSearch.php:0
+[22-Sep-2020 00:07:13 UTC] PHP   2. include() C:\Ampps\www\catalogit\bookTitleSearch.php:9
+[22-Sep-2020 00:07:13 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in C:\Ampps\www\catalogit\boilerplate.php on line 5
+[22-Sep-2020 00:07:13 UTC] PHP Stack trace:
+[22-Sep-2020 00:07:13 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\index.php:0
+[22-Sep-2020 00:07:13 UTC] PHP   2. include() C:\Ampps\www\catalogit\index.php:4
+[27-Sep-2020 18:32:47 UTC] PHP Parse error:  syntax error, unexpected '<<' (T_SL) in C:\Ampps\www\catalogit\delete.php on line 639

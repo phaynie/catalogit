@@ -163,9 +163,6 @@ $roleIDAltered = strip_before_insert($conn, $washPostVar);
 /*Deleting an entire book*/
    if($deleteBook=='true'){
 
-       echo '<script language="javascript">';
-       echo 'alert("ARE YOU SURE YOU WANT TO DELETE THIS BOOK?")';
-       echo '</script>';
 
        $deleteB2R2P= <<<_END
          DELETE FROM B2R2P
@@ -416,9 +413,6 @@ if($deleteComposition =='true') {
 
 
 
-    echo '<script language="javascript">';
-    echo 'alert("ARE YOU SURE YOU WANT TO DELETE THIS COMPOSITION?")';
-    echo '</script>';
 
     $deleteC2I  =  <<<_END
 
@@ -607,9 +601,6 @@ orgOptions.php if we re deleting the Publisher*/
 if($editBook == 'true') {
     if ($deleteEditor == 'true') {
 
-        echo '<script language="javascript">';
-        echo 'alert("ARE YOU SURE YOU WANT TO DELETE THIS EDITOR?")';
-        echo '</script>';
 
         $deleteEditorQuery =
             <<<_END
@@ -632,11 +623,9 @@ _END;
         header('Location: editBook.php?bookID=' . $bookID . '&peopleID=' . $peopleID . '&editBook=true');
         exit();
     }elseif($deletePublisher =='true') {
-        echo '<script language="javascript">';
-        echo 'alert("ARE YOU SURE YOU WANT TO DELETE THIS PUBLISHER?")';
-        echo '</script>';
         $deletePublisherQuery=
             <<<_END
+ 
         DELETE FROM B2R2O
         WHERE B2R2O.book_ID = '$bookIDAltered'
         AND B2R2O.role_ID = 5
@@ -675,11 +664,6 @@ peopleOptions.php*/
 
 if($editComposition == 'true') {
     if ($deletePeople == 'true') {
-       ?>
-        <script type="text/javascript">;
-        alert("ARE YOU SURE YOU WANT TO DELETE THIS PERSON?");
-        </script>
-<?php
         $deletePeopleQuery =
             <<<_END
             DELETE FROM C2R2P

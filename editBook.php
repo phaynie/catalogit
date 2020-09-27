@@ -22,6 +22,7 @@ $physBookLocNote = "";
 $deletePublisherFromBookSuccess = "";
 $deleteEditorFromBookSuccess = "";
 
+
 $bookTitle = "";
 $bookTag1 = "";
 $bookTag2 = "";
@@ -66,6 +67,8 @@ if(isset($_REQUEST['editBook'])) {
 if(isset($_REQUEST['deletePublisherFromBookSuccess'])) {
     $deletePublisherFromBookSuccess = $_REQUEST['deletePublisherFromBookSuccess'];
 }
+
+
 
 
 
@@ -170,14 +173,14 @@ _END;
             $editorPeopleLastName = $row[3];
             $editorPeopleSuffix = $row[4];
             /*$editorPeopleString = implode(',',$instVal);*/
-            $editorPeopleString .=  $editorPeopleFirstName . " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . "<br> Editor Name: " ;
+            $editorPeopleString .=  $editorPeopleFirstName . " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . "<br>Editor Name: " ;
 
         } /*for loop ending*/
 
     } /*End if $resultEditorPeopleQuery query*/
 
 
-    $displayEditorPeopleString = substr($editorPeopleString, 0, strrpos($editorPeopleString, "Editor Name: " ));
+    $displayEditorPeopleString = substr($editorPeopleString, 0, strrpos($editorPeopleString, "<br>Editor Name: " ));
 
     if($displayEditorPeopleString == ""){
         $disableERDEditor = 'disabled';

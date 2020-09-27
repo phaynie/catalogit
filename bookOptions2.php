@@ -5,7 +5,9 @@ will wash user info to be used in db queries ($searchBookTitle and bookID)
 When data is recovered from the db we use htmlspecialchars And ENT_QUOTES to allow the info to be clean and readable again.
 */
 
-
+/*We arrive at this page when:
+ A. We are searching for a book and have come from  bookTitleSearch.php. We only receive the book title from the user.
+    We then search for the book ID and it does not need to be washed. $bookIDAltered does not work for us in this instance.*/
 
 include 'boilerplate.php';
 
@@ -52,8 +54,7 @@ if(isset($_REQUEST['searchBookTitle'])) {
 $notEntered = "<span style='color:rgba(0,0,0,0.4);'>Not Entered</span>";
 
 /*Here we wash this information before we send it in a db query*/
-$washPostVar = cleanup_post($bookID);
-$bookIDAltered = strip_before_insert($conn, $washPostVar);
+
 
 $washPostVar = cleanup_post($searchBookTitle);
 $searchBookTitleAltered = strip_before_insert($conn, $washPostVar);
@@ -120,7 +121,7 @@ _END;
               FROM books AS b 
               JOIN B2R2P ON b.ID = B2R2P.book_ID
               JOIN people AS p ON p.ID= B2R2P.people_ID
-              WHERE b.ID = '$bookIDAltered';
+              WHERE b.ID = '$bookID';
 
 _END;
 
@@ -169,7 +170,7 @@ _END;
                   FROM books AS b 
                   JOIN B2R2O ON b.ID = B2R2O.book_ID
                   JOIN organizations AS o ON o.ID= B2R2O.org_ID
-                  WHERE b.ID = '$bookIDAltered';
+                  WHERE b.ID = '$bookID';
 
 _END;
 
