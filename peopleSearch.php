@@ -51,6 +51,7 @@ $addNewLyricist = "";
 $addNewPeople = "";
 $replacePeople = "";
 $findComposer = "";
+$findPerson = "";
 $submit = "";
 $role = "";
 $validationFailed = false; /*A single place to track whether any validation has failed.*/
@@ -66,7 +67,7 @@ if(isset($_REQUEST['compositionID']) && is_numeric($_REQUEST['compositionID'])) 
     $compositionID = $_REQUEST['compositionID'];
 }
 
-if(isset($_REQUEST['oldPeopleID']) && is_numeric($_REQUEST['oldPeopleId'])) {
+if(isset($_REQUEST['oldPeopleID']) && is_numeric($_REQUEST['oldPeopleID'])) {
     $oldPeopleID = $_REQUEST['oldPeopleID'];
 }
 
@@ -114,6 +115,10 @@ if(isset($_REQUEST['findComposer'])) {
     $findComposer = $_REQUEST['findComposer'];
 }
 
+if(isset($_REQUEST['findPerson'])) {
+    $findPerson = $_REQUEST['findPerson'];
+}
+
 if(isset($_REQUEST['searchPeopleLastName'])) {
     $searchPeopleLastName = $_REQUEST['searchPeopleLastName'];
 }
@@ -140,7 +145,6 @@ if($editBook == 'true') {
 
 if($addNewEditor=='true') {
     $role = "Editor";
-    $addNewPeopleText = "<h5>Enter LAST NAME of New Editor below</h5>";
     $addNewPeopleContinueText = "<h3 >Let's see if the new Editor Already Exists</h3>";
     $sendAddNew = "<input type='hidden' name='addNewEditor' value= 'true' />";
     $addNewPeople = $addNewEditor;
@@ -158,41 +162,41 @@ if($addNewEditor=='true') {
     $addNewPeople = $addNewComposer;
 }elseif($replaceComposer =='true') {
     $role = "Composer";
-    $replacePeopleText = "<h5>Enter LAST NAME of New Composer below</h5>";
     $replacePeopleContinueText = "<h3>Let's search for a replacement Composer</h3>";
     $sendReplace = "<input type='hidden' name='replaceComposer' value='true' />";
     $replacePeople = $replaceComposer;
 }elseif($addNewArranger =='true') {
     $role = "Arranger";
-    $addNewPeopleText = "<h5>Enter LAST NAME of New Arranger below</h5>";
     $addNewPeopleContinueText = "<h3 >Let's see if the new Arranger Already Exists</h3>";
     $sendAddNew = "<input type='hidden' name='addNewArranger' value= 'true' />";
     $addNewPeople = $addNewArranger;
 }elseif($replaceArranger =='true') {
     $role = "Arranger";
-    $replacePeopleText = "<h5>Enter LAST NAME of New Arranger below</h5>";
     $replacePeopleContinueText = "<h3 >Let's search for a replacement Arranger</h3>";
     $sendReplace = "<input type='hidden' name='replaceArranger' value='true' />";
     $replacePeople = $replaceArranger;
 }elseif($addNewLyricist =='true') {
     $role = "Lyricist";
-    $addNewPeopleText = "<h5>Enter LAST NAME of New Lyricist below</h5>";
     $addNewPeopleContinueText = "<h3 >Let's see if the new Lyricist Already Exists</h3>";
     $sendAddNew = "<input type='hidden' name='addNewLyricist' value= 'true' />";
     $addNewPeople = $addNewLyricist;
 }elseif($replaceLyricist =='true') {
     $role = "Lyricist";
-    $replacePeopleText = "<h5>Enter LAST NAME of New Lyricist below</h5>";
     $replacePeopleContinueText = "<h3 >Let's search for a replacement Lyricist</h3>";
     $sendReplace = "<input type='hidden' name='replaceLyricist' value='true' />";
     $replacePeople = $replaceLyricist;
 }elseif($findComposer =='true') {
     $role = "Composer";
-    $findComposerText = "<h5>Enter LAST NAME of Composer below</h5>";
     $findComposerContinueText = "<h3 >Let's see if our Composer already exists</h3>";
     $page = "Intro Page";
     $formAction = "introPage.php";
     $sendFindComposer = "<input type='hidden' name='findComposer' value='true'/>";
+}elseif($findPerson =='true') {
+    $role = "Person";
+    $findPersonContinueText = "<h3 >Let's see if our Person already exists</h3>";
+    $page = "Intro Page";
+    $formAction = "introPage.php";
+    $sendFindPerson = "<input type='hidden' name='findPerson' value='true'/>";
 }
 
 
@@ -288,7 +292,7 @@ if (!$validationFailed ) {
      /*Don't need to was var here. It will not be used until next page*/
 
 /*oldPeopleID needs to be sent when replacing editor*/
-        header('Location: peopleOptions.php?bookID=' . $bookID . '&compName=' . $compName . '&compositionID=' . $compositionID . '&oldPeopleID=' . $oldPeopleID . '&editBook=' . $editBook . '&editComposition=' . $editComposition . '&replaceEditor=' . $replaceEditor . '&replaceComposer=' . $replaceComposer . '&replaceArranger=' . $replaceArranger . '&replaceLyricist=' . $replaceLyricist . '&addNewEditor=' . $addNewEditor . '&addNewComposer=' . $addNewComposer . '&addNewArranger=' . $addNewArranger . '&addNewLyricist=' . $addNewLyricist . '&searchPeopleLastName=' . $searchPeopleLastName . '&findComposer=' . $findComposer);
+        header('Location: peopleOptions.php?bookID=' . $bookID . '&compName=' . $compName . '&compositionID=' . $compositionID . '&oldPeopleID=' . $oldPeopleID . '&editBook=' . $editBook . '&editComposition=' . $editComposition . '&replaceEditor=' . $replaceEditor . '&replaceComposer=' . $replaceComposer . '&replaceArranger=' . $replaceArranger . '&replaceLyricist=' . $replaceLyricist . '&addNewEditor=' . $addNewEditor . '&addNewComposer=' . $addNewComposer . '&addNewArranger=' . $addNewArranger . '&addNewLyricist=' . $addNewLyricist . '&searchPeopleLastName=' . $searchPeopleLastName . '&findComposer=' . $findComposer. '&findPerson=' . $findPerson);
         exit();
     } /* End if (!$validationFailed )*/
 
@@ -312,7 +316,7 @@ echo $personsArray;
 
 /*it is possible we will also need to search for the Composition info. This may be wanted if we are not editing. We have not explored this yet.
 or, in this new scenario we wont need this book search at all. Will there ever be a situation where we want the book info displayed on this page?*/
-    if($editBook !== "true" && $editComposition !== "true" && $findComposer !== "true") {
+    if($editBook !== "true" && $editComposition !== "true" && $findComposer !== "true" && $findPerson !== "true") {
         $bookQuery  = <<<_END
 
           SELECT b.ID, b.title, b.tag1, b.tag2, b.book_vol, b.book_num, b.physBookLoc
@@ -459,7 +463,12 @@ _END;
     <div class="container-fluid bg-light pt-4 pb-5">
       <h3 class="display-4 pb-3">So Far So Good!</h3>
       $informationText
-    </div> <!-- end container-->
+    </div> <!-- end container--> 
+    
+_END;
+
+    if($bookID) {
+        echo <<<_END
       
       <div class="container-fluid bg-light pt-4 pb-5">
       <div class="row">
@@ -482,6 +491,8 @@ _END;
       </div> <!-- end container -->
 
 _END;
+
+}/*End if($bookID)*/
 } /*end if not editBook && if not edit composition*/
 
 
@@ -504,9 +515,8 @@ _END;
           $replacePeopleContinueText
           $addNewPeopleContinueText
           $findComposerContinueText
-          $addNewPeopleText
-          $replacePeopleText
-          $findComposerText
+          $findPersonContinueText
+        
 
   
           $role Last Name: $searchPeopleLastNameErr
@@ -522,6 +532,7 @@ _END;
           $sendEditComposition
           $sendAddNew
           $sendFindComposer
+          $sendFindPerson
         </form>   <!-- end form -->
       
         <form action="$formAction" method="post">

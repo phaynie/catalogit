@@ -1,6 +1,11 @@
 <?php
 
+/*We arrive here
+    Only if we have a bookID. We won't arrive here without one. We cannot add a new composition to the Library without a book for it to go into.
+    1-from editComposition.php When editing a existing composition from an existing book. The form is prepopulated with existing composition information to be edited.
+    2-from displayBook.php when adding new composition information to an existing book. (with a bookID)
 
+*/
 
 
 include 'boilerplate.php';
@@ -12,12 +17,6 @@ $debug_string = "";
 if($debug) {
 
 $debug_string .= "<p>addComposition2.php-13</p>\n";
-/*TODO I should encase all the other echos in quotes and debug_string. Just not sure how to do that without errors on the more complicated strings*/
-//echo <<<_END
-//
-//<p>addComposition2.php-13</p>
-//
-//_END;
 
 }/*end debug*/
 
@@ -517,7 +516,7 @@ _END;
             }/*end foreach keySigs Array*/
 
         }/*end if (count($keySigs) > 0)*/
-    } /*End if ($updateCompositionResult)*/
+
 
 
     /*delete from C2G*/
@@ -731,10 +730,10 @@ _END;
 
         header('Location: editComposition.php?bookID=' . $bookID . '&compositionID=' . $compositionID . '&editComposition=true');
     exit();
-         } /*end if editComposition == 'true'*/
-    } /*END if (!$validationFailed )*/
+            } /*end if editComposition == 'true'*/
+        } /*END if (!$validationFailed )*/
 
-
+    } /*End if ($updateCompositionResult)*/
 
 
 
@@ -829,9 +828,6 @@ VALUES (";
 
 
 
-    if($debug) {
-        $debug_string .= "\n compositionInsertQuery= " . $compositionInsertQuery . "\n<br/>";
-    }/*end debug*/
 
     /*send query and place result into this variable*/
     $compositionInsertQueryResult = $conn->query($compositionInsertQuery);
@@ -839,6 +835,11 @@ VALUES (";
     if($debug) {
         if (!$compositionInsertQueryResult) $debug_string .= "\n Error description compositionInsertQuery: " . mysqli_error($conn) . "\n<br/>";
     }/*end debug*/
+
+    if($debug) {
+        $debug_string .= "\n compositionInsertQuery= " . $compositionInsertQuery . "\n<br/>";
+    }/*end debug*/
+
 
     failureToExecute ($compositionInsertQueryResult, 'I606', 'Insert ' );
 
@@ -871,7 +872,7 @@ VALUES (";
 
             $C2KInsertQuery = <<<_END
         INSERT INTO C2K (composition_ID, keysig_ID)
-        VALUES ('$compositionIDAltered', '$value');
+        VALUES ('$compositionID', '$value');
 
 _END;
 
@@ -905,7 +906,7 @@ _END;
         foreach ($genres as &$value) {
             $C2GInsertQuery = <<<_END
     INSERT INTO C2G (composition_ID, genre_ID)
-    VALUES ('$compositionIDAltered', '$value');
+    VALUES ('$compositionID', '$value');
 
 _END;
 
@@ -939,7 +940,7 @@ _END;
         foreach ($instruments as &$value) {
             $C2IInsertQuery = <<<_END
         INSERT INTO C2I (composition_ID, instrument_ID)
-        VALUES ('$compositionIDAltered', '$value');
+        VALUES ('$compositionID', '$value');
 
 _END;
 
@@ -965,7 +966,7 @@ _END;
     /*Now, insert into C2D the first time for General difficulty*/
     $C2DInsertQuery = <<<_END
  INSERT INTO C2D (composition_ID, difficulty_ID)
- VALUES ('$compositionIDAltered', '$genDiffAltered');
+ VALUES ('$compositionID', '$genDiffAltered');
 
 _END;
 
@@ -989,7 +990,7 @@ _END;
     /*Now, insert into C2D for a second time for ASP difficulty*/
     $C2DInsertQuery = <<<_END
  INSERT INTO C2D (composition_ID, difficulty_ID)
- VALUES ('$compositionIDAltered', '$ASPDiffAltered');
+ VALUES ('$compositionID', '$ASPDiffAltered');
 
 _END;
 
@@ -1035,7 +1036,12 @@ echo $debug_string;
 /*Here we have arrived at the page for the first time and are expecting a pre-populated composition form ready to be edited if wanted*/
 
 if($submit == "" && $editComposition == 'true'){
-/*get form Values from DB*/
+    /*Here we will wash the compositionID again because it was washed inside of the if submit=='true section but needs to be washed here for these db interactions. */
+
+    $washPostVar = cleanup_post($compositionID);
+    $compositionIDAltered = strip_before_insert($conn, $washPostVar);
+
+    /*get form Values from DB*/
     /*Retrieving all key signatures for this composition
     I will also be creating a comma separated list to use in the displayed information*/
     $keySigsQuery = <<<_END

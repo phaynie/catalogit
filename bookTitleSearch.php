@@ -25,6 +25,7 @@ include 'beginningNav.php';
 $searchBookTitleErr = "";
 $searchBookTitle = "";
 $submit = "";
+$addNewComposition = "";
 
 $validationFailed = false;
 
@@ -39,8 +40,15 @@ if(isset($_REQUEST['searchBookTitle'])) {
     $searchBookTitle = $_REQUEST['searchBookTitle'];
 }
 
+if(isset($_REQUEST['addNewComposition'])) {
+    $addNewComposition = $_REQUEST['addNewComposition'];
+}
 
-
+/*Logic for variable use*/
+if($addNewComposition == 'true'){
+    $instructionalText = "<h5>You'll need a book or collection for your composition.</h5><h6>(No worries, we can create a new book or collection if it does not already exist.)</h6>
+                            <h5>Let's start by looking for your book in the library.</h5>";
+}
 
 
 /*Auto Complete: retrieve book Title values from db and put into an array*/
@@ -147,6 +155,7 @@ echo <<<_END
 
 <div class="container-fluid bg-light pt-4 pb-5" >
       <div class="col-md-6">
+      $instructionalText 
       <form class="form-group  pt-3 pb-3" action='bookTitleSearch.php' method='post'>
           Book Title: $searchBookTitleErr
           <input class="form-control" autocomplete="off" type="text" name="searchBookTitle" id="searchBookTitle" placeholder = "Please enter a book title" />

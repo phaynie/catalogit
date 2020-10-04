@@ -430,7 +430,7 @@ _END;
                                 $composerID = $row[2];
 
                                 $composerString = $composerFirstName .  " " . $composerLastName;
-                                $personChunk .= "<a href=\"displayComposer.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&composerID=${composerID}&peopleID=${composerID}&advSearch=true\">$composerString</a></br> ";
+                                $personChunk .= "<a href=\"displayPerson.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&composerID=${composerID}&peopleID=${composerID}&advSearch=true\">$composerString</a></br> ";
                             } /* for loop ending*/
                             $personChunk = substr($personChunk, 0, strrpos($personChunk, "</br> " ));
 
@@ -485,7 +485,7 @@ _END;
                                     $arrangerID = $row[2];
 
                                     $arrangerString = $arrangerFirstName . " " . $arrangerLastName;
-                                    $personChunk .= "<a href=\"displayComposer.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&arrangerID=${arrangerID}&peopleID=${arrangerID}&advSearch=true\">$arrangerString</a></br> ";
+                                    $personChunk .= "<a href=\"displayPerson.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&arrangerID=${arrangerID}&peopleID=${arrangerID}&advSearch=true\">$arrangerString</a></br> ";
                                 } /* for loop ending*/
                                 $personChunk = substr($personChunk, 0, strrpos($personChunk, "</br> "));
 
@@ -539,7 +539,7 @@ _END;
                                     $lyricistID = $row[2];
 
                                     $lyricistString = $lyricistFirstName . " " . $lyricistLastName;
-                                    $personChunk .= "<a href=\"displayComposer.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&lyricistID=${lyricistID}&peopleID=${lyricistID}&advSearch=true\">$lyricistString</a></br> ";
+                                    $personChunk .= "<a href=\"displayPerson.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&lyricistID=${lyricistID}&peopleID=${lyricistID}&advSearch=true\">$lyricistString</a></br> ";
                                 } /* for loop ending*/
                                 $personChunk = substr($personChunk, 0, strrpos($personChunk, "</br> "));
 

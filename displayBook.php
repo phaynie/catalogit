@@ -396,9 +396,10 @@ _END;
         
       </form>
       
-      <form action='compositionSearch.php' method='post'>
+      <form action='addComposition2.php' method='post'>
         <input class="btn btn-secondary mb-3 noPrint" type='submit' value='Add a Composition to this book'/>
         <input type='hidden' name="bookID" value='$bookID'/>
+        <input type='hidden' name="addNewComposition" value='true'/>
        
       </form>
 

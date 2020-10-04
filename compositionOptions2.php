@@ -11,13 +11,14 @@ _END;
 }/*end debug*/
 /*Where are we coming from?
 displayCompositon.php
-compositionSearch.php
+compositionSearch.php*/
 
 include 'beginningNav.php';
 
 /*Initialize variables coming from other pages*/
 
 $bookID = "";
+
 $searchCompositionTitle = "";
 $searchCompositionTitleAltered = "";
 
@@ -100,8 +101,6 @@ if(isset($_REQUEST['compositionID']) && is_numeric($_REQUEST['compositionID'])) 
 
 
 
-
-
 /*Here we wash this information before we send it in a db query*/
 $washPostVar = cleanup_post($searchCompositionTitle);
 $searchCompositionTitleAltered = strip_before_insert($conn, $washPostVar);
@@ -115,6 +114,7 @@ $compositionIDAltered = strip_before_insert($conn, $washPostVar);
 
 
 $notEntered = "<span style='color:rgba(0,0,0,0.4);'>Not Entered</span>";
+
 
 
 /*retrieve composition options*/
@@ -163,9 +163,9 @@ _END;
           <button class="btn btn-light" type='submit'>Try another Composition Search</button><br/>
           <input type="hidden" name="bookID" value="$bookID"> 
         </form><br/>
-        <form action='addComposition2.php' method='post'>
+        <form action='bookTitleSearch.php' method='post'>
           <button class="btn btn-light" type='submit'>Add New Composition Information</button><br>
-          <span class="text-light">Compositions will be added to the current book, or you will be asked to find or add a book for your composition. </span><br/>
+          <span class="text-light"> We'll start by finding a book for your composition. </span><br/>
           <input type="hidden" name="bookID" value="$bookID">
           <input type='hidden' name='addNewComposition' value='true'/>    
         </form>
@@ -215,6 +215,7 @@ _END;
 
 
 
+
   /*Retrieving all key signatures for this composition
 I will also be creating a comma separated list to use in the displayed information*/
   /*We want to select the key_name here because we will only be displaying this value not making it checked or selected. */
@@ -222,7 +223,7 @@ I will also be creating a comma separated list to use in the displayed informati
       SELECT  k.key_name
       FROM C2K
       JOIN keysignatures AS k ON C2K.keysig_ID = k.ID
-      WHERE C2K.composition_ID = '$compositionIDAltered';
+      WHERE C2K.composition_ID = '$compositionID';
 
 _END;
 
@@ -271,7 +272,7 @@ _END;
         SELECT  g.genre_type
         FROM C2G 
         JOIN genres AS g ON C2G.genre_ID = g.ID
-        WHERE C2G.composition_ID = '$compositionIDAltered';
+        WHERE C2G.composition_ID = '$compositionID';
 
 
 _END;
@@ -319,7 +320,7 @@ _END;
       SELECT  i.instr_name
       FROM C2I 
       JOIN instruments AS i ON C2I.instrument_ID = i.ID
-      WHERE C2I.composition_ID = '$compositionIDAltered';
+      WHERE C2I.composition_ID = '$compositionID';
 
 
 _END;
@@ -373,7 +374,7 @@ _END;
       JOIN C2D ON c.ID = C2D.composition_ID
       JOIN difficulties AS d ON C2D.difficulty_ID = d.ID
       JOIN organizations as o On d.org_ID = o.ID AND o.org_name = 'General'
-      WHERE C2D.composition_ID = '$compositionIDAltered';
+      WHERE C2D.composition_ID = '$compositionID';
 
 
 _END;
@@ -416,7 +417,7 @@ _END;
       JOIN C2D ON c.ID = C2D.composition_ID
       JOIN difficulties AS d ON C2D.difficulty_ID = d.ID
       JOIN organizations as o On d.org_ID = o.ID AND o.org_name = 'ASP'
-      WHERE C2D.composition_ID = '$compositionIDAltered';
+      WHERE C2D.composition_ID = '$compositionID';
 
 _END;
 
@@ -463,7 +464,7 @@ _END;
                         JOIN people AS p ON C2R2P.people_ID = p.ID
                         JOIN roles AS r ON  r.ID = C2R2P.role_ID AND r.role_name = 'Composer'
                         
-                        WHERE c.ID = '$compositionIDAltered';
+                        WHERE c.ID = '$compositionID';
 
 _END;
 
@@ -518,7 +519,7 @@ _END;
                         JOIN people AS p ON C2R2P.people_ID = p.ID
                         JOIN roles AS r ON  r.ID = C2R2P.role_ID AND r.role_name = 'Arranger'
                         
-                        WHERE c.ID = '$compositionIDAltered';
+                        WHERE c.ID = '$compositionID';
 
 _END;
 
@@ -573,7 +574,7 @@ _END;
                         JOIN people AS p ON C2R2P.people_ID = p.ID
                         JOIN roles AS r ON r.ID = C2R2P.role_ID AND r.role_name = 'Lyricist'
                        
-                        WHERE c.ID = '$compositionIDAltered';
+                        WHERE c.ID = '$compositionID';
 
 _END;
 
@@ -635,13 +636,13 @@ _END;
 
 
 
-                if($bookIDAltered !== "") {
+
                     $bookQuery  = <<<_END
 
           SELECT b.ID, b.title, b.tag1, b.tag2, b.book_vol, b.book_num, b.physBookLoc
           FROM books AS b
 
-          WHERE b.ID = '$bookIDAltered' ;
+          WHERE b.ID = '$bookID' ;
 
 _END;
 
@@ -736,7 +737,7 @@ _END;
       FROM books AS b 
       JOIN B2R2O ON b.ID = B2R2O.book_ID
       JOIN organizations AS o ON o.ID= B2R2O.org_ID
-      WHERE b.ID = '$bookIDAltered';
+      WHERE b.ID = '$bookID';
 
 _END;
 
@@ -775,7 +776,7 @@ _END;
                     if($displayPublisherOrgString == ""){
                         $disableERDPub = 'disabled';
                     }
-                }/*End if($bookID !== "")*/
+
 
 
 
@@ -984,7 +985,7 @@ _END;
                     <input type='hidden' name='bookID' value="$bookID"/>
                 </form> <!-- end form -->
         
-                <form action="addComposition2.php" method='post'>
+                <form action="bookTitleSearch.php" method='post'>
                   <input class="btn btn-light" type='submit' value='Add New Composition Info'/>
                   <input type='hidden' name='addNewComposition' value='true'/>
                   <input type='hidden' name='bookID' value="$bookID"/>

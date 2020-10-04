@@ -57,6 +57,7 @@ $editReplaceDeleteComposer = "" ;
 $editReplaceDeleteArranger = "" ;
 $editReplaceDeleteLyricist = "" ;
 $findComposer = "";
+$findPerson = "";
 
 
 $replaceEditor = "";
@@ -180,6 +181,10 @@ if(isset($_REQUEST['findComposer'])) {
     $findComposer = $_REQUEST['findComposer'];
 }
 
+if(isset($_REQUEST['findPerson'])) {
+    $findPerson = $_REQUEST['findPerson'];
+}
+
 
 /*Create logic to use variables for many situations*/
 
@@ -198,7 +203,11 @@ if($editBook == 'true') {
     $page = 'Composition Editing Options';
 }elseif($findComposer =='true') {
     $formAction = "introPage.php";
-    $formActionChoose = "displayComposer.php";
+    $formActionChoose = "displayPerson.php";
+}elseif($findPerson =='true') {
+    $formAction = "introPage.php";
+    $formActionChoose = "displayPerson.php";
+
 }else{
     $formAction = 'displayBook.php';
 }
@@ -275,7 +284,12 @@ if($addNewEditor == 'true') {
     $role = 'Composer';
     $sendFindComposer = "<input type='hidden' name='findComposer' value='true' /> ";
     $page = "Intro Page";
+}elseif($findPerson == 'true') {
+$role = 'Person';
+$sendFindPerson = "<input type='hidden' name='findPerson' value='true' /> ";
+$page = "Intro Page";
 }
+
 
 
 
@@ -342,7 +356,8 @@ _END;
           $sendEditComposition
           $sendReplace 
           $sendAddNew 
-          $sendFindComposer        
+          $sendFindComposer 
+          $sendFindPerson       
         </form><br/><br/><!-- end form -->
         
         <form action="addPeople.php" method="post"> 
@@ -354,7 +369,8 @@ _END;
           $sendEditComposition
           $sendReplace 
           $sendAddNew 
-          $sendFindComposer  
+          $sendFindComposer
+          $sendFindPerson  
         </form><br/><br/><!-- end form -->
         <form action="$formAction" method="post"> 
           <input class="btn btn-light" type="submit" value="Back to $page "/>
@@ -404,11 +420,13 @@ _END;
                       <input type="hidden" name="bookID" value="$bookID"/>
                       <input type="hidden" name="compositionID" value="$compositionID"/>
                       <input type="hidden" name="composerID" value="$peopleID"/>
+                      <input type="hidden" name="peopleID" value="$peopleID"/>
                       $sendAddNew  
                       $sendReplace 
                       $sendEditBook
                       $sendEditComposition
                       $sendFindComposer
+                      $sendFindPerson
                     </form><br/> <!-- end form -->
                   </div> <!-- end card-body -->
                 </div> <!-- end card -->
@@ -434,6 +452,7 @@ _END;
                 $sendEditBook
                 $sendEditComposition
                 $sendFindComposer
+                $sendFindPerson
               </form> <!-- end form --><br/>
               
               <form action="peopleSearch.php" method="post"> 
@@ -444,7 +463,8 @@ _END;
                 $sendReplace
                 $sendEditBook
                 $sendEditComposition  
-                $sendFindComposer    
+                $sendFindComposer 
+                $sendFindPerson    
               </form><br/><!-- end form -->
               
               <form action="$formAction" method="post">

@@ -13236,3 +13236,18 @@ Stack trace:
 [22-Sep-2020 00:07:13 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\index.php:0
 [22-Sep-2020 00:07:13 UTC] PHP   2. include() C:\Ampps\www\catalogit\index.php:4
 [27-Sep-2020 18:32:47 UTC] PHP Parse error:  syntax error, unexpected '<<' (T_SL) in C:\Ampps\www\catalogit\delete.php on line 639
+[30-Sep-2020 21:48:50 UTC] PHP Parse error:  syntax error, unexpected '}' in C:\Ampps\www\catalogit\bookTitleSearch.php on line 51
+[01-Oct-2020 20:16:12 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\displayComposer.php on line 1058
+[03-Oct-2020 15:23:26 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\displayComposer.php on line 1263
+[03-Oct-2020 15:29:02 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\displayComposer.php on line 1263
+[03-Oct-2020 15:41:14 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\displayComposer.php on line 1261
+[03-Oct-2020 15:44:36 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\displayComposer.php on line 1262
+[03-Oct-2020 15:46:09 UTC] PHP Warning:  Unterminated comment starting line 1241 in C:\Ampps\www\catalogit\displayComposer.php on line 1241
+[04-Oct-2020 00:35:15 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in C:\Ampps\www\catalogit\displayComposer.php on line 1048
+[04-Oct-2020 00:35:15 UTC] PHP Stack trace:
+[04-Oct-2020 00:35:15 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayComposer.php:0
+[04-Oct-2020 00:41:06 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in C:\Ampps\www\catalogit\displayComposer.php on line 1048
+[04-Oct-2020 00:41:06 UTC] PHP Stack trace:
+[04-Oct-2020 00:41:06 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayComposer.php:0
+[04-Oct-2020 00:57:30 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\displayComposer.php on line 1265
+[04-Oct-2020 17:49:18 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\peopleSearch.php on line 577

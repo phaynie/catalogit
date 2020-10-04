@@ -34,7 +34,7 @@ echo <<<_END
                 <input class="btn btn-secondary mt-4 " type='submit' value='Leave a Review'/>   
             </form>
 
-            <form action='index.php' method='post'>  
+            <form action='logout_script.php' method='post'>  
                 <input class="btn btn-secondary mt-4 "type='submit' value='Exit Library'/> 
                 <input type='hidden' name="next" value=''/>  
             </form><br><br>

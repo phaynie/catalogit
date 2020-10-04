@@ -55,6 +55,12 @@ echo<<<_END
                         <input  class="form-control btn btn-light btn-block mb-3" type="submit" value="Find or Add a Composer"/>
                         <input type="hidden" name="findComposer" value= "true" />
                     </form>
+                    
+                     <form action="peopleSearch.php" method="post">
+                        <input  class="form-control btn btn-light btn-block mb-3" type="submit" value="Find or Add a Person"/>
+                        <input type="hidden" name="findPerson" value= "true" />
+                    </form>
+
 
                     <form action='advancedSearch.php' method='post'>
                         <input  class="form-control btn btn-light btn-block mb-3" type='submit' value='Advanced Search'/>

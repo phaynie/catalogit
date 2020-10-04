@@ -221,6 +221,10 @@ if($editBook == 'true') {
     $sendEditComposition = "<input type='hidden' name='editComposition' value ='true' />";
     $formAction = "editComposition.php";
     $page = 'Edit Composition Options';
+}elseif($findPerson == 'true') {
+    $sendFindPerson = "<input type='hidden' name='findPerson' value ='true' />";
+    $formAction = "displayComposition.php";
+    $page = 'Display Person';
 }
 
 

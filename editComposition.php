@@ -903,7 +903,7 @@ echo <<<_END
         
         
     <div class="col-md-4">
-        <div class="card  border-secondary mt-4 mb-3">
+        <div class="card bg-secondary mt-4 mb-3">
             <div class="card-body bg-secondary">
                 <form action='addComposition2.php' method='post'>
                     <div class="form-check">

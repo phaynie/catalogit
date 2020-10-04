@@ -421,13 +421,13 @@ _END;
             $editorPeopleLastName = $row[3];
             $editorPeopleSuffix = $row[4];
             /*$editorPeopleString = implode(',',$instVal);*/
-            $editorPeopleString .= $editorPeopleFirstName . " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . ", ";
+            $editorPeopleString .= $editorPeopleFirstName . " " . $editorPeopleMiddleName . " " . $editorPeopleLastName . " " . $editorPeopleSuffix . "<br/>Editor Name: ";
 
         } /*for loop ending*/
 
     } /*End if $resultEditorPeopleQuery query*/
 
-    $displayEditorPeopleString = substr($editorPeopleString, 0, strrpos($editorPeopleString, ", " ));
+    $displayEditorPeopleString = substr($editorPeopleString, 0, strrpos($editorPeopleString, "<br/>Editor Name: " ));
 
 
 
@@ -576,12 +576,12 @@ failureToExecute ($resultComposerQuery, 'S562', 'Select ' );
             $compLast = $row[3];
             $compSuffix = $row[4];
 
-              $composerString .= $compFirst .  " " . $compMiddle . " " . $compLast . " " . $compSuffix . ", ";
+              $composerString .= $compFirst .  " " . $compMiddle . " " . $compLast . " " . $compSuffix . "<br/>Composer Name: ";
 
           } /*for loop ending*/
         } /*END if result composer query*/
 
-        $displayComposerString = substr($composerString, 0, strrpos($composerString, ", " ));
+        $displayComposerString = substr($composerString, 0, strrpos($composerString, "<br/>Composer Name: " ));
     
         
        
@@ -628,13 +628,13 @@ failureToExecute ($resultArrangerQuery, 'S563', 'Select ' );
             $arrLast = $row[3];
             $arrSuffix = $row[4];
 
-              $arrangerString .= $arrFirst .  " " . $arrMiddle . " " . $arrLast . " " . $arrSuffix . ", ";
+              $arrangerString .= $arrFirst .  " " . $arrMiddle . " " . $arrLast . " " . $arrSuffix . "<br/>Arranger Name: ";
 
           } /*for loop ending*/
 
         } /*END if result arranger Query*/
 
-        $displayArrangerString = substr($arrangerString, 0, strrpos($arrangerString, ", " ));
+        $displayArrangerString = substr($arrangerString, 0, strrpos($arrangerString, "<br/>Arranger Name: " ));
 
 
 /*create query to select the lyricists from the database */
@@ -681,11 +681,11 @@ failureToExecute ($resultLyricistQuery, 'S564', 'Select ' );
             $lyrLast = $row[3];
             $lyrSuffix = $row[4];
 
-              $lyricistString .= $lyrFirst .  " " . $lyrMiddle . " " . $lyrLast . " " . $lyrSuffix . ",  ";
+              $lyricistString .= $lyrFirst .  " " . $lyrMiddle . " " . $lyrLast . " " . $lyrSuffix . "<br/>Lyricist Name: ";
           } /*for loop ending*/
 
         } /*END if result lyricist Query*/
-$displayLyricistString = substr($lyricistString, 0, strrpos($lyricistString, ", " ));
+$displayLyricistString = substr($lyricistString, 0, strrpos($lyricistString, "<br/>Lyricist Name: " ));
 
 
 
@@ -875,7 +875,7 @@ echo <<<_END
 
       <div class="col-md-4 offset-lg-2 pb-4 pt-3">
         <form action='editComposition.php' method='post'>
-          <input class="btn btn-secondary mb-3 noPrint" type='submit' value='Edit Composition' 
+          <input class="btn btn-secondary mb-3 noPrint" type='submit' value='Edit Composition' />
           
           <input  type='hidden' name="compositionID" value='$compositionID' />
           <input type='hidden' name="bookID" value='$bookID' />
