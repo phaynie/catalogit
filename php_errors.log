@@ -13251,3 +13251,13 @@ Stack trace:
 [04-Oct-2020 00:41:06 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayComposer.php:0
 [04-Oct-2020 00:57:30 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\displayComposer.php on line 1265
 [04-Oct-2020 17:49:18 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\peopleSearch.php on line 577
+[05-Oct-2020 14:59:46 UTC] PHP Parse error:  syntax error, unexpected '<' in C:\Ampps\www\catalogit\displayPerson.php on line 1243
+[05-Oct-2020 21:33:57 UTC] PHP Fatal error:  Uncaught Error: Undefined constant 'n' in C:\Ampps\www\catalogit\editComposition.php:910
+Stack trace:
+#0 {main}
+  thrown in C:\Ampps\www\catalogit\editComposition.php on line 910
+[05-Oct-2020 21:34:35 UTC] PHP Parse error:  syntax error, unexpected '\' (T_NS_SEPARATOR), expecting identifier (T_STRING) in C:\Ampps\www\catalogit\editComposition.php on line 910
+[05-Oct-2020 21:39:20 UTC] PHP Fatal error:  Uncaught Error: Undefined constant 'r' in C:\Ampps\www\catalogit\editComposition.php:910
+Stack trace:
+#0 {main}
+  thrown in C:\Ampps\www\catalogit\editComposition.php on line 910

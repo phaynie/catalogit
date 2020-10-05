@@ -205,6 +205,12 @@ h5.mossaccent {
 
 }
 
+.button-Wrap {
+  margin-bottom: 4px;
+  white-space: normal;
+}
+
+
 p.editpage {
   font-size: 1.1rem;
 }
@@ -216,3 +222,5 @@ p.editpage {
     display: none;
   }
 }
+
+

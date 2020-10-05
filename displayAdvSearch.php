@@ -11,7 +11,7 @@ _END;
 
 }/*end debug*/
 
-
+include 'beginningNav.php';
 
 /*How did we get here?
 displayAdvSearch.php
@@ -471,6 +471,8 @@ _END;
                                 $numberOfAdvSearchArrangerQueryRows = $advSearchArrangerQueryResult->num_rows;
                                 $advancedArrangerSearchFound = ($numberOfAdvSearchArrangerQueryRows > 0);
                                 $advancedArrangerSearchNotFound = ($numberOfAdvSearchArrangerQueryRows === 0);
+                                /*creating an arrangerID to send to next page for $role definition*/
+
 
                                 $ArrangerString = "";
                                 $personChunk = "";
@@ -583,6 +585,7 @@ _END;
                                                 </div>
                                                 <div class="col-md-3 text-right"> 
                                                     $personChunk 
+                                                    
                                                 </div>
                                                 <div class="col-md-2  ">
                                                 </div>                                               

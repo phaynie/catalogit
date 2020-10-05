@@ -74,17 +74,19 @@ $currentPeopleSuffix = "";
 
 if(isset($_REQUEST['composerID']) && is_numeric($_REQUEST['composerID'])) {
     $composerID = $_REQUEST['composerID'];
+    $role = "Composer";
 
 }
 
 if(isset($_REQUEST['arrangerID']) && is_numeric($_REQUEST['arrangerID'])) {
     $arrangerID = $_REQUEST['arrangerID'];
+    $role = "Arranger";
 
 }
 
 if(isset($_REQUEST['lyricistID']) && is_numeric($_REQUEST['lyricistID'])) {
     $lyricistID = $_REQUEST['lyricistID'];
-
+    $role = "Lyricist";
 }
 
 if(isset($_REQUEST['peopleID']) && is_numeric($_REQUEST['peopleID'])) {
@@ -948,11 +950,11 @@ _END;
         /* H- Display Composition info with its connected book Using HTML*/
         echo <<<_END
 
-        <div class="container-fluid bg-light pt-4 pb-5">
-          <div class="card ">
+        <div class="container-fluid bg-light ">
+          <div class="card  border-0">
             <div class="card-body bg-light">
               <div class="row">
-                <div class="col-md-6 pb-4">
+                <div class="col-md-4 offset-md-1 pb-4">
                   <h3 class="pt-4">Composition Info</h3>
                   Composition Name:<strong> $compName </strong><br/>
                   Opus-Like: $opus <br/>
@@ -972,11 +974,24 @@ _END;
                   Arranger Name:  $displayArrangerString<br/>
                   Lyricist Name:  $displayLyricistString<br/>
                   Composition Location: <span style="color:#EB6B42;">$physCompositionLocNote</span><br/><br/>
-                </div> <!-- end col -->
+            
+                
+                
+                                
+                    
+                    <form action="peopleSearch.php" method="post">
+                        <input class="btn btn-secondary mb-3 noPrint"  type='submit' value='Edit Composition'/> 
+                        <input type='hidden' name='bookID' value='$bookID'/>
+                        <input type='hidden' name='compositionID' value='$compositionID'/>
+                        $sendFindPerson
+                    </form>  <!-- end form -->
+                   
+             
+    </div> <!-- end col -->
   
       
-                <div class="col-md-6 pb-4">
-                  <h3 class="pt-4">Book Info</h3>
+                <div class="col-md-4 pb-4">
+                  <h3 class="pt-4">Composition Book Info</h3>
                   Book Title: <strong>$bookTitle</strong> <br/>
                   Tag 1: $bookTag1 <br/>
                   Tag 2: $bookTag2 <br/>
@@ -985,11 +1000,22 @@ _END;
                   Editor Name: $displayEditorPeopleString <br/>
                   Publisher Name: $displayPublisherOrgString<br/>
                   Book Location: <span style="color:#EB6B42;">$physBookLocNote</span><br/><br/>
+                  
+                   <form action="peopleSearch.php" method="post">
+                        <input class="btn btn-secondary mb-3 noPrint"  type='submit' value='Edit Book'/> 
+                        <input type='hidden' name='bookID' value='$bookID'/>
+                        <input type='hidden' name='compositionID' value='$compositionID'/>
+                        $sendFindPerson
+                    </form>  <!-- end form -->
                 </div> <!-- end col -->
+                
+                
               </div>  <!-- end row -->
             </div>  <!-- end card body -->
-          </div>  <!-- end card -->
-        </div>  <!-- end container -->
+        </div>  <!-- end card -->
+     </div>  <!-- end container -->
+             
+       
 
 _END;
 
@@ -1157,11 +1183,11 @@ _END;
             /* H- Display Composition info with its connected book Using HTML*/
             echo <<<_END
 
-        <div class="container-fluid bg-light pt-4 pb-5">
-          <div class="card ">
+        <div class="container-fluid bg-light ">
+          <div class="card  border-0 ">
             <div class="card-body bg-light">
               <div class="row">
-                  <div class="col-md-6 pb-4">
+                  <div class="col-md-4  offset-md-1 pb-4">
                   <h3 class="pt-4">Book Info</h3>
                   Book Title: <strong>$bookTitle</strong> <br/>
                   Tag 1: $bookTag1 <br/>
@@ -1171,13 +1197,33 @@ _END;
                   Editor Name: $displayEditorPeopleString <br/>
                   Publisher Name: $displayPublisherOrgString<br/>
                   Book Location: <span style="color:#EB6B42;">$physBookLocNote</span><br/><br/>
+                  
+                     <form action="peopleSearch.php" method="post">
+                        <input class="btn btn-secondary mb-3 noPrint"  type='submit' value='Edit Book'/> 
+                        <input type='hidden' name='bookID' value='$bookID'/>
+                        <input type='hidden' name='compositionID' value='$compositionID'/>
+                        $sendFindPerson
+                    </form>  <!-- end form -->
                 </div> <!-- end col -->
+             
+     
+                 
+           
               </div>  <!-- end row -->
             </div>  <!-- end card body -->
-          </div>  <!-- end card -->
-        </div>  <!-- end container -->
+        </div>  <!-- end card -->
+     </div>  <!-- end container -->
+
+     
+
+   
+
 
 _END;
+
+
+
+
 
 
         } /*Bookforloop ending*/
@@ -1195,38 +1241,45 @@ if($compositionsFound || $booksFound) {
 
     echo <<<_END
 
-<div class="container-fluid bg-light pt-4 pb-5">
-  <div class="col-md-4  pb-4 pt-3">
-    <h3 class="noPrint">What would you like to do with this information?</h3><br/>
 
-    
-    <form action="peopleSearch.php" method="post">
-        <input class="btn btn-secondary mb-3 noPrint"  type='submit' value='Try another $role Search'/> 
-        <input type='hidden' name='bookID' value='$bookID'/>
-        <input type='hidden' name='compositionID' value='$compositionID'/>
-        $sendFindPerson
-    </form>  <!-- end form -->
-
-
-    <form action='introPage.php' method='post'>
-      <input  class="btn btn-secondary mb-3 noPrint" type='submit' value='New Library Search'/>
-    </form>
-
-    <form action='displayPerson.php' method='post'>
-      <button class="btn btn-secondary mb-3 noPrint" onclick="window.print()">Print</button>
-      <input type='hidden' name="compositionID" value='$compositionID'/>
-      <input type='hidden' name="bookID" value='$bookID'/>
-      <input type='hidden' name="composerPrintPage" value='true'/>
-      <input type='hidden' name="composerID" value='$composerID'/>
-      $sendFindPerson
-    </form>
-
-    <form action='exitMessage.php' method='post'>
-      <input  class="btn btn-secondary mb-3 noPrint" type='submit' value='Exit Library'/>
-    </form>
+ <h3 class="noPrint pt-4 pl-4">What would you like to do with this information?</h3><br/>
+              <div class="col-md-3 offset-1 pb-4 pt-3">
+                   
+                
+                    
+                    <form action="peopleSearch.php" method="post">
+                        <input class="btn btn-secondary mb-3 noPrint  btn-block"  type='submit' value='Try another $role Search'/> 
+                        <input type='hidden' name='bookID' value='$bookID'/>
+                        <input type='hidden' name='compositionID' value='$compositionID'/>
+                        $sendFindPerson
+                    </form>  <!-- end form -->
+                
+                
+                    <form action='introPage.php' method='post'>
+                      <input  class="btn btn-secondary  btn-block mb-3 noPrint" type='submit' value='New Library Search'/>
+                    </form>
+                
+                    <form action='displayPerson.php' method='post'>
+                      <button class="btn btn-secondary mb-3 noPrint  btn-block" onclick="window.print()">Print</button>
+                      <input type='hidden' name="compositionID" value='$compositionID'/>
+                      <input type='hidden' name="bookID" value='$bookID'/>
+                      <input type='hidden' name="composerPrintPage" value='true'/>
+                      <input type='hidden' name="composerID" value='$composerID'/>
+                      $sendFindPerson
+                    </form>
+                
+                    <form action='exitMessage.php' method='post'>
+                      <input  class="btn btn-secondary mb-3 noPrint  btn-block" type='submit' value='Exit Library'/>
+                    </form>
      
-  </div>  <!-- end col -->
-</div>  <!-- end container -->
+               </div>  <!-- end col -->
+              </div>  <!-- end row -->
+            </div>  <!-- end card body -->
+        </div>  <!-- end card -->
+     </div>  <!-- end container -->
+
+
+
 
 
 _END;
@@ -1236,31 +1289,41 @@ _END;
 
 if($compositionsNotFound && $booksNotFound) {
 
-    echo <<<_END
-    <div class="container-fluid bg-secondary pt-4 pb-3">
-      <h2 class="display-4 text-light" >Bummer!</h2>
-      <h2 class="text-dark">No information about  "$currentPeopleFirst $currentPeopleMiddle $currentPeopleLast $currentPeopleSuffix" was found. <br/><br/></h2>
-      <h4 class="text-light"> Which would you like to do? <br/><br/></h4>
-      <form action="peopleSearch.php" method="post">
-        <input class="btn btn-light"  type='submit' value='Try another $role Search'/> 
-        <input type='hidden' name='bookID' value='$bookID'/>
-        <input type='hidden' name='compositionID' value='$compositionID'/>
-        $sendFindPerson
-      </form><br/>  <!-- end form -->
 
-      <form action='addPeople.php' method='post'> 
-        <input class="btn btn-light" type='submit' value='Add New $role information'/>
-        <input type='hidden' name='bookID' value='$bookID'/>
-        <input type='hidden' name='compositionID' value='$compositionID'/>       
-      </form><br/><br/>
-    
-    </div> <!-- end container -->
+
+    echo <<<_END
+   
+                <div class="col-md-4 pb-4">
+                      <h2 class="display-4 text-light" >Bummer!</h2>
+                      <h2 class="text-dark">No information about  "$currentPeopleFirst $currentPeopleMiddle $currentPeopleLast $currentPeopleSuffix" was found. <br/><br/></h2>
+                      <h4 class="text-light"> Which would you like to do? <br/><br/></h4>
+                 <div class="input-group">
+                      <form action="peopleSearch.php" method="post">
+                        <button class="btn btn-light "  type='button' >Try another $role Search</button> 
+                        <input type='hidden' name='bookID' value='$bookID'/>
+                        <input type='hidden' name='compositionID' value='$compositionID'/>
+                        $sendFindPerson
+                      </form><br/>  <!-- end form -->
+                  
+                
+                      <form action='addPeople.php' method='post'> 
+                        <input  class="btn btn-light" type='submit' value='Add New $role information'/>
+                        <input type='hidden' name='bookID' value='$bookID'/>
+                        <input type='hidden' name='compositionID' value='$compositionID'/>       
+                      </form><br/><br/>
+              
+                </div> <!-- end col -->
+              </div>  <!-- end row -->
+            </div>  <!-- end card body -->
+        </div>  <!-- end card -->
+     </div>  <!-- end container -->
+
 
 
 _END;
 
-}/*end if($compositionsNotFound && booksNotFound)*/
 
+}/*end if($compositionsNotFound && booksNotFound)*/
 
 
 

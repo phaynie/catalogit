@@ -860,10 +860,11 @@ echo <<<_END
     <h4 class="display-4 text-light text-center  ">$compName (edit)</h4>
     <h3 class = "text-center">What would you like to do with this Composition info?</h3>
     <h4 class = "text-center">Have you finished adding the Composer, Arranger and Lyricist?</h4>
-    <div class="row pt-4"</div> 
-    <div class=" col-md-4 offset-md-2 ">
+   
         <div class="card  mt-4 mb-3">
               <div class="card-body bg-light">
+               <div class="row pt-4"> 
+                <div class=" col-md-4 offset-md-2 ">
                
                 <h4>Composition Info</h4>
                 Composition Name:<strong>  $compName </strong> <br/>
@@ -897,41 +898,38 @@ echo <<<_END
                 Book Location: <span style="color:#EB6B42;">  $physBookLocNote</span><br/><br/>
             
     
-              </div>  <!-- end card-body -->
-        </div>  <!-- end card -->
+            
     </div>  <!-- end col -->
         
         
     <div class="col-md-4">
-        <div class="card bg-secondary mt-4 mb-3">
-            <div class="card-body bg-secondary">
+       
+            
                 <form action='addComposition2.php' method='post'>
-                    <div class="form-check">
-                        <input class="btn btn-light" type="submit" value="Edit Existing General Composition Info for &quot;{$fn_encode($compName)}&quot; " />
+                 
+                        <input class="btn btn-block btn-secondary mb-3 button-Wrap "  type="submit" value="Edit Existing General Composition Info for &quot;{$fn_encode($compName)}&quot;" />
                         <input type="hidden" name="bookID" value="$bookID" />
                         <input type="hidden" name="compName" value="{$fn_encode($compName)}" />
                         <input type="hidden" name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                         <input type="hidden" name="compositionID" value= "$compositionID" />
                         <input type="hidden" name="editComposition" value ="true" />
-                    </div><!-- end form-check -->
                 </form>
                 
                  <form action='delete.php' method='post'>
-                    <div class="form-check">
-                        <input class="btn btn-light confirm deletecomposition_button" type="submit" value="Delete &quot;{$fn_encode($compName)}&quot;  from &quot;{$fn_encode($bookTitle)}&quot;"/>
+                        <input class="btn btn-block btn-secondary button-Wrap  mb-3 confirm deletecomposition_button" type="submit" value="Delete &quot;{$fn_encode($compName)}&quot;  from &quot;{$fn_encode($bookTitle)}&quot;"/>
                         <input type="hidden" name="editComposition" value ="true" />
                         <input type="hidden" name="bookID" value= "$bookID" />
                         <input type="hidden" name="compositionID" value="$compositionID" />
                         <input type="hidden" name="compName" value="{$fn_encode($compName)}"/>
                         <input type="hidden" name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                         <input type="hidden" name="deleteComposition" value= "true" />
-                    </div><!-- end form-check -->
+                 
                  </form>
         
           
                  <form action='peopleOptions.php' method='post'>
-                    <div class="form-check">
-                      <input class="btn btn-light" type='submit' $disableERDComposer value="Edit, Replace, or Delete Composer for &quot;{$fn_encode($compName)}&quot;"/>
+                  
+                      <input class="btn btn-block btn-secondary mb-3 button-Wrap " type='submit' $disableERDComposer value="Edit, Replace, or Delete Composer for &quot;{$fn_encode($compName)}&quot;"/>
                       <input type="hidden" name="bookID" value='$bookID'/>
                       <input type="hidden" name="compositionID" value='$compositionID'/>
                       <input type="hidden" name="compName" value="{$fn_encode($compName)}"/>
@@ -939,12 +937,12 @@ echo <<<_END
                       <input type="hidden" name="oldPeopleID" value= '$peopleID' />
                       <input type="hidden" name="editReplaceDeleteComposer" value= 'true' />
                       <input type="hidden" name='editComposition' value ='true' />
-                    </div><!-- end form-check -->
+                  
                  </form>
                  
                  <form action='peopleSearch.php' method='post'>
-                    <div class="form-check">
-                        <input class="btn btn-light" type='submit' value="Add New Composer to &quot;{$fn_encode($compName)}&quot;"/>
+               
+                        <input class="btn btn-block btn-secondary mb-3 button-Wrap " type='submit' value="Add New Composer to &quot;{$fn_encode($compName)}&quot;"/>
                         <input type="hidden" name="bookID" value='$bookID'/>
                         <input type="hidden" name="compositionID" value='$compositionID'/>
                         <input type="hidden" name="oldPeopleID" value= '$peopleID' />
@@ -952,24 +950,24 @@ echo <<<_END
                         <input type="hidden" name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                         <input type="hidden" name="addNewComposer" value= 'true' />
                         <input type="hidden" name='editComposition' value ='true' />
-                    </div><!-- end form-check -->
+                  
                  </form>
                  
                  <form action='peopleOptions.php' method='post'>
-                    <div class="form-check">
-                        <input class="btn btn-light" type='submit' $disableERDArranger value="Edit, Replace, or Delete Arranger for &quot;{$fn_encode($compName)}&quot;"/>
+                  
+                        <input class="btn btn-block btn-secondary mb-3 button-Wrap " type='submit' $disableERDArranger value="Edit, Replace, or Delete Arranger for &quot;{$fn_encode($compName)}&quot;"/>
                         <input type="hidden" name="bookID" value='$bookID'/>
                         <input type="hidden" name="compositionID" value='$compositionID'/>
                         <input type="hidden" name="compName" value="{$fn_encode($compName)}"/>
                         <input type="hidden" name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                         <input type="hidden" name="editReplaceDeleteArranger" value= 'true' />
                         <input type="hidden" name='editComposition' value ='true' />
-                    </div><!-- end form-check -->
+                   
                  </form>
                  
                  <form action='peopleSearch.php' method='post'>
-                    <div class="form-check">
-                        <input class="btn btn-light" type='submit' value="Add New Arranger to &quot;{$fn_encode($compName)}&quot;"/>
+                 
+                        <input class="btn btn-block btn-secondary mb-3 button-Wrap " type='submit' value="Add New Arranger to &quot;{$fn_encode($compName)}&quot;"/>
                         <input type="hidden" name="bookID" value='$bookID'/>
                         <input type="hidden" name="compositionID" value='$compositionID'/>
                         <input type="hidden" name="oldPeopleID" value= '$peopleID' />
@@ -977,24 +975,24 @@ echo <<<_END
                         <input type="hidden" name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                         <input type="hidden" name="addNewArranger" value= 'true' />
                         <input type="hidden" name='editComposition' value ='true' />
-                    </div><!-- end form-check -->
+                 
                  </form>
                  
                  <form action='peopleOptions.php' method='post'>
-                    <div class="form-check">
-                        <input class="btn btn-light" type='submit' $disableERDLyricist value="Edit, Replace, or Delete Lyricist from &quot;{$fn_encode($compName)}&quot;"/>
+                   
+                        <input class="btn btn-block btn-secondary mb-3 button-Wrap " type='submit' $disableERDLyricist value="Edit, Replace, or Delete Lyricist from &quot;{$fn_encode($compName)}&quot;"/>
                         <input type="hidden" name="bookID" value='$bookID'/>
                         <input type="hidden" name="compositionID" value='$compositionID'/>
                         <input type="hidden" name="compName" value="{$fn_encode($compName)}"/>
                         <input type="hidden" name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                         <input type="hidden" name="editReplaceDeleteLyricist" value= 'true' />
                         <input type="hidden" name='editComposition' value ='true' />
-                    </div><!-- end form-check -->
+                  
                  </form>
                  
                   <form action='peopleSearch.php' method='post'>
-                      <div class="form-check">
-                          <input class="btn btn-light" type='submit' value="Add New Lyricist to &quot;{$fn_encode($compName)}&quot;"/>
+                      
+                          <input class="btn btn-block btn-secondary mb-3 button-Wrap " type='submit' value="Add New Lyricist to &quot;{$fn_encode($compName)}&quot;"/>
                           <input type="hidden" name="bookID" value='$bookID'/>
                           <input type="hidden" name="compositionID" value='$compositionID'/>
                           <input type="hidden" name="oldPeopleID" value= '$peopleID' />
@@ -1002,25 +1000,27 @@ echo <<<_END
                           <input type="hidden" name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                           <input type="hidden" name="addNewLyricist" value= 'true' />
                           <input type="hidden" name='editComposition' value ='true' />
-                      </div><!-- end form-check -->
+                      
                   </form>
                   
                   <form action='displayComposition.php' method='post'>
-                      <div class="form-check">
-                          <input class="btn btn-light" type='submit' value="Done Editing &quot;{$fn_encode($compName)}&quot;"/>
+                      
+                          <input class="btn btn-block btn-secondary mb-3 button-Wrap " type='submit' value="Done Editing &quot;{$fn_encode($compName)}&quot;"/>
                           <input type="hidden" name="bookID" value='$bookID'/>
                           <input type="hidden" name="compositionID" value='$compositionID'/>
                           <input type="hidden" name='editComposition' value ='true' />
-                      </div><!-- end form-check -->
+                     
                   </form>
 
-               </div>  <!-- end card-body -->
-            </div>  <!-- end card -->
-        </div>  <!-- end col -->
-     </div>  <!-- end row -->
+               </div><!-- end col -->
+            </div> <!-- end row -->
+        </div>    <!-- end card-body -->
+     </div>   <!-- end card -->
  </div> <!-- end container -->
+ 
 
 _END;
+
 
 
 
