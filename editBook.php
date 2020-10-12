@@ -286,7 +286,7 @@ _END;
     </div>
       <div class="row"</div> 
       
-        <div class=" col-md-4 offset-md-2  ">
+        <div class=" col-md-4 offset-md-1">
        
            <div class="card  mt-4 mb-3">
               <div class="card-body bg-light">
@@ -308,12 +308,12 @@ _END;
         </div>  <!-- end col -->
         
      
-        <div class="col-md-4">
+        <div class="col-md-6">
           
                
                    <form class="mt-4" action='addBook.php' method='post'>
                       <div class="form-check">
-                          <input class="btn  btn-light" type='submit' value="Edit Existing General Book Information for &quot;{$fn_encode($bookTitle)}&quot; "/>
+                          <input class="btn  btn-light button-Wrap" type='submit' value="Edit Existing General Book Information for &quot;{$fn_encode($bookTitle)}&quot; "/>
                           <input type='hidden' name="bookID" value='$bookID'/>
                           <input type='hidden' name="editBook" value= 'true' />
                        </div>  <!-- end form-check -->      
@@ -321,7 +321,7 @@ _END;
                   
                    <form action='delete.php' method='post'>
                        <div class="form-check">
-                            <input class="btn btn-light confirm deletebook_button" type="submit" value="Delete the book &quot;{$fn_encode($bookTitle)}&quot; from library "/>
+                            <input class="btn btn-light confirm deletebook_button button-Wrap" type="submit" value="Delete the book &quot;{$fn_encode($bookTitle)}&quot; from library "/>
                             <input type="hidden" name="editBook" value ="true" />
                             <input type="hidden" name="bookID" value= "$bookID" />
                             <input type="hidden" name="bookTitle" value="{$fn_encode($bookTitle)}"/>
@@ -331,7 +331,7 @@ _END;
         
                   <form class="mt-4" action='peopleOptions.php' method='post'>
                     <div class="form-check">
-                        <input class="btn  btn-light" type='submit' $disableERDEditor value="Edit/Replace/Delete Existing Editor Information for &quot;{$fn_encode($bookTitle)}&quot;"  />
+                        <input class="btn  btn-light button-Wrap" type='submit' $disableERDEditor value="Edit/Replace/Delete Existing Editor Information for &quot;{$fn_encode($bookTitle)}&quot;"  />
                         <input type='hidden' name="bookID" value='$bookID'/>
                         <input type='hidden' name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                         <input type='hidden' name="editBook" value= 'true' />
@@ -342,7 +342,7 @@ _END;
                   
                    <form class="mt-4" action='peopleSearch.php' method='post'>
                       <div class="form-check">
-                          <input class="btn  btn-light" type='submit' value="Add a NEW Editor to &quot;{$fn_encode($bookTitle)}&quot;"/>
+                          <input class="btn  btn-light button-Wrap" type='submit' value="Add a NEW Editor to &quot;{$fn_encode($bookTitle)}&quot;"/>
                           <input type='hidden' name="bookID" value='$bookID'/>
                           <input type='hidden' name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                           <input type='hidden' name="editBook" value= 'true' />
@@ -354,7 +354,7 @@ _END;
         
                   <form class="mt-4" action='orgOptions.php' method='post'>
                      <div class="form-check">
-                        <input class="btn  btn-light" type='submit' $disableERDPub value="Edit/Replace/Delete Existing Publisher Information for &quot;{$fn_encode($bookTitle)}&quot;"  />
+                        <input class="btn  btn-light button-Wrap" type='submit' $disableERDPub value="Edit/Replace/Delete Existing Publisher Information for &quot;{$fn_encode($bookTitle)}&quot;"  />
                         <input type='hidden' name="bookID" value='$bookID'/>
                         <input type='hidden' name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                         <input type='hidden' name="editBook" value= 'true' />
@@ -365,7 +365,7 @@ _END;
         
                   <form class="mt-4" action='orgSearch.php' method='post'>
                       <div class="form-check">
-                          <input class="btn  btn-light" type='submit' value="Add a NEW Publisher to &quot;{$fn_encode($bookTitle)}&quot;"/>
+                          <input class="btn  btn-light button-Wrap" type='submit' value="Add a NEW Publisher to &quot;{$fn_encode($bookTitle)}&quot;"/>
                           <input type='hidden' name="bookID" value='$bookID'/>
                           <input type='hidden' name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                           <input type='hidden' name="editBook" value= 'true' />
@@ -375,7 +375,7 @@ _END;
                                                
                   <form class="mt-4" action='displayBook.php' method='post'>
                       <div class="form-check">
-                         <input class="btn  btn-light" type='submit' value="Done Editing &quot;{$fn_encode($bookTitle)}&quot;"/>
+                         <input class="btn  btn-light button-Wrap" type='submit' value="Done Editing &quot;{$fn_encode($bookTitle)}&quot;"/>
                          <input type='hidden' name="bookID" value='$bookID'/>
                       </div>  <!-- end form-check --> 
                   </form>  <!-- end form --><br><br><br>
@@ -391,7 +391,7 @@ _END;
         </div>  <!-- end col -->
         
         
-     <div class="col-md-8 offset-md-2  mt-4">
+     <div class="col-md-10 offset-md-1  mt-4">
      <h4 class="display-5 text-light  mb-4 "> Some Button Explanation</h4>
     <p class="editpage"> * <b>Edit Existing General Book Information:</b>   This will allow you to correct a mis-spelling or incorrect information that needs to be changed everywhere this book is found through-out the library. </p>
     <p class="editpage">* <b>Edit Existing Editor Information:</b> This will allow you to correct a mis-spelling or incorrect information that needs to be changed everywhere this editor/person is found through-out the library. </p>

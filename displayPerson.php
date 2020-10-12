@@ -979,7 +979,7 @@ _END;
                 
                                 
                     
-                    <form action="peopleSearch.php" method="post">
+                    <form action="editComposition.php" method="post">
                         <input class="btn btn-secondary mb-3 noPrint"  type='submit' value='Edit Composition'/> 
                         <input type='hidden' name='bookID' value='$bookID'/>
                         <input type='hidden' name='compositionID' value='$compositionID'/>
@@ -1001,7 +1001,7 @@ _END;
                   Publisher Name: $displayPublisherOrgString<br/>
                   Book Location: <span style="color:#EB6B42;">$physBookLocNote</span><br/><br/>
                   
-                   <form action="peopleSearch.php" method="post">
+                   <form action="editBook.php" method="post">
                         <input class="btn btn-secondary mb-3 noPrint"  type='submit' value='Edit Book'/> 
                         <input type='hidden' name='bookID' value='$bookID'/>
                         <input type='hidden' name='compositionID' value='$compositionID'/>
@@ -1198,7 +1198,7 @@ _END;
                   Publisher Name: $displayPublisherOrgString<br/>
                   Book Location: <span style="color:#EB6B42;">$physBookLocNote</span><br/><br/>
                   
-                     <form action="peopleSearch.php" method="post">
+                     <form action="editBook.php" method="post">
                         <input class="btn btn-secondary mb-3 noPrint"  type='submit' value='Edit Book'/> 
                         <input type='hidden' name='bookID' value='$bookID'/>
                         <input type='hidden' name='compositionID' value='$compositionID'/>

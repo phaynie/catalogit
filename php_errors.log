@@ -13261,3 +13261,134 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in C:\Ampps\www\catalogit\editComposition.php on line 910
+[09-Oct-2020 18:52:21 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function failureToExecute(), 1 passed in C:\Ampps\www\catalogit\addBook.php on line 269 and exactly 3 expected in C:\Ampps\www\catalogit\boilerplate.php:189
+Stack trace:
+#0 C:\Ampps\www\catalogit\addBook.php(269): failureToExecute(true)
+#1 {main}
+  thrown in C:\Ampps\www\catalogit\boilerplate.php on line 189
+[09-Oct-2020 19:00:24 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\Ampps\www\catalogit\addBook.php:265) in C:\Ampps\www\catalogit\addBook.php on line 278
+[09-Oct-2020 19:00:24 UTC] PHP Stack trace:
+[09-Oct-2020 19:00:24 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\addBook.php:0
+[09-Oct-2020 19:00:24 UTC] PHP   2. header() C:\Ampps\www\catalogit\addBook.php:278
+[09-Oct-2020 22:14:40 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in C:\Ampps\www\catalogit\admin.php on line 31
+[09-Oct-2020 22:14:40 UTC] PHP Stack trace:
+[09-Oct-2020 22:14:40 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\admin.php:0
+[09-Oct-2020 22:14:40 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in C:\Ampps\www\catalogit\boilerplate.php on line 5
+[09-Oct-2020 22:14:40 UTC] PHP Stack trace:
+[09-Oct-2020 22:14:40 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\addComposition2.php:0
+[09-Oct-2020 22:14:40 UTC] PHP   2. include() C:\Ampps\www\catalogit\addComposition2.php:11
+[09-Oct-2020 22:14:40 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in C:\Ampps\www\catalogit\boilerplate.php on line 5
+[09-Oct-2020 22:14:40 UTC] PHP Stack trace:
+[09-Oct-2020 22:14:40 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\admin.php:0
+[09-Oct-2020 22:14:40 UTC] PHP   2. include() C:\Ampps\www\catalogit\admin.php:2
+[09-Oct-2020 22:14:40 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in C:\Ampps\www\catalogit\boilerplate.php on line 5
+[09-Oct-2020 22:14:40 UTC] PHP Stack trace:
+[09-Oct-2020 22:14:40 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\admin.php:0
+[09-Oct-2020 22:14:40 UTC] PHP   2. include() C:\Ampps\www\catalogit\admin.php:2
+[11-Oct-2020 00:47:53 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\advancedSearch.php on line 1253
+[11-Oct-2020 00:47:57 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\advancedSearch.php on line 1253
+[11-Oct-2020 00:48:05 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\advancedSearch.php on line 1253
+[11-Oct-2020 01:08:13 UTC] PHP Parse error:  syntax error, unexpected '&' in C:\Ampps\www\catalogit\advancedSearch.php on line 517
+[11-Oct-2020 01:09:41 UTC] PHP Parse error:  syntax error, unexpected '&' in C:\Ampps\www\catalogit\advancedSearch.php on line 524
+[11-Oct-2020 01:10:04 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\advancedSearch.php on line 1251
+[11-Oct-2020 22:21:02 UTC] PHP Warning:  Invalid argument supplied for foreach() in C:\Ampps\www\catalogit\displayAdvSearch.php on line 134
+[11-Oct-2020 22:21:02 UTC] PHP Stack trace:
+[11-Oct-2020 22:21:02 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[11-Oct-2020 22:21:02 UTC] PHP Warning:  Invalid argument supplied for foreach() in C:\Ampps\www\catalogit\displayAdvSearch.php on line 173
+[11-Oct-2020 22:21:02 UTC] PHP Stack trace:
+[11-Oct-2020 22:21:02 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[11-Oct-2020 22:21:02 UTC] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in C:\Ampps\www\catalogit\displayAdvSearch.php on line 258
+[11-Oct-2020 22:21:02 UTC] PHP Stack trace:
+[11-Oct-2020 22:21:02 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[11-Oct-2020 22:23:33 UTC] PHP Warning:  Invalid argument supplied for foreach() in C:\Ampps\www\catalogit\displayAdvSearch.php on line 134
+[11-Oct-2020 22:23:33 UTC] PHP Stack trace:
+[11-Oct-2020 22:23:33 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[11-Oct-2020 22:23:33 UTC] PHP Warning:  Invalid argument supplied for foreach() in C:\Ampps\www\catalogit\displayAdvSearch.php on line 173
+[11-Oct-2020 22:23:33 UTC] PHP Stack trace:
+[11-Oct-2020 22:23:33 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[11-Oct-2020 22:23:33 UTC] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in C:\Ampps\www\catalogit\displayAdvSearch.php on line 258
+[11-Oct-2020 22:23:33 UTC] PHP Stack trace:
+[11-Oct-2020 22:23:33 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[12-Oct-2020 13:09:47 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in C:\Ampps\www\catalogit\boilerplate.php on line 5
+[12-Oct-2020 13:09:47 UTC] PHP Stack trace:
+[12-Oct-2020 13:09:47 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[12-Oct-2020 13:09:47 UTC] PHP   2. include() C:\Ampps\www\catalogit\displayAdvSearch.php:3
+[12-Oct-2020 13:09:47 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in C:\Ampps\www\catalogit\boilerplate.php on line 5
+[12-Oct-2020 13:09:47 UTC] PHP Stack trace:
+[12-Oct-2020 13:09:47 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\advancedSearch.php:0
+[12-Oct-2020 13:09:47 UTC] PHP   2. include() C:\Ampps\www\catalogit\advancedSearch.php:2
+[12-Oct-2020 13:18:30 UTC] PHP Warning:  strpos() expects parameter 1 to be string, array given in C:\Ampps\www\catalogit\displayAdvSearch.php on line 109
+[12-Oct-2020 13:18:30 UTC] PHP Stack trace:
+[12-Oct-2020 13:18:30 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[12-Oct-2020 13:18:30 UTC] PHP   2. getIdFromString() C:\Ampps\www\catalogit\displayAdvSearch.php:135
+[12-Oct-2020 13:18:30 UTC] PHP   3. strpos() C:\Ampps\www\catalogit\displayAdvSearch.php:109
+[12-Oct-2020 13:18:30 UTC] PHP Warning:  substr() expects parameter 1 to be string, array given in C:\Ampps\www\catalogit\displayAdvSearch.php on line 109
+[12-Oct-2020 13:18:30 UTC] PHP Stack trace:
+[12-Oct-2020 13:18:30 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[12-Oct-2020 13:18:30 UTC] PHP   2. getIdFromString() C:\Ampps\www\catalogit\displayAdvSearch.php:135
+[12-Oct-2020 13:18:30 UTC] PHP   3. substr() C:\Ampps\www\catalogit\displayAdvSearch.php:109
+[12-Oct-2020 13:18:30 UTC] PHP Warning:  strpos() expects parameter 1 to be string, array given in C:\Ampps\www\catalogit\displayAdvSearch.php on line 114
+[12-Oct-2020 13:18:30 UTC] PHP Stack trace:
+[12-Oct-2020 13:18:30 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[12-Oct-2020 13:18:30 UTC] PHP   2. getNameFromString() C:\Ampps\www\catalogit\displayAdvSearch.php:136
+[12-Oct-2020 13:18:30 UTC] PHP   3. strpos() C:\Ampps\www\catalogit\displayAdvSearch.php:114
+[12-Oct-2020 13:18:30 UTC] PHP Warning:  substr() expects parameter 1 to be string, array given in C:\Ampps\www\catalogit\displayAdvSearch.php on line 114
+[12-Oct-2020 13:18:30 UTC] PHP Stack trace:
+[12-Oct-2020 13:18:30 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[12-Oct-2020 13:18:30 UTC] PHP   2. getNameFromString() C:\Ampps\www\catalogit\displayAdvSearch.php:136
+[12-Oct-2020 13:18:30 UTC] PHP   3. substr() C:\Ampps\www\catalogit\displayAdvSearch.php:114
+[12-Oct-2020 13:18:30 UTC] PHP Warning:  trim() expects parameter 1 to be string, array given in C:\Ampps\www\catalogit\boilerplate.php on line 123
+[12-Oct-2020 13:18:30 UTC] PHP Stack trace:
+[12-Oct-2020 13:18:30 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[12-Oct-2020 13:18:30 UTC] PHP   2. cleanup_post() C:\Ampps\www\catalogit\displayAdvSearch.php:174
+[12-Oct-2020 13:18:30 UTC] PHP   3. trim() C:\Ampps\www\catalogit\boilerplate.php:123
+[12-Oct-2020 13:25:40 UTC] PHP Warning:  strpos() expects parameter 1 to be string, array given in C:\Ampps\www\catalogit\displayAdvSearch.php on line 109
+[12-Oct-2020 13:25:40 UTC] PHP Stack trace:
+[12-Oct-2020 13:25:40 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[12-Oct-2020 13:25:40 UTC] PHP   2. getIdFromString() C:\Ampps\www\catalogit\displayAdvSearch.php:135
+[12-Oct-2020 13:25:40 UTC] PHP   3. strpos() C:\Ampps\www\catalogit\displayAdvSearch.php:109
+[12-Oct-2020 13:25:40 UTC] PHP Warning:  substr() expects parameter 1 to be string, array given in C:\Ampps\www\catalogit\displayAdvSearch.php on line 109
+[12-Oct-2020 13:25:40 UTC] PHP Stack trace:
+[12-Oct-2020 13:25:40 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[12-Oct-2020 13:25:40 UTC] PHP   2. getIdFromString() C:\Ampps\www\catalogit\displayAdvSearch.php:135
+[12-Oct-2020 13:25:40 UTC] PHP   3. substr() C:\Ampps\www\catalogit\displayAdvSearch.php:109
+[12-Oct-2020 13:25:40 UTC] PHP Warning:  strpos() expects parameter 1 to be string, array given in C:\Ampps\www\catalogit\displayAdvSearch.php on line 114
+[12-Oct-2020 13:25:40 UTC] PHP Stack trace:
+[12-Oct-2020 13:25:40 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[12-Oct-2020 13:25:40 UTC] PHP   2. getNameFromString() C:\Ampps\www\catalogit\displayAdvSearch.php:136
+[12-Oct-2020 13:25:40 UTC] PHP   3. strpos() C:\Ampps\www\catalogit\displayAdvSearch.php:114
+[12-Oct-2020 13:25:40 UTC] PHP Warning:  substr() expects parameter 1 to be string, array given in C:\Ampps\www\catalogit\displayAdvSearch.php on line 114
+[12-Oct-2020 13:25:40 UTC] PHP Stack trace:
+[12-Oct-2020 13:25:40 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[12-Oct-2020 13:25:40 UTC] PHP   2. getNameFromString() C:\Ampps\www\catalogit\displayAdvSearch.php:136
+[12-Oct-2020 13:25:40 UTC] PHP   3. substr() C:\Ampps\www\catalogit\displayAdvSearch.php:114
+[12-Oct-2020 13:25:40 UTC] PHP Warning:  trim() expects parameter 1 to be string, array given in C:\Ampps\www\catalogit\boilerplate.php on line 123
+[12-Oct-2020 13:25:40 UTC] PHP Stack trace:
+[12-Oct-2020 13:25:40 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[12-Oct-2020 13:25:40 UTC] PHP   2. cleanup_post() C:\Ampps\www\catalogit\displayAdvSearch.php:174
+[12-Oct-2020 13:25:40 UTC] PHP   3. trim() C:\Ampps\www\catalogit\boilerplate.php:123
+[12-Oct-2020 13:26:20 UTC] PHP Warning:  strpos() expects parameter 1 to be string, array given in C:\Ampps\www\catalogit\displayAdvSearch.php on line 109
+[12-Oct-2020 13:26:20 UTC] PHP Stack trace:
+[12-Oct-2020 13:26:20 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[12-Oct-2020 13:26:20 UTC] PHP   2. getIdFromString() C:\Ampps\www\catalogit\displayAdvSearch.php:135
+[12-Oct-2020 13:26:20 UTC] PHP   3. strpos() C:\Ampps\www\catalogit\displayAdvSearch.php:109
+[12-Oct-2020 13:26:20 UTC] PHP Warning:  substr() expects parameter 1 to be string, array given in C:\Ampps\www\catalogit\displayAdvSearch.php on line 109
+[12-Oct-2020 13:26:20 UTC] PHP Stack trace:
+[12-Oct-2020 13:26:20 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[12-Oct-2020 13:26:20 UTC] PHP   2. getIdFromString() C:\Ampps\www\catalogit\displayAdvSearch.php:135
+[12-Oct-2020 13:26:20 UTC] PHP   3. substr() C:\Ampps\www\catalogit\displayAdvSearch.php:109
+[12-Oct-2020 13:26:20 UTC] PHP Warning:  strpos() expects parameter 1 to be string, array given in C:\Ampps\www\catalogit\displayAdvSearch.php on line 114
+[12-Oct-2020 13:26:20 UTC] PHP Stack trace:
+[12-Oct-2020 13:26:20 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[12-Oct-2020 13:26:20 UTC] PHP   2. getNameFromString() C:\Ampps\www\catalogit\displayAdvSearch.php:136
+[12-Oct-2020 13:26:20 UTC] PHP   3. strpos() C:\Ampps\www\catalogit\displayAdvSearch.php:114
+[12-Oct-2020 13:26:20 UTC] PHP Warning:  substr() expects parameter 1 to be string, array given in C:\Ampps\www\catalogit\displayAdvSearch.php on line 114
+[12-Oct-2020 13:26:20 UTC] PHP Stack trace:
+[12-Oct-2020 13:26:20 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[12-Oct-2020 13:26:20 UTC] PHP   2. getNameFromString() C:\Ampps\www\catalogit\displayAdvSearch.php:136
+[12-Oct-2020 13:26:20 UTC] PHP   3. substr() C:\Ampps\www\catalogit\displayAdvSearch.php:114
+[12-Oct-2020 13:26:20 UTC] PHP Warning:  trim() expects parameter 1 to be string, array given in C:\Ampps\www\catalogit\boilerplate.php on line 123
+[12-Oct-2020 13:26:20 UTC] PHP Stack trace:
+[12-Oct-2020 13:26:20 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[12-Oct-2020 13:26:20 UTC] PHP   2. cleanup_post() C:\Ampps\www\catalogit\displayAdvSearch.php:174
+[12-Oct-2020 13:26:20 UTC] PHP   3. trim() C:\Ampps\www\catalogit\boilerplate.php:123

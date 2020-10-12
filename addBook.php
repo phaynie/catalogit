@@ -259,14 +259,16 @@ Here we will wash all values that come from the form to be used in the db querie
             }
 
 
+
             /*Send the query to the database*/
             $bookInsertQueryResult = $conn->query($bookInsertQuery);
             if ($debug) {
-                echo("\nbookInsertQuery= " . $bookInsertQuery . "\n<br/>");
-                if (!$bookInsertQueryResult) echo("\n Error description bookInsertQuery: " . mysqli_error($conn) . "\n<br/>");
+                $debug_string = "\nbookInsertQuery= " . $bookInsertQuery . "\n<br/>";
+                if (!$bookInsertQueryResult) $debug_string .="\n Error description bookInsertQuery: " . mysqli_error($conn) . "\n<br/>";
             }/*end debug*/
 
-            failureToExecute ($bookInsertQueryResult);
+            failureToExecute ($bookInsertQueryResult, 'I617', 'Insert');
+
 
             /*Getting book ID for the book just inserted into database*/
             $bookID = $conn->insert_id;

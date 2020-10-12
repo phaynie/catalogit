@@ -165,7 +165,7 @@ if(isset($_REQUEST['findDifficulty'])) {
 }
 
 if(isset($_REQUEST['findGenre'])) {
-    $findfindGenre = $_REQUEST['findGenre'];
+    $findGenre = $_REQUEST['findGenre'];
 }
 
 
@@ -509,6 +509,22 @@ if($submit == 'true') {
 
 
 
+        /*run the search */
+
+
+            $keySigsHeaderString = "";
+            foreach ($keySigs AS $value) {
+                $keySigsHeaderString .= '&keySigs[]=' . $value;
+
+            }/*End foreach loop*/
+
+
+            $genresHeaderString = "";
+            foreach ($genres as $value) {
+                $genresHeaderString .= '&genres[]=' . $value;
+            }/*End foreach loop*/
+
+
 
 
 
@@ -521,7 +537,7 @@ if($submit == 'true') {
     /* $check =    'Location: displayAdvSearch.php?advSearch=true&$searchBoxGeneralCompTitle=' . $compName . '&keySigs[]=' . $keySigs . '&genres[]=' . $genres . '&searchBoxGeneralInst=' . $instruments . '&era=' . $era . '&voice=' . $voice . '&ensemble=' . $ensemble . '&genDiff=' . $genDiff . '&ASPDiff=' . $ASPDiff ;*/
 
 
-            header('Location: displayAdvSearch.php?advSearch=true&searchBoxGeneralCompTitle=' . $searchBoxGeneralCompTitle . '&searchBoxGeneralInst=' . $searchBoxGeneralInst . '&searchBoxGeneralComposer=' . $searchBoxGeneralComposer . '&searchBoxGeneralArr=' . $searchBoxGeneralArr . '&searchBoxGeneralLyr=' . $searchBoxGeneralLyr . '&era=' . $era . '&voice=' . $voice . '&ensemble=' . $ensemble . '&genDiff=' . $genDiff . '&ASPDiff=' . $ASPDiff );
+            header('Location: displayAdvSearch.php?advSearch=true&searchBoxGeneralCompTitle=' . $searchBoxGeneralCompTitle . '&searchBoxGeneralInst=' . $searchBoxGeneralInst . '&searchBoxGeneralComposer=' . $searchBoxGeneralComposer . '&searchBoxGeneralArr=' . $searchBoxGeneralArr . '&searchBoxGeneralLyr=' . $searchBoxGeneralLyr . $keySigsHeaderString  . $genresHeaderString . '&era=' . $era . '&voice=' . $voice . '&ensemble=' . $ensemble . '&genDiff=' . $genDiff . '&ASPDiff=' . $ASPDiff );
             exit();
 
     } /*END if (!$validationFailed )*/

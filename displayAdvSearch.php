@@ -131,9 +131,9 @@ if($advSearch == 'true') {
     $keySigNamesString = rtrim($keySigNamesString, ', ');
 
     $genresString = "";
-    foreach ($genres as $genre) {
-        $genreIdsString .= getIdFromString($genre) . ', ';
-        $genreNamesString .= getNameFromString($genre) . ', ';
+    foreach ($genres as $value) {
+        $genreIdsString .= getIdFromString($value) . ', ';
+        $genreNamesString .= getNameFromString($value) . ', ';
     }/*End foreach loop*/
     $genreIdsString = rtrim($genreIdsString, ', ');
     $genreNamesString = rtrim($genreNamesString, ', ');
@@ -226,7 +226,7 @@ LEFT JOIN difficulties AS d_A ON C2D_A.difficulty_ID = d_A.ID
 LEFT JOIN C2D AS C2D_G ON c.ID = C2D_G.composition_ID 
 LEFT JOIN difficulties AS d_G ON C2D_G.difficulty_ID = d_G.ID
 
-WHERE 1=1";
+WHERE 1=1 ";
 
 
     if (strlen($searchBoxGeneralCompTitleAltered) > 0) {

@@ -4,7 +4,7 @@ setcookie("XDEBUG_SESSION_START", "PHPSTORM");
 
   session_start();
 
-$debug=false;
+$debug=true;
 
 if($debug) {
     print_r($_SESSION);

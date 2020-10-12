@@ -1,5 +1,6 @@
 <?php
 include 'boilerplate.php';
+$admin_debug = false;
 
 // following is example code for dumping a source database to a file
 // then changing the names in the source dump to the target database
@@ -8,10 +9,18 @@ include 'boilerplate.php';
 
 // DANGER DANGER - WASH THESE VARIABLES
 
+/*$washPostVar = cleanup_post($sourceDBname);
+$sourceDBname = strip_before_insert($conn, $washPostVar);
+
+$washPostVar = cleanup_post($targetDBname);
+$targetDBname = strip_before_insert($conn, $washPostVar);*/
+
+
+
 $sourceDBname = $_POST['sourceDBname']; // hardcoding to test $_POST['sourceDBname']
 $targetDBname = $_POST['targetDBname']; // hardcoding to test $_POST['targetDBname']
 
-if($debug) {
+if($admin_debug) {
     echo 'sourceDBname = ' . $sourceDBname . '<br/>';
     echo 'targetDBname = ' . $targetDBname . '<br/>';
 } /*end debug*/
@@ -20,27 +29,37 @@ if (isset($_REQUEST['sourceDBname'])) {
 
     $backup_path = "../backups/"; // folder where we store backups
     $date_string = date("Y-m-d-H-i-s");
-    $filePath = "{$backup_path}{$date_string}_{$sourceDBname}.sql";
+    $filePath = "{$backup_path}{$date_string}_{$sourceDBname}.sql";  // we are creating backup of source DB
 
-    echo 'filepath = ' . $filePath . '<br/>';
+    if($admin_debug) {
+        echo 'filepath = ' . $filePath . '<br/>';
+    } /*end debug*/
 
-    $cmd = "mysqldump -h {$hn} -u {$un} -p {$pw} -B {$sourceDBname} -f --skip-lock-tables > {$filePath}";
+    $cmd = "mysqldump -h {$hn} -u {$un} -p{$pw} -B {$sourceDBname} -f --skip-lock-tables > {$filePath}";  // no space before password!
 
-    echo 'dump command = ' . $cmd . '<br/>';
+    if($admin_debug) {
+        echo 'dump command = ' . $cmd . '<br/>';
+    } /*end debug*/
 
     exec($cmd);  // using command line to run the command
 
-// read dump as string
-    $dump = file_get_contents($filePath);
+    // At this point, we have used mysqldump to create a backup script in the backups folder
 
-// replace db name used in CREATE and USE statements
-    $dump = str_replace($sourceDBname, $targetDBname, $dump);
+    if (isset($_REQUEST['targetDBname'])) {
+        // Now we will modify a copy of the dump and use it to create a new database
+        $dump = file_get_contents($filePath); // read dump as string
 
-// write modified dump back to file
-    file_put_contents($filePath, $dump);
+        // replace db name used in CREATE and USE statements
+        $dump = str_replace($sourceDBname, $targetDBname, $dump);
 
-    $cmd = "mysql -h {$hn} -u {$un} -p{$pw} {$sourceDBname} < {$filePath}";
-    exec($cmd);  // using command line to run the command
+        $filePath = "{$backup_path}{$date_string}_{$targetDBname}.sql";  // we are creating backup of new target DB
+
+        // write modified dump back to file
+        file_put_contents($filePath, $dump);
+
+        $cmd = "mysql -h {$hn} -u {$un} -p{$pw} {$sourceDBname} < {$filePath}";
+        exec($cmd);  // using command line to run the command
+    }
 
 }
 
