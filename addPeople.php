@@ -59,6 +59,8 @@ $peopleFirstName_value = "";
 $peopleMiddleName_value = "";
 $peopleLastName_value = "";
 $peopleSuffix_value = "";
+$alreadyExistsErr = "";
+$findPerson = "";
 $submit = "";
 
 
@@ -154,6 +156,11 @@ if(isset($_REQUEST['peopleSuffix'])) {
     $peopleSuffix = $_REQUEST['peopleSuffix'];
 }
 
+if(isset($_REQUEST['findPerson'])) {
+    $findPerson = $_REQUEST['findPerson'];
+}
+
+
 
 
 if(isset($_REQUEST['submit'])) {
@@ -245,6 +252,44 @@ if($submit == 'true') {
         $peopleLastNameErr = "<span class='error'>  * Last Name of $role is required. </span>";
         $validationFailed = true;
     } /*end if (strlen($peopleLastName) == 0 )*/
+
+    $checkQuery = <<<_END
+            SELECT *
+            FROM people
+            WHERE (firstname = '$peopleFirstName' 
+             AND middlename = '$peopleMiddleName'
+             AND lastname = '$peopleLastName'
+             AND suffix = '$peopleSuffix') ;
+
+_END;
+
+if($debug) {
+    echo 'checkQuery = ' . $checkQuery . '<br/><br/>';
+}/*end debug*/
+
+    $checkQueryResult = $conn->query($checkQuery);
+    if ($debug) {
+        if (!$checkQueryResult) echo("\n Error description checkQuery: " . mysqli_error($conn) . "\n<br/>");
+    }/*end debug*/
+
+
+    failureToExecute ($checkQueryResult, 'S548', 'Select ');
+
+if ($checkQueryResult){
+$numberOfCheckRows = $checkQueryResult->num_rows;
+$checkRowsFound = ($numberOfCheckRows > 0);
+$checkRowsNotFound = ($numberOfCheckRows === 0);
+
+if ($checkRowsFound) {
+    $alreadyExistsErr = "<span class='error'>  * This $role Already exists. </span>";
+    $validationFailed = true;}
+}
+
+
+
+
+
+
 
 
     /*If any validation failed, save all form values in variables
@@ -362,56 +407,60 @@ if($submit == 'true') {
 
             /*We are still in the submit is true section
             only $addNew because if we are using replace, first we go to peopleOptions.php to search,  if we don't choose an existing person(which sends us directly to addRole.php, we will choose the addNew button and have "$addNew..."  following us to get us into this code*/
-        } elseif ($addNewPeople == 'true' || $replacePeople == 'true'){
-
-            $peopleInsertQuery = "INSERT INTO people (firstname, middlename, lastname, suffix) VALUES(";
-
-            if($peopleFirstNameAltered == "") {
-                $peopleInsertQuery .= "NULL,";
-             }else{
-                $peopleInsertQuery .= "'$peopleFirstNameAltered',";
-            }
-
-            if($peopleMiddleNameAltered == "") {
-                $peopleInsertQuery .= "NULL,";
-            }else{
-                $peopleInsertQuery .= "'$peopleMiddleNameAltered',";
-            }
-
-            if($peopleLastNameAltered == "") {
-                $peopleInsertQuery .= "NULL,";
-            }else{
-                $peopleInsertQuery .= "'$peopleLastNameAltered',";
-            }
-
-            if($peopleSuffixAltered == "") {
-                $peopleInsertQuery .= "NULL)";
-            }else{
-                $peopleInsertQuery .= "'$peopleSuffixAltered')";
-            }
-
-
-            /*Send the query to the database*/
-            $peopleInsertQueryResult = $conn->query($peopleInsertQuery);
-
-            if ($debug) {
-                echo("\npeopleInsertQuery= " . $peopleInsertQuery . "\n<br/>");
-                if (!$peopleInsertQueryResult) echo("\n Error description peopleInsertQuery: " . mysqli_error($conn) . "\n<br/>");
-            }/*end debug*/
+        } elseif ($addNewPeople == 'true' || $replacePeople == 'true') {
 
 
 
 
-            failureToExecute ($peopleInsertQueryResult, 'I600', 'Insert ');
+                $peopleInsertQuery = "INSERT INTO people (firstname, middlename, lastname, suffix) VALUES(";
 
-            /*Getting people ID for the organization just inserted into database*/
-            /*This needs to be newPeopleID when a person does not exist and we are adding a new person*/
-            $newPeopleID = $conn->insert_id;
+                if ($peopleFirstNameAltered == "") {
+                    $peopleInsertQuery .= "NULL,";
+                } else {
+                    $peopleInsertQuery .= "'$peopleFirstNameAltered',";
+                }
 
-            if ($debug) {
-                echo("newPeopleID = " . $newPeopleID . "<br/>");
-            }/*end debug*/
-        } /*end elseif ($addNewPeople == 'true' || $replacePeople == 'true')*/
+                if ($peopleMiddleNameAltered == "") {
+                    $peopleInsertQuery .= "NULL,";
+                } else {
+                    $peopleInsertQuery .= "'$peopleMiddleNameAltered',";
+                }
+
+                if ($peopleLastNameAltered == "") {
+                    $peopleInsertQuery .= "NULL,";
+                } else {
+                    $peopleInsertQuery .= "'$peopleLastNameAltered',";
+                }
+
+                if ($peopleSuffixAltered == "") {
+                    $peopleInsertQuery .= "NULL)";
+                } else {
+                    $peopleInsertQuery .= "'$peopleSuffixAltered')";
+                }
+
+
+                /*Send the query to the database*/
+                $peopleInsertQueryResult = $conn->query($peopleInsertQuery);
+
+                if ($debug) {
+                    echo("\npeopleInsertQuery= " . $peopleInsertQuery . "\n<br/>");
+                    if (!$peopleInsertQueryResult) echo("\n Error description peopleInsertQuery: " . mysqli_error($conn) . "\n<br/>");
+                }/*end debug*/
+
+
+                failureToExecute($peopleInsertQueryResult, 'I600', 'Insert ');
+
+                /*Getting people ID for the organization just inserted into database*/
+                /*This needs to be newPeopleID when a person does not exist and we are adding a new person*/
+                $newPeopleID = $conn->insert_id;
+
+                if ($debug) {
+                    echo("newPeopleID = " . $newPeopleID . "<br/>");
+                }/*end debug*/
+
+            } /*End else insert*/
+            } /*end elseif ($addNewPeople == 'true' || $replacePeople == 'true')*/
+
 
 if($editBook == 'true') {
     header('Location: addRole.php?bookID=' . $bookID . '&newPeopleID=' . $newPeopleID . '&oldPeopleID=' . $oldPeopleID . '&addNewEditor=' . $addNewEditor . '&editBook=true');
@@ -422,7 +471,7 @@ if($editBook == 'true') {
 
 }elseif($editComposition == 'true') {
     header('Location: addRole.php?bookID=' . $bookID . '&newPeopleID=' . $newPeopleID . '&oldPeopleID=' . $oldPeopleID . '&addNewComposer=' . $addNewComposer . '&addNewArranger=' . $addNewArranger . '&addNewLyricist=' . $addNewLyricist . '&replaceComposer=' . $replaceComposer . '&replaceArranger=' . $replaceArranger . '&replaceLyricist=' . $replaceLyricist . '&compositionID=' . $compositionID . '&editComposition=true');
-}/*End else if*/
+
 
 } /*end If($submit == 'true')*/
 
@@ -505,16 +554,18 @@ echo <<<_END
 <div class="container-fluid bg-light pt-4 pb-4">
 $instructionalText
 
+<p> if your $role last name begins with von or van please included it as part of the last name. ex. van Beethoven</p>
+
   <div class="row">
     <div class="col-md-6">
       <form action='addPeople.php' method='post'>
         <div class="form-group pt-4">
    
 
-
+$alreadyExistsErr
 
             First Name: 
-            <input class="form-control" type="text" name="peopleFirstName" value = "{$fn_encode($peopleFirstName)}"/><br/>
+            <input class="form-control" type="text" name="peopleFirstName" autofocus value = "{$fn_encode($peopleFirstName)}"/><br/>
             Middle Name: <input class="form-control"  type="text" name="peopleMiddleName" value = "{$fn_encode($peopleMiddleName)}"/><br/>
             Last Name: $peopleLastNameErr
             <input class="form-control"  type="text" name="peopleLastName" value = "{$fn_encode($peopleLastName)}"/><br/>
@@ -530,6 +581,7 @@ $instructionalText
             $sendEditBook
             $sendReplace
             $sendEditComposition
+            $sendFindPerson
            
    
         </div> <!-- end form-group -->

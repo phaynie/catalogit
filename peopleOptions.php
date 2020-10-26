@@ -114,7 +114,9 @@ if(isset($_REQUEST['oldPeopleID']) && is_numeric($_REQUEST['oldPeopleID'])) {
     $oldPeopleID = $_REQUEST['oldPeopleID'];
 }
 
+if($debug) {
 echo "oldPeopleID =" . $oldPeopleID . "</br>";
+}/*end debug*/
 
 if(isset($_REQUEST['editBook'])) {
     $editBook = $_REQUEST['editBook'];

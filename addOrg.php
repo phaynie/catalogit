@@ -313,7 +313,7 @@ echo <<<_END
            
 
                 Publisher Name: $pubNameErr_value
-                <input class="form-control" type="text" name="pubName" value="{$fn_encode($pubName_value)}"/><br/>
+                <input class="form-control" type="text" name="pubName" autofocus value="{$fn_encode($pubName_value)}"/><br/>
                 Publisher Location: <input class="form-control" type="text" name="pubLoc" value= "{$fn_encode($pubLoc_value)}"/><br/>
                 <input class="btn btn-secondary mt-4" type='submit' value='Submit and Continue'/>
                 <input type='hidden' name="bookID" value='{$bookID}'/>

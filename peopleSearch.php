@@ -463,6 +463,7 @@ _END;
     <div class="container-fluid bg-light pt-4 pb-5">
       <h3 class="display-4 pb-3">So Far So Good!</h3>
       $informationText
+     
     </div> <!-- end container--> 
     
 _END;
@@ -516,11 +517,11 @@ _END;
           $addNewPeopleContinueText
           $findComposerContinueText
           $findPersonContinueText
-        
+         <p> if your $role last name begins with von or van it has been included as part of the last name. ex. van Beethoven. </p>
 
   
           $role Last Name: $searchPeopleLastNameErr
-          <input class="form-control" autocomplete="off" type="text" name="searchPeopleLastName" id="searchPeopleLastName" placeholder = "Please enter the last name of the $role "/>
+          <input class="form-control" autocomplete="off" type="text" name="searchPeopleLastName" id="searchPeopleLastName" autofocus placeholder = "Please enter the last name of the $role "/>
           <ul id="cmpsrsArray"></ul>
           <input class="btn btn-secondary mt-4" type="submit" value="Search for this $role"/>
           <input type="hidden" name="bookID" value="{$bookID}"/>

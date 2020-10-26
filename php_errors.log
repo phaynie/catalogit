@@ -13392,3 +13392,26 @@ Stack trace:
 [12-Oct-2020 13:26:20 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
 [12-Oct-2020 13:26:20 UTC] PHP   2. cleanup_post() C:\Ampps\www\catalogit\displayAdvSearch.php:174
 [12-Oct-2020 13:26:20 UTC] PHP   3. trim() C:\Ampps\www\catalogit\boilerplate.php:123
+[15-Oct-2020 16:50:23 UTC] PHP Warning:  Invalid argument supplied for foreach() in C:\Ampps\www\catalogit\displayAdvSearch.php on line 134
+[15-Oct-2020 16:50:23 UTC] PHP Stack trace:
+[15-Oct-2020 16:50:23 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[15-Oct-2020 16:50:23 UTC] PHP Warning:  Invalid argument supplied for foreach() in C:\Ampps\www\catalogit\displayAdvSearch.php on line 173
+[15-Oct-2020 16:50:23 UTC] PHP Stack trace:
+[15-Oct-2020 16:50:23 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[15-Oct-2020 16:50:23 UTC] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in C:\Ampps\www\catalogit\displayAdvSearch.php on line 258
+[15-Oct-2020 16:50:23 UTC] PHP Stack trace:
+[15-Oct-2020 16:50:23 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[15-Oct-2020 16:55:47 UTC] PHP Warning:  Invalid argument supplied for foreach() in C:\Ampps\www\catalogit\displayAdvSearch.php on line 134
+[15-Oct-2020 16:55:47 UTC] PHP Stack trace:
+[15-Oct-2020 16:55:47 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[15-Oct-2020 16:55:47 UTC] PHP Warning:  Invalid argument supplied for foreach() in C:\Ampps\www\catalogit\displayAdvSearch.php on line 173
+[15-Oct-2020 16:55:47 UTC] PHP Stack trace:
+[15-Oct-2020 16:55:47 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[15-Oct-2020 16:55:47 UTC] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in C:\Ampps\www\catalogit\displayAdvSearch.php on line 258
+[15-Oct-2020 16:55:47 UTC] PHP Stack trace:
+[15-Oct-2020 16:55:47 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\displayAdvSearch.php:0
+[17-Oct-2020 23:32:15 UTC] PHP Parse error:  syntax error, unexpected end of file in C:\Ampps\www\catalogit\addBook.php on line 417
+[21-Oct-2020 21:11:47 UTC] PHP Parse error:  syntax error, unexpected 'if' (T_IF) in C:\Ampps\www\catalogit\addBook.php on line 270
+[21-Oct-2020 21:13:35 UTC] PHP Parse error:  syntax error, unexpected 'if' (T_IF) in C:\Ampps\www\catalogit\addBook.php on line 270
+[21-Oct-2020 21:14:05 UTC] PHP Parse error:  syntax error, unexpected 'if' (T_IF) in C:\Ampps\www\catalogit\addBook.php on line 270
+[22-Oct-2020 15:59:35 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\Ampps\www\catalogit\addPeople.php on line 457

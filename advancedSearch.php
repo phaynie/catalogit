@@ -582,7 +582,7 @@ echo $debug_string;
                             <h6>Will you be searching by a Composition Title?</h6>
                             <div class="form-check">
                                 <label for="searchBoxGeneralCompTitle">Composition Name: <?php echo $compNameErr ?></label>
-                                <input type="text" class="form-control" autocomplete="off"  id="searchBoxGeneralCompTitle" name="searchBoxGeneralCompTitle"  placeholder = "Please enter a title for the Composition" /><br/>
+                                <input type="text" class="form-control" autocomplete="off"  id="searchBoxGeneralCompTitle" name="searchBoxGeneralCompTitle"  autofocus placeholder = "Please enter a title for the Composition" /><br/>
                                 <ul id="cmpsnArray"></ul>
                             </div> <!-- end form-check -->
 
@@ -960,6 +960,11 @@ echo $debug_string;
                         </div> <!-- end form-check -->
 
                         <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="chbx38" name="genres[]" value="38-Religious" <?php if (in_array( "38-Religious", $genres)) {echo("checked");}?>> Religious<br>
+                            <label class="form-check-label sr-only" for="chbx38"></label>
+                        </div> <!-- end form-check -->
+
+                        <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="chbx27" name="genres[]" value="27-Rock" <?php if (in_array( "27-Rock", $genres)) {echo("checked");}?>> Rock<br>
                             <label class="form-check-label sr-only" for="chbx27"></label>
                         </div> <!-- end form-check -->
@@ -977,6 +982,11 @@ echo $debug_string;
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="chbx31" name="genres[]" value="31-ThanksGiving" <?php if (in_array( "31-ThanksGiving", $genres)) {echo("checked");}?>> ThanksGiving<br>
                             <label class="form-check-label sr-only" for="chbx31"></label>
+                        </div> <!-- end form-check -->
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="chbx37" name="genres[]" value="37-R&B Soul" <?php if (in_array( "37-R&B Soul", $genres)) {echo("checked");}?>> R&B Soul<br>
+                            <label class="form-check-label sr-only" for="chbx37"></label>
                         </div> <!-- end form-check -->
 
                         <div class="form-check pb-4">
@@ -1056,6 +1066,8 @@ echo $debug_string;
                                 <option value="25-TTBB" <?php if ($voice == "25-TTBB") {echo("selected");} ?>> TTBB</option>
                                 <option value="26-BB" <?php if ($voice == "26-BB") {echo("selected");} ?>> BB</option>
                                 <option value="27-TTB" <?php if ($voice == "27-TTB") {echo("selected");} ?>> TTB</option>
+                                <option value="31-2-Part" <?php if ($voice == "31-2-part") {echo("selected");} ?>> 2-part</option>
+                                <option value="32-3-part mixed" <?php if ($voice == "32-3-part mixed") {echo("selected");} ?>> 3-part mixed</option>
                                 <option value="2-High Voice" <?php if ($voice == "28-High Voice") {echo("selected");} ?>> High Voice</option>
                                 <option value="29-Medium Voice" <?php if ($voice == "29-Medium Voice") {echo("selected");} ?>> Medium Voice</option>
                                 <option value="30-Low Voice" <?php if ($voice == "30-Low Voice") {echo("selected");} ?>> Low Voice</option>

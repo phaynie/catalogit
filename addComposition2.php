@@ -762,7 +762,7 @@ VALUES (";
             $compositionInsertQuery .= " NULL, ";
         }
         else{
-            $compositionInsertQuery .= " '$opusNumAltered', ";
+            $compositionInsertQuery .= " $opusNumAltered, ";
         }
 
         if($compNumAltered == "") {
@@ -1348,7 +1348,7 @@ if($opusNum == 'NULL') {
         <div class="form-group">
 
             <label for="compositionName">Composition Name: <?php echo $compNameErr ?></label>
-            <input type="text" class="form-control" id="compositionName" name="compName" value="<?php echo htmlspecialchars($compName, ENT_QUOTES) ?>" /><br/>
+            <input type="text" class="form-control" id="compositionName" name="compName" autofocus value="<?php echo htmlspecialchars($compName, ENT_QUOTES) ?>" /><br/>
 
             <label for="opusLike">Opus-Like:  </label>
             <input type="text" class="form-control" id="opusLike" name="opus" value="<?php echo htmlspecialchars($opus, ENT_QUOTES) ?>"/><br/>
@@ -1698,6 +1698,11 @@ if($opusNum == 'NULL') {
           </div> <!-- end form-check -->
 
           <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="chbx38" name="genres[]" value="38" <?php if (in_array( "38", $genres)) {echo("checked");}?>> Religious<br>
+              <label class="form-check-label sr-only" for="chbx38"></label>
+          </div> <!-- end form-check -->
+
+          <div class="form-check">
               <input type="checkbox" class="form-check-input" id="chbx27" name="genres[]" value="27" <?php if (in_array( "27", $genres)) {echo("checked");}?>> Rock<br>
               <label class="form-check-label sr-only" for="chbx27"></label>
           </div> <!-- end form-check -->
@@ -1715,6 +1720,11 @@ if($opusNum == 'NULL') {
           <div class="form-check">
               <input type="checkbox" class="form-check-input" id="chbx31" name="genres[]" value="31" <?php if (in_array( "31", $genres)) {echo("checked");}?>> ThanksGiving<br>
               <label class="form-check-label sr-only" for="chbx31"></label>
+          </div> <!-- end form-check -->
+
+          <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="chbx37" name="genres[]" value="37" <?php if (in_array( "37", $genres)) {echo("checked");}?>> Vocal A Cappella<br>
+              <label class="form-check-label sr-only" for="chbx37"></label>
           </div> <!-- end form-check -->
 
           <div class="form-check pb-4">
@@ -1754,6 +1764,11 @@ if($opusNum == 'NULL') {
            <div class="form-check">
                <input type="checkbox"  class="form-check-input" id="chkbx21" name="instruments[]" value="21" <?php if (in_array( "21", $instruments)) {echo("checked");}?>>  Bassoon<br>
                <label class="form-check-label sr-only" for="chkbx21"></label>
+           </div> <!-- end form-check -->
+
+           <div class="form-check">
+               <input type="checkbox"  class="form-check-input" id="chkbx52" name="instruments[]" value="52" <?php if (in_array( "52", $instruments)) {echo("checked");}?>>  Baritone<br>
+               <label class="form-check-label sr-only" for="chkbx52"></label>
            </div> <!-- end form-check -->
 
            <div class="form-check">
@@ -2072,6 +2087,8 @@ if($opusNum == 'NULL') {
               <option value="25" <?php if ($voice == "25") {echo("selected");} ?>> TTBB</option>
               <option value="26" <?php if ($voice == "26") {echo("selected");} ?>> BB</option>
               <option value="27" <?php if ($voice == "27") {echo("selected");} ?>> TTB</option>
+                <option value="31" <?php if ($voice == "31") {echo("selected");} ?>> 2-part</option>
+                <option value="32" <?php if ($voice == "32") {echo("selected");} ?>> 3-part mixed</option>
               <option value="28" <?php if ($voice == "28") {echo("selected");} ?>> High Voice</option>
               <option value="29" <?php if ($voice == "29") {echo("selected");} ?>> Medium Voice</option>
               <option value="30" <?php if ($voice == "30") {echo("selected");} ?>> Low Voice</option>

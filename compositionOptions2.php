@@ -948,7 +948,7 @@ _END;
                       <div class="col-sm-6"> 
                     <div class="card   mb-3">
                      <div class="card-body pt-3 bg-light">
-                  
+                  <div class="form-check pt-3">
                        
                         
                            Book Title: <strong>$bookTitle</strong> <br/>
@@ -960,7 +960,7 @@ _END;
                            Publisher Name: $displayPublisherOrgString <br/>
                            Book Location: <span style="color:#EB6B42;">$physBookLocNote</span><br/><br/>
                       
-                          
+                          </div> <!-- end form check -->
                           </div> <!-- end card body -->
                            </div> <!-- end card -->
                         </div> <!-- end column -->
@@ -978,10 +978,10 @@ _END;
 
             echo <<<_END
 
-            <div class="container-fluid bg-secondary text-light pb-3">
+            <div class="container-fluid bg-secondary text-light pb-3 mt-4">
                 <h2 class="mb-3">None of these Composition Options match</h2>
                 <form action="CompositionSearch.php" method='post'>
-                    <input class="btn btn-light" type='submit' value='Try Another Composition Search'/>
+                    <input class="btn btn-light" type='submit' value='Try Another Composition Search'/><br/><br/>
                     <input type='hidden' name='bookID' value="$bookID"/>
                 </form> <!-- end form -->
         

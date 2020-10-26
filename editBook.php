@@ -319,7 +319,7 @@ _END;
                        </div>  <!-- end form-check -->      
                    </form>  <!-- end form -->
                   
-                   <form action='delete.php' method='post'>
+                   <br/><form action='delete.php' method='post'>
                        <div class="form-check">
                             <input class="btn btn-light confirm deletebook_button button-Wrap" type="submit" value="Delete the book &quot;{$fn_encode($bookTitle)}&quot; from library "/>
                             <input type="hidden" name="editBook" value ="true" />

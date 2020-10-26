@@ -147,7 +147,7 @@ echo <<<_END
       <div class="col-md-6">
       <form class="form-group  pt-3 " action='compositionSearch.php' method='post'>
           Composition Title: $searchCompositionTitleErr
-          <input class="form-control mb-3 " autocomplete="off"  type="text" name="searchCompositionTitle" id="searchCompositionTitle" placeholder = "Please enter a Composition Title" />
+          <input class="form-control mb-3 " autocomplete="off"  type="text" name="searchCompositionTitle" id="searchCompositionTitle" autofocus placeholder = "Please enter a Composition Title" />
           <ul id="cmpsnArray"></ul>
           <input class="btn btn-secondary mt-4" type="submit" value="Search for this Composition"/>
           <input type="hidden" name="submit" value="true"/>

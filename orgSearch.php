@@ -311,7 +311,7 @@ _END;
 
 
         Publisher Name: $searchPubNameErr
-        <input class="form-control" autocomplete="off" type="text" id="searchPubName" name="searchPubName" placeholder = "Please enter a Publisher Name" /><br/>
+        <input class="form-control" autocomplete="off" type="text" id="searchPubName" name="searchPubName" autofocus placeholder = "Please enter a Publisher Name" /><br/>
         <ul id="pbNmsArray"></ul>
         <input class="btn btn-secondary mt-4" type='submit' value='Search for this Publisher'/>
         <input type='hidden' name="bookID" value="{$bookID}"/>

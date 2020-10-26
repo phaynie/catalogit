@@ -83,7 +83,7 @@ if(isset($_REQUEST['tag2'])) {
 }
 
 
-if(isset($_REQUEST['bookNum']) && is_numeric($_REQUEST['bookNum'])) {
+if(isset($_REQUEST['bookNum']) ) {
     $bookNum = $_REQUEST['bookNum'];
 }
 
@@ -125,10 +125,11 @@ if($submit == 'true') {
             $validationFailed = true;
         } /*end if($bookTitle == "") > 0)*/
 
-        if($bookNum !== "" && !is_numeric($bookNum)) {
+
+    /*if($bookNum !== "" && !is_numeric($bookNum)) {
             $bookNumErr = "<span class='error'>* Book Number must be empty or a number</span>";
             $validationFailed = true;
-        } /*end if(strlen($bookTitle) > 0)*/
+        } */   /*end if(strlen($bookTitle) > 0)*/
 
 
 
@@ -173,31 +174,31 @@ Here we will wash all values that come from the form to be used in the db querie
             if($tag1Altered == "") {
                 $updateBooks .= "b.tag1 = NULL,";
             }else{
-                $updateBooks .= "b.tag1 = '$tag1Altered',";
+                $updateBooks .= "b.tag1 = '$tag1Altered', ";
             }
 
             if($tag2Altered == "") {
-                $updateBooks .= "b.tag2 = NULL,";
+                $updateBooks .= "b.tag2 = NULL, ";
             }else{
-                $updateBooks .= "b.tag2 = '$tag2Altered',";
+                $updateBooks .= "b.tag2 = '$tag2Altered', ";
             }
 
             if($bookVolAltered == "") {
-                $updateBooks .= "b.book_vol = NULL,";
+                $updateBooks .= "b.book_vol = NULL, ";
             }else{
-                $updateBooks .= "b.book_vol = '$bookVolAltered',";
+                $updateBooks .= "b.book_vol = '$bookVolAltered', ";
             }
 
             if($bookNumAltered == "") {
-                $updateBooks .= "b.book_num = NULL,";
+                $updateBooks .= "b.book_num = NULL, ";
             }else{
-                $updateBooks .= "b.book_num = '$bookNumAltered',";
+                $updateBooks .= "b.book_num = '$bookNumAltered', ";
             }
 
             if($physBookLocNoteAltered == "") {
-                $updateBooks .= "b.physBookLoc = NULL";
+                $updateBooks .= "b.physBookLoc = NULL ";
             }else{
-                $updateBooks .= "b.physBookLoc = '$physBookLocNoteAltered'";
+                $updateBooks .= "b.physBookLoc = '$physBookLocNoteAltered' ";
             }
 
                 $updateBooks .= " WHERE b.ID = $bookID;";
@@ -210,6 +211,8 @@ Here we will wash all values that come from the form to be used in the db querie
                 $debug_string = "\nupdateBooks= " . $updateBooks . "\n<br/>";
                 if (!$updateBooksResult) $debug_string .="\n Error description updateBooks: " . mysqli_error($conn) . "\n<br/>";
             }/*end debug*/
+
+
 
             failureToExecute ($updateBooksResult, 'U700', 'Update ' );
 
@@ -358,12 +361,12 @@ echo <<<_END
         <div class="form-group pt-4">
 
           
-          Book Title: $bookTitleErr <input class="form-control " type='text' name='bookTitle' value = "{$fn_encode($bookTitle)}"/>
+          Book Title: $bookTitleErr <input class="form-control " type='text' name='bookTitle' autofocus value = "{$fn_encode($bookTitle)}"/>
           <br/>Tag 1: <input class="form-control"  type="text" name="tag1" value = "{$fn_encode($tag1)}"/>
           <br/>Tag 2: <input class="form-control"  type="text" name="tag2" value = "{$fn_encode($tag2)}"/>
           <br/>Book Volume: <input class="form-control"  type="text" name="bookVol" value = "{$fn_encode($bookVol)}"/>
           <br/>  
-          Book Number: $bookNumErr<input class="form-control"  type="text" name="bookNum"value = "{$fn_encode($bookNum)}" placeholder="{$placeHolder}"/>
+          Book Number: $bookNumErr <input class="form-control"  type="text" name="bookNum"value = "{$fn_encode($bookNum)}" placeholder="{$placeHolder}"/>
           <br/>Book Location: <input class="form-control"  type="text" name="physBookLocNote" value = "{$fn_encode($physBookLocNote)}"/>
      
           
