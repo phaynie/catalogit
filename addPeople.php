@@ -276,14 +276,16 @@ if($debug) {
     failureToExecute ($checkQueryResult, 'S548', 'Select ');
 
 if ($checkQueryResult){
-$numberOfCheckRows = $checkQueryResult->num_rows;
-$checkRowsFound = ($numberOfCheckRows > 0);
-$checkRowsNotFound = ($numberOfCheckRows === 0);
+    $numberOfCheckRows = $checkQueryResult->num_rows;
+    $checkRowsFound = ($numberOfCheckRows > 0);
+    $checkRowsNotFound = ($numberOfCheckRows === 0);
+    }
 
-if ($checkRowsFound) {
-    $alreadyExistsErr = "<span class='error'>  * This $role Already exists. </span>";
-    $validationFailed = true;}
-}
+    if ($checkRowsFound) {
+        $alreadyExistsErr = "<span class='error'>  * This $role Already exists. </span>";
+        $validationFailed = true;
+    }
+
 
 
 
@@ -415,25 +417,25 @@ if ($checkRowsFound) {
                 $peopleInsertQuery = "INSERT INTO people (firstname, middlename, lastname, suffix) VALUES(";
 
                 if ($peopleFirstNameAltered == "") {
-                    $peopleInsertQuery .= "NULL,";
+                    $peopleInsertQuery .= "'',";
                 } else {
                     $peopleInsertQuery .= "'$peopleFirstNameAltered',";
                 }
 
                 if ($peopleMiddleNameAltered == "") {
-                    $peopleInsertQuery .= "NULL,";
+                    $peopleInsertQuery .= "'',";
                 } else {
                     $peopleInsertQuery .= "'$peopleMiddleNameAltered',";
                 }
 
                 if ($peopleLastNameAltered == "") {
-                    $peopleInsertQuery .= "NULL,";
+                    $peopleInsertQuery .= "'',";
                 } else {
                     $peopleInsertQuery .= "'$peopleLastNameAltered',";
                 }
 
                 if ($peopleSuffixAltered == "") {
-                    $peopleInsertQuery .= "NULL)";
+                    $peopleInsertQuery .= "'')";
                 } else {
                     $peopleInsertQuery .= "'$peopleSuffixAltered')";
                 }
@@ -458,7 +460,7 @@ if ($checkRowsFound) {
                     echo("newPeopleID = " . $newPeopleID . "<br/>");
                 }/*end debug*/
 
-            } /*End else insert*/
+
             } /*end elseif ($addNewPeople == 'true' || $replacePeople == 'true')*/
 
 
@@ -469,10 +471,10 @@ if($editBook == 'true') {
 
 
 
-}elseif($editComposition == 'true') {
+}elseif(!$validationFailed && $editComposition == 'true') {
     header('Location: addRole.php?bookID=' . $bookID . '&newPeopleID=' . $newPeopleID . '&oldPeopleID=' . $oldPeopleID . '&addNewComposer=' . $addNewComposer . '&addNewArranger=' . $addNewArranger . '&addNewLyricist=' . $addNewLyricist . '&replaceComposer=' . $replaceComposer . '&replaceArranger=' . $replaceArranger . '&replaceLyricist=' . $replaceLyricist . '&compositionID=' . $compositionID . '&editComposition=true');
 
-
+}
 } /*end If($submit == 'true')*/
 
     /*Here we add some additional variables to change the wording of the form in different situations*/
@@ -562,7 +564,8 @@ $instructionalText
         <div class="form-group pt-4">
    
 
-$alreadyExistsErr
+$alreadyExistsErr<br/>
+
 
             First Name: 
             <input class="form-control" type="text" name="peopleFirstName" autofocus value = "{$fn_encode($peopleFirstName)}"/><br/>
@@ -585,16 +588,26 @@ $alreadyExistsErr
            
    
         </div> <!-- end form-group -->
-      </form> <!-- end form -->
+        </form> <!-- end form -->
         
-      <form action='$formAction' method='post'>
-         <div class="form-group pt-4">
+         <form action="peopleSearch.php" method="post"> 
+                <input class="btn btn-secondary mt-4" type="submit" value="Try another $role Search"/>
+                <input type="hidden" name="bookID" value="$bookID"/>
+                <input type="hidden" name="compositionID" value="$compositionID"/> 
+                $sendAddNew  
+                $sendReplace
+                $sendEditBook
+                $sendEditComposition  
+                $sendEdit
+                $sendFindPerson    
+              </form><!-- end form -->
+        
+        <form action='$formAction' method='post'>
+        
             <input class="btn btn-secondary mt-4" type='submit' value='Back to $page '/><br/>
             <input type='hidden' name="bookID" value="{$bookID}"/>
             <input type='hidden' name="compositionID" value="{$compositionID}"/>
-                      
-         </div> <!-- end form-group -->
-</form>
+        </form>
     </div> <!-- end col -->
   </div> <!-- end row -->
 </div> <!-- end container -->

@@ -85,6 +85,9 @@ if(isset($_REQUEST['submit'])) {
     $submit = $_REQUEST['submit'];
 }
 
+
+
+
 if($replacePublisher == 'true') {
     $sendReplacePublisher = "<input type='hidden' name='replacePublisher' value= 'true' />";
 }
@@ -118,6 +121,45 @@ if (strlen($pubName) == 0 && $submit=='true') {
         $pubNameErr = " * Publisher Name is required";
         $validationFailed = true;
 } /*end if (strlen($pubName) == 0 && $submit=='true')*/
+
+
+
+
+
+
+
+
+
+$checkQuery = <<<_END
+            SELECT *
+            FROM organizations
+            WHERE org_name = '$pubName' 
+             AND location = '$pubLoc' ;
+
+_END;
+
+if($debug) {
+    echo 'checkQuery = ' . $checkQuery . '<br/><br/>';
+}/*end debug*/
+
+$checkQueryResult = $conn->query($checkQuery);
+if ($debug) {
+    if (!$checkQueryResult) echo("\n Error description checkQuery: " . mysqli_error($conn) . "\n<br/>");
+}/*end debug*/
+
+
+failureToExecute ($checkQueryResult, 'S549', 'Select ');
+
+if ($checkQueryResult){
+    $numberOfCheckRows = $checkQueryResult->num_rows;
+    $checkRowsFound = ($numberOfCheckRows > 0);
+    $checkRowsNotFound = ($numberOfCheckRows === 0);
+}
+
+if ($checkRowsFound) {
+    $alreadyExistsErr = "<span class='error'>  * This Publisher Already exists. </span>";
+    $validationFailed = true;
+}
 
 
     /*If any validation failed, save all form values in variables*/
@@ -309,7 +351,7 @@ echo <<<_END
       <form action='addOrg.php' method='post'>
         <div class="form-group pt-4">
 
-
+$alreadyExistsErr<br/>
            
 
                 Publisher Name: $pubNameErr_value
@@ -327,16 +369,28 @@ echo <<<_END
                 
 
 
-        </div><!-- end form-group -->
+      </div><!-- end form-group -->
       </form> <!-- end form --> 
-      <form action='editBook.php' method='post'>
-        <div class="form-group pt-4">
-
+      
+       <form action="orgSearch.php" method="post"> 
+                <input class="btn btn-secondary mt-4" type="submit" value="Try another Publisher Search"/>
+                <input type="hidden" name="bookID" value="$bookID"/>
+                <input type="hidden" name="compositionID" value="$compositionID"/> 
+                $sendReplacePublisher
+                $sendAddNewPublisher
+                $sendEditPublisher
+               
+                $sendEditBook
+               
+                
+        </form><!-- end form -->
+              
+              
+        <form action='editBook.php' method='post'>
                 <input class="btn btn-secondary mt-4" type='submit' value='Back to Edit Book Options'/>
                 <input type='hidden' name="bookID" value='{$bookID}'/>
                 $sendEditBook
-        </div><!-- end form-group -->
-      </form> <!-- end form --> 
+        </form> <!-- end form --> 
     </div><!-- end col -->
   </div><!-- end row -->
 </div>  <!-- end container -->

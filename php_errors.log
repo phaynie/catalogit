@@ -13415,3 +13415,6 @@ Stack trace:
 [21-Oct-2020 21:13:35 UTC] PHP Parse error:  syntax error, unexpected 'if' (T_IF) in C:\Ampps\www\catalogit\addBook.php on line 270
 [21-Oct-2020 21:14:05 UTC] PHP Parse error:  syntax error, unexpected 'if' (T_IF) in C:\Ampps\www\catalogit\addBook.php on line 270
 [22-Oct-2020 15:59:35 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\Ampps\www\catalogit\addPeople.php on line 457
+[26-Oct-2020 17:55:05 UTC] PHP Warning:  Use of undefined constant validationFailed - assumed 'validationFailed' (this will throw an Error in a future version of PHP) in C:\Ampps\www\catalogit\addPeople.php on line 474
+[26-Oct-2020 17:55:05 UTC] PHP Stack trace:
+[26-Oct-2020 17:55:05 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\addPeople.php:0
