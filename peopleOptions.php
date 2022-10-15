@@ -83,6 +83,9 @@ $sendDelete = "";
 $formAction = "";
 $deleteButton = "";
 
+$sendFindPerson = "";
+$editReplaceDeletePerson = "";
+
 
 
 
@@ -187,7 +190,7 @@ if(isset($_REQUEST['findPerson'])) {
     $findPerson = $_REQUEST['findPerson'];
 }
 
-
+echo "findPerson = " . $findPerson . "<br>";
 /*Create logic to use variables for many situations*/
 
 
@@ -438,12 +441,13 @@ _END;
 
             } /*for loop ending*/
 
+
             echo <<<_END
         
            
         
             <div class="container-fluid bg-secondary text-light pb-3">
-              <h2 class="mb-3"> None of these $role s Match</h2><br/>
+              <h2 class="mb-3"> If None of these $role s Match</h2><br/>
               <form action="addPeople.php" method="post">
                 <input class="btn btn-light" type="submit" value="Add New $role Info"/>
                 <input type="hidden" name="bookID" value="$bookID"/>
@@ -507,9 +511,9 @@ if ($editReplaceDeletePerson == 'true') {
 
         SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
         FROM books AS b
-        JOIN B2R2P ON b.ID = B2R2P.book_ID
-        JOIN roles AS r ON r.ID = B2R2P.role_ID AND r.role_name = '$role'
-        JOIN people AS p ON p.ID= B2R2P.people_ID
+        JOIN b2r2p ON b.ID = b2r2p.book_ID
+        JOIN roles AS r ON r.ID = b2r2p.role_ID AND r.role_name = '$role'
+        JOIN people AS p ON p.ID= b2r2p.people_ID
         WHERE b.ID = '$bookIDAltered';
        
        
@@ -534,9 +538,9 @@ _END;
 
         SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
         FROM compositions AS c
-        JOIN C2R2P ON c.ID = C2R2P.composition_ID
-        JOIN roles AS r ON r.ID = C2R2P.role_ID AND r.role_name = '$role'
-        JOIN people AS p ON p.ID = C2R2P.people_ID
+        JOIN c2r2p ON c.ID = c2r2p.composition_ID
+        JOIN roles AS r ON r.ID = c2r2p.role_ID AND r.role_name = '$role'
+        JOIN people AS p ON p.ID = c2r2p.people_ID
         WHERE c.ID = '$compositionIDAltered';
        
        
@@ -692,30 +696,6 @@ _END;
 _END;
 
 }/*End if ($editReplaceDeletePerson)*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

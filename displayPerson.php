@@ -28,7 +28,7 @@ $composerID = "";
 $arrangerID = "";
 $lyricistID = "";
 $peopleID = "";
-/*$compositionID = "";*/
+
 /*$bookID = "";*/
 
 $bookTitle = "";
@@ -66,7 +66,18 @@ $currentPeopleMiddle = "";
 $currentPeopleLast = "";
 $currentPeopleSuffix = "";
 
+$compositionID = "";
+$compositionIDAltered = "";
+$physBookLocNote = "";
+$compositionIDAltered = "";
+$opusNum = "";
 
+$booksFound = "";
+$booksNotFound = "";
+$sendFindPerson = "";
+
+
+echo "findPerson = " . $findPerson . "<br>";
 
 /*if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
     $bookID = $_REQUEST['bookID'];
@@ -103,6 +114,8 @@ if(isset($_REQUEST['findComposer'])) {
     $findComposer = $_REQUEST['findComposer'];
     $role = 'Composer';
     $rolePhrase = 'Compositions';
+    $sendComposer = "<input type='hidden' name='findComposer' value='true' />";
+    
 
 }
 
@@ -159,9 +172,9 @@ _END;
 
 SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
   FROM compositions As c
-  JOIN C2R2P ON c.ID = C2R2P.composition_ID
-  JOIN people AS p ON C2R2P.people_ID = p.ID
-  JOIN roles AS r_people ON C2R2P.role_ID = r_people.ID AND r_people.role_name = '$role'
+  JOIN c2r2p ON c.ID = c2r2p.composition_ID
+  JOIN people AS p ON c2r2p.people_ID = p.ID
+  JOIN roles AS r_people ON c2r2p.role_ID = r_people.ID AND r_people.role_name = '$role'
    WHERE p.ID = '$peopleIDAltered';
 
 _END;
@@ -214,6 +227,7 @@ if($debug) {
 /*find all compositions this composer is a composer for and display the composition and the book it is in. 
 We will do this inside a card with the composition information to the left and the book information to the right. 
 This will use a loop.*/
+
 if($findPerson == 'true') {
 
     $compositionQuery = <<<_END
@@ -224,8 +238,8 @@ c.movement, e.description,v.voicing_type, ens.ensemble_type, c.book_ID, c.physCo
     LEFT JOIN eras AS e ON c.era_ID = e.ID
     LEFT JOIN voicing AS v ON c.voice_ID = v.ID
     LEFT JOIN ensembles AS ens ON c.ensemble_ID = ens.ID
-	LEFT JOIN C2R2P ON c.ID = C2R2P.composition_ID
-    LEFT JOIN people AS p ON C2R2P.people_ID = p.ID
+	 JOIN c2r2p ON c.ID = c2r2p.composition_ID
+     JOIN people AS p ON c2r2p.people_ID = p.ID
    
         
     WHERE p.ID = '$peopleIDAltered'
@@ -237,17 +251,15 @@ _END;
 
 $compositionQuery = <<<_END
 
-SELECT c.ID, c.comp_name, c.opus_like, c.comp_num, c.comp_no, c.subtitle, 
-c.movement, e.description,v.voicing_type, ens.ensemble_type, c.book_ID, c.physCompositionLoc 
-    FROM compositions AS c
-    LEFT JOIN eras AS e ON c.era_ID = e.ID
-    LEFT JOIN voicing AS v ON c.voice_ID = v.ID
-    LEFT JOIN ensembles AS ens ON c.ensemble_ID = ens.ID
-	LEFT JOIN C2R2P ON c.ID = C2R2P.composition_ID
-    LEFT JOIN people AS p ON C2R2P.people_ID = p.ID
-    LEFT JOIN roles AS r_composer ON C2R2P.role_ID = r_composer.ID AND r_composer.role_name = '$role'
-        
-    WHERE p.ID = '$peopleIDAltered'
+SELECT c.ID, c.comp_name, c.opus_like, c.comp_num, c.comp_no, c.subtitle, c.movement, e.description,v.voicing_type, ens.ensemble_type, c.book_ID, c.physCompositionLoc 
+    FROM compositions AS c 
+    LEFT JOIN eras AS e ON c.era_ID = e.ID 
+    LEFT JOIN voicing AS v ON c.voice_ID = v.ID 
+    LEFT JOIN ensembles AS ens ON c.ensemble_ID = ens.ID 
+    JOIN c2r2p ON c.ID = c2r2p.composition_ID 
+    JOIN people AS p ON c2r2p.people_ID = p.ID 
+    JOIN roles AS r_composer ON c2r2p.role_ID = r_composer.ID AND r_composer.role_name = 'Composer' 
+    WHERE p.ID = '$peopleIDAltered' 
     ORDER BY c.comp_name ASC;
 
 _END;
@@ -325,9 +337,9 @@ _END;
       I will also be creating a comma separated list to use in the displayed information*/
       $keySigQuery = <<<_END
         SELECT  k.key_name
-        FROM C2K
-        JOIN keysignatures AS k ON C2K.keysig_ID = k.ID
-        WHERE C2K.composition_ID = '$compositionIDAltered';
+        FROM c2k
+        JOIN keysignatures AS k ON c2k.keysig_ID = k.ID
+        WHERE c2k.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -369,9 +381,9 @@ _END;
       $genresQuery = <<<_END
 
         SELECT  g.genre_type
-        FROM C2G 
-        JOIN genres AS g ON C2G.genre_ID = g.ID
-        WHERE C2G.composition_ID = '$compositionIDAltered';
+        FROM c2g 
+        JOIN genres AS g ON c2g.genre_ID = g.ID
+        WHERE c2g.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -406,9 +418,9 @@ _END;
       I will also be creating a comma separated list to use in the displayed information*/
       $instrumentQuery = <<<_END
         SELECT  i.instr_name
-        FROM C2I 
-        JOIN instruments AS i ON C2I.instrument_ID = i.ID
-        WHERE C2I.composition_ID = '$compositionIDAltered';
+        FROM c2i 
+        JOIN instruments AS i ON c2i.instrument_ID = i.ID
+        WHERE c2i.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -447,10 +459,10 @@ _END;
       $genDiffQuery = <<<_END
         SELECT  d.difficulty_level
         FROM compositions AS c 
-        JOIN C2D ON c.ID = C2D.composition_ID
-        JOIN difficulties AS d ON C2D.difficulty_ID = d.ID
+        JOIN c2d ON c.ID = c2d.composition_ID
+        JOIN difficulties AS d ON c2d.difficulty_ID = d.ID
         JOIN organizations as o On d.org_ID = o.ID AND o.org_name = 'General'
-        WHERE C2D.composition_ID = '$compositionIDAltered';
+        WHERE c2d.composition_ID = '$compositionIDAltered';
 
 
 _END;
@@ -482,10 +494,10 @@ _END;
       $ASPDiffQuery = <<<_END
         SELECT  d.difficulty_level
         FROM compositions AS c 
-        JOIN C2D ON c.ID = C2D.composition_ID
-        JOIN difficulties AS d ON C2D.difficulty_ID = d.ID
+        JOIN c2d ON c.ID = c2d.composition_ID
+        JOIN difficulties AS d ON c2d.difficulty_ID = d.ID
         JOIN organizations as o On d.org_ID = o.ID AND o.org_name = 'ASP'
-        WHERE C2D.composition_ID = '$compositionIDAltered';
+        WHERE c2d.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -583,8 +595,8 @@ _END;
 
       SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
       FROM books AS b 
-      JOIN B2R2P ON b.ID = B2R2P.book_ID
-      JOIN people AS p ON p.ID= B2R2P.people_ID
+      JOIN b2r2p ON b.ID = b2r2p.book_ID
+      JOIN people AS p ON p.ID= b2r2p.people_ID
       WHERE b.ID = '$bookID';
 
 _END;
@@ -630,8 +642,8 @@ _END;
 
       SELECT  o.ID, o.org_name, o.location
       FROM books AS b 
-      JOIN B2R2O ON b.ID = B2R2O.book_ID
-      JOIN organizations AS o ON o.ID= B2R2O.org_ID
+      JOIN b2r2o ON b.ID = b2r2o.book_ID
+      JOIN organizations AS o ON o.ID= b2r2o.org_ID
       WHERE b.ID = '$bookID';
 
 _END;
@@ -681,9 +693,9 @@ _END;
 
         SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
         FROM compositions As c
-        JOIN C2R2P ON c.ID = C2R2P.composition_ID
-        JOIN people AS p ON C2R2P.people_ID = p.ID
-        JOIN roles AS r ON  r.ID = C2R2P.role_ID AND r.role_name = 'Composer'
+        JOIN c2r2p ON c.ID = c2r2p.composition_ID
+        JOIN people AS p ON c2r2p.people_ID = p.ID
+        JOIN roles AS r ON  r.ID = c2r2p.role_ID AND r.role_name = 'Composer'
         WHERE c.ID = '$compositionID';
 
 _END;
@@ -734,9 +746,9 @@ _END;
 
         SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
           FROM compositions As c
-          JOIN C2R2P ON c.ID = C2R2P.composition_ID
-          JOIN people AS p ON C2R2P.people_ID = p.ID
-          JOIN roles AS r_arr ON C2R2P.role_ID = r_arr.ID AND r_arr.role_name = 'Arranger'
+          JOIN c2r2p ON c.ID = c2r2p.composition_ID
+          JOIN people AS p ON c2r2p.people_ID = p.ID
+          JOIN roles AS r_arr ON c2r2p.role_ID = r_arr.ID AND r_arr.role_name = 'Arranger'
           WHERE c.ID = '$compositionID';
 
 _END;
@@ -787,9 +799,9 @@ _END;
 
         SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
           FROM compositions As c
-          JOIN C2R2P ON c.ID = C2R2P.composition_ID
-          JOIN people AS p ON C2R2P.people_ID = p.ID
-          JOIN roles AS r_lyr ON C2R2P.role_ID = r_lyr.ID AND r_lyr.role_name = 'Lyricist'
+          JOIN c2r2p ON c.ID = c2r2p.composition_ID
+          JOIN people AS p ON c2r2p.people_ID = p.ID
+          JOIN roles AS r_lyr ON c2r2p.role_ID = r_lyr.ID AND r_lyr.role_name = 'Lyricist'
           WHERE c.ID = '$compositionID';
 
 _END;
@@ -1048,9 +1060,9 @@ if($findPerson == 'true') {
         
         SELECT  b.ID, b.title, b.tag1, b.tag2, b.book_vol, b.book_num, b.physBookLoc 
           FROM books AS b 
-          JOIN B2R2P ON B2R2P.book_ID = b.ID 
-          JOIN roles AS r ON r.ID = B2R2P.role_ID AND r.role_name = 'Editor' 
-          JOIN people AS p ON B2R2P.people_ID = p.ID  
+          JOIN b2r2p ON b2r2p.book_ID = b.ID 
+          JOIN roles AS r ON r.ID = b2r2p.role_ID AND r.role_name = 'Editor' 
+          JOIN people AS p ON b2r2p.people_ID = p.ID  
           WHERE p.ID = '$peopleIDAltered';
         
 
@@ -1094,8 +1106,8 @@ _END;
         
               SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
               FROM books AS b 
-              JOIN B2R2P ON b.ID = B2R2P.book_ID
-              JOIN people AS p ON p.ID= B2R2P.people_ID
+              JOIN b2r2p ON b.ID = b2r2p.book_ID
+              JOIN people AS p ON p.ID= b2r2p.people_ID
               WHERE b.ID = '$bookID';
 
 _END;
@@ -1141,8 +1153,8 @@ _END;
         
               SELECT  o.ID, o.org_name, o.location
               FROM books AS b 
-              JOIN B2R2O ON b.ID = B2R2O.book_ID
-              JOIN organizations AS o ON o.ID= B2R2O.org_ID
+              JOIN b2r2o ON b.ID = b2r2o.book_ID
+              JOIN organizations AS o ON o.ID= b2r2o.org_ID
               WHERE b.ID = '$bookID';
 
 _END;
@@ -1247,11 +1259,10 @@ if($compositionsFound || $booksFound) {
                    
                 
                     
-                    <form action="peopleSearch.php" method="post">
+                    <form action="introPage.php" method="post">
                         <input class="btn btn-secondary mb-3 noPrint  btn-block"  type='submit' value='Try another $role Search'/> 
-                        <input type='hidden' name='bookID' value='$bookID'/>
-                        <input type='hidden' name='compositionID' value='$compositionID'/>
-                        $sendFindPerson
+                        
+                        
                     </form>  <!-- end form -->
                 
                 

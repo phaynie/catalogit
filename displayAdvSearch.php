@@ -36,6 +36,15 @@ $genDiff = "";
 $ASPDiff = "";
 $instType = "";
 
+$keySigIdsString = "";
+$keySigNamesString = "";
+$genreIdsString = "";
+$genreNamesString = "";
+
+$notFound = "";
+
+
+
 
 /*create Local Variables for the REQUEST values*/
 
@@ -211,19 +220,19 @@ if($advSearch == 'true') {
     $advIDSearchQuery = "
     SELECT distinct c.ID, c.comp_name
 FROM compositions AS c
-LEFT JOIN C2I ON c.ID = C2I.composition_ID
-LEFT JOIN instruments as i ON C2I.instrument_ID = i.ID
-LEFT JOIN C2R2P AS C2R2Pcomp ON c.ID = C2R2Pcomp.composition_ID
+LEFT JOIN c2i ON c.ID = c2i.composition_ID
+LEFT JOIN instruments as i ON c2i.instrument_ID = i.ID
+LEFT JOIN c2r2p AS C2R2Pcomp ON c.ID = C2R2Pcomp.composition_ID
 LEFT JOIN people AS pComp ON C2R2Pcomp.people_ID = pComp.ID
-LEFT JOIN C2R2P AS C2R2Parr ON c.ID = C2R2Parr.composition_ID
+LEFT JOIN c2r2p AS C2R2Parr ON c.ID = C2R2Parr.composition_ID
 LEFT JOIN people AS pArr ON C2R2Parr.people_ID = pArr.ID
-LEFT JOIN C2R2P AS C2R2Plyr ON c.ID = C2R2Plyr.composition_ID
+LEFT JOIN c2r2p AS C2R2Plyr ON c.ID = C2R2Plyr.composition_ID
 LEFT JOIN people AS pLyr ON C2R2Plyr.people_ID = pLyr.ID
-LEFT JOIN C2K ON c.ID = C2K.composition_ID 
-LEFT JOIN C2G ON c.ID = C2G.composition_ID
-LEFT JOIN C2D AS C2D_A ON c.ID = C2D_A.composition_ID 
+LEFT JOIN c2k ON c.ID = c2k.composition_ID 
+LEFT JOIN c2g ON c.ID = c2g.composition_ID
+LEFT JOIN c2d AS C2D_A ON c.ID = C2D_A.composition_ID 
 LEFT JOIN difficulties AS d_A ON C2D_A.difficulty_ID = d_A.ID
-LEFT JOIN C2D AS C2D_G ON c.ID = C2D_G.composition_ID 
+LEFT JOIN c2d AS C2D_G ON c.ID = C2D_G.composition_ID 
 LEFT JOIN difficulties AS d_G ON C2D_G.difficulty_ID = d_G.ID
 
 WHERE 1=1 ";
@@ -252,11 +261,11 @@ WHERE 1=1 ";
         $searchString .= "Lyricist: " . $searchBoxGeneralLyr .  "<br>";
     }
     if (count($keySigs) > 0) {
-        $advIDSearchQuery .= " AND C2K.keysig_ID IN (" . $keySigIdsString . " ) ";
+        $advIDSearchQuery .= " AND c2k.keysig_ID IN (" . $keySigIdsString . " ) ";
         $searchString .= "Key Signature(s): " . $keySigNamesString .  "<br>";
     }
     if (count($genres) > 0) {
-        $advIDSearchQuery .= " AND C2G.genre_ID IN (" . $genreIdsString . " ) ";
+        $advIDSearchQuery .= " AND c2g.genre_ID IN (" . $genreIdsString . " ) ";
         $searchString .= "Genre(s): " . $genreNamesString .  "<br>";
     }
     if (strlen($eraAltered) > 0) {
@@ -392,8 +401,8 @@ _END;
                         $advSearchComposerQuery = "
                        SELECT p.firstname, p.lastname, p.ID
                         FROM compositions AS c
-                        JOiN C2R2P ON c.ID = C2R2P.composition_ID
-                        JOIN people AS p ON C2R2P.people_ID = p.ID AND C2R2P.role_ID='1'
+                        JOiN c2r2p ON c.ID = c2r2p.composition_ID
+                        JOIN people AS p ON c2r2p.people_ID = p.ID AND c2r2p.role_ID='1'
                         
                         Where c.ID = '$compositionID';
                         
@@ -450,8 +459,8 @@ _END;
                             
                         SELECT p.firstname, p.lastname, p.ID
                         FROM compositions AS c
-                        JOiN C2R2P ON c.ID = C2R2P.composition_ID
-                        JOIN people AS p ON C2R2P.people_ID = p.ID AND C2R2P.role_ID='2'
+                        JOiN c2r2p ON c.ID = c2r2p.composition_ID
+                        JOIN people AS p ON c2r2p.people_ID = p.ID AND c2r2p.role_ID='2'
                         
                         Where c.ID = '$compositionID';";
 
@@ -504,8 +513,8 @@ _END;
                                             
                                         SELECT p.firstname, p.lastname, p.ID
                                         FROM compositions AS c
-                                        JOiN C2R2P ON c.ID = C2R2P.composition_ID
-                                        JOIN people AS p ON C2R2P.people_ID = p.ID AND C2R2P.role_ID='3'
+                                        JOiN c2r2p ON c.ID = c2r2p.composition_ID
+                                        JOIN people AS p ON c2r2p.people_ID = p.ID AND c2r2p.role_ID='3'
                                         
                                         Where c.ID = '$compositionID';";
 
@@ -639,7 +648,7 @@ echo <<<_END
             <div class="container-fluid bg-secondary text-light pt-4 pb-4 ">
             
                <br><form action="introPage.php" method='post'>
-                    <input class="btn btn-light noPrint" type='submit' value='Back to Site Options'/>
+                    <input class="btn btn-light noPrint" type='submit' value='Search Library'/>
                 </form> <!-- end form --><br>
                 
                <form action="displayAdvSearch.php" method='post'>

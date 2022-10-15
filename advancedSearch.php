@@ -1,16 +1,13 @@
 <?php
 include 'boilerplate.php';
 
+$debug_string = "";
 if($debug) {
-    echo <<<_END
-
- <p>advancedSearch.php-37</p>
-
-_END;
-
+   $debug_string .= 
+ "<p>advancedSearch.php-37</p>";
 }/*end debug*/
 
-$debug_string = "";
+
 
 include 'beginningNav.php';
 
@@ -203,6 +200,7 @@ $instrumentsArrayQuery = "
 $resultInstrumentsArrayQuery = $conn->query($instrumentsArrayQuery);
 if($debug) {
     $debug_string .= " 'instrumentsArrayQuery = ' . $instrumentsArrayQuery . '<br/><br/>'";
+    var_dump(mysqli_error($conn));
     if (!$resultInstrumentsArrayQuery) $debug_string.='("\n Error description instrumentsArrayQuery: " . mysqli_error($conn) . "\n<br/>")';
 }/*end debug*/
 
@@ -243,16 +241,32 @@ $debug_string .="$instrumentsArray";
     $composerArrayQuery = "
                 SELECT distinct p.lastname, p.firstname
                 FROM people AS p 
-                JOIN C2R2P ON p.ID = C2R2P.people_ID
-                JOIN roles AS r ON C2R2P.role_ID = r.ID AND r.role_name = 'Composer'
+                JOIN c2r2p ON p.ID = c2r2p.people_ID
+                JOIN roles AS r ON c2r2p.role_ID = r.ID AND r.role_name = 'Composer'
                 ORDER by p.lastname ASC, p.firstname ASC;
                   ";
 
              $resultComposerArrayQuery = $conn->query($composerArrayQuery);
     if($debug) {
-        $debug_string.=" 'composerArrayQuery = ' . $composerArrayQuery . '<br/><br/>'";
-        if (!$resultComposerArrayQuery) $debug_string.="('\n Error description composerArrayQuery: ' . mysqli_error($conn) . '\n<br/>')";
+        $debug_string.="composerArrayQuery =" . $composerArrayQuery . "<br/><br/>";
+        
+       var_dump(mysqli_error($conn)); 
+        
+       if (!$resultComposerArrayQuery) $debug_string.="('\n Error description composerArrayQuery: ' . mysqli_error($conn) . '\n<br/>')";
+       
+       
+        
+        /*if (!$resultComposerArrayQuery) echo("\n Error description composerArrayQuery: " . mysqli_error($conn) . "\n<br/>");*/
+       
     }/*end debug*/
+    
+      /*see line 206 for an example*/
+    /*if (!$resultPeopleQuery) echo("\n Error description peopleQuery: " . mysqli_error($conn) . "\n<br/>");
+    When I returned it to the echo syntax like above it lets us see the error
+    not resolved. I am adding a Var dump at each of these events so I can see the error. */
+      
+      
+      
 
 failureToExecute ($resultComposerArrayQuery, 'S512', 'Select ' );
 
@@ -292,14 +306,15 @@ $arrangersArray = "";
 $arrangersArrayQuery = "
                 SELECT distinct p.lastname, p.firstname
                 FROM people AS p 
-                JOIN C2R2P ON p.ID = C2R2P.people_ID
-                JOIN roles AS r ON C2R2P.role_ID = r.ID AND r.role_name = 'Arranger'
+                JOIN c2r2p ON p.ID = c2r2p.people_ID
+                JOIN roles AS r ON c2r2p.role_ID = r.ID AND r.role_name = 'Arranger'
                 ORDER by p.lastname ASC, p.firstname ASC;
                   ";
 
 $resultArrangersArrayQuery = $conn->query($arrangersArrayQuery);
 if($debug) {
     $debug_string.=" 'arrangersArrayQuery = ' . $arrangersArrayQuery . '<br/><br/>'";
+    var_dump(mysqli_error($conn));
     if (!$resultArrangersArrayQuery) $debug_string.="('\n Error description arrangersArrayQuery: ' . mysqli_error($conn) . '\n<br/>')";
 }/*end debug*/
 
@@ -337,14 +352,15 @@ $lyricistsArray = "";
 $lyricistsArrayQuery = "
                 SELECT distinct p.lastname, p.firstname
                 FROM people AS p 
-                JOIN C2R2P ON p.ID = C2R2P.people_ID
-                JOIN roles AS r ON C2R2P.role_ID = r.ID AND r.role_name = 'Lyricist'
+                JOIN c2r2p ON p.ID = c2r2p.people_ID
+                JOIN roles AS r ON c2r2p.role_ID = r.ID AND r.role_name = 'Lyricist'
                 ORDER by p.lastname ASC, p.firstname ASC;
                   ";
 
 $resultLyricistsArrayQuery = $conn->query($lyricistsArrayQuery);
 if($debug) {
     $debug_string.=" 'lyricistsArrayQuery = ' . $lyricistsArrayQuery . '<br/><br/>'";
+    var_dump(mysqli_error($conn));
     if (!$resultLyricistsArrayQuery) $debug_string.='("\n Error description lyricistsArrayQuery: " . mysqli_error($conn) . "\n<br/>")';
 }/*end debug*/
 
@@ -393,6 +409,7 @@ $compositionsArrayQuery = "
 $resultCompositionsArrayQuery = $conn->query($compositionsArrayQuery);
 if($debug) {
     $debug_string.=" 'compositionsArrayQuery = ' . $compositionsArrayQuery . '<br/><br/>'";
+    var_dump(mysqli_error($conn));
     if (!$resultCompositionsArrayQuery) $debug_string.='("\n Error description compositionsArrayQuery: " . mysqli_error($conn) . "\n<br/>")';
 }/*end debug*/
 

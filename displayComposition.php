@@ -108,9 +108,9 @@ $bookIDAltered = strip_before_insert($conn, $washPostVar);
 I will also be creating a comma separated list to use in the displayed information*/
       $keySigQuery = <<<_END
       SELECT  k.key_name
-      FROM C2K
-      JOIN keysignatures AS k ON C2K.keysig_ID = k.ID
-      WHERE C2K.composition_ID = '$compositionIDAltered';
+      FROM c2k
+      JOIN keysignatures AS k ON c2k.keysig_ID = k.ID
+      WHERE c2k.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -158,9 +158,9 @@ I will also be creating a comma separated list to use in the displayed informati
 $genresQuery = <<<_END
 
         SELECT  g.genre_type
-        FROM C2G 
-        JOIN genres AS g ON C2G.genre_ID = g.ID
-        WHERE C2G.composition_ID = '$compositionIDAltered';
+        FROM c2g 
+        JOIN genres AS g ON c2g.genre_ID = g.ID
+        WHERE c2g.composition_ID = '$compositionIDAltered';
 
 
 _END;
@@ -206,9 +206,9 @@ $displayGenreString = rtrim($genreString,', ');
 I will also be creating a comma separated list to use in the displayed information*/
 $instrumentQuery = <<<_END
       SELECT  i.instr_name
-      FROM C2I 
-      JOIN instruments AS i ON C2I.instrument_ID = i.ID
-      WHERE C2I.composition_ID = '$compositionIDAltered';
+      FROM c2i 
+      JOIN instruments AS i ON c2i.instrument_ID = i.ID
+      WHERE c2i.composition_ID = '$compositionIDAltered';
 
 
 _END;
@@ -258,10 +258,10 @@ $displayInstrumentString = rtrim($instrumentString,', ');
 $genDiffQuery = <<<_END
       SELECT  d.difficulty_level
       FROM compositions AS c 
-      JOIN C2D ON c.ID = C2D.composition_ID
-      JOIN difficulties AS d ON C2D.difficulty_ID = d.ID
+      JOIN c2d ON c.ID = c2d.composition_ID
+      JOIN difficulties AS d ON c2d.difficulty_ID = d.ID
       JOIN organizations as o On d.org_ID = o.ID AND o.org_name = 'General'
-      WHERE C2D.composition_ID = '$compositionIDAltered';
+      WHERE c2d.composition_ID = '$compositionIDAltered';
 
 
 _END;
@@ -301,10 +301,10 @@ failureToExecute ($resultGenDiffQuery, 'S556', 'Select ' );
 $ASPDiffQuery = <<<_END
       SELECT  d.difficulty_level
       FROM compositions AS c 
-      JOIN C2D ON c.ID = C2D.composition_ID
-      JOIN difficulties AS d ON C2D.difficulty_ID = d.ID
+      JOIN c2d ON c.ID = c2d.composition_ID
+      JOIN difficulties AS d ON c2d.difficulty_ID = d.ID
       JOIN organizations as o On d.org_ID = o.ID AND o.org_name = 'ASP'
-      WHERE C2D.composition_ID = '$compositionIDAltered';
+      WHERE c2d.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -391,8 +391,8 @@ _END;
 
       SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
       FROM books AS b 
-      JOIN B2R2P ON b.ID = B2R2P.book_ID
-      JOIN people AS p ON p.ID= B2R2P.people_ID
+      JOIN b2r2p ON b.ID = b2r2p.book_ID
+      JOIN people AS p ON p.ID= b2r2p.people_ID
       WHERE b.ID = '$bookIDAltered';
 
 _END;
@@ -438,8 +438,8 @@ _END;
 
       SELECT  o.ID, o.org_name, o.location
       FROM books AS b 
-      JOIN B2R2O ON b.ID = B2R2O.book_ID
-      JOIN organizations AS o ON o.ID= B2R2O.org_ID
+      JOIN b2r2o ON b.ID = b2r2o.book_ID
+      JOIN organizations AS o ON o.ID= b2r2o.org_ID
       WHERE b.ID = '$bookIDAltered';
 
 _END;
@@ -540,9 +540,9 @@ $composerQuery = <<<_END
 
         SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
         FROM compositions As c
-        JOIN C2R2P ON c.ID = C2R2P.composition_ID
-        JOIN people AS p ON C2R2P.people_ID = p.ID
-        JOIN roles AS r ON  r.ID = C2R2P.role_ID AND r.role_name = 'Composer'
+        JOIN c2r2p ON c.ID = c2r2p.composition_ID
+        JOIN people AS p ON c2r2p.people_ID = p.ID
+        JOIN roles AS r ON  r.ID = c2r2p.role_ID AND r.role_name = 'Composer'
         WHERE c.ID = '$compositionIDAltered';
 
 _END;
@@ -591,9 +591,9 @@ failureToExecute ($resultComposerQuery, 'S562', 'Select ' );
 
         SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
         FROM compositions As c
-        JOIN C2R2P ON c.ID = C2R2P.composition_ID
-        JOIN people AS p ON C2R2P.people_ID = p.ID
-        JOIN roles AS r ON r.ID = C2R2P.role_ID AND r.role_name = 'Arranger'
+        JOIN c2r2p ON c.ID = c2r2p.composition_ID
+        JOIN people AS p ON c2r2p.people_ID = p.ID
+        JOIN roles AS r ON r.ID = c2r2p.role_ID AND r.role_name = 'Arranger'
        
         WHERE c.ID = '$compositionIDAltered';
 
@@ -643,9 +643,9 @@ failureToExecute ($resultArrangerQuery, 'S563', 'Select ' );
 
         SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
         FROM compositions As c
-        JOIN C2R2P ON c.ID = C2R2P.composition_ID
-        JOIN people AS p ON C2R2P.people_ID = p.ID
-        JOIN roles AS r ON r.ID = C2R2P.role_ID AND r.role_name = 'Lyricist'
+        JOIN c2r2p ON c.ID = c2r2p.composition_ID
+        JOIN people AS p ON c2r2p.people_ID = p.ID
+        JOIN roles AS r ON r.ID = c2r2p.role_ID AND r.role_name = 'Lyricist'
        
        
         WHERE c.ID = '$compositionIDAltered';

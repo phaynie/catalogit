@@ -1,13 +1,26 @@
 <?php
 include 'boilerplate.php';
+echo "loginSubmit =" . $_POST['loginSubmit'] . "<br>"; 
 
-if(isset($_POST['login-submit'])) {
+
+if(isset($_POST['loginSubmit'])) {
 
     $mailuid = $_POST['mailuid'];
     $password = $_POST['pwd'];
+    
+    echo "mailuid =" . $mailuid . "<br>";
+    echo "password =" . $password . "<br>";
+    
+    if(empty($password)){
+    echo 'This line is printed, because the $password is empty.';
+    }
+echo "empty($mailuid) = " . empty($mailuid);
+echo "empty($password) = " . empty($password);
 
     if (empty($mailuid) || empty($password)) {
-        header("Location:indexlogin.php?error=emptyfields");
+        echo "yyy";
+        header('Location: indexlogin.php?error=emptyfields');
+        echo "zzz";
         exit();
     } else {
         $sql = "SELECT * FROM users WHERE uidUsers = ? OR emailUsers = ?;";
@@ -48,4 +61,4 @@ if(isset($_POST['login-submit'])) {
 }else{
         header("Location:indexlogin.php");
         exit();
-}/*end if(isset($_POST['login-submit']*/
+}/*end if(isset($_POST['login_submit']*/

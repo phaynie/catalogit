@@ -6,7 +6,9 @@ include 'boilerplate.php';
 /*We arrive at this page if we are
 -Adding a new book or Composition to the library and are adding an Editor, Composer, Arranger, or lyricist to that book.
 -Editing a current book or Composition and want to add or replace an Editor, Composer, Arranger, or lyricist.
--adding an additional Editor, Composer, Arranger, or lyricist to an existing book or Composition and want to know if it already exists in the db*/
+-adding an additional Editor, Composer, Arranger, or lyricist to an existing book or Composition and want to know if it already exists in the db
+-searching for all the pieces and books a person is linked to as a "composer", Lyricist, Arranger, Editor etc.*/
+
 
 /*Purpose of this page is to:
 -provide the user with a form that has a search box and submit button to submit an Editor, Composer, Arranger, or lyricist name (we will search for it in peopleOptions).
@@ -14,14 +16,10 @@ include 'boilerplate.php';
 -Once validation is successful, user is sent to peopleOptions.php
 
 */
+$debug_string = "";
 
 if($debug) {
-    echo <<<_END
-
-<p>peopleSearch-6</p>
-
-_END;
-
+    $debug_string .= "peopleSearch.php<br/>";
 }/*end debug*/
 
 
@@ -56,6 +54,21 @@ $submit = "";
 $role = "";
 $validationFailed = false; /*A single place to track whether any validation has failed.*/
 
+
+ $replacePeopleContinueText = "";
+ $addNewPeopleContinueText = "";
+ $findComposerContinueText = "";
+ $findPersonContinueText = "";
+ 
+ $sendEditBook = "";
+ $sendEditComposition = "";
+ $sendAddNew = "";
+ $sendFindPerson = "";
+ $sendReplace = "";
+ $sendFindComposer = "";
+ $formAction = "";
+ $page = "";
+ $informationText = "";
 
 /*we use REQUEST here because then we can find our Key whether it is in the Post array or the Get Array. REQUEST includes both*/
 
@@ -220,7 +233,7 @@ $personsArrayQuery = "
 
 $resultPersonsArrayQuery = $conn->query($personsArrayQuery);
 if($debug) {
-    $debug_string.=" 'personsArrayQuery = ' . $personsArrayQuery . '<br/><br/>'";
+    $debug_string.="personsArrayQuery = " . $personsArrayQuery . "<br/><br/>";
     if (!$resultPersonsArrayQuery) $debug_string.="('\n Error description personsArrayQuery: ' . mysqli_error($conn) . '\n<br/>')";
 }/*end debug*/
 
@@ -289,7 +302,7 @@ if($submit == 'true') {
     /*Validation over*/
     /*washes this user data*/
 if (!$validationFailed ) {
-     /*Don't need to was var here. It will not be used until next page*/
+     /*Don't need to wash var here. It will not be used until next page*/
 
 /*oldPeopleID needs to be sent when replacing editor*/
         header('Location: peopleOptions.php?bookID=' . $bookID . '&compName=' . $compName . '&compositionID=' . $compositionID . '&oldPeopleID=' . $oldPeopleID . '&editBook=' . $editBook . '&editComposition=' . $editComposition . '&replaceEditor=' . $replaceEditor . '&replaceComposer=' . $replaceComposer . '&replaceArranger=' . $replaceArranger . '&replaceLyricist=' . $replaceLyricist . '&addNewEditor=' . $addNewEditor . '&addNewComposer=' . $addNewComposer . '&addNewArranger=' . $addNewArranger . '&addNewLyricist=' . $addNewLyricist . '&searchPeopleLastName=' . $searchPeopleLastName . '&findComposer=' . $findComposer. '&findPerson=' . $findPerson);
@@ -364,8 +377,8 @@ _END;
 
       SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
       FROM books AS b 
-      JOIN B2R2P ON b.ID = B2R2P.book_ID
-      JOIN people AS p ON p.ID= B2R2P.people_ID
+      JOIN b2r2p ON b.ID = b2r2p.book_ID
+      JOIN people AS p ON p.ID= b2r2p.people_ID
       WHERE b.ID = '$bookIDAltered';
 
 _END;
@@ -414,8 +427,8 @@ _END;
 
       SELECT  o.ID, o.org_name, o.location
       FROM books AS b 
-      JOIN B2R2O ON b.ID = B2R2O.book_ID
-      JOIN organizations AS o ON o.ID= B2R2O.org_ID
+      JOIN b2r2o ON b.ID = b2r2o.book_ID
+      JOIN organizations AS o ON o.ID= b2r2o.org_ID
       WHERE b.ID = '$bookIDAltered';
 
 _END;
@@ -508,6 +521,9 @@ _END;
 
 /*Next we will display form with text box for person's last name and button "Search for this Person". We will also pass hidden values needed when we validate.
  */
+ 
+
+ 
     echo <<<_END
 
     <div class="container-fluid bg-light pt-4 pb-5" >

@@ -21,7 +21,7 @@ include 'beginningNav.php';
     -provides a form (and button) to submit new organization (publisher) information.
     -validates the submitted form information.
     -inserts validated information into the organization table.
-    -sends user by way of header to addRole.php to update(edit/replace) or add(add new) to B2R2O table or delete a dispal(delete) from B2R2O table .
+    -sends user by way of header to addRole.php to update(edit/replace) or add(add new) to b2r2o table or delete a dispal(delete) from b2r2o table .
 */
 
 /*Initialize Variables*/
@@ -110,8 +110,8 @@ $validationFailed = false;  /*A single place to track whether any validation has
 /*Validation code section
 if $validationFailed is true, we will show form pre-populated with error messages and user can re-submit values.
 if $validationFailed is false, we will wash data coming from the form.
-If editing an existing book and validation is successful   we will go to addRole.php, update the B2R2O table and send the user by way of header to editBook.php
-If adding a new book to the library and validation is successful  we will insert this new publisher info into the organizations table, go to addRole.php and add a new row to the B2R2O table connecting this organization information to the book as a publisher. */
+If editing an existing book and validation is successful   we will go to addRole.php, update the b2r2o table and send the user by way of header to editBook.php
+If adding a new book to the library and validation is successful  we will insert this new publisher info into the organizations table, go to addRole.php and add a new row to the b2r2o table connecting this organization information to the book as a publisher. */
 
 
 /*These values will be used in the form below to show us what we submitted and to make corrections*/

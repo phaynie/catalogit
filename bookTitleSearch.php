@@ -8,6 +8,8 @@ This user data does not need to be washed on this page*/
 
 include 'boilerplate.php';
 
+$debug_string = "";
+
 if($debug) {
     echo <<<_END
 
@@ -26,6 +28,7 @@ $searchBookTitleErr = "";
 $searchBookTitle = "";
 $submit = "";
 $addNewComposition = "";
+$instructionalText = "";
 
 $validationFailed = false;
 
@@ -64,7 +67,7 @@ $bookTitlesArrayQuery = "
 
 $resultBookTitlesArrayQuery = $conn->query($bookTitlesArrayQuery);
 if($debug) {
-    $debug_string.=" 'bookTitlesArrayQuery = ' . $bookTitlesArrayQuery . '<br/><br/>'";
+    $debug_string.= "bookTitlesArrayQuery = " . $bookTitlesArrayQuery . "<br/><br/>";
     if (!$resultBookTitlesArrayQuery) $debug_string.="('\n Error description bookTitlesArrayQuery: ' . mysqli_error($conn) . '\n<br/>')";
 }/*end debug*/
 

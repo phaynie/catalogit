@@ -1,11 +1,11 @@
 <?php
 
-setcookie("XDEBUG_SESSION_START", "PHPSTORM");
+$debug = true;
+
+// setcookie("XDEBUG_SESSION_START", "PHPSTORM");
 
   session_start();
-
-$debug=true;
-
+  
 if($debug) {
     print_r($_SESSION);
 } /*end debug*/
@@ -19,14 +19,14 @@ $pageName = $_SERVER['PHP_SELF'];
 // change logic below to check if $pageName is not in the list
 
 $openPage = array(
-        "/catalogit/index.php",
-        "/catalogit/userLogin.php",
-        "/catalogit/login_script.php",
-        "/catalogit/indexlogin.php",
-        "/catalogit/about.php",
-        "/catalogit/answer.php",
-        "/catalogit/contact.php",
-        "/catalogit/logout_script.php");
+        "/index.php",
+        "/userLogin.php",
+        "/login_script.php",
+        "/indexlogin.php",
+        "/about.php",
+        "/answer.php",
+        "/contact.php",
+        "/logout_script.php");
 
 
 if(!isset($_SESSION['userId'])  &&  !in_array($pageName, $openPage, TRUE )) {
@@ -37,22 +37,12 @@ if(!isset($_SESSION['userId'])  &&  !in_array($pageName, $openPage, TRUE )) {
 
 
 
+include 'not4git.php';
 
-
-// extract the db name from the original request URL
-$requestString = $_SERVER['REQUEST_URI'];  // example = /catalogit/dbname/intropage.php
-$startPosition = strpos($requestString, "/", 1) + 1;  // character after second slash
-$length = strpos($requestString, "/", $startPosition) - $startPosition; // use position of third slash
-$dbname = substr($requestString, $startPosition, $length);
-
-$hn = 'localhost';
-$db = $dbname;
-$un = 'root';
-$pw = 'mysql';
 
 if($debug) {
     echo("<br/>site / dbname = ");
-    print_r($dbname);
+    print_r($db);
     echo("<br/>");
 } /*end debug*/
 
@@ -81,7 +71,13 @@ if($debug) {
 <body class="container-fluid bg-light mt-5 ">
 
 <?php
-  $conn = new mysqli($hn ,$un, $pw, $db);
+
+//Establish variables to create connection to the db
+$hn = 'localhost';  //server name
+$un = 'cleverbu_stagingCatalogit';       //user name
+/*password comes from not4git.php*/
+
+  $conn = new mysqli($hn, $un, $pw, $db);
   if ($conn->connect_error) die("Fatal Error");
 
 $primaryKeyName ="ID";
@@ -104,9 +100,20 @@ if($debug) {
 
 _END;
 
-    foreach ($_GET as $key => $value)
+    foreach ($_GET as $key => $value){
+        
+        if(is_array($value)){
+            echo $key . '=' . print_r($value);
+        }
+        else {
         echo $key . '=' . $value . '<br />';
+        }
+    }
 } /*end debug*/
+
+/*function getNameFromString($mystring){
+    return substr($mystring, strpos($mystring, '-')+1);
+}*/
 
 
 /*This was the second original function. Name doesn't really make sense for my code.*/

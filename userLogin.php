@@ -7,7 +7,7 @@ if($debug) {
 
 include 'beginningNav.php';
 
-echo<<<_END
+?>
 
 
 <div class="container  pb-4">
@@ -15,16 +15,16 @@ echo<<<_END
     <div class="row">
         <div class="col-sm-10 offset-sm-1 text-center">
             
-_END;
+<?php
 
 if($_GET['signup'] == "success") {
-    echo<<<_END
+   ?>
     <h1 class='text-center signupsuccess'>Signup successful!</h1>
-_END;
+<?php
 
 }
 
-echo<<<_END
+?>
             
             
             <h1 class="pb-4 pt-4"> Log in to Continue</h1>
@@ -39,7 +39,8 @@ echo<<<_END
                         <input class="form-control" type="text" id="mailuid" name="mailuid" ><br>
                         <label for="pwd">Password</label>  
                         <input class="form-control" type="password" id="pwd" name="pwd" ><br>
-                        <button class="btn btn-secondary-outline btn-sm mb-4" type="submit" name="login-submit">Login</button><br>
+                        <button class="btn btn-secondary-outline btn-sm mb-4" type="submit" >Login</button><br>
+                        <input type='hidden' name='loginSubmit'  value='true'>
                     </div> <!--form-group--->
                 </form>
                 
@@ -47,7 +48,7 @@ echo<<<_END
         </div> <!--end col-->
     </div> <!--end row-->
 </div> <!--end container-->
-_END;
+<?php
 
 
 include 'footer.php';

@@ -23,8 +23,8 @@ echo <<<_END
 <div class="jumbotron-fluid bg-light  ">
  
     <div class="container-fluid bg-secondary pt-4 ">
-        <div class="card mx-auto w-75 px-4">
-            <img class="card-img-top" src="images/musiclibraryCut2.jpg" alt="Book Stacks with wooden ladder">
+        <div class="card mx-auto w-75 ">
+            <img class="card-img-top" style="margin-left:0; padding-right:0;" src="images/musiclibraryCut2.jpg"  alt="Book Stacks with wooden ladder">
             <div class="card-body  ">
                 <h5 class="card-title text-center display-4">Welcome to Catalogit</h5>
                 <h5 class="card-title text-center display-4">Music Library</h5>

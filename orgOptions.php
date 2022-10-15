@@ -145,13 +145,14 @@ if (strlen($searchPubNameAltered) > 0  ) {
      not a publisher. I will copy and paste this query changing it to look for only an organization, not a
     publisher. */
 
+    /* took this line out. I believe it was giving me every instance   LEFT JOIN b2r2o ON o.ID = b2r2o.org_ID */
+
     $orgQuery = <<<_END
 
     SELECT  o.ID, o.org_name, o.location
     FROM organizations As o
-    LEFT JOIN B2R2O ON o.ID = B2R2O.org_ID 
-
-    WHERE o.org_name LIKE '%$searchPubNameAltered%';
+   
+       WHERE o.org_name LIKE '%$searchPubNameAltered%';
 
 _END;
 
@@ -322,8 +323,8 @@ if($editReplaceDeletePub == "true") {
 
       SELECT  o.ID, o.org_name, o.location
       FROM books AS b 
-      JOIN B2R2O ON b.ID = B2R2O.book_ID
-      JOIN organizations AS o ON o.ID= B2R2O.org_ID
+      JOIN b2r2o ON b.ID = b2r2o.book_ID
+      JOIN organizations AS o ON o.ID= b2r2o.org_ID
       WHERE b.ID = '$bookIDAltered';
 
 _END;

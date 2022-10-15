@@ -67,6 +67,10 @@ $ensembleErr = "";
 $genDiffErr = "";
 $ASPDiffErr = "";
 
+$opusNumErr = "";
+$compNumErr = "";
+$sendEditComposition = "";
+
 
 
 /*End initializing variables*/
@@ -450,15 +454,15 @@ if($submit == 'true') {
         failureToExecute ($updateCompositionsResult, 'U701', 'Update ' );
 
 
-        /*delete past row(s) from the junction tables C2k, C2Gk, C2I before inserting new row*/
+        /*delete past row(s) from the junction tables c2k, c2g, c2i before inserting new row*/
 
 
     if ($updateCompositionsResult) {
-        /*delete from C2K*/
+        /*delete from c2k*/
         $deleteC2K = <<<_END
 
-            DELETE FROM C2K
-            WHERE C2K.composition_ID = '$compositionIDAltered';
+            DELETE FROM c2k
+            WHERE c2k.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -477,10 +481,10 @@ _END;
 
         failureToExecute ($deleteC2KResult, 'D800', 'Delete ' );
 
-        /*End deleting from C2K*/
+        /*End deleting from c2k*/
 
 
-        /*Insert new row into C2K*/
+        /*Insert new row into c2k*/
 
 
         if (count($keySigs) > 0) {
@@ -494,7 +498,7 @@ _END;
 
 
                 $C2KInsertQuery = <<<_END
-                            INSERT INTO C2K (composition_ID, keysig_ID)
+                            INSERT INTO c2k (composition_ID, keysig_ID)
                             VALUES ('$compositionIDAltered', '$value');
 
 _END;
@@ -519,11 +523,11 @@ _END;
 
 
 
-    /*delete from C2G*/
+    /*delete from c2g*/
     $deleteC2G = <<<_END
 
-                DELETE FROM C2G
-                WHERE C2G.composition_ID  = '$compositionIDAltered';
+                DELETE FROM c2g
+                WHERE c2g.composition_ID  = '$compositionIDAltered';
 
 _END;
 
@@ -543,13 +547,13 @@ _END;
         failureToExecute ($deleteC2GResult, 'D801', 'Delete ' );
 
 
-        /*Now, insert into    C2G*/
-    /*Here i must go find the id number for each genre entered by the user and insert a row into the C2G table */
+        /*Now, insert into    c2g*/
+    /*Here i must go find the id number for each genre entered by the user and insert a row into the c2g table */
     if (count($genres) > 0) {
 
         foreach ($genres as $value) {
             $C2GInsertQuery = <<<_END
-                INSERT INTO C2G (composition_ID, genre_ID)
+                INSERT INTO c2g (composition_ID, genre_ID)
                 VALUES ('$compositionIDAltered', '$value');
 
 _END;
@@ -576,12 +580,12 @@ _END;
     }/*end if (count($genres) > 0)*/
 
 
-    /*delete from C2I*/
+    /*delete from c2i*/
 
     $deleteC2I = <<<_END
 
-        DELETE FROM C2I
-        WHERE C2I.composition_ID = '$compositionIDAltered';
+        DELETE FROM c2i
+        WHERE c2i.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -600,15 +604,15 @@ _END;
 
         failureToExecute ($deleteC2IResult, 'D802', 'Delete ' );
 
-        /*end delete from C2I*/
+        /*end delete from c2i*/
 
-    /*Now, insert into C2I*/
-    /*Here i must go find the id number for each instrument entered by the user and insert a row into the C2I table */
+    /*Now, insert into c2i*/
+    /*Here i must go find the id number for each instrument entered by the user and insert a row into the c2i table */
     if (count($instruments) > 0) {
 
         foreach ($instruments as $value) {
             $C2IInsertQuery = <<<_END
-                INSERT INTO C2I (composition_ID, instrument_ID)
+                INSERT INTO c2i (composition_ID, instrument_ID)
                 VALUES ('$compositionIDAltered', '$value');
 
 _END;
@@ -633,12 +637,12 @@ _END;
 
 
 
-        /*delete from C2D*/
+        /*delete from c2d*/
 
         $deleteC2D = <<<_END
 
-        DELETE FROM C2D
-        WHERE C2D.composition_ID = '$compositionIDAltered';
+        DELETE FROM c2d
+        WHERE c2d.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -657,12 +661,12 @@ _END;
 
         failureToExecute ($deleteC2DResult, 'D803', 'Delete ' );
 
-        /*end delete from C2D*/
+        /*end delete from c2d*/
 
 
-        /*Now, insert into C2D the first time for General difficulty*/
+        /*Now, insert into c2d the first time for General difficulty*/
         $C2DInsertQuery = <<<_END
- INSERT INTO C2D (composition_ID, difficulty_ID)
+ INSERT INTO c2d (composition_ID, difficulty_ID)
  VALUES ('$compositionIDAltered', '$genDiffAltered');
 
 _END;
@@ -684,9 +688,9 @@ _END;
 
 
 
-        /*Now, insert into C2D for a second time for ASP difficulty*/
+        /*Now, insert into c2d for a second time for ASP difficulty*/
         $C2DInsertQuery = <<<_END
- INSERT INTO C2D (composition_ID, difficulty_ID)
+ INSERT INTO c2d (composition_ID, difficulty_ID)
  VALUES ('$compositionIDAltered', '$ASPDiffAltered');
 
 _END;
@@ -857,9 +861,9 @@ VALUES (";
 
 
 
-    /*Now, insert into   C2K*/
+    /*Now, insert into   c2k*/
 
-    /*Here i must go find the id number for each key signature entered by the user and insert a row into the C2K table */
+    /*Here i must go find the id number for each key signature entered by the user and insert a row into the c2k table */
     if(!is_array($keySigs)) {
         if($debug) {
             $debug_string .=  '$keySigID is not an array' . $keySigs;
@@ -871,7 +875,7 @@ VALUES (";
             }/*end debug*/
 
             $C2KInsertQuery = <<<_END
-        INSERT INTO C2K (composition_ID, keysig_ID)
+        INSERT INTO c2k (composition_ID, keysig_ID)
         VALUES ('$compositionID', '$value');
 
 _END;
@@ -895,9 +899,9 @@ _END;
 
 
 
-    /*Now, insert into    C2G*/
+    /*Now, insert into    c2g*/
 
-    /*Here i must go find the id number for each genre entered by the user and insert a row into the C2G table */
+    /*Here i must go find the id number for each genre entered by the user and insert a row into the c2g table */
     if(!is_array($genres)) {
         if($debug) {
             $debug_string .=  '$keySigID is not an array' . $genres;
@@ -905,7 +909,7 @@ _END;
     }else{
         foreach ($genres as &$value) {
             $C2GInsertQuery = <<<_END
-    INSERT INTO C2G (composition_ID, genre_ID)
+    INSERT INTO c2g (composition_ID, genre_ID)
     VALUES ('$compositionID', '$value');
 
 _END;
@@ -929,8 +933,8 @@ _END;
     }/*!is_array($keySigID)*/
 
 
-    /*Now, insert into C2I*/
-    /*Here i must go find the id number for each instrument entered by the user and insert a row into the C2I table */
+    /*Now, insert into c2i*/
+    /*Here i must go find the id number for each instrument entered by the user and insert a row into the c2i table */
     if(!is_array($instruments)) {
         if($debug) {
             $debug_string .=  '$instrumentID is not an array' . $instruments;
@@ -939,7 +943,7 @@ _END;
     }else{
         foreach ($instruments as &$value) {
             $C2IInsertQuery = <<<_END
-        INSERT INTO C2I (composition_ID, instrument_ID)
+        INSERT INTO c2i (composition_ID, instrument_ID)
         VALUES ('$compositionID', '$value');
 
 _END;
@@ -963,9 +967,9 @@ _END;
 
 
 
-    /*Now, insert into C2D the first time for General difficulty*/
+    /*Now, insert into c2d the first time for General difficulty*/
     $C2DInsertQuery = <<<_END
- INSERT INTO C2D (composition_ID, difficulty_ID)
+ INSERT INTO c2d (composition_ID, difficulty_ID)
  VALUES ('$compositionID', '$genDiffAltered');
 
 _END;
@@ -987,9 +991,9 @@ _END;
 
 
 
-    /*Now, insert into C2D for a second time for ASP difficulty*/
+    /*Now, insert into c2d for a second time for ASP difficulty*/
     $C2DInsertQuery = <<<_END
- INSERT INTO C2D (composition_ID, difficulty_ID)
+ INSERT INTO c2d (composition_ID, difficulty_ID)
  VALUES ('$compositionID', '$ASPDiffAltered');
 
 _END;
@@ -1046,9 +1050,9 @@ if($submit == "" && $editComposition == 'true'){
     I will also be creating a comma separated list to use in the displayed information*/
     $keySigsQuery = <<<_END
       SELECT  k.ID
-      FROM C2K
-      LEFT JOIN keysignatures AS k ON C2K.keysig_ID = k.ID
-      WHERE C2K.composition_ID = '$compositionIDAltered';
+      FROM c2k
+      LEFT JOIN keysignatures AS k ON c2k.keysig_ID = k.ID
+      WHERE c2k.composition_ID = '$compositionIDAltered';
 
 _END;
 
@@ -1094,9 +1098,9 @@ _END;
     $genresQuery = <<<_END
 
         SELECT  g.ID
-        FROM C2G 
-        LEFT JOIN genres AS g ON C2G.genre_ID = g.ID
-        WHERE C2G.composition_ID = '$compositionIDAltered';
+        FROM c2g 
+        LEFT JOIN genres AS g ON c2g.genre_ID = g.ID
+        WHERE c2g.composition_ID = '$compositionIDAltered';
 
 
 _END;
@@ -1143,9 +1147,9 @@ _END;
     I will also be creating a comma separated list to use in the displayed information*/
     $instrumentsQuery = <<<_END
       SELECT  i.ID
-      FROM C2I 
-      LEFT JOIN instruments AS i ON C2I.instrument_ID = i.ID
-      WHERE C2I.composition_ID = '$compositionIDAltered';
+      FROM c2i 
+      LEFT JOIN instruments AS i ON c2i.instrument_ID = i.ID
+      WHERE c2i.composition_ID = '$compositionIDAltered';
 
 
 _END;
@@ -1194,10 +1198,10 @@ _END;
     $genDiffQuery = <<<_END
       SELECT  d.ID
       FROM compositions AS c 
-      LEFT JOIN C2D ON c.ID = C2D.composition_ID
-      LEFT JOIN difficulties AS d ON C2D.difficulty_ID = d.ID
+      LEFT JOIN c2d ON c.ID = c2d.composition_ID
+      LEFT JOIN difficulties AS d ON c2d.difficulty_ID = d.ID
       JOIN organizations as o On d.org_ID = o.ID AND o.org_name = 'General'
-      WHERE C2D.composition_ID = '$compositionIDAltered';
+      WHERE c2d.composition_ID = '$compositionIDAltered';
 
 
 _END;
@@ -1237,10 +1241,10 @@ _END;
     $ASPDiffQuery = <<<_END
       SELECT  d.ID
       FROM compositions AS c 
-      LEFT JOIN C2D ON c.ID = C2D.composition_ID
-      LEFT JOIN difficulties AS d ON C2D.difficulty_ID = d.ID
+      LEFT JOIN c2d ON c.ID = c2d.composition_ID
+      LEFT JOIN difficulties AS d ON c2d.difficulty_ID = d.ID
       JOIN organizations as o On d.org_ID = o.ID AND o.org_name = 'ASP'
-      WHERE C2D.composition_ID = '$compositionIDAltered';
+      WHERE c2d.composition_ID = '$compositionIDAltered';
 
 _END;
 

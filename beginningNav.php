@@ -4,7 +4,7 @@ $welcomeLink = "";
 $disabled = "";
 if(!isset($_SESSION['userId'])) {
     $disabled = 'disabled';
-    $welcomeLink = "<a class='nav-link ' href='index.php''>Welcome!</a>";
+    $welcomeLink = "<a class='nav-link ' href='index.php'>Welcome!</a>";
 }
 
 
@@ -47,9 +47,7 @@ echo<<<_END
                     <li class="nav-item">
                         <a class="nav-link $disabled" href="review.php">Review-it</a>
                     </li>
-                    <li class="nav-item">
-                        $welcomeLink
-                    </li>
+                   
                 </ul>
             </div><!-- navbar-collapse -->
             

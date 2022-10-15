@@ -13418,3 +13418,63 @@ Stack trace:
 [26-Oct-2020 17:55:05 UTC] PHP Warning:  Use of undefined constant validationFailed - assumed 'validationFailed' (this will throw an Error in a future version of PHP) in C:\Ampps\www\catalogit\addPeople.php on line 474
 [26-Oct-2020 17:55:05 UTC] PHP Stack trace:
 [26-Oct-2020 17:55:05 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\addPeople.php:0
+[21-Dec-2020 16:43:57 UTC] PHP Warning:  mysqli::__construct(): (HY000/2002): No connection could be made because the target machine actively refused it.
+ in C:\Ampps\www\catalogit\boilerplate.php on line 84
+[21-Dec-2020 16:43:57 UTC] PHP Stack trace:
+[21-Dec-2020 16:43:57 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\index.php:0
+[21-Dec-2020 16:43:57 UTC] PHP   2. include() C:\Ampps\www\catalogit\index.php:4
+[21-Dec-2020 16:43:57 UTC] PHP   3. mysqli->__construct() C:\Ampps\www\catalogit\boilerplate.php:84
+[21-Dec-2020 16:44:14 UTC] PHP Warning:  mysqli::__construct(): (HY000/2002): No connection could be made because the target machine actively refused it.
+ in C:\Ampps\www\catalogit\boilerplate.php on line 84
+[21-Dec-2020 16:44:14 UTC] PHP Stack trace:
+[21-Dec-2020 16:44:14 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\index.php:0
+[21-Dec-2020 16:44:14 UTC] PHP   2. include() C:\Ampps\www\catalogit\index.php:4
+[21-Dec-2020 16:44:14 UTC] PHP   3. mysqli->__construct() C:\Ampps\www\catalogit\boilerplate.php:84
+[21-Dec-2020 17:27:27 UTC] PHP Warning:  mysqli::__construct(): (HY000/2002): No connection could be made because the target machine actively refused it.
+ in C:\Ampps\www\catalogit\boilerplate.php on line 84
+[21-Dec-2020 17:27:27 UTC] PHP Stack trace:
+[21-Dec-2020 17:27:27 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\admin.php:0
+[21-Dec-2020 17:27:27 UTC] PHP   2. include() C:\Ampps\www\catalogit\admin.php:2
+[21-Dec-2020 17:27:27 UTC] PHP   3. mysqli->__construct() C:\Ampps\www\catalogit\boilerplate.php:84
+[02-Mar-2021 18:38:54 UTC] PHP Warning:  mysqli::__construct(): (HY000/2002): No connection could be made because the target machine actively refused it.
+ in C:\Ampps\www\catalogit\boilerplate.php on line 84
+[02-Mar-2021 18:38:54 UTC] PHP Stack trace:
+[02-Mar-2021 18:38:54 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\bookOptions2.php:0
+[02-Mar-2021 18:38:54 UTC] PHP   2. include() C:\Ampps\www\catalogit\bookOptions2.php:12
+[02-Mar-2021 18:38:54 UTC] PHP   3. mysqli->__construct() C:\Ampps\www\catalogit\boilerplate.php:84
+[29-Mar-2021 14:35:05 UTC] PHP Warning:  mysqli::__construct(): (HY000/2002): No connection could be made because the target machine actively refused it.
+ in C:\Ampps\www\catalogit\boilerplate.php on line 84
+[29-Mar-2021 14:35:05 UTC] PHP Stack trace:
+[29-Mar-2021 14:35:05 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\compositionOptions2.php:0
+[29-Mar-2021 14:35:05 UTC] PHP   2. include() C:\Ampps\www\catalogit\compositionOptions2.php:2
+[29-Mar-2021 14:35:05 UTC] PHP   3. mysqli->__construct() C:\Ampps\www\catalogit\boilerplate.php:84
+[29-Mar-2021 14:35:07 UTC] PHP Warning:  mysqli::__construct(): (HY000/2002): No connection could be made because the target machine actively refused it.
+ in C:\Ampps\www\catalogit\boilerplate.php on line 84
+[29-Mar-2021 14:35:07 UTC] PHP Stack trace:
+[29-Mar-2021 14:35:07 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\admin.php:0
+[29-Mar-2021 14:35:07 UTC] PHP   2. include() C:\Ampps\www\catalogit\admin.php:2
+[29-Mar-2021 14:35:07 UTC] PHP   3. mysqli->__construct() C:\Ampps\www\catalogit\boilerplate.php:84
+[18-Apr-2021 18:57:01 UTC] PHP Warning:  mysqli::__construct(): (HY000/2002): No connection could be made because the target machine actively refused it.
+ in C:\Ampps\www\catalogit\boilerplate.php on line 84
+[18-Apr-2021 18:57:01 UTC] PHP Stack trace:
+[18-Apr-2021 18:57:01 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\compositionOptions2.php:0
+[18-Apr-2021 18:57:01 UTC] PHP   2. include() C:\Ampps\www\catalogit\compositionOptions2.php:2
+[18-Apr-2021 18:57:01 UTC] PHP   3. mysqli->__construct() C:\Ampps\www\catalogit\boilerplate.php:84
+[18-Apr-2021 18:57:03 UTC] PHP Warning:  mysqli::__construct(): (HY000/2002): No connection could be made because the target machine actively refused it.
+ in C:\Ampps\www\catalogit\boilerplate.php on line 84
+[18-Apr-2021 18:57:03 UTC] PHP Stack trace:
+[18-Apr-2021 18:57:03 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\admin.php:0
+[18-Apr-2021 18:57:03 UTC] PHP   2. include() C:\Ampps\www\catalogit\admin.php:2
+[18-Apr-2021 18:57:03 UTC] PHP   3. mysqli->__construct() C:\Ampps\www\catalogit\boilerplate.php:84
+[15-May-2021 16:46:18 UTC] PHP Warning:  mysqli::__construct(): (HY000/2002): No connection could be made because the target machine actively refused it.
+ in C:\Ampps\www\catalogit\boilerplate.php on line 84
+[15-May-2021 16:46:18 UTC] PHP Stack trace:
+[15-May-2021 16:46:18 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\admin.php:0
+[15-May-2021 16:46:18 UTC] PHP   2. include() C:\Ampps\www\catalogit\admin.php:2
+[15-May-2021 16:46:18 UTC] PHP   3. mysqli->__construct() C:\Ampps\www\catalogit\boilerplate.php:84
+[15-May-2021 16:46:20 UTC] PHP Warning:  mysqli::__construct(): (HY000/2002): No connection could be made because the target machine actively refused it.
+ in C:\Ampps\www\catalogit\boilerplate.php on line 84
+[15-May-2021 16:46:20 UTC] PHP Stack trace:
+[15-May-2021 16:46:20 UTC] PHP   1. {main}() C:\Ampps\www\catalogit\compositionOptions2.php:0
+[15-May-2021 16:46:20 UTC] PHP   2. include() C:\Ampps\www\catalogit\compositionOptions2.php:2
+[15-May-2021 16:46:20 UTC] PHP   3. mysqli->__construct() C:\Ampps\www\catalogit\boilerplate.php:84

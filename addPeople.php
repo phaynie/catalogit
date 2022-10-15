@@ -20,7 +20,7 @@ include 'beginningNav.php';
     -provides a form (and button) to submit new people (editor, composer, arranger, lyricist) information.
     -validates the submitted form information.
     -inserts validated information into the people table.
-    -sends user by way of header to addRole.php to update(edit/replace) or add(add new) to B2R2P table or delete a row(delete) from B2R2P table .
+    -sends user by way of header to addRole.php to update(edit/replace) or add(add new) to b2r2p table or delete a row(delete) from b2r2p table .
 */
 
 /*Initialize Variables*/
@@ -240,8 +240,8 @@ $validationFailed = false;  /*A single place to track whether any validation has
 /*Validation code section
 if $validationFailed is true, we will show form pre-populated with error messages and user can re-submit values.
 if $validationFailed is false, we will wash data coming from the form.
-If editing an existing book and validation is successful   we will go to addRole.php, update the B2R2P table and send the user by way of header to editBook.php
-If adding a new book to the library and validation is successful  we will insert this new people info into the people table, go to addRole.php and add a new row to the B2R2P table connecting this person information to the book as an editor, composer, arranger or Lyricist. */
+If editing an existing book and validation is successful   we will go to addRole.php, update the b2r2p table and send the user by way of header to editBook.php
+If adding a new book to the library and validation is successful  we will insert this new people info into the people table, go to addRole.php and add a new row to the b2r2p table connecting this person information to the book as an editor, composer, arranger or Lyricist. */
 
 
 /*Validation*/
@@ -511,7 +511,7 @@ if($submit == "") {
         $peopleQuery = <<<_END
 
       SELECT p.firstname, p.middlename, p.lastname, p.suffix
-      FROM people AS p
+      FROM people AS pF
       WHERE p.ID = $oldPeopleIDAltered;
 
 _END;

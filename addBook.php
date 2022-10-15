@@ -48,6 +48,10 @@ $editBook = "";
 $physBookLocNote = "";
 $debug_string = "";
 
+$bookTitleErr = "";
+$bookNumErr = "";
+$sendEditBook = "";
+
 /*Set local variables and assign the REQUEST values coming from the form or previous page. */
 
 if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {

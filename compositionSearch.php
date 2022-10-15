@@ -1,6 +1,6 @@
 <?php
 include 'boilerplate.php';
-
+$debug_string = "";
 if($debug) {
     echo <<<_END
 
@@ -53,7 +53,7 @@ $compositionsArrayQuery = "
 
 $resultCompositionsArrayQuery = $conn->query($compositionsArrayQuery);
 if($debug) {
-    $debug_string.=" 'compositionsArrayQuery = ' . $compositionsArrayQuery . '<br/><br/>'";
+    $debug_string.=" compositionsArrayQuery = " . $compositionsArrayQuery . "<br/><br/>";
     if (!$resultCompositionsArrayQuery) $debug_string.='("\n Error description compositionsArrayQuery: " . mysqli_error($conn) . "\n<br/>")';
 }/*end debug*/
 

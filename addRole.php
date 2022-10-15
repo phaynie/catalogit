@@ -250,7 +250,7 @@ _END;
 
      }elseif($addNewPeople == 'true') {
          $C2R2PInsertQuery = <<<_END
-            INSERT INTO C2R2P (composition_ID, role_ID, people_ID)
+            INSERT INTO c2r2p (composition_ID, role_ID, people_ID)
             VALUES('$compositionIDAltered', '$roleID', '$newPeopleIDAltered');
             
 _END;
@@ -338,18 +338,18 @@ _END;
     } elseif($replacePeople == 'true' && $newPeopleIDAltered !== 0) {
 
          $updateC2R2P = <<<_END
-         UPDATE C2R2P
+         UPDATE c2r2p
          SET composition_ID = '$compositionIDAltered', role_ID = '$roleID', people_ID = '$newPeopleIDAltered'
-         WHERE C2R2P.composition_ID = '$compositionIDAltered'
-             AND C2R2P.role_ID = '$roleID'
-             AND C2R2P.people_ID = '$oldPeopleIDAltered';
+         WHERE c2r2p.composition_ID = '$compositionIDAltered'
+             AND c2r2p.role_ID = '$roleID'
+             AND c2r2p.people_ID = '$oldPeopleIDAltered';
              
 _END;
 
          $updateC2R2PResult = $conn->query($updateC2R2P);
 
          if ($debug) {
-             echo("\nupdateC2R2P= " . $updateC2R2P . "\n<br/>");
+             echo("\n updateC2R2P= " . $updateC2R2P . "\n<br/>");
              if (!$updateC2R2PResult) echo("\n Error description updateC2R2P: " . mysqli_error($conn) . "\n<br/>");
 
          } /*end debug*/

@@ -208,12 +208,12 @@ $bookQuery = <<<_END
 
           SELECT b.ID, b.title, b.tag1, b.tag2, b.book_vol, b.book_num, o.org_name, o.location, p.firstname, p.middlename, p.lastname, p.suffix, p.id, o.id
           FROM books AS b
-          LEFT JOIN B2R2P ON b.ID = B2R2P.book_ID
-          LEFT JOIN roles AS r_p ON r_p.ID = B2R2P.role_ID AND r_p.role_name = 'Editor'
-          LEFT JOIN people AS p ON p.ID = B2R2P.people_ID
-          LEFT JOIN B2R2O ON b.ID = B2R2O.book_ID
-          LEFT JOIN roles AS r_o ON r_o.ID = B2R2O.role_ID AND r_o.role_name = 'Publisher'
-          LEFT JOIN organizations AS o ON o.ID = B2R2O.org_ID
+          LEFT JOIN b2r2p ON b.ID = b2r2p.book_ID
+          LEFT JOIN roles AS r_p ON r_p.ID = b2r2p.role_ID AND r_p.role_name = 'Editor'
+          LEFT JOIN people AS p ON p.ID = b2r2p.people_ID
+          LEFT JOIN b2r2o ON b.ID = b2r2o.book_ID
+          LEFT JOIN roles AS r_o ON r_o.ID = b2r2o.role_ID AND r_o.role_name = 'Publisher'
+          LEFT JOIN organizations AS o ON o.ID = b2r2o.org_ID
 
           WHERE b.ID = '$bookIDAltered' ;
 

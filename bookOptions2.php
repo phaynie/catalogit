@@ -119,8 +119,8 @@ _END;
         
               SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
               FROM books AS b 
-              JOIN B2R2P ON b.ID = B2R2P.book_ID
-              JOIN people AS p ON p.ID= B2R2P.people_ID
+              JOIN b2r2p ON b.ID = b2r2p.book_ID
+              JOIN people AS p ON p.ID= b2r2p.people_ID
               WHERE b.ID = '$bookID';
 
 _END;
@@ -168,8 +168,8 @@ _END;
     
                   SELECT  o.ID, o.org_name, o.location
                   FROM books AS b 
-                  JOIN B2R2O ON b.ID = B2R2O.book_ID
-                  JOIN organizations AS o ON o.ID= B2R2O.org_ID
+                  JOIN b2r2o ON b.ID = b2r2o.book_ID
+                  JOIN organizations AS o ON o.ID= b2r2o.org_ID
                   WHERE b.ID = '$bookID';
 
 _END;
@@ -295,7 +295,7 @@ _END;
       </div> <!-- end container -->
 
       <div class="container-fluid bg-secondary text-light pb-3">
-        <h2 class="mb-3">None of these Book Options match</h2>
+        <h2 class="mb-3">If None of these Book Options match</h2>
         <form action="bookTitleSearch.php" method='post'>
           <input class="btn btn-light" type='submit' value='Try Another Book Search'/>
         </form><br/> <!-- end form -->
