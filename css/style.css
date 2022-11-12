@@ -6,6 +6,7 @@
 /*#ffa472  Creamsicle*/
 /*#EB6B42  burnt*/
 /*#2fa628  mossy green*/
+/*#6c757d  login-button border color bootstrap secondary gray-600*/
 
 .brandname {
   font-style:italic;
@@ -77,6 +78,9 @@ h5.mossaccent {
   .btn {
     font-size: 11px;
     padding: 4px 6px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: #6c757d;
   }
 }
 
@@ -84,6 +88,9 @@ h5.mossaccent {
   .btn {
     font-size: 12px;
     padding: 6px 12px;
+    border-width:2px;
+    border-style:outset;
+    border-color:#6c757d;
   }
 }
 
@@ -91,14 +98,23 @@ h5.mossaccent {
   .btn {
     font-size: 14px;
     padding: 8px 12px;
+    border-width:2px;
+    border-style:outset;
+    border-color:#6c757d;
   }
+ 
 }
 
 @media (min-width: 1200px) {
   .btn {
     padding: 10px 16px;
     font-size: 18px;
+    border-width:2px;
+    border-style:outset;
+    border-color:#6c757d;
   }
+  
+ 
 }
 
 
@@ -108,6 +124,9 @@ h5.mossaccent {
   .btn {
     font-size: 11px;
     padding: 4px 6px;
+    border-width:2px;
+    border-style:outset;
+    border-color:#6c757d;
   }
 }
 
@@ -115,6 +134,9 @@ h5.mossaccent {
   .btn {
     font-size: 12px;
     padding: 6px 12px;
+    border-width:2px;
+    border-style:outset;
+    border-color:#6c757d;
   }
 }
 
@@ -122,6 +144,9 @@ h5.mossaccent {
   .btn {
     font-size: 14px;
     padding: 8px 12px;
+    border-width:2px;
+    border-style:outset;
+    border-color:#6c757d;
   }
 }
 
@@ -129,6 +154,9 @@ h5.mossaccent {
   .btn {
     padding: 10px 16px;
     font-size: 18px;
+    border-width:2px;
+    border-style:outset;
+    border-color:#6c757d;
   }
 }
 
@@ -214,6 +242,147 @@ h5.mossaccent {
 p.editpage {
   font-size: 1.1rem;
 }
+
+
+.login-btn {
+  padding:1px 6px;
+  border-width: 2px;
+  border-style: outset;
+  border-color: #6c757d;
+}
+
+
+
+
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+     div.displayCard {
+         width:100%;
+     }
+     .welcomePageText1 {
+         font-size: 5vw;
+     }
+     .welcomePageText2 {
+         font-size: 3vw;
+     }
+      .bummerText1 {
+         font-size: 8vw;
+     }
+     .bummerText2 {
+         font-size: 5vw;
+     }
+     .bummerText3 {
+         font-size: 3vw;
+     }
+ }
+ 
+
+
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    div.displayCard {
+         width:100%;
+     }
+     .welcomePageText1 {
+         font-size: 5vw;
+     }
+     .welcomePageText2 {
+         font-size: 3vw;
+     }
+     .bummerText1 {
+         font-size: 5vw;
+     }
+     .bummerText2 {
+         font-size: 3vw;
+     }
+     .bummerText3 {
+         font-size: 2vw;
+     }
+
+  
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    div.displayCard {
+         width:75%;
+         margin-left:auto;
+         margin-right:auto;
+     }
+     .welcomePageText1 {
+         font-size: 4vw;
+     }
+     .welcomePageText2 {
+         font-size: 3vw;
+     }
+     .bummerText1 {
+         font-size: 4vw;
+     }
+     .bummerText2 {
+         font-size: 2vw;
+     }
+     .bummerText3 {
+         font-size: 1.5vw;
+     }
+     
+
+  
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    div.displayCard {
+         width:75%;
+         margin-left:auto;
+         margin-right:auto;
+     }
+     .welcomePageText1 {
+         font-size: 4vw;
+     }
+     .welcomePageText2 {
+         font-size: 2vw;
+     }
+     .bummerText1 {
+         font-size: 4vw;
+     }
+     .bummerText2 {
+         font-size: 2vw;
+     }
+     .bummerText3 {
+         font-size: 1.5vw;
+     }
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+     div.displayCard {
+         width:60%;
+         margin-left:auto;
+         margin-right:auto;
+     }
+     .welcomePageText1 {
+         font-size: 3vw;
+     }
+     .welcomePageText2 {
+         font-size: 2vw;
+     }
+     .bummerText1 {
+         font-size: 3vw;
+     }
+     .bummerText2 {
+         font-size: 2vw;
+     }
+     .bummerText3 {
+         font-size: 1.5vw;
+     }
+ 
+}
+
+
 
 
 

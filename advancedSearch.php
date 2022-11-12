@@ -4,7 +4,7 @@ include 'boilerplate.php';
 $debug_string = "";
 if($debug) {
    $debug_string .= 
- "<p>advancedSearch.php-37</p>";
+ "<p><strong>advancedSearch.php-37</strong></p>";
 }/*end debug*/
 
 
@@ -586,7 +586,7 @@ echo $debug_string;
 <div class="container-fluid bg-light pt-4 ">
     <h2 class="pb-4" >Advanced Search</h2>
     <h4 class="pb-4" >Add as many search criteria as you like</h4>
-    <form class="pb-4" action='advancedSearch.php' method='post'>
+    <form class="" action='advancedSearch.php' method='post'>
 
 
         <div class="row">
@@ -1238,7 +1238,7 @@ echo <<<_END
   <div class="row">
     <div class="col-md-6">
 <form class="form-group  pt-3 pb-3" action='introPage.php' method='post'>
-         <input class="btn btn-secondary" type='submit' value='Back to Site Options'/>
+         <input class="btn btn-secondary" type='submit' value='Back to Search Library'/>
       </form>
  </div> <!-- end col -->
   </div> <!-- end row -->

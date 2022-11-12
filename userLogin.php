@@ -5,7 +5,11 @@ if($debug) {
     echo '<p>userLogin-54</p>';
 }/*end debug*/
 
+$currentUserAdminStatus = "";
+$adminTab = "";
+
 include 'beginningNav.php';
+
 
 ?>
 
@@ -16,8 +20,13 @@ include 'beginningNav.php';
         <div class="col-sm-10 offset-sm-1 text-center">
             
 <?php
+$signup = "";
 
-if($_GET['signup'] == "success") {
+if(isset($_GET['signup'])){
+    $signup = $_GET['signup'];
+}
+
+if($signup == "success") {
    ?>
     <h1 class='text-center signupsuccess'>Signup successful!</h1>
 <?php
@@ -39,8 +48,11 @@ if($_GET['signup'] == "success") {
                         <input class="form-control" type="text" id="mailuid" name="mailuid" ><br>
                         <label for="pwd">Password</label>  
                         <input class="form-control" type="password" id="pwd" name="pwd" ><br>
-                        <button class="btn btn-secondary-outline btn-sm mb-4" type="submit" >Login</button><br>
+                        <button class="btn btn-secondary-outline  mb-4  login-btn" type="submit" >Login</button><br>
                         <input type='hidden' name='loginSubmit'  value='true'>
+                        <p class="welcomePageText2 card-text " style="font-size: 1rem;  text-align: center;" >Try it out!</p>
+                        <p class="welcomePageText2 card-text " style="color:red; text-align: center; font-size: 1rem;">User name: trialUser</p>
+                        <p class="welcomePageText2 card-text " style="color:#2fa628; text-align: center; font-size: 1rem;">Password: trialPassword</p>
                     </div> <!--form-group--->
                 </form>
                 

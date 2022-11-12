@@ -16,7 +16,7 @@ $debug_string = "";
 
 if($debug) {
 
-$debug_string .= "<p>addComposition2.php-13</p>\n";
+$debug_string .= "<p><strong>addComposition2.php-13</strong></p>\n";
 
 }/*end debug*/
 
@@ -70,6 +70,7 @@ $ASPDiffErr = "";
 $opusNumErr = "";
 $compNumErr = "";
 $sendEditComposition = "";
+$sendAddNewComposition = "";
 
 
 
@@ -1341,7 +1342,7 @@ if($opusNum == 'NULL') {
 
 
 <div class="container-fluid bg-light pt-4 ">
- <h2 class="pb-4" >Add Composition Information below</h2>
+ <h2 class="pb-4" >Add/Edit Composition Information below</h2>
   <form class="pb-4" action='addComposition2.php' method='post'>
    
 

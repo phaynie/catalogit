@@ -4,7 +4,7 @@ include 'boilerplate.php';
 if($debug) {
     echo <<<_END
 
-<p>displayComposition-14</p>
+<p><strong>displayComposition-14</strong></p>
 
 _END;
 
@@ -813,58 +813,61 @@ if($diffGen == 'none') {
 
 
 
-  <div class="container-fluid bg-light pt-4 pb-3">
-  <h3 class="display-4 pb-3  noPrint">Success!</h3>
-  <h3>Composition:</h3>
-  <h3 class="display-4">  $compName </h3><br/>
-  <h3 class=" noPrint">What would you like to do with this composition information?</h3>
-  </div>
+    <div class="container-fluid displayCard bg-dark  mt-4 pt-4 pb-5">
+        <div class="card">
+            <div class="card-body bg-light">
+                <div class="row  ">
+                    <div class=" col-md-6 pb-4">
+                        <h3 class="display-4 pb-3  noPrint bummerText1">Success!</h3>
+                        <h3 class="bummerText2">Composition:</h3>
+                        <h3 class="display-4 bummerText1">  $compName </h3><br/>
+                        <h3 class=" noPrint bummerText2">What would you like to do with this composition information?</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
  
 
-  <div class="container-fluid bg-light pt-4 pb-5">
-    <div class="row">
-      <div class="col-md-6 pb-4">
-       
+    <div class="container-fluid displayCard bg-dark pt-4 mb-4 pb-5">
+        <div class="card">
+            <div class="card-body bg-light">
+                <div class="row  ">
       
-     
-     
-    
-        <h3 class="pt-4">Composition Info</h3>
-        Composition Name:<strong> $compName </strong><br/>
-        Opus-Like: $opus <br/>
-        Opus No.: $opusNum <br/>
-        Composition No.: $compNum <br/>
-        Subtitle: $subTitle <br/>
-        Key Signature: $displayKeySigString <br/>
-        Movement: $movement <br/>
-        Era: $era <br/>
-        Genre: $displayGenreString<br/>
-        Voice: $voice <br/>  
-        Ensemble: $ensemble <br/>
-        Instrument: $displayInstrumentString <br/>
-        General difficulty: $diffGen <br/>
-        ASP difficulty: $diffASP<br/>
-        Composer Name: $displayComposerString <br/>
-        Arranger Name: $displayArrangerString <br/>
-        Lyricist Name: $displayLyricistString<br/>
-        Composition Location: <span style="color:#EB6B42;">$physCompositionLocNote</span><br/><br/><br/>
+                    <div class=" col-md-6 pb-4">
+
+                        <h3 class="pt-4">Composition Info</h3>
+                        Composition Name:<strong> $compName </strong><br/>
+                        Opus-Like: $opus <br/>
+                        Opus No.: $opusNum <br/>
+                        Composition No.: $compNum <br/>
+                        Subtitle: $subTitle <br/>
+                        Key Signature: $displayKeySigString <br/>
+                        Movement: $movement <br/>
+                        Era: $era <br/>
+                        Genre: $displayGenreString<br/>
+                        Voice: $voice <br/>  
+                        Ensemble: $ensemble <br/>
+                        Instrument: $displayInstrumentString <br/>
+                        General difficulty: $diffGen <br/>
+                        ASP difficulty: $diffASP<br/>
+                        Composer Name: $displayComposerString <br/>
+                        Arranger Name: $displayArrangerString <br/>
+                        Lyricist Name: $displayLyricistString<br/>
+                        Composition Location: <span style="color:#EB6B42;">$physCompositionLocNote</span><br/><br/><br/>
+                        
+                        <h3>Book Info</h3>
+                        Book Title: <strong>$bookTitle</strong> <br/>
+                        Tag 1: $bookTag1 <br/>
+                        Tag 2: $bookTag2 <br/>
+                        Book Volume: $bookVolume <br/>
+                        Book Number: $bookNumber <br/><br/>
+                        Editor Name: $displayEditorPeopleString<br/>
+                        Publisher Name: $displayPublisherOrgString<br/>
+                        Book Location: <span style="color:#EB6B42;">$physBookLocNote</span><br/>
+                        
+                    </div> <!-- end col -->
         
-        <h3>Book Info</h3>
-        Book Title: <strong>$bookTitle</strong> <br/>
-        Tag 1: $bookTag1 <br/>
-        Tag 2: $bookTag2 <br/>
-        Book Volume: $bookVolume <br/>
-        Book Number: $bookNumber <br/><br/>
-        Editor Name: $displayEditorPeopleString<br/>
-        Publisher Name: $displayPublisherOrgString<br/>
-        Book Location: <span style="color:#EB6B42;">$physBookLocNote</span><br/>
-        
-        
-        
-        
-        
-      </div> <!-- end col -->
-  
    
 
 _END;
@@ -873,38 +876,40 @@ _END;
 
 echo <<<_END
 
-      <div class="col-md-4 offset-lg-2 pb-4 pt-3">
-        <form action='editComposition.php' method='post'>
-          <input class="btn btn-secondary mb-3 noPrint" type='submit' value='Edit Composition' />
-          
-          <input  type='hidden' name="compositionID" value='$compositionID' />
-          <input type='hidden' name="bookID" value='$bookID' />
-          <input type='hidden' name="compName" value="{$fn_encode($compName)}" />
-          <input type='hidden' name="editComposition" value='true' />
-        </form>
+                    <div class="col-md-6  pb-4 pt-4">
+                        <form action='editComposition.php' method='post'>
+                            <input class="btn btn-secondary mb-3 mt-4 noPrint" type='submit' value='Edit Composition' />
+                            <input  type='hidden' name="compositionID" value='$compositionID' />
+                            <input type='hidden' name="bookID" value='$bookID' />
+                            <input type='hidden' name="compName" value="{$fn_encode($compName)}" />
+                            <input type='hidden' name="editComposition" value='true' />
+                        </form>
      
-        <form action='displayBook.php' method='post'>
-          <input  class="btn btn-secondary mb-3 noPrint" type='submit' value='Go to Display Book'/>
-          <input type='hidden' name="bookID" value='$bookID' />
-        </form>
-
-        <form action='introPage.php' method='post'>
-          <input  class="btn btn-secondary mb-3 noPrint" type='submit' value='Search or Add to the Library'/>
-        </form>
-
-        <form action='displayComposition.php' method='post'>
-          <button class="btn btn-secondary mb-3 noPrint" onclick="window.print()">Print Info for &quot; $compName &quot;</button>
-          <input type='hidden' name="compositionID" value='$compositionID'/>
-          <input type='hidden' name="compositionTitle" value="{$fn_encode($compName)}"/>
-          <input type='hidden' name="bookID" value='$bookID' />
-        </form>
-
-        <form action='exitMessage.php' method='post'>
-          <input  class="btn btn-secondary mb-3  noPrint" type='submit' value='Exit Library'/>
-        </form>
-      </div>  <!-- end col -->
-    </div>  <!-- end row -->
-  </div>  <!-- end container -->
+                        <form action='displayBook.php' method='post'>
+                          <input  class="btn btn-secondary mb-3 noPrint" type='submit' value='Go to Display Book'/>
+                          <input type='hidden' name="bookID" value='$bookID' />
+                        </form>
+                
+                        <form action='introPage.php' method='post'>
+                          <input  class="btn btn-secondary mb-3 noPrint" type='submit' value='Search or Add to the Library'/>
+                        </form>
+                
+                        <form action='displayComposition.php' method='post'>
+                          <button class="btn btn-secondary mb-3 noPrint" onclick="window.print()">Print Info for &quot; $compName &quot;</button>
+                          <input type='hidden' name="compositionID" value='$compositionID'/>
+                          <input type='hidden' name="compositionTitle" value="{$fn_encode($compName)}"/>
+                          <input type='hidden' name="bookID" value='$bookID' />
+                        </form>
+                
+                        <form action='exitMessage.php' method='post'>
+                          <input  class="btn btn-secondary mb-3  noPrint" type='submit' value='Exit Library'/>
+                        </form>
+                    </div>  <!-- end col -->
+                </div>  <!-- end row -->
+            </div> <!-- end cardbody -->
+        </div> <!-- end card -->
+    </div>  <!-- end container -->
+  </div>
 
 _END;
 

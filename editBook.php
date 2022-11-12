@@ -274,23 +274,31 @@ _END;
 
 
     echo <<<_END
-    <div class="container-fluid bg-secondary pt-3 pb-3 mt-3">
-    <h4 class="display-4 text-light text-center "> "$bookTitle"</h4><br/><br/>
+    <div class="container-fluid bg-secondary  pt-3 pb-3 mt-3">
+    <div class="card mt-4 mb-3 bg-secondary border-0">
+    <div class="card-body ">
+    <div class="row pt-4">
+    <div class="col-md-8 offset-md-2">
     
-  
-   <div class=" col-md-8 offset-md-2  ">
-   <h4 class="display-5 text-light  "> Add or Edit here</h4>
+   
+   <h4 class="display-4 text-light bummerText1 text-center "> "$bookTitle"</h4><br/><br/>
+   
+   <h4 class="display-5 bummerText2 text-center text-light  "> Add or Edit here</h4>
    <p class="editpage"> * Don't forget to finish adding your Editor and Publisher information here. </p>
     <p class="editpage"> * You will be returned to this page each time UNTIL you are finished editing and you click the "Done Editing" button. The editing you have done will be reflected in the book information you see on this page. Cool, right?</p>
     <p class="editpage"> * What do the buttons mean? Look farther below for explanation of each button.</p>
-    </div>
-      <div class="row"</div> 
-      
-        <div class=" col-md-4 offset-md-1">
+    </div> <!-- end col -->
+    </div> <!-- end row -->
+    </div> <!-- end card-body -->
+    </div> <!-- end card -->
+   
+    
+    <div class="card mt-4 mb-3">
+    <div class="card-body bg-light">
+    <div class="row pt-4">
+    <div class="col-md-4 offset-md-2">
+ 
        
-           <div class="card  mt-4 mb-3">
-              <div class="card-body bg-light">
-                 
                        Book Title: <strong>$bookTitle</strong> <br/>
                        Tag 1: $bookTag1 <br/>
                        Tag 2: $bookTag2 <br/>
@@ -299,21 +307,16 @@ _END;
                        Editor Name: $displayEditorPeopleString<br/>
                        Publisher Name: $displayPublisherOrgString <br/>
                        Book Location: <span style="color:#EB6B42;">$physBookLocNote</span><br/><br/>
-                      
-                      
-                                  
-                   
-              </div>  <!-- end card-body -->
-           </div>  <!-- end card -->
-        </div>  <!-- end col -->
         
+        </div> <!--end col-->
      
-        <div class="col-md-6">
-          
-               
+        
+        <div class="col-md-4">
+        
+        
                    <form class="mt-4" action='addBook.php' method='post'>
                       <div class="form-check">
-                          <input class="btn  btn-light button-Wrap" type='submit' value="Edit Existing General Book Information for &quot;{$fn_encode($bookTitle)}&quot; "/>
+                          <input class="btn  btn-secondary button-Wrap" type='submit' value="Edit Existing General Book Information for &quot;{$fn_encode($bookTitle)}&quot; "/>
                           <input type='hidden' name="bookID" value='$bookID'/>
                           <input type='hidden' name="editBook" value= 'true' />
                        </div>  <!-- end form-check -->      
@@ -321,7 +324,7 @@ _END;
                   
                    <br/><form action='delete.php' method='post'>
                        <div class="form-check">
-                            <input class="btn btn-light confirm deletebook_button button-Wrap" type="submit" value="Delete the book &quot;{$fn_encode($bookTitle)}&quot; from library "/>
+                            <input class="btn btn-secondary confirm deletebook_button button-Wrap" type="submit" value="Delete the book &quot;{$fn_encode($bookTitle)}&quot; from library "/>
                             <input type="hidden" name="editBook" value ="true" />
                             <input type="hidden" name="bookID" value= "$bookID" />
                             <input type="hidden" name="bookTitle" value="{$fn_encode($bookTitle)}"/>
@@ -331,7 +334,7 @@ _END;
         
                   <form class="mt-4" action='peopleOptions.php' method='post'>
                     <div class="form-check">
-                        <input class="btn  btn-light button-Wrap" type='submit' $disableERDEditor value="Edit/Replace/Delete Existing Editor Information for &quot;{$fn_encode($bookTitle)}&quot;"  />
+                        <input class="btn  btn-secondary button-Wrap" type='submit' $disableERDEditor value="Edit/Replace/Delete Existing Editor Information for &quot;{$fn_encode($bookTitle)}&quot;"  />
                         <input type='hidden' name="bookID" value='$bookID'/>
                         <input type='hidden' name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                         <input type='hidden' name="editBook" value= 'true' />
@@ -342,7 +345,7 @@ _END;
                   
                    <form class="mt-4" action='peopleSearch.php' method='post'>
                       <div class="form-check">
-                          <input class="btn  btn-light button-Wrap" type='submit' value="Add a NEW Editor to &quot;{$fn_encode($bookTitle)}&quot;"/>
+                          <input class="btn  btn-secondary button-Wrap" type='submit' value="Add a NEW Editor to &quot;{$fn_encode($bookTitle)}&quot;"/>
                           <input type='hidden' name="bookID" value='$bookID'/>
                           <input type='hidden' name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                           <input type='hidden' name="editBook" value= 'true' />
@@ -354,7 +357,7 @@ _END;
         
                   <form class="mt-4" action='orgOptions.php' method='post'>
                      <div class="form-check">
-                        <input class="btn  btn-light button-Wrap" type='submit' $disableERDPub value="Edit/Replace/Delete Existing Publisher Information for &quot;{$fn_encode($bookTitle)}&quot;"  />
+                        <input class="btn  btn-secondary button-Wrap" type='submit' $disableERDPub value="Edit/Replace/Delete Existing Publisher Information for &quot;{$fn_encode($bookTitle)}&quot;"  />
                         <input type='hidden' name="bookID" value='$bookID'/>
                         <input type='hidden' name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                         <input type='hidden' name="editBook" value= 'true' />
@@ -365,7 +368,7 @@ _END;
         
                   <form class="mt-4" action='orgSearch.php' method='post'>
                       <div class="form-check">
-                          <input class="btn  btn-light button-Wrap" type='submit' value="Add a NEW Publisher to &quot;{$fn_encode($bookTitle)}&quot;"/>
+                          <input class="btn  btn-secondary button-Wrap" type='submit' value="Add a NEW Publisher to &quot;{$fn_encode($bookTitle)}&quot;"/>
                           <input type='hidden' name="bookID" value='$bookID'/>
                           <input type='hidden' name="bookTitle" value="{$fn_encode($bookTitle)}"/>
                           <input type='hidden' name="editBook" value= 'true' />
@@ -375,24 +378,24 @@ _END;
                                                
                   <form class="mt-4" action='displayBook.php' method='post'>
                       <div class="form-check">
-                         <input class="btn  btn-light button-Wrap" type='submit' value="Done Editing &quot;{$fn_encode($bookTitle)}&quot;"/>
+                         <input class="btn  btn-secondary button-Wrap" type='submit' value="Done Editing &quot;{$fn_encode($bookTitle)}&quot;"/>
                          <input type='hidden' name="bookID" value='$bookID'/>
                       </div>  <!-- end form-check --> 
                   </form>  <!-- end form --><br><br><br>
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-            
+       
         </div>  <!-- end col -->
+        </div>  <!-- end row -->
+        </div>  <!-- end card-body -->
+        </div>  <!-- end card -->
+        </div>  <!-- end container -->
+         
         
-        
-     <div class="col-md-10 offset-md-1  mt-4">
-     <h4 class="display-5 text-light  mb-4 "> Some Button Explanation</h4>
+        <div class="container-fluid bg-secondary pt-4 mt-4 mb-4"
+        <div class="card mt-4 mb-3">
+        <div class="card-body bg-secondary">
+        <div class="row">
+        <div class="col-md-10 offset-md-1  ">
+     <h4 class="display-5 text-light  mt-4 mb-4 "> Some Button Explanation . . .</h4>
     <p class="editpage"> * <b>Edit Existing General Book Information:</b>   This will allow you to correct a mis-spelling or incorrect information that needs to be changed everywhere this book is found through-out the library. </p>
     <p class="editpage">* <b>Edit Existing Editor Information:</b> This will allow you to correct a mis-spelling or incorrect information that needs to be changed everywhere this editor/person is found through-out the library. </p>
      <p class="editpage">* <b>Replace Existing Editor for this book:</b> If an Editor does exist, but you would like to replace it with a different person. </p>
@@ -411,15 +414,10 @@ _END;
      <p class="editpage">* <b>Edit the Physical location for your Book:</b> Change your location anytime it makes sense. </p>
           <p class="editpage">* <b>DONE EDITING:</b> This ends your editing session and takes you to the book display page where you can choose what to do next.  </p><br/><br/>
      
-   
-    
-    
-    </div>
-         
-        
-        
-        
+    </div> <!--end col-->
      </div>  <!-- end row -->
+     </div>  <!-- card-body -->
+     </div>  <!-- card -->
  </div> <!-- end container -->
 
 _END;

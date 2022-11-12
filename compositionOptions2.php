@@ -4,7 +4,7 @@ include 'boilerplate.php';
 if($debug) {
     echo <<<_END
 
-  <p>compositionOptions2.php-11</p>
+  <p><strong>compositionOptions2.php-11</strong></p>
 
 _END;
 
@@ -155,20 +155,26 @@ _END;
 
             echo <<<_END
       
-      <div class="container-fluid bg-secondary pt-4 pb-2"> 
-        <h3 class= "display-4 text-light" > Bummer! </h3>
-        <h3>No composition with the title of  "$searchCompositionTitle" was found. <br/><br/><br/></h3> 
-        <h4 class="text-light pb-3">Choose an option below <br/></h4>
-        <form action='compositionSearch.php' method='post'>
-          <button class="btn btn-light" type='submit'>Try another Composition Search</button><br/>
-          <input type="hidden" name="bookID" value="$bookID"> 
-        </form><br/>
-        <form action='bookTitleSearch.php' method='post'>
-          <button class="btn btn-light" type='submit'>Add New Composition Information</button><br>
-          <span class="text-light"> We'll start by finding a book for your composition. </span><br/>
-          <input type="hidden" name="bookID" value="$bookID">
-          <input type='hidden' name='addNewComposition' value='true'/>    
-        </form>
+      <div class="container-fluid bg-light pt-4 pb-2"> 
+          <div class="displayCard bg-secondary pt-4 pb-2 px-4">
+            <h3 class= "display-4 text-light bummerText1" > Bummer! </h3>
+            <h3 class="bummerText2">No composition with the title of  "$searchCompositionTitle" was found. <br/><br/><br/></h3> 
+            <h4 class="text-light pb-3">Choose an option below <br/></h4>
+            <form action='compositionSearch.php' method='post'>
+              <button class="btn btn-light" type='submit'>Try another Composition Search</button><br/>
+              <input type="hidden" name="bookID" value="$bookID"> 
+            </form><br/>
+            <form action='bookTitleSearch.php' method='post'>
+              <button class="btn btn-light" type='submit'>Add New Composition Information</button><br>
+              <span class="text-light"> We'll start by finding a book for your composition. </span><br/>
+              <input type="hidden" name="bookID" value="$bookID">
+              <input type='hidden' name='addNewComposition' value='true'/>    
+            </form>
+            <form action='introPage.php' method='post'>
+              <button class="btn btn-light" type='submit'>Back to Search Library</button><br/>
+            </form><br/>
+          </div>
+      </div>
     
       
 _END;
@@ -182,10 +188,13 @@ _END;
 
             echo <<<_END
         
-            <div class="container-fluid bg-secondary pt-4 pb-2"> 
+            <div class="container-fluid bg-secondary pt-4 pb-2">
+                <div class="displayCard">
                   <h5 class="text-light pb-2">Choose a composition below. Then click on the "Choose this Composition" button to continue.</h5>
+                </div>
             </div> <!--end container-->
             <div class="container-fluid bg-secondary pt-4 pb-2">
+                
 _END;
 
             /*COMPOSITION LOOP*/
@@ -902,10 +911,10 @@ _END;
 
                 /*Here we hold all of the information about each composition belonging to a specific book. Because it is in our for loop, each composition found with the bookID we are working with, will have this block of information displayed on our page.*/
                 echo <<<_END
-         
-                <div class="row">
+         <div class="displayCard">
+                <div class=" row">
              
-                <div class="col-sm-6"> 
+                <div class=" col-sm-6"> 
                     <div class="card  mb-3">
                      <div class="card-body bg-light">
                      
@@ -941,31 +950,34 @@ _END;
                        
                         </div> <!-- end card body -->
                         </div> <!-- end card -->
+                   
                         </div> <!-- end column -->
                     
                  
                 
-                      <div class="col-sm-6"> 
-                    <div class="card   mb-3">
-                     <div class="card-body pt-3 bg-light">
-                  <div class="form-check pt-3">
-                       
-                        
-                           Book Title: <strong>$bookTitle</strong> <br/>
-                           Tag 1: $bookTag1 <br/>
-                           Tag 2: $bookTag2 <br/>
-                           Book Volume: $bookVolume <br/>
-                           Book Number: $bookNumber <br/>
-                           Editor Name: $displayEditorPeopleString<br/>
-                           Publisher Name: $displayPublisherOrgString <br/>
-                           Book Location: <span style="color:#EB6B42;">$physBookLocNote</span><br/><br/>
-                      
-                          </div> <!-- end form check -->
-                          </div> <!-- end card body -->
-                           </div> <!-- end card -->
-                        </div> <!-- end column -->
+                          <div class=" col-sm-6"> 
+                            <div class="card   mb-3">
+                             <div class="card-body pt-4 bg-light">
+                                <div class="form-check pt-3">
+                           
+                            
+                                   Book Title: <strong>$bookTitle</strong> <br/>
+                                   Tag 1: $bookTag1 <br/>
+                                   Tag 2: $bookTag2 <br/>
+                                   Book Volume: $bookVolume <br/>
+                                   Book Number: $bookNumber <br/>
+                                   Editor Name: $displayEditorPeopleString<br/>
+                                   Publisher Name: $displayPublisherOrgString <br/>
+                                   Book Location: <span style="color:#EB6B42;">$physBookLocNote</span><br/><br/>
+                          
+                                 </div> <!-- end form check -->
+                              </div> <!-- end card body -->
+                            </div> <!-- end card -->
+                          </div> <!-- end column -->
                         
                 </div> <!--end row-->
+                </div><!--end displayCard-->
+               
                 
                 
                 
@@ -979,17 +991,23 @@ _END;
             echo <<<_END
 
             <div class="container-fluid bg-secondary text-light pb-3 mt-4">
-                <h2 class="mb-3">None of these Composition Options match</h2>
-                <form action="CompositionSearch.php" method='post'>
-                    <input class="btn btn-light" type='submit' value='Try Another Composition Search'/><br/><br/>
-                    <input type='hidden' name='bookID' value="$bookID"/>
-                </form> <!-- end form -->
-        
-                <form action="bookTitleSearch.php" method='post'>
-                  <input class="btn btn-light" type='submit' value='Add New Composition Info'/>
-                  <input type='hidden' name='addNewComposition' value='true'/>
-                  <input type='hidden' name='bookID' value="$bookID"/>
-                </form> <!-- end form -->
+                <div class="displayCard">
+                    <h5 class="mb-3">If none of these Composition Options match</h5>
+                    <form action="compositionSearch.php" method='post'>
+                        <input class="btn btn-light" type='submit' value='Try Another Composition Search'/>
+                        <input type='hidden' name='bookID' value="$bookID"/>
+                    </form> <!-- end form -->
+            
+                    <form action="bookTitleSearch.php" method='post'>
+                      <input class="btn btn-light" type='submit' value='Add New Composition Info'/>
+                      <input type='hidden' name='addNewComposition' value='true'/>
+                      <input type='hidden' name='bookID' value="$bookID"/>
+                    </form> <!-- end form -->
+                    
+                    <form action="introPage.php" method='post'>
+                        <input class="btn btn-light" type='submit' value='Back to Search Library'/>
+                    </form> <!-- end form -->
+                <div> <!--end displayCard-->
             </div> <!-- end container -->
       
 

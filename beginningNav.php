@@ -2,9 +2,78 @@
 <?php
 $welcomeLink = "";
 $disabled = "";
-if(!isset($_SESSION['userId'])) {
+
+if(!isset($_SESSION['userID'])) {
     $disabled = 'disabled';
     $welcomeLink = "<a class='nav-link ' href='index.php'>Welcome!</a>";
+    
+}
+
+/*ADMIN STATUS*/
+$adminTab = "";
+$sessionUserID = "";
+$currentUserName = "";
+$currentUserAdmin = "";
+$adminStatus = ""; 
+
+
+/*Trying to address warning Undefined Array key "userId in beg nav.php on line 20"
+$sessionUserID = $_SESSION['userId']; 
+foreach ($sessionUserID as $key => $value){
+    echo "key = " . $key . "<br>
+    value = " . $value . "<br>";
+}*/
+
+
+
+$adminStatusQuery = "SELECT *
+FROM users
+WHERE idUsers = $sessionUserID";
+
+$adminStatusQueryResult = $conn->query($adminStatusQuery);
+
+
+if ($debug) {
+   echo 'adminStatusQuery = ' . $adminStatusQuery . '<br/><br/>';
+    if (!$adminStatusQueryResult) {
+        $queryError = "\n Error description: adminStatusQuery " . mysqli_error($conn) . "\n<br/>";
+        
+    }
+}/*end debug*/
+
+if ($adminStatusQueryResult) {
+    $numberOfAdminStatusQueryRows = $adminStatusQueryResult->num_rows;
+
+    for ($j = 0; $j < $numberOfAdminStatusQueryRows; ++$j) {
+        $row = $adminStatusQueryResult->fetch_array(MYSQLI_NUM);
+
+        $currentUserID = $row[0];
+        $currentUserName = $row[1];
+        $currentUserEmail = $row[2];
+        $currentUserPwd = $row[3];
+        $currentUserAdminStatus = $row[4];
+
+    }
+    if($currentUserAdminStatus == false){
+    $adminStatus = "User";
+    }elseif($currentUserAdminStatus == true){
+    $adminStatus = "Admin";
+    $adminTab = "";
+    }
+    if($debug){
+    echo "currentUserName = " . $currentUserName . "<br>";
+    echo "currentUserAdminStatus = " . $currentUserAdminStatus . "<br>";
+    echo "adminStatus = " . $adminStatus . "<br>";
+    }
+
+    if($adminStatus == 'Admin' ) {
+        $adminTab = "
+        
+        <li class='nav-item'>
+                        <a class='nav-link $disabled' href='simpleAdmin.php'>Admin-it</a>
+                    </li>";
+
+    }
 }
 
 
@@ -29,6 +98,7 @@ echo<<<_END
                     <li class="nav-item ">
                         <a class="nav-link $disabled" href="introPage.php">Home</a>
                     </li>
+                    <span> $adminTab </span>
                     <li class="nav-item">
                         <a class="nav-link $disabled" href="introPage.php">Search-it</a>
                     </li>

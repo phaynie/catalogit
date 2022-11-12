@@ -330,14 +330,14 @@ _END;
         if ($compositionIDFound) {
             echo <<<_END
                 
-                <div class="container-fluid bg-light pt-4 pb-5 ">
+                <div class="container-fluid bg-light pt-4 ">
                     <div class="row justify-content-center">
-                        <div class="col-md-10  pb-4">
+                        <div class="col-md-10 bg-dark pb-2">
                             <div class="card  mt-4 mb-3 ">
                                 <div class="card-body bg-light  ">
                                   
-                                    <h3 class="display-4 pt-4 pb-4 text-center"> Your Search Results </h3>
-                                    <h5> You searched for: </h5>
+                                    <h3 class="display-4 pt-4 pb-4 bummerText1 text-center"> Your Search Results </h3>
+                                    <h5 class="bummerText2"><strong> You searched for: </strong> </h5>
                                     $searchString <br/><br/>
                                  
 
@@ -589,14 +589,14 @@ _END;
                                                 <div class="col-md-3 text-left ">
                                                      <a href="displayComposition.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&advSearch=true">$compositionName</a>
                                                 </div>
-                                                <div class="col-md-2  "> 
+                                                <div class="col-md-3  "> 
                                                      <h6 >$createdby </h6> 
                                                 </div>
-                                                <div class="col-md-3 text-right"> 
+                                                <div class="col-md-3 "> 
                                                     $personChunk 
                                                     
                                                 </div>
-                                                <div class="col-md-2  ">
+                                                <div class="col-md-1  ">
                                                 </div>                                               
                                             </div><br/> <!--end row-->
                                                    
@@ -645,20 +645,28 @@ _END;
 
 echo <<<_END
 
-            <div class="container-fluid bg-secondary text-light pt-4 pb-4 ">
+            <div class="container-fluid bg-light   pb-4 ">
+            <div class="row justify-content-center ">
+            <div class="col-md-10 pb-4 bg-dark">
+            <div class="card mt-2 mb-3">
+            <div class="card-body bg-light">
             
                <br><form action="introPage.php" method='post'>
-                    <input class="btn btn-light noPrint" type='submit' value='Search Library'/>
+                    <input class="btn btn-secondary noPrint" type='submit' value='Search Library'/>
                 </form> <!-- end form --><br>
                 
                <form action="displayAdvSearch.php" method='post'>
-                    <input class="btn btn-light noPrint" onclick="window.print()" type='submit' $notFound value='Print Search Results'/>     
+                    <input class="btn btn-secondary noPrint" onclick="window.print()" type='submit' $notFound value='Print Search Results'/>     
                 </form> <!-- end form --><br>
         
                 <form action="advancedSearch.php" method='post'>
-                  <input class="btn btn-light noPrint" type='submit' value='Try Another Advanced Search'/>
+                  <input class="btn btn-secondary noPrint" type='submit' value='Try Another Advanced Search'/>
                   <input type='hidden' name='advSearch' value= 'true' />
                 </form> <!-- end form -->
+                </div> <!-- end card-body -->
+                </div> <!-- end card -->
+                </div> <!-- end col -->
+                </div> <!-- end row -->
             </div> <!-- end container -->
  
 

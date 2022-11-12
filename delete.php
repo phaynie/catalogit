@@ -666,7 +666,7 @@ if($editComposition == 'true') {
     if ($deletePeople == 'true') {
         $deletePeopleQuery =
             <<<_END
-            DELETE FROM c2r29
+            DELETE FROM c2r2p
             WHERE c2r2p.composition_ID = '$compositionIDAltered'
             AND c2r2p.role_ID = '$roleIDAltered'
             AND c2r2p.people_ID = '$oldPeopleIDAltered';

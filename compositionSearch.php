@@ -144,7 +144,7 @@ echo <<<_END
 
 
 <div class="container-fluid bg-light pt-4 pb-5" >
-      <div class="col-md-6">
+      <div class="displayCard col-md-6">
       <form class="form-group  pt-3 " action='compositionSearch.php' method='post'>
           Composition Title: $searchCompositionTitleErr
           <input class="form-control mb-3 " autocomplete="off"  type="text" name="searchCompositionTitle" id="searchCompositionTitle" autofocus placeholder = "Please enter a Composition Title" />

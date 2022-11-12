@@ -61,10 +61,32 @@ $peopleLastName_value = "";
 $peopleSuffix_value = "";
 $alreadyExistsErr = "";
 $findPerson = "";
+$findComposer = "";
 $submit = "";
+
+$role = "";
+$sendAddNew = "";
+$sendEdit = "";
+$sendEditBook = "";
+$sendReplace = "";
+$sendEditComposition = "";
+$sendFindPerson = "";
+$sendFindComposer = "";
+$formAction = "";
+$page = "";
+$from = "";
+$searchPeopleLastName = "";
+$sendSearchPeopleLastName = "";
+$personID = "";
+$sendSearchPeopleID = "";
 
 
 /*assigning variable names to post and get values*/
+
+if(isset($_REQUEST['searchPeopleLastName']))  {
+    $searchPeopleLastName = $_REQUEST['searchPeopleLastName'];
+    $sendSearchPeopleLastName = "<input type='hidden' name='searchPeopleLastName' value= '$searchPeopleLastName' />";
+}
 
 if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
     $bookID = $_REQUEST['bookID'];
@@ -158,6 +180,11 @@ if(isset($_REQUEST['peopleSuffix'])) {
 
 if(isset($_REQUEST['findPerson'])) {
     $findPerson = $_REQUEST['findPerson'];
+    $role = "person";
+}
+
+if(isset($_REQUEST['findComposer'])) {
+    $findComposer = $_REQUEST['findComposer'];
 }
 
 
@@ -167,8 +194,20 @@ if(isset($_REQUEST['submit'])) {
     $submit = $_REQUEST['submit'];
 }
 
+if(isset($_REQUEST['from'])) {
+    $from = $_REQUEST['from'];
+}
+
 
 /*logic*/
+/*to help us direct our back to buttons*/
+if($from == 'peopleOptions') {
+    $backToPage = "People Options";
+}elseif($from == 'displayPeople') {
+    $backToPage = "displayPeople";
+}
+
+
 if($addNewEditor == 'true') {
     $sendAddNew = "<input type='hidden' name='addNewEditor' value= 'true' />";
     $role = "Editor";
@@ -230,8 +269,19 @@ if($editBook == 'true') {
     $page = 'Edit Composition Options';
 }elseif($findPerson == 'true') {
     $sendFindPerson = "<input type='hidden' name='findPerson' value ='true' />";
-    $formAction = "displayComposition.php";
-    $page = 'Display Person';
+        if($from == 'peopleOptions'){
+        $formAction = "peopleOptions.php";
+        $backToPage = 'People Options';
+        }elseif($from == 'displayPerson'){
+            $formAction = 'displayPerson';
+            $backToPage = 'Display Person';
+        }
+
+    
+}elseif($findComposer == 'true') {
+    $sendFindComposer = "<input type='hidden' name='findComposer' value ='true' />";
+    $formAction = "introPage.php";
+    $page = 'Search Library';
 }
 
 
@@ -511,7 +561,7 @@ if($submit == "") {
         $peopleQuery = <<<_END
 
       SELECT p.firstname, p.middlename, p.lastname, p.suffix
-      FROM people AS pF
+      FROM people AS p
       WHERE p.ID = $oldPeopleIDAltered;
 
 _END;
@@ -553,7 +603,7 @@ _END;
 
 echo <<<_END
    
-<div class="container-fluid bg-light pt-4 pb-4">
+<div class="container-fluid displayCard bg-light pt-4 pb-4">
 $instructionalText
 
 <p> if your $role last name begins with von or van please included it as part of the last name. ex. van Beethoven</p>
@@ -599,14 +649,20 @@ $alreadyExistsErr<br/>
                 $sendEditBook
                 $sendEditComposition  
                 $sendEdit
-                $sendFindPerson    
+                $sendFindPerson
+                $sendFindComposer
               </form><!-- end form -->
         
         <form action='$formAction' method='post'>
         
-            <input class="btn btn-secondary mt-4" type='submit' value='Back to $page '/><br/>
+            <input class="btn btn-secondary mt-4" type='submit' value='Back to $backToPage '/><br/>
             <input type='hidden' name="bookID" value="{$bookID}"/>
             <input type='hidden' name="compositionID" value="{$compositionID}"/>
+            <input type='hidden' name="personID" value="{$personID}"/>
+            $sendFindPerson
+            $sendFindComposer
+            $sendSearchPeopleLastName
+            
         </form>
     </div> <!-- end col -->
   </div> <!-- end row -->

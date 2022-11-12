@@ -216,17 +216,19 @@ _END;
    if($bookTitleNotFound)  {
        echo <<<_END
       
-      <div class="container-fluid bg-secondary pt-4 pb-3">
-        <h2 class="display-4 text-light">Bummer!<br/></h2>
-        <h2 class="text-dark">No Book with the title of "$searchBookTitle" was found. <br/><br/></h2>
-            
-        <form action='bookTitleSearch.php' method='post'>
-          <input class="btn btn-light" type='submit' value='Try another Book Title Search' />
-        </form><br/> <!-- end form -->
-        <form action="addBook.php" method='post'>
-          <input class="btn btn-light" type='submit' value='Add New Book Info'/>
-          <input type='hidden' name='addNewBook' value='true'/>
-        </form> <!-- end form -->
+      <div class="container-fluid bg-light pt-4 pb-3">
+        <div class="displayCard bg-secondary px-4 pt-4 pb-3">
+            <h2 class="display-4 text-light bummerText1 ">Bummer!<br/></h2>
+            <h2 class="text-dark bummerText2">No Book with the title of "$searchBookTitle" was found. <br/><br/></h2>
+                
+            <form action='bookTitleSearch.php' method='post'>
+              <input class="btn btn-light" type='submit' value='Try another Book Title Search' />
+            </form> <!-- end form -->
+            <form action="addBook.php" method='post'>
+              <input class="btn btn-light" type='submit' value='Add New Book Info'/>
+              <input type='hidden' name='addNewBook' value='true'/>
+            </form> <!-- end form -->
+        </div>
        
       </div>  <!-- end container -->
                        
@@ -271,9 +273,12 @@ _END;
 
         echo <<<_END
   
-      <div class="container-fluid bg-secondary pt-4 pb-3">
+      <div class="container-fluid bg-secondary pt-2 pb-3">
+        <div class="displayCard bg-secondary pt-4 pb-3">
           <h5 class="text-light pb-2">Click on the "Choose this Book" button to continue.</h5>
-          <div class="card mb-3" >
+        </div>  
+       
+          <div class="card displayCard mb-3" >
               <div class="card-body bg-light">
                 <form action='displayBook.php' method='post'>
                     <div class="form-check">
@@ -292,18 +297,21 @@ _END;
                 </form><br/> <!-- form -->
               </div> <!-- end card-body -->   
           </div>  <!-- end card -->
+         
       </div> <!-- end container -->
 
-      <div class="container-fluid bg-secondary text-light pb-3">
-        <h2 class="mb-3">If None of these Book Options match</h2>
-        <form action="bookTitleSearch.php" method='post'>
-          <input class="btn btn-light" type='submit' value='Try Another Book Search'/>
-        </form><br/> <!-- end form -->
-        <form action="addBook.php" method='post'>
-          <input class="btn btn-light" type='submit' value='Add New Book Info'/>
-          <input type='hidden' name='addNewBook' value='true'/>
-
-        </form> <!-- end form -->
+      <div class="container-fluid  bg-secondary text-light pb-3">
+          <div class="displayCard bg-secondary text-light pb-3">
+            <h5 class="mb-3">If None of these Book Options match</h5>
+            <form action="bookTitleSearch.php" method='post'>
+              <input class="btn btn-light my-2" type='submit' value='Try Another Book Search'/>
+            </form> <!-- end form -->
+            <form action="addBook.php" method='post'>
+              <input class="btn btn-light" type='submit' value='Add New Book Info'/>
+              <input type='hidden' name='addNewBook' value='true'/>
+    
+            </form> <!-- end form -->
+          </div><!-- end displayCard -->
       </div> <!-- end container -->
 
 _END;

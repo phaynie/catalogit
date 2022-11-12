@@ -51,6 +51,7 @@ $debug_string = "";
 $bookTitleErr = "";
 $bookNumErr = "";
 $sendEditBook = "";
+$sendAddNewBook = "";
 
 /*Set local variables and assign the REQUEST values coming from the form or previous page. */
 
@@ -357,45 +358,44 @@ if(isset($_REQUEST['bookVol']) && $_REQUEST['bookNum'] !== "") {
 /* - create the form, using whatever is in the prepop variables for the values and the error messages*/
 
 echo <<<_END
-<div class="container-fluid bg-light pt-4 pb-4">
+<div class="container-fluid displayCard bg-light pt-4 pb-4">
   $primaryText
-  <div class="row">
-    <div class="col-md-6">
-      <form action='addBook.php' method='post'>
-        <div class="form-group pt-4">
-
+  <div class="row ">
+    <div class="col-md-10">
+        <form action='addBook.php' method='post'>
+            <div class="form-group pt-4">
+              Book Title: $bookTitleErr <input class="form-control " type='text' name='bookTitle' autofocus value = "{$fn_encode($bookTitle)}"/>
+              <br/>Tag 1: <input class="form-control"  type="text" name="tag1" value = "{$fn_encode($tag1)}"/>
+              <br/>Tag 2: <input class="form-control"  type="text" name="tag2" value = "{$fn_encode($tag2)}"/>
+              <br/>Book Volume: <input class="form-control"  type="text" name="bookVol" value = "{$fn_encode($bookVol)}"/>
+              <br/>  
+              Book Number: $bookNumErr <input class="form-control"  type="text" name="bookNum"value = "{$fn_encode($bookNum)}" placeholder="{$placeHolder}"/>
+              <br/>Book Location: <input class="form-control"  type="text" name="physBookLocNote" value = "{$fn_encode($physBookLocNote)}"/>
           
-          Book Title: $bookTitleErr <input class="form-control " type='text' name='bookTitle' autofocus value = "{$fn_encode($bookTitle)}"/>
-          <br/>Tag 1: <input class="form-control"  type="text" name="tag1" value = "{$fn_encode($tag1)}"/>
-          <br/>Tag 2: <input class="form-control"  type="text" name="tag2" value = "{$fn_encode($tag2)}"/>
-          <br/>Book Volume: <input class="form-control"  type="text" name="bookVol" value = "{$fn_encode($bookVol)}"/>
-          <br/>  
-          Book Number: $bookNumErr <input class="form-control"  type="text" name="bookNum"value = "{$fn_encode($bookNum)}" placeholder="{$placeHolder}"/>
-          <br/>Book Location: <input class="form-control"  type="text" name="physBookLocNote" value = "{$fn_encode($physBookLocNote)}"/>
-     
+       
           
-            <br/><input class="btn btn-secondary" type='submit' value='Submit new information'/>
+            <br><br/><input class="btn btn-secondary" type='submit' value='Submit new information'/>
             <input type='hidden' name='submit' value='true'/>
             <input type='hidden' name='bookID' value='$bookID'/>
             $sendEditBook
             $sendAddNewBook
         
         </div>  <!-- end form-group -->
-      </form> <!-- end form -->
-       <form action='introPage.php' method='post'>
-        <div class="form-group pt-4">
-            <br/><input class="btn btn-secondary" type='submit' value='Back to Intro Page Options'/>
+        </form> <!-- end form -->
+        <form action='introPage.php' method='post'>
+            <div class="form-group ">
+                <br/><input class="btn btn-secondary" type='submit' value='Back to Search Library'/>
             
         
-        </div>  <!-- end form-group -->
-      </form> <!-- end form -->
+            </div>  <!-- end form-group -->
+        </form> <!-- end form -->
 
 _END;
 
 
  if($editBook == 'true') {
      echo <<<_END
-      <form action='editBook.php' method='post'>
+    <form action='editBook.php' method='post'>
         <div class="form-group pt-4">
             <br/><input class="btn btn-secondary" type='submit' value='Back to Edit Book'/>
             <input type='hidden' name='bookID' value='$bookID'/>
@@ -403,7 +403,7 @@ _END;
             $sendAddNewBook
         
         </div>  <!-- end form-group -->
-      </form> <!-- end form -->
+    </form> <!-- end form -->
 
 _END;
 

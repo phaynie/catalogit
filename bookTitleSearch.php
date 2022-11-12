@@ -157,7 +157,7 @@ echo <<<_END
 
 
 <div class="container-fluid bg-light pt-4 pb-5" >
-      <div class="col-md-6">
+      <div class=" displayCard col-md-6">
       $instructionalText 
       <form class="form-group  pt-3 pb-3" action='bookTitleSearch.php' method='post'>
           Book Title: $searchBookTitleErr

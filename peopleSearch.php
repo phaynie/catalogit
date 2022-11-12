@@ -19,7 +19,7 @@ include 'boilerplate.php';
 $debug_string = "";
 
 if($debug) {
-    $debug_string .= "peopleSearch.php<br/>";
+    $debug_string .= "<strong>peopleSearch.php</strong><br/>";
 }/*end debug*/
 
 
@@ -201,13 +201,13 @@ if($addNewEditor=='true') {
 }elseif($findComposer =='true') {
     $role = "Composer";
     $findComposerContinueText = "<h3 >Let's see if our Composer already exists</h3>";
-    $page = "Intro Page";
+    $page = "Search Library";
     $formAction = "introPage.php";
     $sendFindComposer = "<input type='hidden' name='findComposer' value='true'/>";
 }elseif($findPerson =='true') {
     $role = "Person";
     $findPersonContinueText = "<h3 >Let's see if our Person already exists</h3>";
-    $page = "Intro Page";
+    $page = "Search Library";
     $formAction = "introPage.php";
     $sendFindPerson = "<input type='hidden' name='findPerson' value='true'/>";
 }
@@ -301,10 +301,10 @@ if($submit == 'true') {
 
     /*Validation over*/
     /*washes this user data*/
-if (!$validationFailed ) {
+    if (!$validationFailed ) {
      /*Don't need to wash var here. It will not be used until next page*/
 
-/*oldPeopleID needs to be sent when replacing editor*/
+    /*oldPeopleID needs to be sent when replacing editor*/
         header('Location: peopleOptions.php?bookID=' . $bookID . '&compName=' . $compName . '&compositionID=' . $compositionID . '&oldPeopleID=' . $oldPeopleID . '&editBook=' . $editBook . '&editComposition=' . $editComposition . '&replaceEditor=' . $replaceEditor . '&replaceComposer=' . $replaceComposer . '&replaceArranger=' . $replaceArranger . '&replaceLyricist=' . $replaceLyricist . '&addNewEditor=' . $addNewEditor . '&addNewComposer=' . $addNewComposer . '&addNewArranger=' . $addNewArranger . '&addNewLyricist=' . $addNewLyricist . '&searchPeopleLastName=' . $searchPeopleLastName . '&findComposer=' . $findComposer. '&findPerson=' . $findPerson);
         exit();
     } /* End if (!$validationFailed )*/
@@ -314,8 +314,9 @@ if (!$validationFailed ) {
 
 if($debug) {
     echo $debug_string;
+    echo $personsArray;
 }
-echo $personsArray;
+
 
 
 
@@ -329,6 +330,7 @@ echo $personsArray;
 
 /*it is possible we will also need to search for the Composition info. This may be wanted if we are not editing. We have not explored this yet.
 or, in this new scenario we wont need this book search at all. Will there ever be a situation where we want the book info displayed on this page?*/
+
     if($editBook !== "true" && $editComposition !== "true" && $findComposer !== "true" && $findPerson !== "true") {
         $bookQuery  = <<<_END
 
@@ -371,15 +373,15 @@ _END;
 
 
 
-        /*Retrieving all editor info for this book
-       I will also be creating a comma separated list to use in the displayed information, except my comma will be a break and Editor Name: */
-        $editorPeopleQuery = <<<_END
-
-      SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
-      FROM books AS b 
-      JOIN b2r2p ON b.ID = b2r2p.book_ID
-      JOIN people AS p ON p.ID= b2r2p.people_ID
-      WHERE b.ID = '$bookIDAltered';
+            /*Retrieving all editor info for this book
+           I will also be creating a comma separated list to use in the displayed information, except my comma will be a break and Editor Name: */
+            $editorPeopleQuery = <<<_END
+    
+          SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
+          FROM books AS b 
+          JOIN b2r2p ON b.ID = b2r2p.book_ID
+          JOIN people AS p ON p.ID= b2r2p.people_ID
+          WHERE b.ID = '$bookIDAltered';
 
 _END;
 
@@ -421,15 +423,15 @@ _END;
 
 
 
-        /*Retrieving all publisher info for this book
-       I will also be creating a comma separated list to use in the displayed information, except my comma will be a break and Publisher Name: */
-        $publisherOrgQuery = <<<_END
-
-      SELECT  o.ID, o.org_name, o.location
-      FROM books AS b 
-      JOIN b2r2o ON b.ID = b2r2o.book_ID
-      JOIN organizations AS o ON o.ID= b2r2o.org_ID
-      WHERE b.ID = '$bookIDAltered';
+            /*Retrieving all publisher info for this book
+           I will also be creating a comma separated list to use in the displayed information, except my comma will be a break and Publisher Name: */
+            $publisherOrgQuery = <<<_END
+    
+          SELECT  o.ID, o.org_name, o.location
+          FROM books AS b 
+          JOIN b2r2o ON b.ID = b2r2o.book_ID
+          JOIN organizations AS o ON o.ID= b2r2o.org_ID
+          WHERE b.ID = '$bookIDAltered';
 
 _END;
 
@@ -473,8 +475,8 @@ _END;
 
         echo <<<_END
 
-    <div class="container-fluid bg-light pt-4 pb-5">
-      <h3 class="display-4 pb-3">So Far So Good!</h3>
+    <div class="container-fluid bg-light displayCard pt-4 pb-5">
+      <h3 class="display-4 pb-3 bummerText1">So Far So Good!</h3>
       $informationText
      
     </div> <!-- end container--> 
@@ -527,7 +529,7 @@ _END;
     echo <<<_END
 
     <div class="container-fluid bg-light pt-4 pb-5" >
-      <div class="col-md-6">
+      <div class="displayCard col-md-6">
         <form action="peopleSearch.php" method="post">
           $replacePeopleContinueText
           $addNewPeopleContinueText

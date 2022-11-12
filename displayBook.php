@@ -74,15 +74,20 @@ $bookIDAltered = strip_before_insert($conn, $washPostVar);
 
 echo <<<_END
 
-  <div class="container-fluid bg-light pt-4 pb-3">
-   <h3 class="display-4 noPrint">Success!</h3>
-   <h3 class="noPrint">What would you like to do with this book?</h3>
-   </div>
+  <div class="container-fluid displayCard bg-dark pt-4 mt-4 pb-3">
+    <div class="card">
+        <div class="card-body bg-light">
+            <div class="row">
+                <div class="col-md-6 pb-4">
+                   <h3 class="display-4 noPrint bummerText1">Success!</h3>
+                   <h3 class="noPrint bummerText2">What would you like to do with this book?</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
 
    
-    
-  
-
 _END;
 
   if (strlen($bookIDAltered)  > 0) {
@@ -264,22 +269,21 @@ _END;
 
       echo <<<_END
 
-  <div class="container-fluid bg-light pt-4 pb-5">
-    <div class="row">
-      <div class="col-md-6  pb-4">
-        <div class="card  mt-4 mb-3">
-           <div class="card-body bg-light">
-     
-        <h3>$bookTitle</h3><br/><br/>
-         Book Title:<strong> $bookTitle </strong><br/>
-         Tag 1: $bookTag1<br/>
-         Tag 2: $bookTag2<br/>
-         Book Volume: $bookVolume<br/>
-         Book Number: $bookNumber<br/>
-         Editor Name: $displayEditorPeopleString<br/>
-         Publisher Name: $displayPublisherOrgString <br/>
-         Book Location:<span style="color:#EB6B42;">  $physBookLocNote</span><br/><br/>
-       
+  <div class="container-fluid displayCard bg-dark pt-4 mb-4 pb-5">
+    <div class="card">
+        <div class="card-body bg-light">
+            <div class="row">
+                <div class="col-md-6  pb-4">
+                    <h3 class="pt-4">$bookTitle</h3><br/><br/>
+                     Book Title:<strong> $bookTitle </strong><br/>
+                     Tag 1: $bookTag1<br/>
+                     Tag 2: $bookTag2<br/>
+                     Book Volume: $bookVolume<br/>
+                     Book Number: $bookNumber<br/>
+                     Editor Name: $displayEditorPeopleString<br/>
+                     Publisher Name: $displayPublisherOrgString <br/>
+                     Book Location:<span style="color:#EB6B42;">  $physBookLocNote</span><br/><br/>
+                   
   
 _END;
 
@@ -318,8 +322,8 @@ if($debug) {
         echo <<<_END
   
      
-        <h2 class=" text-light">Bummer!<br/><br/></h2>
-        <h5 class='text-dark'>No Compositions from  "$bookTitle" were found. <br/><br/></h5>
+                    <h2 class=" text-light">Bummer!<br/><br/></h2>
+                    <h5 class='text-dark'>No Compositions from  "$bookTitle" were found. <br/><br/></h5>
       
   
 _END;
@@ -331,7 +335,7 @@ _END;
         echo <<<_END
 
       
-        <h5 class=" pt-4">Compositions from $bookTitle </h5>
+                    <h5 class=" pt-4">Compositions from $bookTitle </h5>
       
 _END;
 
@@ -344,16 +348,16 @@ _END;
             $physCompositionLocNote = $row[3];
 
 
-            echo <<<_END
-                 
-             <form action='displayComposition.php' method='post'>
-                       
-                <input class="btn  btn-link" type="submit" value="{$fn_encode($compName)}" />
-                <input type="hidden" name="compositionID" value= "$compositionID" />
-                <input type="hidden" name="bookID" value= "$bookID" />
-                <input type="hidden" name="compName" value= "{$fn_encode($compName)}" />
-                       
-             </form> <!-- form -->        
+                    echo <<<_END
+                         
+                     <form action='displayComposition.php' method='post'>
+                               
+                        <input class="btn  btn-link" type="submit" value="{$fn_encode($compName)}" />
+                        <input type="hidden" name="compositionID" value= "$compositionID" />
+                        <input type="hidden" name="bookID" value= "$bookID" />
+                        <input type="hidden" name="compName" value= "{$fn_encode($compName)}" />
+                               
+                     </form> <!-- form -->        
                  
 _END;
 
@@ -378,52 +382,52 @@ _END;
 
       echo<<<_END
 
-    </div>  <!-- end card-body -->
-           </div>  <!-- end card -->  
-    </div> <!-- end col -->
+</div> <!-- end col -->
+    
+    
 
 _END;
 
     echo <<<_END
 
    
-    <div class="col-md-4  pb-4 pt-3 mt-4">
-       
-      <form action='editBook.php' method='post'>
-        <input class="btn btn-secondary mb-3 noPrint" type='submit' value='Edit this Book'/>
-        <input type='hidden' name="bookID" value='$bookID'/>
-        <input type='hidden' name="editBook" value= true />
-        
-      </form>
+                <div class="col-md-6  pb-4 pt-4 ">
+                    <form action='editBook.php' method='post'>
+                      <input class="btn btn-secondary mb-3 mt-4 noPrint" type='submit' value='Edit this Book'/>
+                      <input type='hidden' name="bookID" value='$bookID'/>
+                      <input type='hidden' name="editBook" value= true />
+                    </form>
       
-      <form action='addComposition2.php' method='post'>
-        <input class="btn btn-secondary mb-3 noPrint" type='submit' value='Add a Composition to this book'/>
-        <input type='hidden' name="bookID" value='$bookID'/>
-        <input type='hidden' name="addNewComposition" value='true'/>
-       
-      </form>
-
-      <form action='bookTitleSearch.php' method='post'>
-        <input class="btn btn-secondary mb-3 noPrint" type='submit' value='Add a New Book to the Library'/>
-      </form>
-
-      <form action='introPage.php' method='post'>
-        <input class="btn btn-secondary mb-3 noPrint" type='submit' value='Search the Library'/>
-      </form>
-
-      <form action='displayBook.php' method='post'>
-        <button class="btn btn-secondary mb-3 noPrint" onclick="window.print()">Print this book information</button>
-        <input type='hidden' name="bookID" value='$bookID'/> 
-        <input type='hidden' name="printBook" value="true"/>       
-      </form>
-
-      <form action='exitMessage.php' method='post'>
-        <input class="btn btn-secondary mb-3 noPrint" type='submit' value='Exit Library'/>
-      </form>
-     
-    </div> <!-- end col -->
-  </div> <!-- end row -->
+                    <form action='addComposition2.php' method='post'>
+                        <input class="btn btn-secondary mb-3 noPrint" type='submit' value='Add a Composition to this book'/>
+                        <input type='hidden' name="bookID" value='$bookID'/>
+                        <input type='hidden' name="addNewComposition" value='true'/>
+                       
+                    </form>
+                
+                    <form action='bookTitleSearch.php' method='post'>
+                        <input class="btn btn-secondary mb-3 noPrint" type='submit' value='Add a New Book to the Library'/>
+                    </form>
+                
+                    <form action='introPage.php' method='post'>
+                        <input class="btn btn-secondary mb-3 noPrint" type='submit' value='Search the Library'/>
+                    </form>
+                
+                    <form action='displayBook.php' method='post'>
+                        <button class="btn btn-secondary mb-3 noPrint" onclick="window.print()">Print this book information</button>
+                        <input type='hidden' name="bookID" value='$bookID'/> 
+                        <input type='hidden' name="printBook" value="true"/>       
+                    </form>
+                
+                    <form action='exitMessage.php' method='post'>
+                        <input class="btn btn-secondary mb-3 noPrint" type='submit' value='Exit Library'/>
+                    </form>
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+        </div> <!-- end card-body -->
+    </div> <!-- end card -->
 </div>  <!-- end container -->
+
 
 _END;
 

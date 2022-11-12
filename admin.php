@@ -1,6 +1,6 @@
 <?php
 include 'boilerplate.php';
-$admin_debug = false;
+$admin_debug = true;
 
 // following is example code for dumping a source database to a file
 // then changing the names in the source dump to the target database

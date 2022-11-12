@@ -4,7 +4,7 @@ include 'boilerplate.php';
 if($debug) {
   echo <<<_END
 
-<p>editComposition-17</p>
+<p><strong>editComposition-17</strong></p>
 
 _END;
 
@@ -859,9 +859,9 @@ if($diffGen == 'none') {
 echo <<<_END
 
  <div class="container-fluid bg-secondary pt-3 pb-3 mt-3">
-    <h4 class="display-4 text-light text-center  ">$compName (edit)</h4>
-    <h3 class = "text-center">What would you like to do with this Composition info?</h3>
-    <h4 class = "text-center">Have you finished adding the Composer, Arranger and Lyricist?</h4>
+    <h4 class="display-4 text-light bummerText1 text-center  ">$compName (edit)</h4>
+    <h3 class = "text-center bummerText2">What would you like to do with this Composition info?</h3>
+    <h4 class = "text-center bummerText3">Have you finished adding the Composer, Arranger and Lyricist?</h4>
    
         <div class="card  mt-4 mb-3">
               <div class="card-body bg-light">
@@ -909,7 +909,7 @@ echo <<<_END
             
                 <form action='addComposition2.php' method='post'>
                  
-                        <input class="btn btn-block btn-secondary mb-3 button-Wrap "  type="submit" value="Edit Existing General Composition Info for &quot;{$fn_encode($compName)}&quot;" />
+                        <input class="btn btn-block btn-secondary mb-3 button-Wrap "   type="submit" value="Edit Existing General Composition Info for &quot;{$fn_encode($compName)}&quot;" />
                         <input type="hidden" name="bookID" value="$bookID" />
                         <input type="hidden" name="compName" value="{$fn_encode($compName)}" />
                         <input type="hidden" name="bookTitle" value="{$fn_encode($bookTitle)}"/>

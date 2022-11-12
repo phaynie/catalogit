@@ -1,13 +1,23 @@
 <?php
 
 $debug = true;
+$debug_string = "";
 
 // setcookie("XDEBUG_SESSION_START", "PHPSTORM");
 
   session_start();
   
+$sessionUserId = "";
+
+if(isset($_SESSION['userId'])){
+    $sessionUserId = $_SESSION['userId'];
+}
+
+
 if($debug) {
     print_r($_SESSION);
+    echo "<br>Session userId = " . $sessionUserId . "<br>";
+   
 } /*end debug*/
 
 /*if no session user id and not already on index.php or answer it, or about it, or contact it, then redirect to index.php*/
@@ -38,6 +48,12 @@ if(!isset($_SESSION['userId'])  &&  !in_array($pageName, $openPage, TRUE )) {
 
 
 include 'not4git.php';
+
+$adminStatus = ""; 
+$sessionUserID = ""; 
+
+
+
 
 
 if($debug) {
@@ -74,7 +90,7 @@ if($debug) {
 
 //Establish variables to create connection to the db
 $hn = 'localhost';  //server name
-$un = 'cleverbu_stagingCatalogit';       //user name
+$un = 'cleverbu_dbuser';       //user name
 /*password comes from not4git.php*/
 
   $conn = new mysqli($hn, $un, $pw, $db);
