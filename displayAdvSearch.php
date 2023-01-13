@@ -203,39 +203,28 @@ if($advSearch == 'true') {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     $searchString = "";
 
 
     $advIDSearchQuery = "
     SELECT distinct c.ID, c.comp_name
-FROM compositions AS c
-LEFT JOIN c2i ON c.ID = c2i.composition_ID
-LEFT JOIN instruments as i ON c2i.instrument_ID = i.ID
-LEFT JOIN c2r2p AS C2R2Pcomp ON c.ID = C2R2Pcomp.composition_ID
-LEFT JOIN people AS pComp ON C2R2Pcomp.people_ID = pComp.ID
-LEFT JOIN c2r2p AS C2R2Parr ON c.ID = C2R2Parr.composition_ID
-LEFT JOIN people AS pArr ON C2R2Parr.people_ID = pArr.ID
-LEFT JOIN c2r2p AS C2R2Plyr ON c.ID = C2R2Plyr.composition_ID
-LEFT JOIN people AS pLyr ON C2R2Plyr.people_ID = pLyr.ID
-LEFT JOIN c2k ON c.ID = c2k.composition_ID 
-LEFT JOIN c2g ON c.ID = c2g.composition_ID
-LEFT JOIN c2d AS C2D_A ON c.ID = C2D_A.composition_ID 
-LEFT JOIN difficulties AS d_A ON C2D_A.difficulty_ID = d_A.ID
-LEFT JOIN c2d AS C2D_G ON c.ID = C2D_G.composition_ID 
-LEFT JOIN difficulties AS d_G ON C2D_G.difficulty_ID = d_G.ID
-
-WHERE 1=1 ";
+        FROM compositions AS c
+        LEFT JOIN c2i ON c.ID = c2i.composition_ID
+        LEFT JOIN instruments as i ON c2i.instrument_ID = i.ID
+        LEFT JOIN c2r2p AS C2R2Pcomp ON c.ID = C2R2Pcomp.composition_ID
+        LEFT JOIN people AS pComp ON C2R2Pcomp.people_ID = pComp.ID
+        LEFT JOIN c2r2p AS C2R2Parr ON c.ID = C2R2Parr.composition_ID
+        LEFT JOIN people AS pArr ON C2R2Parr.people_ID = pArr.ID
+        LEFT JOIN c2r2p AS C2R2Plyr ON c.ID = C2R2Plyr.composition_ID
+        LEFT JOIN people AS pLyr ON C2R2Plyr.people_ID = pLyr.ID
+        LEFT JOIN c2k ON c.ID = c2k.composition_ID 
+        LEFT JOIN c2g ON c.ID = c2g.composition_ID
+        LEFT JOIN c2d AS C2D_A ON c.ID = C2D_A.composition_ID 
+        LEFT JOIN difficulties AS d_A ON C2D_A.difficulty_ID = d_A.ID
+        LEFT JOIN c2d AS C2D_G ON c.ID = C2D_G.composition_ID 
+        LEFT JOIN difficulties AS d_G ON C2D_G.difficulty_ID = d_G.ID
+        
+        WHERE 1=1 ";
 
 
     if (strlen($searchBoxGeneralCompTitleAltered) > 0) {
@@ -311,16 +300,19 @@ WHERE 1=1 ";
         $compositionIDNotFound = ($numberOfAdvSearchIDQueryRows === 0);
 
 
-
-
         if ($compositionIDNotFound) {
             $notFound = 'disabled';
+            
 
             echo <<<_END
-            <div class="container-fluid bg-secondary text-light pb-3 ">
-            <h3 class="display-4 pt-4 pb-4"> No Results for your Search</h3>
-            <h5> You searched for: </h5>
-                 $searchString
+            <div class="container-fluid bg-light pb-3 ">
+                <div class="row">
+                    <div class="col-md-6 displayCard mt-4 pb-4 px-4 bg-secondary">
+                        <h3 class="display-4 pt-4 pb-4 text-light"> No Results for your Search</h3>
+                        <h5 class="text-light"> You searched for: </h5>
+                 <p class="infoColor">$searchString</p>
+                    </div> <!-- end col -->
+                </div> <!-- end row -->
             </div> <!-- end container -->
 
 _END;
@@ -332,12 +324,12 @@ _END;
                 
                 <div class="container-fluid bg-light pt-4 ">
                     <div class="row justify-content-center">
-                        <div class="col-md-10 bg-dark pb-2">
+                        <div class="col-md-6 bg-dark pb-2">
                             <div class="card  mt-4 mb-3 ">
                                 <div class="card-body bg-light  ">
                                   
                                     <h3 class="display-4 pt-4 pb-4 bummerText1 text-center"> Your Search Results </h3>
-                                    <h5 class="bummerText2"><strong> You searched for: </strong> </h5>
+                                    <h5 class="bummerText2 "><strong> You searched for: </strong> </h5>
                                     $searchString <br/><br/>
                                  
 
@@ -398,53 +390,50 @@ _END;
 
 
 
-                        $advSearchComposerQuery = "
-                       SELECT p.firstname, p.lastname, p.ID
-                        FROM compositions AS c
-                        JOiN c2r2p ON c.ID = c2r2p.composition_ID
-                        JOIN people AS p ON c2r2p.people_ID = p.ID AND c2r2p.role_ID='1'
-                        
-                        Where c.ID = '$compositionID';
-                        
-                        
-                        ";
+                $advSearchComposerQuery = "
+                   SELECT p.firstname, p.lastname, p.ID
+                    FROM compositions AS c
+                    JOiN c2r2p ON c.ID = c2r2p.composition_ID
+                    JOIN people AS p ON c2r2p.people_ID = p.ID AND c2r2p.role_ID='1'
+                    Where c.ID = '$compositionID';
+                    ";
 
-                        $advSearchComposerQueryResult = $conn->query($advSearchComposerQuery);
+                $advSearchComposerQueryResult = $conn->query($advSearchComposerQuery);
 
-                        if ($debug) {
-                            echo 'advSearchComposerQuery =' . $advSearchComposerQuery . '</br>';
-                            if (!$advSearchComposerQueryResult) echo("\n Error description query advSearchComposerQuery: " . mysqli_error($conn) . "\n<br/>");
-                        }
+                if ($debug) {
+                    echo 'advSearchComposerQuery =' . $advSearchComposerQuery . '</br>';
+                    if (!$advSearchComposerQueryResult) echo("\n Error description query advSearchComposerQuery: " . mysqli_error($conn) . "\n<br/>");
+                }
 
                 failureToExecute ($advSearchComposerQueryResult, 'S533', 'Select ' );
 
 
                 $advancedComposerSearchNotFound = "";
 
-                        if ($advSearchComposerQueryResult) {
-                            $numberOfAdvSearchComposerQueryRows = $advSearchComposerQueryResult->num_rows;
-                            $advancedComposerSearchFound = ($numberOfAdvSearchComposerQueryRows > 0);
-                            $advancedComposerSearchNotFound = ($numberOfAdvSearchComposerQueryRows === 0);
+                    if ($advSearchComposerQueryResult) {
+                        $numberOfAdvSearchComposerQueryRows = $advSearchComposerQueryResult->num_rows;
+                        $advancedComposerSearchFound = ($numberOfAdvSearchComposerQueryRows > 0);
+                        $advancedComposerSearchNotFound = ($numberOfAdvSearchComposerQueryRows === 0);
 
-                            $composerString = "";
-                            $personChunk="";
-                            $createdby = 'composed by';
+                        $composerString = "";
+                        $personChunk="";
+                        $createdby = 'composed by';
 
-                            for ($i = 0; $i < $numberOfAdvSearchComposerQueryRows; ++$i) {
-                                $row = $advSearchComposerQueryResult->fetch_array(MYSQLI_NUM);
-
-
-                                $composerFirstName = $row[0];
-                                $composerLastName = $row[1];
-                                $composerID = $row[2];
-
-                                $composerString = $composerFirstName .  " " . $composerLastName;
-                                $personChunk .= "<a href=\"displayPerson.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&composerID=${composerID}&peopleID=${composerID}&advSearch=true\">$composerString</a></br> ";
-                            } /* for loop ending*/
-                            $personChunk = substr($personChunk, 0, strrpos($personChunk, "</br> " ));
+                        for ($i = 0; $i < $numberOfAdvSearchComposerQueryRows; ++$i) {
+                            $row = $advSearchComposerQueryResult->fetch_array(MYSQLI_NUM);
 
 
-                        } /*END if ($advSearchComposerQueryResult)*/
+                            $composerFirstName = $row[0];
+                            $composerLastName = $row[1];
+                            $composerID = $row[2];
+
+                            $composerString = $composerFirstName .  " " . $composerLastName;
+                            $personChunk .= "<a href=\"displayPerson.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&composerID=${composerID}&peopleID=${composerID}&advSearch=true\">$composerString</a></br> ";
+                        } /* for loop ending*/
+                        $personChunk = substr($personChunk, 0, strrpos($personChunk, "</br> " ));
+
+
+                    } /*END if ($advSearchComposerQueryResult)*/
 
 
 
@@ -454,184 +443,159 @@ _END;
        /* ***** trying this out**** */
 
 
-                        if ($advancedComposerSearchNotFound) {
-                            $advSearchArrangerQuery = "
-                            
+                    if ($advancedComposerSearchNotFound) {
+                        $advSearchArrangerQuery = "
+                        
                         SELECT p.firstname, p.lastname, p.ID
                         FROM compositions AS c
                         JOiN c2r2p ON c.ID = c2r2p.composition_ID
                         JOIN people AS p ON c2r2p.people_ID = p.ID AND c2r2p.role_ID='2'
                         
                         Where c.ID = '$compositionID';";
-
-
-                            $advSearchArrangerQueryResult = $conn->query($advSearchArrangerQuery);
-
-                            if ($debug) {
-                                echo 'advSearchArrangerQuery =' . $advSearchArrangerQuery . '</br>';
-                                if (!$advSearchArrangerQueryResult) echo("\n Error description query advSearchArrangerQuery: " . mysqli_error($conn) . "\n<br/>");
-                            }
-
-                            failureToExecute ($advSearchArrangerQueryResult, 'S534', 'Select ' );
-
-
-
-                            if ($advSearchArrangerQueryResult) {
-                                $numberOfAdvSearchArrangerQueryRows = $advSearchArrangerQueryResult->num_rows;
-                                $advancedArrangerSearchFound = ($numberOfAdvSearchArrangerQueryRows > 0);
-                                $advancedArrangerSearchNotFound = ($numberOfAdvSearchArrangerQueryRows === 0);
-                                /*creating an arrangerID to send to next page for $role definition*/
-
-
-                                $ArrangerString = "";
-                                $personChunk = "";
-                                $createdby = 'arranged by';
-
-                                for ($i = 0; $i < $numberOfAdvSearchArrangerQueryRows; ++$i) {
-                                    $row = $advSearchArrangerQueryResult->fetch_array(MYSQLI_NUM);
-
-
-                                    $arrangerFirstName = $row[0];
-                                    $arrangerLastName = $row[1];
-                                    $arrangerID = $row[2];
-
-                                    $arrangerString = $arrangerFirstName . " " . $arrangerLastName;
-                                    $personChunk .= "<a href=\"displayPerson.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&arrangerID=${arrangerID}&peopleID=${arrangerID}&advSearch=true\">$arrangerString</a></br> ";
-                                } /* for loop ending*/
-                                $personChunk = substr($personChunk, 0, strrpos($personChunk, "</br> "));
-
-
-                            } /*END if ($advSearchArrangerQueryResult)*/
-                        } /*END if ($advancedComposerSearchNotFound)*/
-
-
-
-
-
-                        if($advancedComposerSearchNotFound && $advancedArrangerSearchNotFound) {
-                            $advSearchLyricistQuery = "
-                                            
-                                        SELECT p.firstname, p.lastname, p.ID
-                                        FROM compositions AS c
-                                        JOiN c2r2p ON c.ID = c2r2p.composition_ID
-                                        JOIN people AS p ON c2r2p.people_ID = p.ID AND c2r2p.role_ID='3'
-                                        
-                                        Where c.ID = '$compositionID';";
-
-
-                            $advSearchLyricistQueryResult = $conn->query($advSearchLyricistQuery);
-
-                            if ($debug) {
-                                echo 'advSearchLyricistQuery =' . $advSearchLyricistQuery . '</br>';
-                                if (!$advSearchLyricistQueryResult) echo("\n Error description query advSearchLyricistQuery: " . mysqli_error($conn) . "\n<br/>");
-                            }
-
-                            failureToExecute ($advSearchLyricistQueryResult, 'S535', 'Select ' );
-
-
-                            $advancedLyricistSearchNotFound = "";
-
-                            if ($advSearchLyricistQueryResult) {
-                                $numberOfAdvSearchLyricistQueryRows = $advSearchLyricistQueryResult->num_rows;
-                                $advancedLyricistSearchFound = ($numberOfAdvSearchLyricistQueryRows > 0);
-                                $advancedLyricistSearchNotFound = ($numberOfAdvSearchLyricistQueryRows === 0);
-
-                                $LyricistString = "";
-                                $personChunk = "";
-                                $createdby = 'words by';
-
-
-                                for ($i = 0; $i < $numberOfAdvSearchLyricistQueryRows; ++$i) {
-                                    $row = $advSearchLyricistQueryResult->fetch_array(MYSQLI_NUM);
-
-
-                                    $lyricistFirstName = $row[0];
-                                    $lyricistLastName = $row[1];
-                                    $lyricistID = $row[2];
-
-                                    $lyricistString = $lyricistFirstName . " " . $lyricistLastName;
-                                    $personChunk .= "<a href=\"displayPerson.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&lyricistID=${lyricistID}&peopleID=${lyricistID}&advSearch=true\">$lyricistString</a></br> ";
-                                } /* for loop ending*/
-                                $personChunk = substr($personChunk, 0, strrpos($personChunk, "</br> "));
-
-
-                            } /*END if ($advSearchLyricistQueryResult)*/
-                        } /*END if ($advancedComposerSearchNotFound && $advancedArrangerSearchNotFound)*/
+    
+    
+                        $advSearchArrangerQueryResult = $conn->query($advSearchArrangerQuery);
+    
+                        if ($debug) {
+                            echo 'advSearchArrangerQuery =' . $advSearchArrangerQuery . '</br>';
+                            if (!$advSearchArrangerQueryResult) echo("\n Error description query advSearchArrangerQuery: " . mysqli_error($conn) . "\n<br/>");
+                        }
+    
+                        failureToExecute ($advSearchArrangerQueryResult, 'S534', 'Select ' );
+    
+    
+    
+                        if ($advSearchArrangerQueryResult) {
+                            $numberOfAdvSearchArrangerQueryRows = $advSearchArrangerQueryResult->num_rows;
+                            $advancedArrangerSearchFound = ($numberOfAdvSearchArrangerQueryRows > 0);
+                            $advancedArrangerSearchNotFound = ($numberOfAdvSearchArrangerQueryRows === 0);
+                            /*creating an arrangerID to send to next page for $role definition*/
+    
+    
+                            $ArrangerString = "";
+                            $personChunk = "";
+                            $createdby = 'arranged by';
+    
+                            for ($i = 0; $i < $numberOfAdvSearchArrangerQueryRows; ++$i) {
+                                $row = $advSearchArrangerQueryResult->fetch_array(MYSQLI_NUM);
+    
+                                $arrangerFirstName = $row[0];
+                                $arrangerLastName = $row[1];
+                                $arrangerID = $row[2];
+    
+                                $arrangerString = $arrangerFirstName . " " . $arrangerLastName;
+                                $personChunk .= "<a href=\"displayPerson.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&arrangerID=${arrangerID}&peopleID=${arrangerID}&advSearch=true\">$arrangerString</a></br> ";
+                            } /* for loop ending*/
+                            $personChunk = substr($personChunk, 0, strrpos($personChunk, "</br> "));
+    
+    
+                        } /*END if ($advSearchArrangerQueryResult)*/
+                    } /*END if ($advancedComposerSearchNotFound)*/
 
 
 
 
 
+                    if($advancedComposerSearchNotFound && $advancedArrangerSearchNotFound) {
+                        $advSearchLyricistQuery = "
+                            SELECT p.firstname, p.lastname, p.ID
+                            FROM compositions AS c
+                            JOiN c2r2p ON c.ID = c2r2p.composition_ID
+                            JOIN people AS p ON c2r2p.people_ID = p.ID AND c2r2p.role_ID='3'
+                            Where c.ID = '$compositionID';";
 
+                        $advSearchLyricistQueryResult = $conn->query($advSearchLyricistQuery);
+
+                        if ($debug) {
+                            echo 'advSearchLyricistQuery =' . $advSearchLyricistQuery . '</br>';
+                            if (!$advSearchLyricistQueryResult) echo("\n Error description query advSearchLyricistQuery: " . mysqli_error($conn) . "\n<br/>");
+                        }
+
+                        failureToExecute ($advSearchLyricistQueryResult, 'S535', 'Select ' );
+
+
+                        $advancedLyricistSearchNotFound = "";
+
+                        if ($advSearchLyricistQueryResult) {
+                            $numberOfAdvSearchLyricistQueryRows = $advSearchLyricistQueryResult->num_rows;
+                            $advancedLyricistSearchFound = ($numberOfAdvSearchLyricistQueryRows > 0);
+                            $advancedLyricistSearchNotFound = ($numberOfAdvSearchLyricistQueryRows === 0);
+
+                            $LyricistString = "";
+                            $personChunk = "";
+                            $createdby = 'words by';
+
+
+                            for ($i = 0; $i < $numberOfAdvSearchLyricistQueryRows; ++$i) {
+                                $row = $advSearchLyricistQueryResult->fetch_array(MYSQLI_NUM);
+
+
+                                $lyricistFirstName = $row[0];
+                                $lyricistLastName = $row[1];
+                                $lyricistID = $row[2];
+
+                                $lyricistString = $lyricistFirstName . " " . $lyricistLastName;
+                                $personChunk .= "<a href=\"displayPerson.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&lyricistID=${lyricistID}&peopleID=${lyricistID}&advSearch=true\">$lyricistString</a></br> ";
+                            } /* for loop ending*/
+                            $personChunk = substr($personChunk, 0, strrpos($personChunk, "</br> "));
+
+
+                        } /*END if ($advSearchLyricistQueryResult)*/
+                    } /*END if ($advancedComposerSearchNotFound && $advancedArrangerSearchNotFound)*/
 
 
 
 /*  **** Trying this out ***  */
 
+                    echo <<<_END
+                    
+                        <div class="row mt-4 pt-4">
+                            <div class="col-md-2  ">
+                            </div>
+                            <div class="col-md-3 text-left ">
+                                 <a href="displayComposition.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&advSearch=true">$compositionName</a>
+                            </div>
+                            <div class="col-md-3  "> 
+                                 <h6 >$createdby </h6> 
+                            </div>
+                            <div class="col-md-3 "> 
+                                $personChunk 
+                                
+                            </div>
+                            <div class="col-md-1  ">
+                            </div>                                               
+                        </div><br/> <!--end row-->
+                               
 
-
-
-
-
-
-
-
-
-
-
-
-                                echo <<<_END
-                                                   
-                
-                                            <div class="row mt-4 pt-4">
-                                                <div class="col-md-2  ">
-                                                </div>
-                                                <div class="col-md-3 text-left ">
-                                                     <a href="displayComposition.php?compositionID=${compositionID}&instType=${instType}&bookID=${bookID}&advSearch=true">$compositionName</a>
-                                                </div>
-                                                <div class="col-md-3  "> 
-                                                     <h6 >$createdby </h6> 
-                                                </div>
-                                                <div class="col-md-3 "> 
-                                                    $personChunk 
-                                                    
-                                                </div>
-                                                <div class="col-md-1  ">
-                                                </div>                                               
-                                            </div><br/> <!--end row-->
-                                                   
-                                           
-                                                  
-                            
 _END;
 
 
 
 
 
-            }/*End CompositionID for Loop*/
-            echo <<<_END
+                }/*End CompositionID for Loop*/
+                echo <<<_END
                 
-                                        </div> <!-- END card body-->
-                                    </div> <!-- END card-->
-                                </div> <!-- END col-->
-                            </div> <!-- END row-->
-                        </div> <!-- END container-->
-       
+                </div> <!-- END card body-->
+            </div> <!-- END card-->
+        </div> <!-- END col-->
+    </div> <!-- END row-->
+</div> <!-- END container-->
+
             
                 
                     
 
 _END;
-            if ($compositionIDNotFound) {
-                $notFound = 'disabled';
-
-                echo <<<_END
-                        <div class="container-fluid bg-secondary text-light pb-3">
-                        <h3 class="display-4 pt-4 pb-4"> No Results for your Search</h3>
-                        <h5> You searched for: </h5>
-                         $searchString
-                        </div>
+                if ($compositionIDNotFound) {
+                    $notFound = 'disabled';
+            
+                    echo <<<_END
+                    <div class="container-fluid bg-secondary text-light pb-3">
+                    <h3 class="display-4 pt-4 pb-4"> No Results for your Search</h3>
+                    <h5> You searched for: </h5>
+                     $searchString
+                    </div>
 _END;
 
             }/*End if($advancedSearchNotFound)*/
@@ -645,29 +609,29 @@ _END;
 
 echo <<<_END
 
-            <div class="container-fluid bg-light   pb-4 ">
-            <div class="row justify-content-center ">
-            <div class="col-md-10 pb-4 bg-dark">
+<div class="container-fluid bg-light   pb-4 ">
+    <div class="row ">
+        <div class="col-md-6 displayCard px-2 bg-dark">
             <div class="card mt-2 mb-3">
-            <div class="card-body bg-light">
-            
-               <br><form action="introPage.php" method='post'>
-                    <input class="btn btn-secondary noPrint" type='submit' value='Search Library'/>
-                </form> <!-- end form --><br>
-                
-               <form action="displayAdvSearch.php" method='post'>
-                    <input class="btn btn-secondary noPrint" onclick="window.print()" type='submit' $notFound value='Print Search Results'/>     
-                </form> <!-- end form --><br>
-        
-                <form action="advancedSearch.php" method='post'>
-                  <input class="btn btn-secondary noPrint" type='submit' value='Try Another Advanced Search'/>
-                  <input type='hidden' name='advSearch' value= 'true' />
-                </form> <!-- end form -->
+                <div class="card-body bg-light">
+
+                    <form action="introPage.php" method='post'>
+                        <input class="btn btn-secondary noPrint" type='submit' value='Search Library'/>
+                    </form> <!-- end form --><br>
+    
+                    <form action="displayAdvSearch.php" method='post'>
+                        <input class="btn btn-secondary noPrint" onclick="window.print()" type='submit' $notFound value='Print Search Results'/>     
+                    </form> <!-- end form --><br>
+
+                    <form action="advancedSearch.php" method='post'>
+                      <input class="btn btn-secondary noPrint" type='submit' value='Try Another Advanced Search'/>
+                      <input type='hidden' name='advSearch' value= 'true' />
+                    </form> <!-- end form -->
                 </div> <!-- end card-body -->
-                </div> <!-- end card -->
-                </div> <!-- end col -->
-                </div> <!-- end row -->
-            </div> <!-- end container -->
+            </div> <!-- end card -->
+        </div> <!-- end col -->
+    </div> <!-- end row -->
+</div> <!-- end container -->
  
 
 _END;

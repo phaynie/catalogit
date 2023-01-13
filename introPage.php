@@ -49,6 +49,7 @@ echo<<<_END
 
                     <form action='compositionSearch.php' method='post'>
                         <input class="form-control btn btn-light btn-block mb-3"  type="submit" value="Find or Add a Composition"/>
+                        
                     </form>
 
                     <form action="peopleSearch.php" method="post">

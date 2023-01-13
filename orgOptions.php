@@ -185,31 +185,33 @@ _END;
 
             echo <<<_END
 
-          <div class="container-fluid bg-secondary pt-4 pb-3">
-            <h2 class="display-4 text-light">Bummer!</h2>
-            <h2>No publisher by the name of "$searchPubName" was found. <br/><br/></h2>
-            <h4 class="text-light"> Which would you like to do? <br/><br/></h4>
+          <div class="container-fluid bg-light pt-4 my-4 pb-3">
+          <div class="displayCard col-md-6 pl-4 py-4">
+            <h2 class="display-4 bummerText1">Bummer!</h2>
+            <h2 class="bummerText2">No publisher by the name of "$searchPubName" was found. <br/></h2>
+            <h4 class="bummerText2"> Which would you like to do? <br/><br/></h4>
             <form action='orgSearch.php' method='post'> 
-              <input class="btn btn-light" type='submit' value='Try another Publisher Search'/>
+              <input class="btn btn-secondary" type='submit' value='Try another Publisher Search'/>
               <input type='hidden' name='bookID' value='$bookID'/>
               <input type='hidden' name='oldOrgID' value='$oldOrgID'/> 
               $sendEditBook
               $sendReplacePublisher 
               $sendAddNewPublisher       
-            </form><br/><br/><!-- end form -->
+            </form><!-- end form -->
             
             <form action='addOrg.php' method='post'> 
-              <input class="btn btn-light" type='submit' value='Add New Publisher Information'/>
+              <input class="btn btn-secondary" type='submit' value='Add New Publisher Information'/>
               <input type='hidden' name='bookID' value='$bookID'/> 
               <input type='hidden' name='oldOrgID' value='$oldOrgID'/>
               $sendEditBook 
               $sendReplacePublisher 
               $sendAddNewPublisher   
-            </form><br/><br/><!-- end form -->
+            </form><!-- end form -->
             <form action='editBook.php' method='post'> 
-              <input class="btn btn-light" type='submit' value='Back to Book Editing Options'/>
+              <input class="btn btn-secondary" type='submit' value='Back to Book Editing Options'/>
               <input type='hidden' name='bookID' value='$bookID'/>       
-            </form><br/><br/><!-- end form -->
+            </form><!-- end form -->
+            </div <!-- end col -->
           </div> <!-- end container -->
 
 _END;
@@ -349,32 +351,34 @@ _END;
 
             echo <<<_END
     
-          <div class="container-fluid bg-secondary pt-4 pb-3">
-            <h2 class="display-4 text-light">Bummer!</h2>
-            <h2>No publisher for your book was found. <br/><br/></h2>
+          <div class="container-fluid bg-light pt-4 pb-3">
+          <div class="col-md-6 displayCard pl-4 py-4>
+            <h2 class="display-4 bummerText1">Bummer!</h2>
+            <h2 class="bummerText2">No publisher for your book was found. <br/><br/></h2>
              <form action="addOrg.php" method="post">
-            <input class="btn btn-light"  type='submit' value='Add New Publisher Info'/> 
+            <input class="btn btn-secondary"  type='submit' value='Add New Publisher Info'/> 
             <input type='hidden' name='bookID' value='$bookID'/>
             <input type='hidden' name='oldOrgID' value='$oldOrgID'/>
             $sendAddNewPublisher 
             $sendReplacePublisher 
             $sendEditBook
-          </form><br/>  <!-- end form -->
+          </form>  <!-- end form -->
           
           <form action='orgSearch.php' method='post'> 
-            <input class="btn btn-light" type='submit' value='Try another Publisher Search'/>
+            <input class="btn btn-secondary" type='submit' value='Try another Publisher Search'/>
             <input type='hidden' name='bookID' value='$bookID'/> 
               <input type='hidden' name='oldOrgID' value='$oldOrgID'/> 
               $sendEditBook
               $sendReplacePublisher 
               $sendAddNewPublisher        
-          </form><br/><!-- end form -->
+          </form><!-- end form -->
           
           <form action="$formAction" method="post">
-            <input class="btn btn-light"  type='submit' value='No Publisher: Continue'/> 
+            <input class="btn btn-secondary"  type='submit' value='No Publisher: Continue'/> 
             <input type='hidden' name='bookID' value='$bookID'/>
-          </form> <!-- end form --><br/><br/>
-          </div> /*End container*/
+          </form> <!-- end form -->
+          </div> <!-- end col -->
+          </div> <!-- end container -->
             
 
 _END;

@@ -1245,8 +1245,10 @@ if($compositionsFound || $booksFound) {
                 <div class="row">
                     <div class="col-md-6 displayCard pb-4 ">
                         <h3 class="noPrint pt-4 bummerText2 pb-4">What would you like to do with this information?</h3><br/>
-                        <form action="introPage.php" method="post">
-                            <input class="btn btn-secondary mb-3 noPrint  btn-block"  type='submit' value='Try another $role Search'/> 
+                        <form action="peopleSearch.php" method="post">
+                            <input class="btn btn-secondary mb-3 noPrint  btn-block"  type='submit' value='Try another $role Search'/>
+                            <input type='hidden' name="findComposer" value='$findComposer'/>
+                            <input type='hidden' name="findPerson" value='$findPerson'/>
                         </form>  <!-- end form -->
                         <form action='introPage.php' method='post'>
                           <input  class="btn btn-secondary  btn-block mb-3 noPrint" type='submit' value='New Library Search'/>
@@ -1283,30 +1285,27 @@ if($compositionsNotFound && $booksNotFound) {
 
     echo <<<_END
    
-    <div class="container-fluid displayCard bg-light pt-4 mb-4 pb-5 ">
-        <div class="card  border-0 ">
-            <div class="card-body bg-light">
-                <div class="row">
-                    <div class="col-md-6  pb-4 ">
-                        <h2 class="display-4 text-dark" >Bummer!</h2>
-                        <h2 class="text-dark">No information about  "$currentPeopleFirst $currentPeopleMiddle $currentPeopleLast $currentPeopleSuffix" was found. <br/><br/></h2>
-                        <h4 class="text-dark"> Which would you like to do? <br/><br/></h4>
-                        <div class="input-group">
-                        <form action="peopleSearch.php" method="post">
-                            <input  class="btn btn-secondary mb-3" type='submit' value='Try another $role Search'/>
-                            <input type='hidden' name='bookID' value='$bookID'/>
-                            <input type='hidden' name='compositionID' value='$compositionID'/>
-                            $sendFindPerson
-                        </form><br/>  <!-- end form -->
-                        <form action='addPeople.php' method='post'> 
-                            <input  class="btn btn-secondary mb-3" type='submit' value='Add New $role information'/>
-                            <input type='hidden' name='bookID' value='$bookID'/>
-                            <input type='hidden' name='compositionID' value='$compositionID'/>       
-                        </form><br/><br/>
+    <div class="container-fluid displayCard bg-light pt-4 my-4 pb-5 ">
+       
+                    <div class="displayCard col-md-6   pb-4 ">
+                        <h2 class="display-4 bummerText1" >Bummer!</h2>
+                        <h2 class=" bummerText2">No information about  "$currentPeopleFirst $currentPeopleMiddle $currentPeopleLast $currentPeopleSuffix" was found. <br/><br/></h2>
+                        <h4 class="bummerText2"> Which would you like to do? <br><br></h4>
+                        
+                            <form action="peopleSearch.php" method="post">
+                                <input  class="btn btn-secondary mb-3" type='submit' value='Try another $role Search'/>
+                                <input type='hidden' name='bookID' value='$bookID'/>
+                                <input type='hidden' name='compositionID' value='$compositionID'/>
+                                $sendFindPerson
+                            </form>  
+                            <form action='addPeople.php' method='post'> 
+                                <input  class="btn btn-secondary mb-3" type='submit' value='Add New $role information'/>
+                                <input type='hidden' name='bookID' value='$bookID'/>
+                                <input type='hidden' name='compositionID' value='$compositionID'/>       
+                            </form>
+                       
                     </div> <!-- end col -->
-                </div>  <!-- end row -->
-            </div>  <!-- end card body -->
-        </div>  <!-- end card -->
+         
     </div>  <!-- end container -->
 
 

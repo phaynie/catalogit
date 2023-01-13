@@ -52,6 +52,7 @@ $findComposer = "";
 $findPerson = "";
 $submit = "";
 $role = "";
+$listAccess = "";
 $validationFailed = false; /*A single place to track whether any validation has failed.*/
 
 
@@ -204,6 +205,7 @@ if($addNewEditor=='true') {
     $page = "Search Library";
     $formAction = "introPage.php";
     $sendFindComposer = "<input type='hidden' name='findComposer' value='true'/>";
+    $listAccess = "composerListAccess";
 }elseif($findPerson =='true') {
     $role = "Person";
     $findPersonContinueText = "<h3 >Let's see if our Person already exists</h3>";
@@ -313,8 +315,9 @@ if($submit == 'true') {
 }/*End if submit == 'true'*/
 
 if($debug) {
-    echo $debug_string;
-    echo $personsArray;
+    echo $debug_string . "<br>";
+    echo "personsArray = " . $personsArray . "<br>";
+    echo "listAccess = " . $listAccess . "<br>";
 }
 
 
@@ -553,9 +556,14 @@ _END;
           $sendFindComposer
           $sendFindPerson
         </form>   <!-- end form -->
+        
+        <form class="form-group pt-1 pb-3" action="list.php" method="post">
+              <input class="btn btn-secondary" type="submit" value="See Complete $role List"/>
+              <input type="hidden" name="{$listAccess}" value="true"/>
+        </form>   <!-- end form -->
       
         <form action="$formAction" method="post">
-          <input class="btn btn-secondary mt-4" type="submit" value="Back to $page "/>
+          <input class="btn btn-secondary " type="submit" value="Back to $page "/>
           <input type="hidden" name="bookID" value="$bookID"/>
           <input type="hidden" name="compositionID" value="$compositionID"/>
         </form>  <!-- end form -->

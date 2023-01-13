@@ -79,6 +79,7 @@ $searchPeopleLastName = "";
 $sendSearchPeopleLastName = "";
 $personID = "";
 $sendSearchPeopleID = "";
+$backToPage = "";
 
 
 /*assigning variable names to post and get values*/
@@ -263,6 +264,7 @@ if($editBook == 'true') {
     $sendEditBook = "<input type='hidden' name='editBook' value ='true' />";
     $formAction = "editBook.php";
     $page = 'Edit Book Options';
+    $backToPage = 'Edit Book Options';
 }elseif($editComposition == 'true') {
     $sendEditComposition = "<input type='hidden' name='editComposition' value ='true' />";
     $formAction = "editComposition.php";

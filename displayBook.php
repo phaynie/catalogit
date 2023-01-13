@@ -2,7 +2,8 @@
  
 <?php
 /*How we arrived here:
-    A. from bookOptions.php we are searching for a book and chose this option. This page displays the book we are searching for.*/
+    A. from bookOptions.php we are searching for a book and chose this option. This page displays the book we are searching for.
+    B. From list.php when a book buttonlink is clicked*/
 
 include 'boilerplate.php';
 
@@ -10,7 +11,7 @@ if($debug) {
 
     echo <<<_END
 
-        <p>Display book-4</p>
+        <p><strong>Display book-4</strong></p>
 
 _END;
 
@@ -322,7 +323,7 @@ if($debug) {
         echo <<<_END
   
      
-                    <h2 class=" text-light">Bummer!<br/><br/></h2>
+                    <h2 class=" ">Bummer!<br/></h2>
                     <h5 class='text-dark'>No Compositions from  "$bookTitle" were found. <br/><br/></h5>
       
   
@@ -335,7 +336,7 @@ _END;
         echo <<<_END
 
       
-                    <h5 class=" pt-4">Compositions from $bookTitle </h5>
+                    <h5 class=" pt-2">Compositions from $bookTitle </h5>
       
 _END;
 
@@ -418,9 +419,14 @@ _END;
                         <input type='hidden' name="bookID" value='$bookID'/> 
                         <input type='hidden' name="printBook" value="true"/>       
                     </form>
+                    <form action='list.php' method='post'>
+                        <input class="btn btn-secondary mb-3 noPrint" type='submit' value='Return to List of Book Titles'/>
+                        <input type='hidden' name="bookListAccess" value="true"/>
+                    </form>
                 
                     <form action='exitMessage.php' method='post'>
                         <input class="btn btn-secondary mb-3 noPrint" type='submit' value='Exit Library'/>
+                        
                     </form>
                 </div> <!-- end col -->
             </div> <!-- end row -->

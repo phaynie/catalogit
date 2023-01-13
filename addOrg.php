@@ -40,6 +40,14 @@ $pubLoc_value = "";
 $submit = "";
 $debug_string = "";
 $oldOrgIDAltered = "";
+$sendAddNewPublisher = "";
+$sendReplacePublisher = "";
+$compositionID = "";
+$onSuccess = "";
+$sendAddNewPublisher = "";
+$sendReplacePublisher = "";
+$pubNameErr_value = "";
+$alreadyExistsErr = "";
 
 /*bookID will NOT be used in db queries on this page
 We still check for numeric value*/

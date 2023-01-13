@@ -158,19 +158,23 @@ echo <<<_END
 
 <div class="container-fluid bg-light pt-4 pb-5" >
       <div class=" displayCard col-md-6">
-      $instructionalText 
-      <form class="form-group  pt-3 pb-3" action='bookTitleSearch.php' method='post'>
-          Book Title: $searchBookTitleErr
-          <input class="form-control" autocomplete="off" type="text" name="searchBookTitle" id="searchBookTitle"  autofocus placeholder = "Please enter a book title" />
-          <ul id="bkTtlsArray"></ul>
-          <p>If adding sheet music, add your selection to the book titled "Sheet Music Collection"</p>
-          <p>OR create your own sheet music "book or collection" by searching for the name of the collection and adding a new "book" when it is not found. You will be able to add this music to as many collections as you like.</p>
-          <input class="btn btn-secondary mt-4" type="submit" value="Search for this Book"/>
-          <input type="hidden" name="submit" value="true"/>
-      </form>   <!-- end form -->
+          $instructionalText 
+          <form class="form-group  pt-3 pb-3" action="bookTitleSearch.php" method="post">
+              Book Title: $searchBookTitleErr
+              <input class="form-control" autocomplete="off" type="text" name="searchBookTitle" id="searchBookTitle"  autofocus placeholder= "Please enter a book title" />
+              <ul id="bkTtlsArray"></ul>
+              <p>If adding sheet music, add your selection to the book titled "Sheet Music Collection"</p>
+              <p>OR create your own sheet music "book or collection" by searching for the name of the collection and adding a new "book" when it is not found. You will be able to add this music to as many collections as you like.</p>
+              <input class="btn btn-secondary mt-4" type="submit" value="Search for this Book"/>
+              <input type="hidden" name="submit" value="true"/>
+          </form>   <!-- end form -->
+          <form class="form-group pt-1 pb-3" action="list.php" method="post">
+              <input class="btn btn-secondary" type="submit" value="See List of Book Titles"/>
+              <input type="hidden" name="bookListAccess" value="true"/>
+          </form>   <!-- end form -->
 
       </div>  <!-- end col -->
-    </div> <!-- end container -->
+</div> <!-- end container -->
 
 _END;
 

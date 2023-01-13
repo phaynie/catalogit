@@ -69,6 +69,7 @@ $disableERDComposer = "";
 $disableERDArranger = "";
 $disableERDLyricist = "";
 $physCompositionLocNote = "";
+$additionalInfoNote = "";
 
 $peopleID = "";
 
@@ -82,6 +83,7 @@ if(isset($_REQUEST['bookID']) && is_numeric($_REQUEST['bookID'])) {
 if(isset($_REQUEST['compName'])) {
   $compName = $_REQUEST['compName'];
 }
+echo "compName = " . $compName . "<br>";
 
 if(isset($_REQUEST['compositionID']) && is_numeric($_REQUEST['compositionID'])) {
   $compositionID = $_REQUEST['compositionID'];
@@ -505,7 +507,7 @@ _END;
 
 
   $compositionQuery = <<<_END
-        SELECT c.ID, c.comp_name, c.opus_like, c.comp_num, c.comp_no, c.subtitle, c.movement, e.description, v.voicing_type, ens.ensemble_type, b.ID, c.physCompositionLoc 
+        SELECT c.ID, c.comp_name, c.opus_like, c.comp_num, c.comp_no, c.subtitle, c.movement, e.description, v.voicing_type, ens.ensemble_type, b.ID, c.physCompositionLoc, c.additionalInfo 
         FROM compositions AS c
         LEFT JOIN eras AS e ON c.era_ID = e.ID
         LEFT JOIN voicing AS v ON c.voice_ID = v.ID
@@ -547,6 +549,7 @@ failureToExecute ($resultCompositionQuery, 'S576', 'Select ' );
       $ensemble = $row[9];
       $compbookID = $row[10];
       $physCompositionLocNote = $row[11];
+      $additionalInfoNote = $row[12];
 
 
     } /*for loop ending*/
@@ -825,6 +828,10 @@ if($physCompositionLocNote == "") {
   $physCompositionLocNote = "$notEntered";
 }
 
+if($additionalInfoNote == "") {
+  $additionalInfoNote = "$notEntered";
+}
+
 if($displayComposerString == "") {
   $displayComposerString = "$notEntered";
 }
@@ -875,6 +882,7 @@ echo <<<_END
                 Composition No.: $compNum <br/>
                 Subtitle:   $subTitle <br/>
                 Movement:  $movement <br/>
+                Other:<span style="color:#EB6B42;">  $additionalInfoNote</span><br/>
                 Key Signature:   $displayKeySigString <br/>
                 Era: $era <br/>
                 Genre:   $displayGenreString<br/>

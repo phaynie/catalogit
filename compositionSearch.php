@@ -125,9 +125,10 @@ if($submit == 'true') {
 
 
 if($debug) {
+    $debug_string .= "compositionsArray = " .  $compositionsArray . "<br>";
     echo $debug_string;
 }
-echo $compositionsArray;
+
 
 
 
@@ -144,7 +145,7 @@ echo <<<_END
 
 
 <div class="container-fluid bg-light pt-4 pb-5" >
-      <div class="displayCard col-md-6">
+    <div class="displayCard col-md-6">
       <form class="form-group  pt-3 " action='compositionSearch.php' method='post'>
           Composition Title: $searchCompositionTitleErr
           <input class="form-control mb-3 " autocomplete="off"  type="text" name="searchCompositionTitle" id="searchCompositionTitle" autofocus placeholder = "Please enter a Composition Title" />
@@ -152,18 +153,17 @@ echo <<<_END
           <input class="btn btn-secondary mt-4" type="submit" value="Search for this Composition"/>
           <input type="hidden" name="submit" value="true"/>
           <input type="hidden" name="bookID" value="$bookID"/>
-         
       </form>   <!-- end form -->
-      
-      <form class="form-group   pb-3" action='displayBook.php' method='post'>
-          <input class="btn btn-secondary mt-4" type="submit" value="Back to Display Book"/>
+      <form class="form-group  pb-3" action="list.php" method="post">
+              <input class="btn btn-secondary" type="submit" value="See All Compositions List"/>
+              <input type="hidden" name="compositionListAccess" value="true"/>
+      </form>   <!-- end form -->
+      <form class="form-group  pb-3" action="displayBook.php" method="post">
+          <input class="btn btn-secondary" type="submit" value="Back to Display Book"/>
           <input type="hidden" name="bookID" value="$bookID"/>
-         
       </form>   <!-- end form -->
-
-
-      </div>  <!-- end col -->
-    </div> <!-- end container -->
+    </div>  <!-- end col -->
+</div> <!-- end container -->
 
 _END;
 

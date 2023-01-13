@@ -152,15 +152,27 @@ h5.mossaccent {
 
 @media (min-width: 1200px) {
   .btn {
+    font-size: 14px;
+    padding: 8px 12px;
+    border-width:2px;
+    border-style:outset;
+    border-color:#6c757d;
+    
+    /* A little too big
     padding: 10px 16px;
     font-size: 18px;
     border-width:2px;
     border-style:outset;
-    border-color:#6c757d;
+    border-color:#6c757d;*/
   }
 }
 
-
+/*This keeps the button from extending beyond the card or container.*/
+.btn { 
+    white-space:normal !important; 
+    word-wrap:break-word; 
+    
+}
 
 
 
@@ -241,6 +253,9 @@ h5.mossaccent {
 
 p.editpage {
   font-size: 1.1rem;
+}
+.infoColor {
+    color:white;
 }
 
 
@@ -377,7 +392,7 @@ p.editpage {
          font-size: 2vw;
      }
      .bummerText3 {
-         font-size: 1.5vw;
+         font-size: 1.5vw ;
      }
  
 }
@@ -386,10 +401,29 @@ p.editpage {
 
 
 
-@media print {
+/*@media print {
   header, footer, .noPrint {
     display: none;
   }
+}*/
+
+@media print {
+     header, footer, .noPrint {
+    display: none;
+  }
+  div.two {
+    column-count: 2;
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    
+  }
+  .one {
+    column-count: 1;
+    -webkit-column-count: 1;
+    -moz-column-count: 1;
+  }
 }
+
+
 
 

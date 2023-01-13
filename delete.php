@@ -4,7 +4,7 @@ include 'boilerplate.php';
 if($debug) {
     echo <<<_END
 
-<p>delete.php-12</p>
+<p><strong>delete.php-12</strong></p>
 
 _END;
 
@@ -26,6 +26,7 @@ $deleteArranger = "";
 $deleteLyricist = "";
 $deleteBook = "";
 $deleteComposition = "";
+$deletePeople = "";
 
 
 $editBook = "";
@@ -33,6 +34,7 @@ $editComposition = "";
 $oldOrgID = "";
 $oldPeopleID = "";
 $deletePublisher = "";
+$roleID = "";
 
 
 
@@ -363,34 +365,51 @@ _END;
 
                                                 echo<<<_END
                                                    
-                                                <h5 class="mt-4">"$bookTitle" and all its compositions has been deleted from the Library</h5></br></br>
-      
-
-                                                  <form action="introPage.php" method="post">
-                                                     <input class="btn btn-secondary mt-4" type="submit" value="Search Library "/>
-                                                  </form>  <!-- end form --></br>
                                                 
-                                                  <form action="exitMessage.php" method="post">
-                                                     <input class="btn btn-secondary mt-4" type="submit" value="Exit Library "/>
-                                                  </form>  <!-- end form --></br></br>
+                                            <div class="container-fluid displayCard bg-dark pt-4 my-4 pb-3">
+                                                <div class="card">
+                                                    <div class="card-body bg-light">
+                                                        <div class="row">
+                                                            <div class="col pb-4">
+                                                                <h5 class="mt-4">"$bookTitle" and all its compositions have been deleted from the Library</h5></br></br>
+                      
+                
+                                                                <form action="introPage.php" method="post">
+                                                                    <input class="btn btn-secondary mt-4" type="submit" value="Search Library "/>
+                                                                </form>  <!-- end form -->
+                                                                
+                                                                <form action="exitMessage.php" method="post">
+                                                                    <input class="btn btn-secondary mt-4" type="submit" value="Exit Library "/>
+                                                                </form>  <!-- end form -->
+                                                            </div> <!--- end col --->
+                                                        </div> <!--- end row --->
+                                                    </div>  <!--- end cardbody --->
+                                                </div> <!--- end card --->
+                                            </div> <!--- end container --->
+                             
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
 _END;
 
 
-                                            } /*end $deleteBooksResult */
-                                        } /*end $deleteCompositionsResult */
-                                    } /*end $deleteC2R2PResult */
-                                } /*end $deleteC2GResult */
-                            } /*end $deleteC2DResult */
-                        } /*end $deleteC2KResult */
-                    } /*end $deleteC2IResult */
-                } /*end $deleteB2R2OResult */
-            }  /*end $deleteB2R2PResult */
+                                        } /*end $deleteBooksResult */
+                                    } /*end $deleteCompositionsResult */
+                                } /*end $deleteC2R2PResult */
+                            } /*end $deleteC2GResult */
+                        } /*end $deleteC2DResult */
+                    } /*end $deleteC2KResult */
+                } /*end $deleteC2IResult */
+            } /*end $deleteB2R2OResult */
+        }  /*end $deleteB2R2PResult */
 
 
 
 
 
-        } /*end if $deleteBook == 'true' */
+    } /*end if $deleteBook == 'true' */
 
 
 
@@ -684,8 +703,8 @@ _END;
 
         header('Location: editComposition.php?bookID=' . $bookID . '&compositionID=' . $compositionID . '&peopleID=' . $peopleID . '&editComposition=true');
         exit();
-    } /*End if ($deleteEditor == 'true')*/
-} /*End if($editBook == 'true')*/
+    } /*End if ($deletePeople == 'true')*/
+} /*End if($editComposition == 'true')*/
 
 
 

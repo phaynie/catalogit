@@ -75,6 +75,7 @@ $disableERDComposer = "";
 $disableERDArranger = "";
 $disableERDLyricist = "";
 $physCompositionLocNote = "";
+$additionalInfoNote = "";
 
 
 
@@ -122,7 +123,7 @@ if ($searchCompositionTitleAltered !== "") {
 
 
     $compositionQuery = <<<_END
-            SELECT c.ID, c.comp_name, c.opus_like, c.comp_num, c.comp_no, c.subtitle, c.movement, e.description, v.voicing_type, ens.ensemble_type, c.book_ID, c.physCompositionLoc, b.ID 
+            SELECT c.ID, c.comp_name, c.opus_like, c.comp_num, c.comp_no, c.subtitle, c.movement, e.description, v.voicing_type, ens.ensemble_type, c.book_ID, c.physCompositionLoc, c.additionalInfo, b.ID 
             FROM compositions AS c
             LEFT JOIN eras AS e ON c.era_ID = e.ID
             LEFT JOIN voicing AS v ON c.voice_ID = v.ID
@@ -156,23 +157,23 @@ _END;
             echo <<<_END
       
       <div class="container-fluid bg-light pt-4 pb-2"> 
-          <div class="displayCard bg-secondary pt-4 pb-2 px-4">
-            <h3 class= "display-4 text-light bummerText1" > Bummer! </h3>
+          <div class="displayCard col-md-6 pt-4 pb-2 px-4">
+            <h3 class= "display-4 bummerText1" > Bummer! </h3>
             <h3 class="bummerText2">No composition with the title of  "$searchCompositionTitle" was found. <br/><br/><br/></h3> 
-            <h4 class="text-light pb-3">Choose an option below <br/></h4>
+            <h4 class=" bummerText3 pb-3">Choose an option below: <br/></h4>
             <form action='compositionSearch.php' method='post'>
-              <button class="btn btn-light" type='submit'>Try another Composition Search</button><br/>
+              <button class="btn btn-secondary mb-2" type='submit'>Try another Composition Search</button>
               <input type="hidden" name="bookID" value="$bookID"> 
-            </form><br/>
+            </form>
             <form action='bookTitleSearch.php' method='post'>
-              <button class="btn btn-light" type='submit'>Add New Composition Information</button><br>
-              <span class="text-light"> We'll start by finding a book for your composition. </span><br/>
+              <button class="btn btn-secondary " type='submit'>Add New Composition Information</button><br>
+              <span > We'll start by finding a book for your composition. </span><br/>
               <input type="hidden" name="bookID" value="$bookID">
               <input type='hidden' name='addNewComposition' value='true'/>    
             </form>
             <form action='introPage.php' method='post'>
-              <button class="btn btn-light" type='submit'>Back to Search Library</button><br/>
-            </form><br/>
+              <button class="btn btn-secondary my-2" type='submit'>Back to Search Library</button>
+            </form>
           </div>
       </div>
     
@@ -215,6 +216,7 @@ _END;
                 $ensemble = $row[9];
                 $bookID = $row[10];
                 $physCompositionLocNote = $row[11];
+                $additionalInfoNote = $row[12];
 
 
 
@@ -884,6 +886,10 @@ _END;
                 if($physCompositionLocNote == "") {
                     $physCompositionLocNote = "$notEntered";
                 }
+                
+                if($additionalInfoNote == "") {
+                    $additionalInfoNote = "$notEntered";
+                }
 
                 if($displayComposerString == "") {
                     $displayComposerString = "$notEntered";
@@ -927,6 +933,7 @@ _END;
                           Opus Number or sim: $opusNum<br>
                           Composition No.: $compNum<br>
                           Subtitle: $subTitle<br>
+                          Other:<span style="color:#EB6B42;"> $additionalInfoNote </span> <br>
                           Key Signature: $displayKeySigString<br>
                           Movement: $movement<br>
                           Era: $era <br>

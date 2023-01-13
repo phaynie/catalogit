@@ -302,7 +302,7 @@ _END;
       echo <<<_END
       
   <div class="container-fluid bg-light pt-4 pb-5"> 
-    <div class="col-md-6">
+    <div class="displayCard col-md-6 pl-4 py-4">
       <form action='orgSearch.php' method='post'>
           $replaceContinueText
           $addNewPublisherContinueText

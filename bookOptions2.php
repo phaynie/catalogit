@@ -217,15 +217,15 @@ _END;
        echo <<<_END
       
       <div class="container-fluid bg-light pt-4 pb-3">
-        <div class="displayCard bg-secondary px-4 pt-4 pb-3">
-            <h2 class="display-4 text-light bummerText1 ">Bummer!<br/></h2>
-            <h2 class="text-dark bummerText2">No Book with the title of "$searchBookTitle" was found. <br/><br/></h2>
+        <div class="displayCard col-md-6  px-4 pt-4 pb-3">
+            <h2 class="display-4  bummerText1 ">Bummer!<br/></h2>
+            <h2 class=" bummerText2">No Book with the title of "$searchBookTitle" was found. <br/><br/></h2>
                 
-            <form action='bookTitleSearch.php' method='post'>
-              <input class="btn btn-light" type='submit' value='Try another Book Title Search' />
+            <form action='bookTitleSearch.php' class="mb-2" method='post'>
+              <input class="btn btn-secondary" type='submit' value='Try another Book Title Search' />
             </form> <!-- end form -->
             <form action="addBook.php" method='post'>
-              <input class="btn btn-light" type='submit' value='Add New Book Info'/>
+              <input class="btn btn-secondary" type='submit' value='Add New Book Info'/>
               <input type='hidden' name='addNewBook' value='true'/>
             </form> <!-- end form -->
         </div>

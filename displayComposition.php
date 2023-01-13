@@ -52,6 +52,7 @@ $displayComposerString = "";
 $displayArrangerString = "";
 $displayLyricistString = "";
 $physCompositionLocNote = "";
+$additionalInfoNote = "";
 $advSearch = "";
 
 
@@ -487,7 +488,7 @@ _END;
 
 
        $compositionQuery = <<<_END
-        SELECT c.ID, c.comp_name, c.opus_like, c.comp_num, c.comp_no, c.subtitle, c.movement, e.description,v.voicing_type, ens.ensemble_type, c.book_ID, c.physCompositionLoc 
+        SELECT c.ID, c.comp_name, c.opus_like, c.comp_num, c.comp_no, c.subtitle, c.movement, e.description,v.voicing_type, ens.ensemble_type, c.book_ID, c.physCompositionLoc, c.additionalInfo 
         FROM compositions AS c
         LEFT JOIN eras AS e ON c.era_ID = e.ID
         LEFT JOIN voicing AS v ON c.voice_ID = v.ID
@@ -529,6 +530,7 @@ failureToExecute ($resultCompositionQuery, 'S561', 'Select ' );
             $ensemble = $row[9];
             $compBookID = $row[10];
             $physCompositionLocNote = $row[11];
+            $additionalInfoNote = $row[12];
             
            
           } /*for loop ending*/
@@ -780,6 +782,10 @@ if($physCompositionLocNote == "") {
     $physCompositionLocNote = "$notEntered";
 }
 
+if($additionalInfoNote == "") {
+    $additionalInfoNote = "$notEntered";
+}
+
 if($displayComposerString == "") {
     $displayComposerString = "$notEntered";
 }
@@ -817,7 +823,7 @@ if($diffGen == 'none') {
         <div class="card">
             <div class="card-body bg-light">
                 <div class="row  ">
-                    <div class=" col-md-6 pb-4">
+                    <div class=" col-md-12 pb-4">
                         <h3 class="display-4 pb-3  noPrint bummerText1">Success!</h3>
                         <h3 class="bummerText2">Composition:</h3>
                         <h3 class="display-4 bummerText1">  $compName </h3><br/>
@@ -842,6 +848,7 @@ if($diffGen == 'none') {
                         Opus No.: $opusNum <br/>
                         Composition No.: $compNum <br/>
                         Subtitle: $subTitle <br/>
+                        Other:<span style="color:#EB6B42;">$additionalInfoNote</span><br/>
                         Key Signature: $displayKeySigString <br/>
                         Movement: $movement <br/>
                         Era: $era <br/>
@@ -900,6 +907,10 @@ echo <<<_END
                           <input type='hidden' name="compositionTitle" value="{$fn_encode($compName)}"/>
                           <input type='hidden' name="bookID" value='$bookID' />
                         </form>
+                        <form action='list.php' method='post'>
+                        <input class="btn btn-secondary mb-3 noPrint" type='submit' value='Return to List of Composition Titles'/>
+                        <input type='hidden' name="compositionListAccess" value="true"/>
+                    </form>
                 
                         <form action='exitMessage.php' method='post'>
                           <input  class="btn btn-secondary mb-3  noPrint" type='submit' value='Exit Library'/>

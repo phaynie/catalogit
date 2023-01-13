@@ -8,6 +8,7 @@
 */
 
 
+
 include 'boilerplate.php';
 /*Most current addComposition page*/
 
@@ -50,6 +51,7 @@ $ensemble = "";
 $genDiff = "";
 $ASPDiff = "";
 $physCompositionLocNote = "";
+$additionalInfoNote = "";
 
 
 
@@ -130,6 +132,10 @@ if (isset($_REQUEST['addNewComposition'])) {
 
 if (isset($_REQUEST['physCompositionLocNote'])) {
     $physCompositionLocNote = $_REQUEST['physCompositionLocNote'];
+}
+
+if (isset($_REQUEST['additionalInfoNote'])) {
+    $additionalInfoNote = $_REQUEST['additionalInfoNote'];
 }
 
 
@@ -214,7 +220,7 @@ if($submit == 'true') {
 
 
     $validationFailed = false;
-
+echo "validationFailed3 =" . (int)$validationFailed . "<br>";
 
     /*VALIDATION*/
     /*validate local submission vars*/
@@ -225,6 +231,8 @@ if($submit == 'true') {
         $compNameErr = "<span class='error'>  * Name of Composition is required </span>";
         $validationFailed = true;
     }/*if(strlen($compName) == 0)*/
+    
+echo "validationFailed1 = " . $validationFailed . "<br>";
 
     if(strlen($opusNum) !== 0 && !is_numeric($opusNum)) {
         $opusNumErr = "<span class='error'>  * Must be empty or a number </span>";
@@ -321,6 +329,9 @@ if($submit == 'true') {
 
         $washPostVar = cleanup_post($physCompositionLocNote);
         $physCompositionLocNoteAltered = strip_before_insert($conn, $washPostVar);
+        
+        $washPostVar = cleanup_post($additionalInfoNote);
+        $additionalInfoNoteAltered = strip_before_insert($conn, $washPostVar);
 
         foreach($keySigs as &$value) {
             $washPostVar = cleanup_post($value);
@@ -432,10 +443,19 @@ if($submit == 'true') {
         }
 
         if($physCompositionLocNoteAltered =="") {
-            $updateCompositions .= "c.physCompositionLoc=NULL ";
+            $updateCompositions .= "c.physCompositionLoc=NULL, ";
         }
         else{
-            $updateCompositions .= "c.physCompositionLoc='$physCompositionLocNoteAltered' ";
+            $updateCompositions .= "c.physCompositionLoc='$physCompositionLocNoteAltered', ";
+        }
+        
+        if($additionalInfoNoteAltered =="") {
+            $updateCompositions .= "c.additionalInfo=NULL ";
+            
+            echo "additionalInfoNoteAltered = " . $additionalInfoNote . "<br>";
+        }
+        else{
+            $updateCompositions .= "c.additionalInfo='$additionalInfoNoteAltered' ";
         }
 
             $updateCompositions .= "WHERE c.ID='$compositionIDAltered';";
@@ -452,7 +472,7 @@ if($submit == 'true') {
         }
     }/*end debug*/
 
-        failureToExecute ($updateCompositionsResult, 'U701', 'Update ' );
+       /* failureToExecute ($updateCompositionsResult, 'U701', 'Update ' );*/
 
 
         /*delete past row(s) from the junction tables c2k, c2g, c2i before inserting new row*/
@@ -743,16 +763,16 @@ _END;
 
 
 
-
-
+echo "addNewComposition = " . $addNewComposition . "<br>";
+echo "validationFailed44 =" . (int)$validationFailed . "<br>";
 
 if( $addNewComposition == 'true' && $validationFailed == false){
     /*insert into compositions table*/
 /*used the $varAltered names to ensure we are using washed data in the DB queries*/
 
-    $compositionInsertQuery = "INSERT INTO compositions (comp_name, opus_like, comp_num, comp_no, subtitle, book_ID, movement, era_ID, voice_ID, ensemble_ID, physCompositionLoc)
+    $compositionInsertQuery = "INSERT INTO compositions (comp_name, opus_like, comp_num, comp_no, subtitle, book_ID, movement, era_ID, voice_ID, ensemble_ID, physCompositionLoc, additionalInfo)
 VALUES (";
-
+        
 
         $compositionInsertQuery .= "'$compNameAltered', ";
 
@@ -820,11 +840,20 @@ VALUES (";
         }
 
         if($physCompositionLocNoteAltered == "") {
+            $compositionInsertQuery .= " NULL, ";
+        }
+        else{
+            $compositionInsertQuery .= " '$physCompositionLocNoteAltered', ";
+        }
+        
+        if($additionalInfoNoteAltered == "") {
             $compositionInsertQuery .= " NULL )";
         }
         else{
-            $compositionInsertQuery .= " '$physCompositionLocNoteAltered' )";
+            $compositionInsertQuery .= " '$additionalInfoNoteAltered') ";
         }
+        
+   
 
 
 
@@ -846,7 +875,7 @@ VALUES (";
     }/*end debug*/
 
 
-    failureToExecute ($compositionInsertQueryResult, 'I606', 'Insert ' );
+  /* failureToExecute ($compositionInsertQueryResult, 'I606', 'Insert ' );*/
 
 
     /*Here I will want to get the composition ID I just created*/
@@ -1023,10 +1052,11 @@ _END;
 
 
 
+echo "compsitionID = " . $compositionID . "<br>";
 
 
 
-    header('Location: editComposition.php?bookID=' . $bookID . '&compositionID=' . $compositionID . '&editComposition=true');
+   header('Location: editComposition.php?bookID=' . $bookID . '&compositionID=' . $compositionID . '&editComposition=true');
     exit();
 
     /*add header*/
@@ -1278,7 +1308,7 @@ _END;
 
 
     $compositionQuery = <<<_END
-        SELECT c.ID, c.comp_name, c.opus_like, c.comp_num, c.comp_no, c.subtitle, c.movement, c.era_ID,c.voice_ID, c.ensemble_ID, c.book_ID, c.physCompositionLoc 
+        SELECT c.ID, c.comp_name, c.opus_like, c.comp_num, c.comp_no, c.subtitle, c.movement, c.era_ID,c.voice_ID, c.ensemble_ID, c.book_ID, c.physCompositionLoc, c.additionalInfo 
         FROM compositions AS c
         LEFT JOIN books AS b ON c.book_ID = b.ID
 
@@ -1317,6 +1347,7 @@ _END;
             $ensemble = $row[9];
             $compBookID = $row[10];
             $physCompositionLocNote = $row[11];
+            $additionalInfoNote = $row[12];
 
 
         } /*for loop ending*/
@@ -1440,6 +1471,21 @@ if($opusNum == 'NULL') {
                 <input type="checkbox"  class="form-check-input"  id="chk7" name="keySigs[]" value="7" <?php if (in_array( "7", $keySigs)) {echo("checked");}?>>  B Major<br>
                 <label class="form-check-label sr-only" for="chk7"></label>
             </div> <!-- end form-check -->
+            
+            <div class="form-check">
+                <input type="checkbox"  class="form-check-input"  id="ch26" name="keySigs[]" value="26" <?php if (in_array( "26", $keySigs)) {echo("checked");}?>>  F# Major<br>
+                <label class="form-check-label sr-only" for="chk26"></label>
+            </div> <!-- end form-check -->
+            
+            <div class="form-check">
+                <input type="checkbox"  class="form-check-input"  id="ch27" name="keySigs[]" value="27" <?php if (in_array( "27", $keySigs)) {echo("checked");}?>>  C# Major<br>
+                <label class="form-check-label sr-only" for="chk27"></label>
+            </div> <!-- end form-check -->
+            
+            <div class="form-check">
+                <input type="checkbox"  class="form-check-input"  id="ch28" name="keySigs[]" value="28" <?php if (in_array( "28", $keySigs)) {echo("checked");}?>>  Cb Major<br>
+                <label class="form-check-label sr-only" for="chk28"></label>
+            </div> <!-- end form-check -->
 
             <div class="form-check">
                 <input type="checkbox"  class="form-check-input"  id="chk8" name="keySigs[]" value="8" <?php if (in_array( "8", $keySigs)) {echo("checked");}?>>  Gb Major<br>
@@ -1500,14 +1546,15 @@ if($opusNum == 'NULL') {
                 <input type="checkbox"  class="form-check-input"  id="chk19" name="keySigs[]" value="19" <?php if (in_array( "19", $keySigs)) {echo("checked");}?>>  g# minor<br>
                 <label class="form-check-label sr-only" for="chk19"></label>
             </div> <!-- end form-check -->
+            
 
             <div class="form-check">
-                <input type="checkbox"  class="form-check-input"  id="chk20" name="keySigs[]" value="20" <?php if (in_array( "20", $keySigs)) {echo("checked");}?>>  eb minor<br>
+                <input type="checkbox"  class="form-check-input"  id="chk20" name="keySigs[]" value="20" <?php if (in_array( "20", $keySigs)) {echo("checked");}?>>  eb minor (d# minor)<br>
                 <label class="form-check-label sr-only" for="chk20"></label>
             </div> <!-- end form-check -->
 
             <div class="form-check">
-                <input type="checkbox"  class="form-check-input"  id="chk21" name="keySigs[]" value="21" <?php if (in_array( "21", $keySigs)) {echo("checked");}?>>  bb minor<br>
+                <input type="checkbox"  class="form-check-input"  id="chk21" name="keySigs[]" value="21" <?php if (in_array( "21", $keySigs)) {echo("checked");}?>>  bb minor (a# minor)<br>
                 <label class="form-check-label sr-only" for="chk21"></label>
             </div> <!-- end form-check -->
 
@@ -1522,7 +1569,7 @@ if($opusNum == 'NULL') {
             </div> <!-- end form-check -->
 
             <div class="form-check">
-                <input type="checkbox"  class="form-check-input"  id="chk24" name="keySigs[]" value="24" <?php if (in_array( "24", $keySigs)) {echo("checked");}?>>   g minor<br>
+                <input type="checkbox"  class="form-check-input"  id="chk24" name="keySigs[]" value="24" <?php if (in_array( "24", $keySigs)) {echo("checked");}?>>   g minor  (f## minor)<br>
                 <label class="form-check-label sr-only" for="chk24"></label>
             </div> <!-- end form-check -->
 
@@ -1710,6 +1757,11 @@ if($opusNum == 'NULL') {
           <div class="form-check">
               <input type="checkbox" class="form-check-input" id="chbx27" name="genres[]" value="27" <?php if (in_array( "27", $genres)) {echo("checked");}?>> Rock<br>
               <label class="form-check-label sr-only" for="chbx27"></label>
+          </div> <!-- end form-check -->
+          
+          <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="chbx39" name="genres[]" value="39" <?php if (in_array( "39", $genres)) {echo("checked");}?>> New Age<br>
+              <label class="form-check-label sr-only" for="chbx39"></label>
           </div> <!-- end form-check -->
 
           <div class="form-check">
@@ -2170,64 +2222,77 @@ if($opusNum == 'NULL') {
  </div> <!-- end row -->
 
 
-  <div class="row">
+ <div class="row">
     <div class="col-md-6">
-      <div class="card mb-3">
-        <div class="card-body bg-light">     
-          <div class="form-group pt-2">
+        <div class="card mb-3">
+            <div class="card-body bg-light">     
+                <div class="form-group pt-2">
+
+                    <label for="aspDiff">ASP difficulty level: choose one</label>
+                    <?php echo $ASPDiffErr ?>
+                    <select  class="form-control" id="aspDiff" name="ASPDiff">
+                            <option value="34" <?php if ($ASPDiff == "34") {echo("selected");} ?>> none</option>
+                            <option value="11" <?php if ($ASPDiff == "11") {echo("selected");} ?>> ASP 1 / Gen EE</option>
+                            <option value="12" <?php if ($ASPDiff == "12") {echo("selected");} ?>> ASP 1-2 / Gen EE-E</option>
+                            <option value="13" <?php if ($ASPDiff == "13") {echo("selected");} ?>> ASP 2 / Gen E</option>
+                            <option value="14" <?php if ($ASPDiff == "14") {echo("selected");} ?>> ASP 2-3 / Gen E-LE </option>
+                            <option value="15" <?php if ($ASPDiff == "15") {echo("selected");} ?>> ASP 3 / Gen LE</option>
+                            <option value="16" <?php if ($ASPDiff == "16") {echo("selected");} ?>> ASP 3-4 / Gen LE-EI</option>
+                            <option value="17" <?php if ($ASPDiff == "17") {echo("selected");} ?>> ASP 4 / Gen EI</option>
+                            <option value="18" <?php if ($ASPDiff == "18") {echo("selected");} ?>> ASP 4-5 / Gen EI-I</option>
+                            <option value="19" <?php if ($ASPDiff == "19") {echo("selected");} ?>> ASP 5 / Gen I</option>
+                            <option value="20" <?php if ($ASPDiff == "20") {echo("selected");} ?>> ASP 5-6 / Gen I</option>
+                            <option value="21" <?php if ($ASPDiff == "21") {echo("selected");} ?>> ASP 6 / Gen I</option>
+                            <option value="22" <?php if ($ASPDiff == "22") {echo("selected");} ?>> ASP 6-7 / Gen I-LI</option>
+                            <option value="23" <?php if ($ASPDiff == "23") {echo("selected");} ?>> ASP 7 / Gen LI</option>
+                            <option value="24" <?php if ($ASPDiff == "24") {echo("selected");} ?>> ASP 7-8 / Gen LI-EA</option>
+                            <option value="25" <?php if ($ASPDiff == "25") {echo("selected");} ?>> ASP 8 / Gen EA</option>
+                            <option value="26" <?php if ($ASPDiff == "26") {echo("selected");} ?>> ASP 8-9 / Gen EA-A</option>
+                            <option value="27" <?php if ($ASPDiff == "27") {echo("selected");} ?>> ASP 9 / Gen A</option>
+                            <option value="28" <?php if ($ASPDiff == "28") {echo("selected");} ?>> ASP 9-10 / Gen A</option>
+                            <option value="29" <?php if ($ASPDiff == "29") {echo("selected");} ?>> ASP 10 / Gen A</option>
+                            <option value="30" <?php if ($ASPDiff == "30") {echo("selected");} ?>> ASP 10-11 / Gen A-LA</option>
+                            <option value="31" <?php if ($ASPDiff == "31") {echo("selected");} ?>> ASP 11 / Gen LA</option>
+                            <option value="32" <?php if ($ASPDiff == "32") {echo("selected");} ?>> ASP 11-12 / Gen LA</option>
+                            <option value="33" <?php if ($ASPDiff == "33") {echo("selected");} ?>> ASP 12 / Gen LA</option>
+                    </select>
 
 
-            <label for="aspDiff">ASP difficulty level: choose one</label>
-            <?php echo $ASPDiffErr ?>
-            <select  class="form-control" id="aspDiff" name="ASPDiff">
-                    <option value="34" <?php if ($ASPDiff == "34") {echo("selected");} ?>> none</option>
-                    <option value="11" <?php if ($ASPDiff == "11") {echo("selected");} ?>> ASP 1 / Gen EE</option>
-                    <option value="12" <?php if ($ASPDiff == "12") {echo("selected");} ?>> ASP 1-2 / Gen EE-E</option>
-                    <option value="13" <?php if ($ASPDiff == "13") {echo("selected");} ?>> ASP 2 / Gen E</option>
-                    <option value="14" <?php if ($ASPDiff == "14") {echo("selected");} ?>> ASP 2-3 / Gen E-LE </option>
-                    <option value="15" <?php if ($ASPDiff == "15") {echo("selected");} ?>> ASP 3 / Gen LE</option>
-                    <option value="16" <?php if ($ASPDiff == "16") {echo("selected");} ?>> ASP 3-4 / Gen LE-EI</option>
-                    <option value="17" <?php if ($ASPDiff == "17") {echo("selected");} ?>> ASP 4 / Gen EI</option>
-                    <option value="18" <?php if ($ASPDiff == "18") {echo("selected");} ?>> ASP 4-5 / Gen EI-I</option>
-                    <option value="19" <?php if ($ASPDiff == "19") {echo("selected");} ?>> ASP 5 / Gen I</option>
-                    <option value="20" <?php if ($ASPDiff == "20") {echo("selected");} ?>> ASP 5-6 / Gen I</option>
-                    <option value="21" <?php if ($ASPDiff == "21") {echo("selected");} ?>> ASP 6 / Gen I</option>
-                    <option value="22" <?php if ($ASPDiff == "22") {echo("selected");} ?>> ASP 6-7 / Gen I-LI</option>
-                    <option value="23" <?php if ($ASPDiff == "23") {echo("selected");} ?>> ASP 7 / Gen LI</option>
-                    <option value="24" <?php if ($ASPDiff == "24") {echo("selected");} ?>> ASP 7-8 / Gen LI-EA</option>
-                    <option value="25" <?php if ($ASPDiff == "25") {echo("selected");} ?>> ASP 8 / Gen EA</option>
-                    <option value="26" <?php if ($ASPDiff == "26") {echo("selected");} ?>> ASP 8-9 / Gen EA-A</option>
-                    <option value="27" <?php if ($ASPDiff == "27") {echo("selected");} ?>> ASP 9 / Gen A</option>
-                    <option value="28" <?php if ($ASPDiff == "28") {echo("selected");} ?>> ASP 9-10 / Gen A</option>
-                    <option value="29" <?php if ($ASPDiff == "29") {echo("selected");} ?>> ASP 10 / Gen A</option>
-                    <option value="30" <?php if ($ASPDiff == "30") {echo("selected");} ?>> ASP 10-11 / Gen A-LA</option>
-                    <option value="31" <?php if ($ASPDiff == "31") {echo("selected");} ?>> ASP 11 / Gen LA</option>
-                    <option value="32" <?php if ($ASPDiff == "32") {echo("selected");} ?>> ASP 11-12 / Gen LA</option>
-                    <option value="33" <?php if ($ASPDiff == "33") {echo("selected");} ?>> ASP 12 / Gen LA</option>
-            </select>
-
-
-          </div> <!-- end form-group -->  
-        </div> <!-- end card-body -->
-      </div> <!-- end card -->     
+                </div> <!-- end form-group -->  
+            </div> <!-- end card-body -->
+        </div> <!-- end card -->     
     </div> <!-- end col -->
 
 
 
-          <div class="col-md-6">
-              <div class="card mb-3">
-                  <div class="card-body bg-light">
-                      <div class="form-group pt-2">
-                          <label for="physCompositionLoc">Composition Location: Type in the Composition Location for your library</label>
-                          <input type="text" class="form-control" id="physCompositionLoc" name="physCompositionLocNote" value="<?php echo htmlspecialchars($physCompositionLocNote, ENT_QUOTES) ?>"/><br/>
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-body bg-light">
+                <div class="form-group pt-2 ">
+                    <label for="physCompositionLoc">Composition Location: Type in the Composition Location for your library</label>
+                    <input type="text" class="form-control" id="physCompositionLoc" name="physCompositionLocNote" value="<?php echo htmlspecialchars($physCompositionLocNote, ENT_QUOTES) ?>"/>
 
-                      </div> <!-- end form-group -->
-                  </div> <!-- end card-body -->
-              </div> <!-- end card -->
-          </div> <!-- end col -->
-      </div> <!--end row-->
+                </div> <!-- end form-group -->
+            </div> <!-- end card-body -->
+        </div> <!-- end card -->
+    </div> <!-- end col -->
+    
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-body bg-light">
+                <div class="form-group pt-2">
+                    <label for="additionalInfo">Additional Info: 'Traditional American Folk Song'</label>
+                    <input type="text" class="form-control" id="additionalInfo" name="additionalInfoNote" value="<?php echo htmlspecialchars($additionalInfoNote, ENT_QUOTES) ?>"/>
 
+                </div> <!-- end form-group -->
+            </div> <!-- end card-body -->
+        </div> <!-- end card -->
+    </div> <!-- end col -->
+          
+</div> <!--end row-->
+      
 
+      
 
 
       <input class="btn btn-secondary" type="submit" value="Submit & Continue"/>

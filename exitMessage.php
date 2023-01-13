@@ -36,7 +36,8 @@ echo <<<_END
 
             <form action='logout_script.php' method='post'>  
                 <input class="btn btn-secondary mt-4 "type='submit' value='Exit Library'/> 
-                <input type='hidden' name="next" value=''/>  
+                <input type='hidden' name="next" value=''/>
+                <p class='error'>*Exit Library will log you out of this site and will likely delete changes you have made.</p>
             </form><br><br>
         </div><!-- end col --> 
     </div><!-- end row -->

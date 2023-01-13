@@ -319,35 +319,31 @@ $compositionIDAltered = strip_before_insert($conn, $washPostVar);
 
 
 
-
-if (strlen($searchPeopleLastNameAltered) > 0) {
-    if($findPerson==true){
-     $peopleQuery = <<<_END
-    
-        SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix, r.role_name
+/*Deleted some code from this peopleQuery. Query used to look like this. 
+When searching for a person name of person should only show up once in displayPerson.php
+but all of the items he is attached to should show up in the following page
+query used to look like this:
+ SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix, r.role_name
         FROM people As p
         LEFT JOIN c2r2p ON c2r2p.people_ID=p.ID
         LEFT JOIN roles AS r ON r.ID=c2r2p.role_ID
-        
         WHERE p.lastname LIKE '%$searchPeopleLastNameAltered%';
-        
 
-_END;
-
-    }else{
+*/
+if (strlen($searchPeopleLastNameAltered) > 0) {
+    
     /*searches the database for the person the user is looking for*/
       $peopleQuery = <<<_END
     
-        SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix, r.role_name
+        SELECT  p.ID, p.firstname, p.middlename, p.lastname, p.suffix
         FROM people As p
-        LEFT JOIN c2r2p ON c2r2p.people_ID=p.ID
-        LEFT JOIN roles AS r ON r.ID=c2r2p.role_ID
+     
         
         WHERE p.lastname LIKE '%$searchPeopleLastNameAltered%'
-        AND r.role_name='$role';
+       
 
 _END;
-    }
+    
 
 
         if($debug) {
@@ -374,44 +370,46 @@ _END;
 
             echo <<<_END
 
-      <div class="container-fluid bg-secondary displayCard pt-4 mb-4 pb-3">
-      
-      <h2 class="display-4 text-light bummerText1">Bummer!</h2>
-        <h2 class="bummerText2">No "$role" by the name of "$searchPeopleLastName" was found. <br/><br/></h2>
-        <h4 class="text-light bummerText2" > Which would you like to do? <br/><br/></h4>
-        <form action="peopleSearch.php" method='post'> 
-          <input class="btn btn-light" type="submit" value="Try another $role Search"/>
-          <input type="hidden" name="bookID" value="$bookID"/>
-          <input type="hidden" name="compositionID" value="$compositionID"/>
-          $sendEditBook 
-          $sendEditComposition
-          $sendReplace 
-          $sendAddNew 
-          $sendFindComposer 
-          $sendFindPerson       
-        </form><!-- end form -->
-        
-        <form action="addPeople.php" method="post"> 
-          <input class="btn btn-light" type="submit" value="Add New $role Information"/>
-          <input type="hidden" name="bookID" value="$bookID"/> 
-          <input type="hidden" name="compositionID" value="$compositionID"/>
-          <input type="hidden" name="oldPeopleID" value="$oldPeopleID" />
-          
-          $sendEditBook
-          $sendEditComposition
-          $sendReplace
-          $sendAddNew 
-          $sendFindComposer
-          $sendFindPerson 
-           
-          
-        </form><!-- end form -->
-        <form action="$formAction" method="post"> 
-          <input class="btn btn-light" type="submit" value="Back to $page "/>
-          <input type="hidden" name="bookID" value="$bookID"/>
-          <input type="hidden" name="compositionID" value="$compositionID"/>       
-        </form><!-- end form -->
-      </div> <!-- end container -->
+        <div class="container-fluid  bg-light  pt-4 my-4 pb-3">
+            <div class="displayCard col-md-6 pl-4 py-4">
+               
+                <h2 class="display-4  bummerText1">Bummer!</h2>
+                <h2 class="bummerText2">No "$role" by the name of "$searchPeopleLastName" was found. <br/></h2>
+                <h4 class=" bummerText2" > Which would you like to do? <br/><br/></h4>
+                <form action="peopleSearch.php" class="mb-2" method='post'> 
+                  <input class="btn btn-secondary" type="submit" value="Try another $role Search"/>
+                  <input type="hidden" name="bookID" value="$bookID"/>
+                  <input type="hidden" name="compositionID" value="$compositionID"/>
+                  $sendEditBook 
+                  $sendEditComposition
+                  $sendReplace 
+                  $sendAddNew 
+                  $sendFindComposer 
+                  $sendFindPerson       
+                </form><!-- end form -->
+            
+                <form action="addPeople.php" class="mb-2" method="post"> 
+                  <input class="btn btn-secondary" type="submit" value="Add New $role Information"/>
+                  <input type="hidden" name="bookID" value="$bookID"/> 
+                  <input type="hidden" name="compositionID" value="$compositionID"/>
+                  <input type="hidden" name="oldPeopleID" value="$oldPeopleID" />
+                  
+                  $sendEditBook
+                  $sendEditComposition
+                  $sendReplace
+                  $sendAddNew 
+                  $sendFindComposer
+                  $sendFindPerson 
+                   
+                  
+                </form><!-- end form -->
+                <form action="$formAction" method="post"> 
+                  <input class="btn btn-secondary" type="submit" value="Back to $page "/>
+                  <input type="hidden" name="bookID" value="$bookID"/>
+                  <input type="hidden" name="compositionID" value="$compositionID"/>       
+                </form><!-- end form -->
+            </div> <!-- end col -->
+        </div> <!-- end container -->
 
 _END;
 
@@ -423,7 +421,7 @@ _END;
 
             echo <<<_END
               
-            <div class="container-fluid bg-secondary displayCard pt-3 pb-3">
+            <div class="container-fluid bg-secondary displayCard pt-3 my-4 pb-3">
             <h5 class="text-light pb-2"> Click on a button to continue.</h5>
 
 _END;
@@ -465,7 +463,7 @@ if($findPerson=='true'){
                   <div class="card-body bg-light">
                     <form action="$formActionChoose" method="post">
                       $role Name: $peopleFirst $peopleMiddle $peopleLast $peopleSuffix<br><br>
-                      <input class="btn" type="submit" value="Choose this $role">
+                      <input class="btn " type="submit" value="Choose this $role">
                       <input type="hidden" name="newPeopleID" value="$peopleID"/>
                       <input type="hidden" name="oldPeopleID" value="$oldPeopleID"/>
                       <input type="hidden" name="bookID" value="$bookID"/>
@@ -493,10 +491,10 @@ _END;
         
            
         
-            <div class="container-fluid bg-secondary text-light pb-3">
+            <div class="container-fluid bg-secondary text-light mb-2 pb-3">
               <h5 class="mb-3"> If None of these $role s Match</h5><br/>
-              <form action="addPeople.php" method="post">
-                <input class="btn btn-light" type="submit" value="Add New $role Info"/>
+              <form action="addPeople.php " method="post">
+                <input class="btn btn-light mb-1" type="submit" value="Add New $role Info"/>
                 <input type="hidden" name="bookID" value="$bookID"/>
                 <input type="hidden" name="compositionID" value="$compositionID"/>
                 <input type="hidden" name="oldPeopleID" value="$oldPeopleID"/>
@@ -511,7 +509,7 @@ _END;
               </form> <!-- end form -->
               
               <form action="peopleSearch.php" method="post"> 
-                <input class="btn btn-light" type="submit" value="Try another $role Search"/>
+                <input class="btn btn-light mb-1" type="submit" value="Try another $role Search"/>
                 <input type="hidden" name="bookID" value="$bookID"/>
                 <input type="hidden" name="compositionID" value="$compositionID"/> 
                 $sendAddNew  
@@ -622,19 +620,22 @@ _END;
         if ($ERDPeopleNotFound) {
 
             echo <<<_END
+            
 
-             <div class="container-fluid bg-secondary pt-4 pb-3">
-                <h2 class="display-4 text-light">Bummer!</h2>
-                <h2>No $role for your book "$bookTitle" was found. <br/><br/></h2>
-                 <form action='$formAction' method='post'>
-                    <input class="btn btn-light" type='submit' value='BACK To $page'/>
-                    <input type='hidden' name='bookID' value='$bookID'/>
-                    <input type='hidden' name='compositionID' value='$compositionID'/>
-                    $sendEditBook
-                    $sendEditComposition
+            <div class="container-fluid  bg-light pt-4 my-4 pb-3">
+                <div class="displayCard col-md-6 pl-4 py-4>
+                    <h2 class="display-4  bummerText1">Bummer!</h2>
+                    <h2 class="bummerText2">No $role for your book "$bookTitle" was found. <br/><br/></h2>
+                    <form action='$formAction' method='post'>
+                        <input class="btn btn-secondary" type='submit' value='BACK To $page'/>
+                        <input type='hidden' name='bookID' value='$bookID'/>
+                        <input type='hidden' name='compositionID' value='$compositionID'/>
+                        $sendEditBook
+                        $sendEditComposition
                     
-                </form><br/><br/><!-- end form -->
-             </div> <!-- end container -->
+                    </form><!-- end form -->
+                </div> <!-- end col -->
+            </div> <!-- end container -->
 
 
 _END;
@@ -731,21 +732,24 @@ _END;
 
     echo<<<_END
 
-<div class="container-fluid displayCard bg-secondary pt-4 pb-3 mb-4">
+            <div class="container-fluid displayCard bg-secondary pt-4 pb-3 mb-4">
                 
-                 <form action='$formAction' method='post'>
+                <form action='$formAction' method='post'>
                     <input class="btn btn-light" type='submit' value='BACK To $page '/>
                     <input type='hidden' name='bookID' value='$bookID'/>
                     <input type='hidden' name='compositionID' value='$compositionID'/>
                     $sendEditBook
                     $sendEditComposition
 
-                    </form><br/><br/><!-- end form -->
+                </form><br/><br/><!-- end form -->
              </div> <!-- end container -->
-
+        
 _END;
 
 }/*End if ($editReplaceDeletePerson)*/
+?>
+</div> <!--end container -->
+<?php
 
 
 

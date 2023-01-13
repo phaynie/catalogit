@@ -58,6 +58,7 @@ _END;
  $editBookPassThrough = "";
  $pubNameValue = "";
  $pubLocValue = "";
+ $addNewPeople = "";
 
 
 
@@ -223,7 +224,7 @@ _END;
 
      if($addNewEditor=='true'){
          $B2R2PInsertQuery = <<<_END
-            INSERT INTO B2R2P (book_ID, role_ID, people_ID)
+            INSERT INTO b2r2p (book_ID, role_ID, people_ID)
             VALUES('$bookID', '$editorRoleID', '$newPeopleIDAltered');
             
 _END;
@@ -277,7 +278,7 @@ _END;
   publisher is the only organization for the book*/
 if($addNewPublisher=='true'){
      $B2R2OInsertQuery = <<<_END
-        INSERT INTO B2R2O (book_ID, role_ID, org_ID)
+        INSERT INTO b2r2o (book_ID, role_ID, org_ID)
         VALUES('$bookID', '$publisherRoleID', '$newOrgIDAltered');
         
 _END;
@@ -313,11 +314,11 @@ _END;
      if($replaceEditor == 'true' && $newPeopleIDAltered !== 0) {
 
      $updateB2R2P = <<<_END
-         UPDATE B2R2P
+         UPDATE b2r2p
          SET book_ID = '$bookID', role_ID = '$roleID', people_ID = '$newPeopleIDAltered'
-         WHERE B2R2P.book_ID = '$bookID'
-             AND B2R2P.role_ID = '$roleID'
-             AND B2R2P.people_ID = '$oldPeopleIDAltered';
+         WHERE b2r2p.book_ID = '$bookID'
+             AND b2r2p.role_ID = '$roleID'
+             AND b2r2p.people_ID = '$oldPeopleIDAltered';
              
 _END;
 
@@ -365,11 +366,11 @@ _END;
  /*REPLACE PUBLISHER*/
 
      $updatePublisher = <<<_END
-     UPDATE B2R2O
+     UPDATE b2r2o
      SET book_ID = '$bookID', role_ID = '$roleID', org_ID = '$newOrgIDAltered'
-     WHERE B2R2O.book_ID = '$bookID'
-         AND B2R2O.role_ID = '$roleID'
-         AND B2R2O.org_ID = '$oldOrgIDAltered';
+     WHERE b2r2o.book_ID = '$bookID'
+         AND b2r2o.role_ID = '$roleID'
+         AND b2r2o.org_ID = '$oldOrgIDAltered';
          
 _END;
 

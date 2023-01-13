@@ -720,6 +720,21 @@ echo $debug_string;
                             <input type="checkbox"  class="form-check-input"  id="chk7" name="keySigs[]" value="7-B Major" <?php if (in_array( "7-B Major", $keySigs)) {echo("checked");}?>>  B Major<br>
                             <label class="form-check-label sr-only" for="chk7"></label>
                         </div> <!-- end form-check -->
+                        
+                        <div class="form-check">
+                            <input type="checkbox"  class="form-check-input"  id="chk26" name="keySigs[]" value="26-F# Major" <?php if (in_array( "26-F# Major", $keySigs)) {echo("checked");}?>>  F# Major<br>
+                            <label class="form-check-label sr-only" for="chk26"></label>
+                        </div> <!-- end form-check -->
+                        
+                        <div class="form-check">
+                            <input type="checkbox"  class="form-check-input"  id="chk27" name="keySigs[]" value="27-C# Major" <?php if (in_array( "27-C# Major", $keySigs)) {echo("checked");}?>>  C# Major<br>
+                            <label class="form-check-label sr-only" for="chk27"></label>
+                        </div> <!-- end form-check -->
+                        
+                        <div class="form-check">
+                            <input type="checkbox"  class="form-check-input"  id="chk28" name="keySigs[]" value="28-Cb Major" <?php if (in_array( "28-Cb Major", $keySigs)) {echo("checked");}?>>  Cb Major<br>
+                            <label class="form-check-label sr-only" for="chk28"></label>
+                        </div> <!-- end form-check -->
 
                         <div class="form-check">
                             <input type="checkbox"  class="form-check-input"  id="chk8" name="keySigs[]" value="8-Gb Major" <?php if (in_array( "8-Gb Major", $keySigs)) {echo("checked");}?>>  Gb Major<br>
@@ -780,14 +795,14 @@ echo $debug_string;
                             <input type="checkbox"  class="form-check-input"  id="chk19" name="keySigs[]" value="19-g# minor" <?php if (in_array( "19-g# minor", $keySigs)) {echo("checked");}?>>  g# minor<br>
                             <label class="form-check-label sr-only" for="chk19"></label>
                         </div> <!-- end form-check -->
-
+                        
                         <div class="form-check">
-                            <input type="checkbox"  class="form-check-input"  id="chk20" name="keySigs[]" value="20-eb minor" <?php if (in_array( "20-eb minor", $keySigs)) {echo("checked");}?>>  eb minor<br>
+                            <input type="checkbox"  class="form-check-input"  id="chk20" name="keySigs[]" value="20-eb minor" <?php if (in_array( "20-eb minor", $keySigs)) {echo("checked");}?>>  eb minor (d# minor)<br>
                             <label class="form-check-label sr-only" for="chk20"></label>
                         </div> <!-- end form-check -->
 
                         <div class="form-check">
-                            <input type="checkbox"  class="form-check-input"  id="chk21" name="keySigs[]" value="21-bb minor" <?php if (in_array( "21-bb minor", $keySigs)) {echo("checked");}?>>  bb minor<br>
+                            <input type="checkbox"  class="form-check-input"  id="chk21" name="keySigs[]" value="21-bb minor" <?php if (in_array( "21-bb minor", $keySigs)) {echo("checked");}?>>  bb minor (a# minor)<br>
                             <label class="form-check-label sr-only" for="chk21"></label>
                         </div> <!-- end form-check -->
 
@@ -802,7 +817,7 @@ echo $debug_string;
                         </div> <!-- end form-check -->
 
                         <div class="form-check">
-                            <input type="checkbox"  class="form-check-input"  id="chk24" name="keySigs[]" value="24-g minor" <?php if (in_array( "24-g minor", $keySigs)) {echo("checked");}?>>   g minor<br>
+                            <input type="checkbox"  class="form-check-input"  id="chk24" name="keySigs[]" value="24-g minor" <?php if (in_array( "24-g minor", $keySigs)) {echo("checked");}?>>   g minor (f## minor)<br>
                             <label class="form-check-label sr-only" for="chk24"></label>
                         </div> <!-- end form-check -->
 
@@ -1002,12 +1017,12 @@ echo $debug_string;
                         </div> <!-- end form-check -->
 
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="chbx37" name="genres[]" value="37-R&B Soul" <?php if (in_array( "37-R&B Soul", $genres)) {echo("checked");}?>> R&B Soul<br>
+                            <input type="checkbox" class="form-check-input" id="chbx37" name="genres[]" value="37-Alternative" <?php if (in_array( "37-Alternative", $genres)) {echo("checked");}?>> Alternative<br>
                             <label class="form-check-label sr-only" for="chbx37"></label>
                         </div> <!-- end form-check -->
 
                         <div class="form-check pb-4">
-                            <input type="checkbox" class="form-check-input" id="chbx33" name="genres[]" value="33-Other Alternative" <?php if (in_array( "33-Other Alternative", $genres)) {echo("checked");}?>> Other Alternative<br>
+                            <input type="checkbox" class="form-check-input" id="chbx33" name="genres[]" value="33-Other " <?php if (in_array( "33-Other", $genres)) {echo("checked");}?>> Other<br>
                             <label class="form-check-label sr-only" for="chbx33"></label>
                         </div> <!-- end form-check -->
 
@@ -1150,7 +1165,7 @@ echo $debug_string;
                                 <option value="5-Gen I / ASP 5-6" <?php if ($genDiff == "5-Gen I / ASP 5-6") {echo("selected");} ?>> Gen I / ASP 5-6</option>
                                 <option value="6-Gen LI / ASP 7" <?php if ($genDiff == "6-Gen LI / ASP 7") {echo("selected");} ?>> Gen LI / ASP 7</option>
                                 <option value="7-Gen EA / ASP 8" <?php if ($genDiff == "7-Gen EA / ASP 8") {echo("selected");} ?>> Gen EA / ASP 8</option>
-                                <option value="8-Gen A / ASP 9-19" <?php if ($genDiff == "-Gen A / ASP 9-19") {echo("selected");} ?>> Gen A / ASP 9-19</option>
+                                <option value="8-Gen A / ASP 9-10" <?php if ($genDiff == "-Gen A / ASP 9-10") {echo("selected");} ?>> Gen A / ASP 9-10</option>
                                 <option value="9-Gen LA / ASP 11-12" <?php if ($genDiff == "9-Gen LA / ASP 11-12") {echo("selected");} ?>> Gen LA / ASP 11-12</option>
                             </select>
 
